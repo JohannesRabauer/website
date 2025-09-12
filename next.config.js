@@ -12,7 +12,8 @@ const nextConfig = {
       },
     ],
   },
-  basePath: '/website',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '/website',
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '/website',
 };
 
 module.exports = nextConfig;
