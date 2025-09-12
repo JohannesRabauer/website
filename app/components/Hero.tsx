@@ -31,7 +31,7 @@ function Hero() {
           </div>
         </div>
         
-        <h1 className="text-cyber-pink text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in">
+        <h1 className="text-cyber-green text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in">
           Johannes Rabauer
         </h1>
         <h2 className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
@@ -41,33 +41,33 @@ function Hero() {
           Java Craftsman • Public Speaker • Father of three • Nature & Tech Enthusiast. Building secure and scalable systems with passion for elegant, expressive code.
         </p>
         <div className="flex flex-wrap justify-center gap-6 mb-10 animate-fade-in delay-300">
-          <a href="https://github.com/JohannesRabauer" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-cyber-cyan hover:text-cyber-pink text-3xl transition drop-shadow-cyber">
+          <a href="https://github.com/JohannesRabauer" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-cyber-green hover:text-cyber-purple text-3xl transition drop-shadow-cyber">
             <FaGithub />
           </a>
-          <a href="https://www.linkedin.com/in/johannes-rabauer" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-cyber-purple hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
+          <a href="https://www.linkedin.com/in/johannes-rabauer" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-cyber-cyan hover:text-cyber-green text-3xl transition drop-shadow-cyber">
             <FaLinkedin />
           </a>
-          <a href="https://www.youtube.com/@johannesrabauer" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-cyber-pink hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
+          <a href="https://www.youtube.com/@johannesrabauer" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-cyber-purple hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
             <FaYoutube />
           </a>
-          <a href="https://twitter.com/JohannesRabauer" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-cyber-cyan hover:text-cyber-pink text-3xl transition drop-shadow-cyber">
+          <a href="https://twitter.com/JohannesRabauer" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-cyber-green hover:text-cyber-purple text-3xl transition drop-shadow-cyber">
             <FaTwitter />
           </a>
-          <a href="https://mastodon.online/@rabauer" target="_blank" rel="noopener noreferrer" aria-label="Mastodon" className="text-cyber-purple hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
+          <a href="https://mastodon.online/@rabauer" target="_blank" rel="noopener noreferrer" aria-label="Mastodon" className="text-cyber-cyan hover:text-cyber-green text-3xl transition drop-shadow-cyber">
             <SiMastodon />
           </a>
-          <a href="https://bsky.app/profile/johannesrabauer.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky" className="text-cyber-pink hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
+          <a href="https://bsky.app/profile/johannesrabauer.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky" className="text-cyber-purple hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
             <SiBluesky />
           </a>
-          <a href="https://www.tiktok.com/@johannes.rabauer" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-cyber-cyan hover:text-cyber-pink text-3xl transition drop-shadow-cyber">
+          <a href="https://www.tiktok.com/@johannes.rabauer" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-cyber-green hover:text-cyber-purple text-3xl transition drop-shadow-cyber">
             <SiTiktok />
           </a>
         </div>
         <div className="flex flex-wrap justify-center gap-4 animate-fade-in delay-400">
-          <span className="inline-block px-4 py-2 rounded-full bg-cyber-purple/20 text-cyber-purple text-xs tracking-widest uppercase">
+          <span className="inline-block px-4 py-2 rounded-full bg-cyber-green/20 text-cyber-green text-xs tracking-widest uppercase">
             Java Developer
           </span>
-          <span className="inline-block px-4 py-2 rounded-full bg-cyber-pink/20 text-cyber-pink text-xs tracking-widest uppercase">
+          <span className="inline-block px-4 py-2 rounded-full bg-cyber-purple/20 text-cyber-purple text-xs tracking-widest uppercase">
             Public Speaker
           </span>
           <span className="inline-block px-4 py-2 rounded-full bg-cyber-cyan/20 text-cyber-cyan text-xs tracking-widest uppercase">
