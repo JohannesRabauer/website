@@ -13,7 +13,7 @@ function Hero() {
       <div className="w-full max-w-4xl mx-auto mb-12">
         <div className="relative w-full h-48 mb-20">
           <Image
-            src="/banner.jpg"
+            src="/website/banner.jpg"
             alt="Tech conference speaking banner"
             fill
             className="object-cover rounded-lg shadow-xl"
