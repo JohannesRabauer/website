@@ -8,8 +8,8 @@ import { ReactNode } from "react";
  */
 
 export const metadata = {
-  title: "[Your Name] | AI & Cyberpunk Dev",
-  description: "Personal site, portfolio, and links for [Your Name] - AI, Cyberpunk, and Tech.",
+  title: "Johannes Rabauer | Senior Software Engineer",
+  description: "Personal site, portfolio, and links for Johannes Rabauer - Java Developer, Public Speaker, and Tech Enthusiast.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
