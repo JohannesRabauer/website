@@ -1,15 +1,22 @@
 name: Deploy to GitHub Pages
 
+# Force a redeploy
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+  # Adding pull_request for testing
+  pull_request:
+    branches:
+      - main
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
+  pull-requests: write
+  actions: write
 
 concurrency:
   group: "pages"
@@ -33,8 +40,18 @@ jobs:
       - name: Build website
         run: npm run build
 
+      - name: Debug output directory
+        run: |
+          echo "Contents of ./out directory:"
+          ls -la ./out
+          
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll
+        
+      - name: Debug after nojekyll
+        run: |
+          echo "Verifying .nojekyll file:"
+          ls -la ./out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
