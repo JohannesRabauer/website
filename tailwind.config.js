@@ -29,6 +29,20 @@ module.exports = {
           cyan: "#00f2fe", // Cyan accent
         },
       },
+      dropShadow: {
+        cyber: [
+          "0 0 8px #7b2ff7, 0 0 16px #f107a3, 0 0 24px #00f2fe"
+        ],
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'fade-in': 'fade-in 1s cubic-bezier(0.4,0,0.2,1) both',
+      },
     },
   },
   plugins: [],

@@ -6,15 +6,16 @@ import { ReactNode } from "react";
  * - Defines base HTML structure
  * - Applies global background and font
  */
+
 export const metadata = {
-  title: "Cyber Portfolio",
-  description: "Senior Developer | Java | AI | Tech Lead",
+  title: "[Your Name] | AI & Cyberpunk Dev",
+  description: "Personal site, portfolio, and links for [Your Name] - AI, Cyberpunk, and Tech.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-cyber-bg text-white font-sans min-h-screen">
+      <body className="bg-cyber-bg text-white font-sans min-h-screen antialiased selection:bg-cyber-pink/80 selection:text-cyber-bg">
         {children}
       </body>
     </html>

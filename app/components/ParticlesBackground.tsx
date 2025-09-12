@@ -19,7 +19,7 @@ export default function ParticlesBackground() {
     <Particles
       id="tsparticles"
       init={particlesInit}
-  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" }}
+      className="particles-background"
       options={{
         background: { color: "#0d0b1e" },
         particles: {

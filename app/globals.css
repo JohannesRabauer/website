@@ -3,7 +3,24 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  scroll-behavior: smooth;
+/* Base styles */
+@layer base {
+  html,
+  body {
+    scroll-behavior: smooth;
+    @apply relative;
+  }
+}
+
+/* Custom styles */
+@layer components {
+  /* Ensure main content appears above particles */
+  .content-layer {
+    @apply relative z-10;
+  }
+  
+  /* Particle background layer */
+  .particles-background {
+    @apply fixed inset-0 z-0;
+  }
 }
