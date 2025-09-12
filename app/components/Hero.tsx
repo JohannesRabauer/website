@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGithub, FaYoutube, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
 import { SiMastodon, SiBluesky, SiTiktok } from "react-icons/si";
 import Image from "next/image";
 
@@ -35,7 +35,7 @@ function Hero() {
           Johannes Rabauer
         </h1>
         <h2 className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
-          Senior Software Engineer at XDEV Software GmbH
+          Senior Software Engineer at <a href="https://xdev.software">XDEV Software GmbH</a>
         </h2>
         <p className="max-w-xl mx-auto text-lg md:text-xl text-gray-300 mb-10 animate-fade-in delay-200">
           Java Craftsman • Public Speaker • Father of three • Nature & Tech Enthusiast. Building secure and scalable systems with passion for elegant, expressive code.
@@ -61,6 +61,9 @@ function Hero() {
           </a>
           <a href="https://www.tiktok.com/@johannes.rabauer" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-cyber-green hover:text-cyber-purple text-3xl transition drop-shadow-cyber">
             <SiTiktok />
+          </a>
+          <a href="mailto:johannes@rabauer.dev" target="_blank" rel="noopener noreferrer" aria-label="E-Mail" className="text-cyber-cyan hover:text-cyber-green text-3xl transition drop-shadow-cyber">
+            <FaEnvelope />
           </a>
         </div>
         <div className="flex flex-wrap justify-center gap-4 animate-fade-in delay-400">
