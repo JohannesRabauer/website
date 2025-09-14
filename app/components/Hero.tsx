@@ -9,7 +9,7 @@ import Image from "next/image";
  */
 function Hero() {
   return (
-    <section className="content-layer flex flex-col items-center justify-center text-center py-24 px-4 min-h-screen bg-cyber-bg/80">
+    <section className="content-layer flex flex-col items-center justify-center text-center py-6 px-4 min-h-screen bg-cyber-bg/80">
       <div className="w-full max-w-4xl mx-auto mb-12">
         <div className="relative w-full h-48 mb-20">
           <Image

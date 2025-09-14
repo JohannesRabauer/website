@@ -23,4 +23,19 @@
   .particles-background {
     @apply fixed inset-0 z-0;
   }
+
+  /* Certification badge styles */
+  .certification-badge {
+    @apply block w-[100px] h-[100px] object-contain;
+    @apply relative z-10;
+    width: 100px; /* Set uniform width */
+    height: 100px; /* Set uniform height */
+    object-fit: contain; /* Maintain aspect ratio */
+    display: block; /* Ensure the image is displayed */
+  }
+
+  /* Added styles for horizontal layout */
+  .certification-list {
+    @apply flex space-x-4; /* Tailwind classes for flex and spacing */
+  }
 }
