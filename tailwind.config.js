@@ -23,7 +23,7 @@ module.exports = {
     extend: {
       colors: {
         cyber: {
-          bg: "#0d0b1e", // Dark background
+          bg: "#0d0b1e4b", // Dark background
           green: "#00ff9d", // Matrix-inspired neon green
           purple: "#7b2ff7", // Neon purple
           cyan: "#00f2fe", // Cyan accent

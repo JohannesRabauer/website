@@ -21,7 +21,8 @@
   
   /* Particle background layer */
   .particles-background {
-    @apply fixed inset-0 z-0;
+    @apply fixed inset-0;
+    z-index: -1; /* Ensure it's behind other content */
   }
 
   /* Certification badge styles */
