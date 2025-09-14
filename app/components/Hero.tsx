@@ -3,7 +3,6 @@
 import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
 import { SiMastodon, SiBluesky, SiTiktok } from "react-icons/si";
 import Image from "next/image";
-import YouTubePlaylist from './YouTubePlaylist';
 
 /**
  * Hero section with animated headline and social links
@@ -77,16 +76,6 @@ function Hero() {
           <span className="inline-block px-4 py-2 rounded-full bg-cyber-cyan/20 text-cyber-cyan text-xs tracking-widest uppercase">
             Tech Enthusiast
           </span>
-        </div>
-        <div className="flex flex-col md:flex-row gap-6 justify-between items-start mt-8">
-          <YouTubePlaylist
-            title="Local AI Chatbot Game in Java"
-            url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3ybRddlcvxgnZt2h8odeqUm8&pp=gAQB"
-          />
-          <YouTubePlaylist
-            title="Tech & Conference Talks"
-            url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3ybVkunRsGPkc-VBG3-pIBQ2&pp=gAQB"
-          />
         </div>
       </div>
     </section>

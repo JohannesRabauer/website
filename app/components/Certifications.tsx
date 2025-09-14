@@ -18,7 +18,7 @@ const certifications: Certification[] = [
 const Certifications: React.FC = () => {
     return (
         <div className="certifications items-center justify-center text-center">
-            <h2 className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">Certifications</h2>
+            <h2 className="text-cyber-green text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">Certifications</h2>
             <div className="certification-list flex space-x-4 py-6">
                 {certifications.map((cert, index) => (
                     <div key={index} className="certification-item">
