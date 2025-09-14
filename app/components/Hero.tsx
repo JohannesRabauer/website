@@ -81,11 +81,11 @@ function Hero() {
         <div className="flex flex-col md:flex-row gap-6 justify-between items-start mt-8">
           <YouTubePlaylist
             title="Local AI Chatbot Game in Java"
-            url="https://www.youtube.com/watch?v=kZVYYqCFVM8&list=PLiY7ZRy4r3ybRddlcvxgnZt2h8odeqUm8&pp=gAQB"
+            url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3ybRddlcvxgnZt2h8odeqUm8&pp=gAQB"
           />
           <YouTubePlaylist
             title="Tech & Conference Talks"
-            url="https://www.youtube.com/watch?v=KUv1xFTjxKw&list=PLiY7ZRy4r3ybVkunRsGPkc-VBG3-pIBQ2&pp=gAQB"
+            url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3ybVkunRsGPkc-VBG3-pIBQ2&pp=gAQB"
           />
         </div>
       </div>
