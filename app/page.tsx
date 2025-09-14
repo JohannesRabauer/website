@@ -3,7 +3,7 @@
 import ParticlesBackground from "./components/ParticlesBackground";
 import Hero from "./components/Hero";
 import Certifications from "./components/Certifications";
-import ProjectCard from "./components/ProjectCard";
+import Publications from "./components/Publications";
 
 export default function Home() {
   return (
@@ -11,6 +11,7 @@ export default function Home() {
       <ParticlesBackground />
       <Hero />
       <Certifications />
+      <Publications />
     </main>
   );
 }
