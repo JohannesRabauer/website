@@ -56,7 +56,7 @@ function Hero() {
           <a href="https://mastodon.online/@rabauer" target="_blank" rel="noopener noreferrer" aria-label="Mastodon" className="text-cyber-cyan hover:text-cyber-green text-3xl transition drop-shadow-cyber">
             <SiMastodon />
           </a>
-          <a href="https://bsky.app/profile/johannesrabauer.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky" className="text-cyber-purple hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
+          <a href="https://bsky.app/profile/rabauer.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky" className="text-cyber-purple hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
             <SiBluesky />
           </a>
           <a href="https://www.tiktok.com/@johannes.rabauer" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-cyber-green hover:text-cyber-purple text-3xl transition drop-shadow-cyber">
