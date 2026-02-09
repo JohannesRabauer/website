@@ -14,6 +14,10 @@ const Youtube: React.FC = () => {
                     title="Tech & Conference Talks"
                     url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3ybVkunRsGPkc-VBG3-pIBQ2&pp=gAQB"
                 />
+                <YouTubePlaylist
+                    title="Vibe Coding in Java"
+                    url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3yantT13lFvvi5fWtqo0fcBQ&pp=gAQB"
+                />
             </div>
         </div>
     );
