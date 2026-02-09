@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope, FaTwitch } from "react-icons/fa";
 import { SiMastodon, SiBluesky, SiTiktok } from "react-icons/si";
 import Image from "next/image";
 
@@ -61,6 +61,9 @@ function Hero() {
           </a>
           <a href="https://www.tiktok.com/@johannes.rabauer" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-cyber-green hover:text-cyber-purple text-3xl transition drop-shadow-cyber">
             <SiTiktok />
+          </a>
+          <a href="https://www.twitch.tv/johannesrabauer" target="_blank" rel="noopener noreferrer" aria-label="Twitch" className="text-cyber-purple hover:text-cyber-cyan text-3xl transition drop-shadow-cyber">
+            <FaTwitch />
           </a>
           <a href="mailto:johannes@rabauer.dev" target="_blank" rel="noopener noreferrer" aria-label="E-Mail" className="text-cyber-cyan hover:text-cyber-green text-3xl transition drop-shadow-cyber">
             <FaEnvelope />
