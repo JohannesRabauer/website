@@ -20,8 +20,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link
           rel="icon"
           type="image/png"
-          href="/Logo_round.png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
         ></link>
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        ></link>
+        <link rel="shortcut icon" href="/favicon.ico"></link>
         <link rel="apple-touch-icon" href="/Logo_round.png"></link>
       </head>
       <body className="bg-cyber-bg text-white font-sans min-h-screen antialiased selection:bg-cyber-pink/80 selection:text-cyber-bg">
