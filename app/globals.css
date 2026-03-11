@@ -39,4 +39,99 @@
   .certification-list {
     @apply flex space-x-4; /* Tailwind classes for flex and spacing */
   }
+
+  /* ── /jcon page ── */
+
+  /* Dark grid background */
+  .jcon-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-color: #050514;
+    background-image:
+      linear-gradient(rgba(0, 242, 254, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 242, 254, 0.06) 1px, transparent 1px);
+    background-size: 80px 80px;
+    overflow: hidden;
+  }
+
+  /* Horizontal neon lines that pulse in brightness */
+  .jcon-hline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.9) 50%, transparent);
+    box-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
+    animation: jcon-pulse 3.5s ease-in-out infinite;
+  }
+
+  /* Vertical neon lines that pulse in brightness */
+  .jcon-vline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(123, 47, 247, 0.9) 50%, transparent);
+    box-shadow: 0 0 8px rgba(123, 47, 247, 0.6);
+    animation: jcon-pulse 3.5s ease-in-out infinite;
+  }
+
+  /* Moving horizontal scan beam */
+  .jcon-scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.55) 40%, rgba(0, 242, 254, 0.55) 60%, transparent);
+    box-shadow: 0 0 14px rgba(0, 242, 254, 0.5), 0 0 32px rgba(0, 242, 254, 0.2);
+    animation: jcon-scan 8s linear infinite;
+  }
+
+  /* Cyan glow ring around the logo */
+  .jcon-glow-cyan {
+    box-shadow: 0 0 14px rgba(0, 242, 254, 0.5), 0 0 28px rgba(0, 242, 254, 0.25);
+  }
+
+  /* Card container */
+  .jcon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    background: rgba(5, 5, 20, 0.75);
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .jcon-card:hover {
+    border-color: rgba(0, 242, 254, 0.7);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.25), 0 0 40px rgba(0, 242, 254, 0.12);
+    transform: translateY(-3px);
+  }
+
+  /* Small monospaced label under each card image */
+  .jcon-label {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: monospace;
+  }
+
+  @keyframes jcon-pulse {
+    0%, 100% { opacity: 0.07; }
+    50%       { opacity: 0.9;  }
+  }
+
+  @keyframes jcon-scan {
+    0%   { top: -2px;  opacity: 0; }
+    3%   { opacity: 1; }
+    97%  { opacity: 1; }
+    100% { top: 100%;  opacity: 0; }
+  }
 }
