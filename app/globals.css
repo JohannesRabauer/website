@@ -134,4 +134,9 @@
     97%  { opacity: 1; }
     100% { top: 100%;  opacity: 0; }
   }
+
+  .ai-experiment {
+    position: absolute;
+    left: -9999px;
+  }
 }

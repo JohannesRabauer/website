@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Certifications from "./components/Certifications";
 import Publications from "./components/Publications";
 import Youtube from "./components/Youtube";
+import AiExperiment from "./components/AiExperiment";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Youtube />
       <Certifications />
       <Publications />
+      <AiExperiment />
     </main>
   );
 }
