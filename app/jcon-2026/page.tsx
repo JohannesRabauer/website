@@ -70,8 +70,7 @@ export default function JConPage() {
               aria-label="Join Q&amp;A on Slido"
             >
               <Image
-                src="/qrcode.png"
-                alt="Scan to join on Slido"
+                src="/jcon-2026/slido_logo.png"
                 width={180}
                 height={180}
                 className="rounded"
