@@ -1,13 +1,20 @@
 "use client";
 
-import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope, FaTwitch } from "react-icons/fa";
+import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope, FaTwitch, FaVolumeUp } from "react-icons/fa";
 import { SiMastodon, SiBluesky, SiTiktok } from "react-icons/si";
 import Image from "next/image";
+import { useRef } from "react";
 
 /**
  * Hero section with animated headline and social links
  */
 function Hero() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  function playPronunciation() {
+    audioRef.current?.play();
+  }
+
   return (
     <section className="content-layer flex flex-col items-center justify-center text-center py-6 px-4 min-h-screen bg-cyber-bg/80">
       <div className="w-full max-w-4xl mx-auto mb-12">
@@ -31,9 +38,18 @@ function Hero() {
           </div>
         </div>
         
-        <h1 className="text-cyber-green text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in">
+        <h1 className="text-cyber-green text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in flex items-center justify-center gap-3">
           Johannes Rabauer
+          <button
+            onClick={playPronunciation}
+            aria-label="Play name pronunciation"
+            title="Hear how to pronounce my name"
+            className="text-cyber-green/70 hover:text-cyber-green text-3xl md:text-4xl transition drop-shadow-cyber"
+          >
+            <FaVolumeUp />
+          </button>
         </h1>
+        <audio ref={audioRef} src="/name-pronunciation.mp3" preload="none" />
         <h2 className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
           Senior Software Engineer at <a href="https://xdev.software">XDEV Software GmbH</a>
         </h2>
