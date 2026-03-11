@@ -70,15 +70,15 @@ export default function JConPage() {
           className={`${michroma.className} text-[#f1f4ff] text-4xl md:text-6xl font-extrabold uppercase tracking-[0.18em]`}
           style={{ textShadow: "0 0 10px rgba(214, 42, 66, 0.75), 0 0 24px rgba(122, 19, 30, 0.5)" }}
         >
-          Johannes Rabauer
+         Ten Angry Comments Later
         </h1>
 
         <h2 className={`${michroma.className} text-[#ff2c4d] text-2xl md:text-4xl font-bold tracking-wide -mt-3`}>
-          Ten Angry Comments Later
+          Stories About Code Reviews, Teams, and Yesterday&apos;s Code
         </h2>
 
         <p className="max-w-4xl text-[#8f9fcb] text-lg md:text-2xl font-medium leading-tight -mt-4">
-          Stories About Code Reviews, Teams, and Yesterday&apos;s Code
+           Johannes Rabauer
         </p>
 
         {/* Cards */}
