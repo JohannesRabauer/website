@@ -71,6 +71,7 @@ export default function JConPage() {
             >
               <Image
                 src="/jcon-2026/slido_logo.png"
+                alt="Slido logo"
                 width={180}
                 height={180}
                 className="rounded"
