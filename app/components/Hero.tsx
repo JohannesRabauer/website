@@ -44,7 +44,7 @@ function Hero() {
             onClick={playPronunciation}
             aria-label="Play name pronunciation"
             title="Hear how to pronounce my name"
-            className="text-cyber-green/70 hover:text-cyber-green text-3xl md:text-4xl transition drop-shadow-cyber"
+            className="text-cyber-green/70 hover:text-cyber-green text-xl md:text-2xl transition drop-shadow-cyber focus:outline-none focus:ring-2 focus:ring-cyber-green rounded"
           >
             <FaVolumeUp />
           </button>
