@@ -19,6 +19,10 @@ const links = [
 
 export default function SocialBadges({ variant = "default" }: SocialBadgesProps) {
   const isJcon = variant === "jcon";
+  const jconColorClasses = [
+    "text-[#f1f4ff] hover:text-[#ff2c4d]",
+    "text-[#8f9fcb] hover:text-[#f1f4ff]",
+  ];
 
   return (
     <div
@@ -28,7 +32,7 @@ export default function SocialBadges({ variant = "default" }: SocialBadgesProps)
           : "flex flex-wrap justify-center gap-6 mb-10 animate-fade-in delay-300"
       }
     >
-      {links.map(({ href, label, Icon, defaultClass }) => (
+      {links.map(({ href, label, Icon, defaultClass }, index) => (
         <a
           key={label}
           href={href}
@@ -37,7 +41,7 @@ export default function SocialBadges({ variant = "default" }: SocialBadgesProps)
           aria-label={label}
           className={
             isJcon
-              ? "text-cyber-cyan hover:text-cyber-purple text-3xl transition drop-shadow-cyber"
+              ? `${jconColorClasses[index % 2]} text-6xl transition duration-300 drop-shadow-[0_0_14px_rgba(214,42,66,0.65)] hover:drop-shadow-[0_0_24px_rgba(214,42,66,0.95)]`
               : `${defaultClass} text-3xl transition drop-shadow-cyber`
           }
         >
