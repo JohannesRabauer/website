@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import SocialBadges from "../components/SocialBadges";
 
 /** Slido Q&A link is shown until midnight on 22 April 2026 */
 const SLIDO_DEADLINE = new Date("2026-04-22T23:59:59");
@@ -99,6 +100,7 @@ export default function JConPage() {
             <span className="jcon-label text-cyber-purple">Resources on GitHub</span>
           </a>
         </div>
+        <SocialBadges variant="jcon" />
       </div>
     </main>
   );
