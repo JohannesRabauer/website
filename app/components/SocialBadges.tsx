@@ -1,5 +1,5 @@
 import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope, FaTwitch } from "react-icons/fa";
-import { SiMastodon, SiBluesky, SiTiktok } from "react-icons/si";
+import { SiMastodon, SiBluesky, SiTiktok, SiSessionize } from "react-icons/si";
 
 interface SocialBadgesProps {
   variant?: "default" | "jcon";
@@ -14,6 +14,7 @@ const links = [
   { href: "https://bsky.app/profile/rabauer.dev",          label: "Bluesky",   Icon: SiBluesky,  defaultClass: "text-cyber-purple hover:text-cyber-cyan" },
   { href: "https://www.tiktok.com/@johannes.rabauer",      label: "TikTok",    Icon: SiTiktok,   defaultClass: "text-cyber-green hover:text-cyber-purple" },
   { href: "https://www.twitch.tv/johannesrabauer",         label: "Twitch",    Icon: FaTwitch,   defaultClass: "text-cyber-purple hover:text-cyber-cyan" },
+  { href: "https://sessionize.com/johannes/",              label: "Sessionize",Icon: SiSessionize,defaultClass: "text-cyber-green hover:text-cyber-purple" },
   { href: "mailto:johannes@rabauer.dev",                   label: "E-Mail",    Icon: FaEnvelope, defaultClass: "text-cyber-cyan hover:text-cyber-green" },
 ];
 
