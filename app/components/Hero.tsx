@@ -1,8 +1,10 @@
 "use client";
 
 import { FaVolumeUp } from "react-icons/fa";
+import { FaBlog } from "react-icons/fa";
 import Image from "next/image";
 import { useRef } from "react";
+import Link from "next/link";
 import SocialBadges from "./SocialBadges";
 
 /**
@@ -67,6 +69,15 @@ function Hero() {
           <span className="inline-block px-4 py-2 rounded-full bg-cyber-cyan/20 text-cyber-cyan text-xs tracking-widest uppercase">
             Tech Enthusiast
           </span>
+        </div>
+        <div className="mt-8 animate-fade-in delay-500">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-cyber-green text-cyber-green text-base md:text-lg font-semibold tracking-wide hover:bg-cyber-green/10 hover:scale-[1.02] transition-all shadow-lg shadow-cyber-green/10"
+          >
+            <FaBlog className="text-lg md:text-xl" aria-hidden="true" />
+            Visit my Live-Coding Learnings
+          </Link>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import { DM_Serif_Display, Inter } from 'next/font/google';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 
 const dmSerif = DM_Serif_Display({
   subsets: ['latin'],
@@ -33,11 +34,16 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
             href="/blog"
             className="flex items-center gap-2.5 group"
           >
-            <span className="w-7 h-7 rounded-full bg-gradient-to-br from-blog-purple to-blog-green flex items-center justify-center text-white text-[11px] font-bold flex-shrink-0 shadow-sm">
-              JR
-            </span>
+            <Image
+              src="/Logo_round.png"
+              alt="Johannes Rabauer Logo"
+              width={28}
+              height={28}
+              className="rounded-full shadow-sm ring-1 ring-blog-border"
+              priority
+            />
             <span className="font-[family-name:var(--font-dm-serif)] text-lg text-blog-purple group-hover:text-blog-green transition-colors">
-              Blog
+              Live-Coding Learnings
             </span>
           </Link>
 

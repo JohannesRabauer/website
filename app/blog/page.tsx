@@ -3,8 +3,8 @@ import BlogPageClient from '@/app/components/BlogPageClient';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Blog | Johannes Rabauer',
-  description: 'Live coding sessions, Java deep-dives, and engineering insights.',
+  title: 'Live-Coding Learnings | Johannes Rabauer',
+  description: 'Summarizing, Concluding and general reflections on my live-coding sessions.',
 };
 
 export default function BlogPage() {
@@ -15,16 +15,11 @@ export default function BlogPage() {
     <main className="max-w-6xl mx-auto px-6 py-14">
       {/* Page header */}
       <div className="mb-14">
-        <div className="flex items-center gap-2 text-blog-green text-sm font-medium mb-4">
-          <span className="w-6 h-px bg-blog-green inline-block" />
-          Engineering Notes
-        </div>
         <h1 className="font-[family-name:var(--font-dm-serif)] text-5xl md:text-6xl text-blog-purple leading-tight mb-5">
-          The Blog
+          Live-Coding Learnings
         </h1>
         <p className="text-blog-muted text-lg max-w-xl leading-relaxed">
-          Live coding sessions, Java deep-dives, cloud-native patterns, and
-          occasional thoughts on building software with craft.
+          Summarizing, Concluding and general reflections on my live-coding sessions. I share insights, challenges, and lessons learned from building real-world projects in Java and beyond.
         </p>
 
         {/* Divider */}

@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ReactNode } from "react";
+import FloatingSiteControls from "./components/FloatingSiteControls";
 
 /**
  * Root layout component wrapping all pages
@@ -33,23 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="apple-touch-icon" href="/Logo_round.png"></link>
       </head>
       <body className="bg-cyber-bg text-white font-sans min-h-screen antialiased selection:bg-cyber-pink/80 selection:text-cyber-bg">
-        {/* Fixed top-left brand logo */}
-        <a href="/" className="fixed top-4 left-4 z-50">
-          <img
-            src="/Logo_round.png"
-            alt="JR Logo"
-            width={40}
-            height={40}
-            className="rounded-full shadow-lg hover:scale-110 transition-transform"
-          />
-        </a>
-          {/* Fixed top-right blog link */}
-          <a
-            href="/blog"
-            className="fixed top-4 right-4 z-50 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase border border-cyber-green/50 text-cyber-green hover:bg-cyber-green/10 hover:border-cyber-green transition-all backdrop-blur-sm"
-          >
-            Blog
-          </a>
+        <FloatingSiteControls />
         {children}
       </body>
     </html>
