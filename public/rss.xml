@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Johannes Rabauer | Blog</title>
+    <link>https://rabauer.dev/blog/</link>
+    <description>Live coding sessions, Java deep-dives, cloud-native patterns, and engineering craft.</description>
+    <language>en</language>
+    <atom:link href="https://rabauer.dev/rss.xml" rel="self" type="application/rss+xml"/>
+    <copyright>© 2026 Johannes Rabauer</copyright>
+  <item>
+    <title>Building a Live Coding Stream Setup — What I Learned</title>
+    <link>https://rabauer.dev/blog/building-a-live-coding-stream-setup/</link>
+    <guid isPermaLink="true">https://rabauer.dev/blog/building-a-live-coding-stream-setup/</guid>
+    <description>After six months of weekly live coding sessions on YouTube, here&apos;s everything I wish I knew before starting: gear, OBS config, Java project structure, and how to stay calm when the build breaks on stream.</description>
+    <pubDate>Tue, 24 Mar 2026 00:00:00 GMT</pubDate>
+    <category>live-coding</category>
+    <category>java</category>
+    <category>streaming</category>
+    <category>setup</category>
+  </item>
+  </channel>
+</rss>

@@ -43,6 +43,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             className="rounded-full shadow-lg hover:scale-110 transition-transform"
           />
         </a>
+          {/* Fixed top-right blog link */}
+          <a
+            href="/blog"
+            className="fixed top-4 right-4 z-50 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase border border-cyber-green/50 text-cyber-green hover:bg-cyber-green/10 hover:border-cyber-green transition-all backdrop-blur-sm"
+          >
+            Blog
+          </a>
         {children}
       </body>
     </html>

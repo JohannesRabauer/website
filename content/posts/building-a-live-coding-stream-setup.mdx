@@ -1,0 +1,95 @@
+---
+title: "Building a Live Coding Stream Setup — What I Learned"
+date: "2026-03-24"
+summary: "After six months of weekly live coding sessions on YouTube, here's everything I wish I knew before starting: gear, OBS config, Java project structure, and how to stay calm when the build breaks on stream."
+tags: ["live-coding", "java", "streaming", "setup"]
+youtubeId: "dQw4w9WgXcQ"
+draft: false
+---
+
+## Why I Started Live Coding
+
+A few years ago I watched another developer debug a gnarly race condition live on stream. No cuts. No magic fixes. Just genuine problem-solving.
+
+It was more educational than any polished tutorial I'd watched. That session convinced me: **authenticity beats perfection in technical content**.
+
+So I started streaming. Here's what I've learned.
+
+---
+
+## The Hardware Stack
+
+You don't need expensive gear to start. But a few investments make a real difference:
+
+| Item | My Pick | Budget Alternative |
+|---|---|---|
+| Microphone | Shure MV7 | Blue Yeti Nano |
+| Camera | Sony ZV-E10 | Logitech C920 |
+| Lighting | Elgato Key Light | Ring light |
+
+The microphone matters most. Viewers will tolerate lower video quality far longer than they'll tolerate bad audio.
+
+## OBS Setup for Code Streams
+
+My scene collection has two layouts:
+
+```yaml
+scenes:
+  - name: "Coding"
+    sources:
+      - type: display_capture   # full monitor
+      - type: browser_source    # chat overlay
+      - type: video_capture     # facecam (corner)
+
+  - name: "BRB"
+    sources:
+      - type: image             # logo card
+      - type: media_source      # lo-fi music visualization
+```
+
+### The Key OBS Settings
+
+For smooth Java compilation (lots of quick file changes):
+- **Encoder**: x264 at CRF 23 for local recording; NVENC for streaming
+- **Bitrate**: 6000 kbps for 1080p60
+- **Keyframe interval**: 2 seconds
+
+## Java Project Structure
+
+I always start a stream with a **pre-prepared skeleton project**. Nothing kills momentum like spending 10 minutes on boilerplate setup while 30 people watch.
+
+```java
+// Always start with the end in mind
+@SpringBootApplication
+public class StreamDemoApplication {
+
+    public static void main(String[] args) {
+        // We'll build out the feature together, live
+        SpringApplication.run(StreamDemoApplication.class, args);
+    }
+}
+```
+
+My template includes:
+- Spring Boot 3 with Web + Actuator
+- A pre-configured `docker-compose.yml` (PostgreSQL + Redis)
+- Testcontainers already on the classpath
+- A `README.md` with the session goal written down
+
+## Staying Calm When Things Break
+
+They will break. An API changes, a dependency conflict appears, Docker won't start.
+
+**My three rules:**
+
+1. **Say what you see** — narrate your debugging thought process out loud. This is the most valuable part of the stream for viewers.
+2. **Don't Google in silence** — explain *what* you're searching for and *why* before you open the browser.
+3. **Celebrate the fix** — when it finally works, react authentically. Your viewers just suffered through it with you.
+
+---
+
+## What's Next
+
+The next session will cover setting up a full event-driven architecture with Kafka and Spring Boot — from zero to a working producer/consumer pipeline. Subscribe so you don't miss it.
+
+> "The only way to get good at debugging live is to debug live."

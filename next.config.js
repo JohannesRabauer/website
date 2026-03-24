@@ -5,6 +5,11 @@ let basePath = '';
 
 const nextConfig = {
   output: 'export',
+  eslint: {
+    // ESLint runs separately via `npm run lint`; skip during build to avoid
+    // the known eslint-config-next circular-reference issue with ESLint 9.
+    ignoreDuringBuilds: true,
+  },
   images: {
     unoptimized: true,
     remotePatterns: [

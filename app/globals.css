@@ -142,3 +142,64 @@
     left: -9999px;
   }
 }
+
+  /* ─── Blog: highlight.js custom theme (light + purple/green) ─── */
+  .hljs {
+    background: #F0EDF8;
+    color: #1A1A2E;
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    display: block;
+  }
+  .hljs-keyword,
+  .hljs-built_in,
+  .hljs-selector-tag { color: #3D2B6B; font-weight: 600; }
+  .hljs-string,
+  .hljs-attr,
+  .hljs-selector-attr,
+  .hljs-selector-pseudo { color: #2A5C45; }
+  .hljs-number,
+  .hljs-literal { color: #B5351A; }
+  .hljs-comment,
+  .hljs-quote { color: #9CA3AF; font-style: italic; }
+  .hljs-title,
+  .hljs-title.function_,
+  .hljs-title.class_ { color: #1D4ED8; }
+  .hljs-type,
+  .hljs-class .hljs-title { color: #6D28D9; }
+  .hljs-variable,
+  .hljs-template-variable { color: #1A1A2E; }
+  .hljs-property { color: #3D2B6B; }
+  .hljs-tag .hljs-name { color: #0F766E; }
+  .hljs-addition { background: #E6F0EC; color: #2A5C45; }
+  .hljs-deletion { background: #FEE2E2; color: #B91C1C; }
+  .hljs-emphasis { font-style: italic; }
+  .hljs-strong { font-weight: 700; }
+
+  /* ─── Blog: inline code outside pre blocks ─── */
+  .prose-blog :not(pre) > code {
+    background: #EDE8F5;
+    color: #3D2B6B;
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.85em;
+  }
+  .prose-blog :not(pre) > code::before,
+  .prose-blog :not(pre) > code::after { content: none; }
+
+  /* ─── Blog: heading anchor links ─── */
+  .prose-blog h2 a,
+  .prose-blog h3 a,
+  .prose-blog h4 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .prose-blog h2:hover a::after,
+  .prose-blog h3:hover a::after {
+    content: ' #';
+    color: #7C5CBF;
+    font-size: 0.75em;
+  }
