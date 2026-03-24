@@ -1,95 +1,109 @@
 ---
-title: "Building a Live Coding Stream Setup — What I Learned"
-date: "2026-03-24"
-summary: "After six months of weekly live coding sessions on YouTube, here's everything I wish I knew before starting: gear, OBS config, Java project structure, and how to stay calm when the build breaks on stream."
-tags: ["live-coding", "java", "streaming", "setup"]
-youtubeId: "dQw4w9WgXcQ"
+title: "AI Assisted Java Modernization: Building OpenRewrite Recipes with Tim te Beek"
+date: "2026-03-19"
+summary: "What I took away from this session with Tim te Beek: OpenRewrite becomes especially powerful when AI is used to help build deterministic, testable recipes instead of making uncontrolled code changes."
+tags: ["openrewrite", "java", "modernization", "github-copilot", "live-coding"]
+youtubeId: "LpGguXsR93A"
 draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "05:26"
+    label: "Moderne CLI Skills"
+  - time: "11:20"
+    label: "Prompts to modernize the app"
+  - time: "12:33"
+    label: "Bad first try of Prompt No. 1"
+  - time: "26:10"
+    label: "Rewriting Prompt No. 1"
+  - time: "35:55"
+    label: "Exploring the Create-Recipe Skill"
+  - time: "47:15"
+    label: "AI-generated composite recipe results"
+  - time: "58:18"
+    label: "OpenRewrite's do-no-harm policy"
+  - time: "01:01:37"
+    label: "Executing a dry run"
+  - time: "01:08:50"
+    label: "Refactoring Prompt No. 2 for custom recipes"
+  - time: "01:15:55"
+    label: "Looking through comments"
+  - time: "01:21:40"
+    label: "Different kinds of prompting"
+  - time: "01:34:00"
+    label: "Results of AI-created imperative recipes"
+  - time: "01:58:10"
+    label: "Conclusion"
 ---
 
-## Why I Started Live Coding
+In this session I was joined by Tim te Beek from Moderne / OpenRewrite, and the big idea was refreshingly practical: use AI to help build **structured OpenRewrite recipes**, not to make random edits and hope they work.
 
-A few years ago I watched another developer debug a gnarly race condition live on stream. No cuts. No magic fixes. Just genuine problem-solving.
+That difference is what made the whole workflow interesting to me. The result is something deterministic, reviewable, and reproducible.
 
-It was more educational than any polished tutorial I'd watched. That session convinced me: **authenticity beats perfection in technical content**.
+<CoSpeakerCard
+  name="Tim te Beek"
+  role="Software Engineer"
+  company="Moderne / OpenRewrite"
+  bio="Tim joined the session to walk through how OpenRewrite recipes work in practice and why structural refactoring gives you much more control than ad-hoc code generation."
+/>
 
-So I started streaming. Here's what I've learned.
+## What I Learned
 
----
+### 1. The Moderne CLI Skills are already useful
 
-## The Hardware Stack
+This was probably the first pleasant surprise. There are already dedicated Moderne CLI Skills for helping AI use existing recipes or create new ones, and they worked better than I expected.
 
-You don't need expensive gear to start. But a few investments make a real difference:
+Instead of interacting with the model in a vague way, the skills give it structure and constraints. That made the workflow feel much more disciplined and much less like guesswork.
 
-| Item | My Pick | Budget Alternative |
-|---|---|---|
-| Microphone | Shure MV7 | Blue Yeti Nano |
-| Camera | Sony ZV-E10 | Logitech C920 |
-| Lighting | Elgato Key Light | Ring light |
+### 2. Imperative recipes are hard to write by hand
 
-The microphone matters most. Viewers will tolerate lower video quality far longer than they'll tolerate bad audio.
+This became very clear during the session. Imperative recipes written in Java are powerful, but they are not something I would casually want to author from scratch under time pressure.
 
-## OBS Setup for Code Streams
+That is where the AI-assisted workflow felt strongest. With the right skills in place, it could generate the recipe and the tests around it, and that worked smoothly on the first try.
 
-My scene collection has two layouts:
+That was a big takeaway for me: **AI is especially helpful when the manual version of the task is tedious, detailed, and easy to get wrong.**
 
-```yaml
-scenes:
-  - name: "Coding"
-    sources:
-      - type: display_capture   # full monitor
-      - type: browser_source    # chat overlay
-      - type: video_capture     # facecam (corner)
+### 3. Custom recipes are valuable when you need repeatable modernization
 
-  - name: "BRB"
-    sources:
-      - type: image             # logo card
-      - type: media_source      # lo-fi music visualization
-```
+This is the part that makes the approach useful beyond a demo.
 
-### The Key OBS Settings
+Custom recipes are a great fit when:
 
-For smooth Java compilation (lots of quick file changes):
-- **Encoder**: x264 at CRF 23 for local recording; NVENC for streaming
-- **Bitrate**: 6000 kbps for 1080p60
-- **Keyframe interval**: 2 seconds
+- you want a very deterministic change in an existing system
+- you want to modernize many projects that all share the same kind of problem
 
-## Java Project Structure
+That is where OpenRewrite really stands out. You define the transformation once, review it properly, and then apply it repeatedly across repositories without drifting into inconsistent manual fixes.
 
-I always start a stream with a **pre-prepared skeleton project**. Nothing kills momentum like spending 10 minutes on boilerplate setup while 30 people watch.
+## Why This Approach Works
 
-```java
-// Always start with the end in mind
-@SpringBootApplication
-public class StreamDemoApplication {
+One of the strongest points in the session was the contrast with fragile text-based refactoring.
 
-    public static void main(String[] args) {
-        // We'll build out the feature together, live
-        SpringApplication.run(StreamDemoApplication.class, args);
-    }
-}
-```
+OpenRewrite works on a structured model of the code, including its lossless semantic tree. That means the change logic is based on the actual code structure, not on brittle regex-style replacements.
 
-My template includes:
-- Spring Boot 3 with Web + Actuator
-- A pre-configured `docker-compose.yml` (PostgreSQL + Redis)
-- Testcontainers already on the classpath
-- A `README.md` with the session goal written down
+For modernization work, that is exactly what I want: less guessing, more control.
 
-## Staying Calm When Things Break
+## Useful Links
 
-They will break. An API changes, a dependency conflict appears, Docker won't start.
+- [Moderne CLI Skills](https://github.com/JohannesRabauer/open-rewrite-with-ai/tree/main/.github/instructions)  
+  The instruction files used to guide the AI when creating or composing recipes.
 
-**My three rules:**
+- [Prompts to modernize the app](https://github.com/JohannesRabauer/open-rewrite-with-ai/blob/main/.github/legacy-banking-modernization-prompts.md)  
+  The prompts we used during the session to drive the modernization workflow.
 
-1. **Say what you see** — narrate your debugging thought process out loud. This is the most valuable part of the stream for viewers.
-2. **Don't Google in silence** — explain *what* you're searching for and *why* before you open the browser.
-3. **Celebrate the fix** — when it finally works, react authentically. Your viewers just suffered through it with you.
+- [Moderne CLI documentation](https://docs.moderne.io/user-documentation/moderne-cli/getting-started/cli-intro)  
+  The best place to start if you want to try the CLI yourself.
 
----
+- [Wispr Flow](https://wisprflow.ai)  
+  Voice dictation tooling that can speed up writing prompts and notes.
 
-## What's Next
+- [obra/superpowers](https://github.com/obra/superpowers)  
+  Extra tooling and workflow ideas around AI-assisted development.
 
-The next session will cover setting up a full event-driven architecture with Kafka and Spring Boot — from zero to a working producer/consumer pipeline. Subscribe so you don't miss it.
+- [Conductor](https://docs.conductor.build/)  
+  Documentation for another tool in the structured AI workflow space.
 
-> "The only way to get good at debugging live is to debug live."
+## Final Thought
+
+What stayed with me most is that AI becomes much more useful when it works inside a controlled modernization workflow.
+
+For me, the session made three things very clear: the existing skills are already good, imperative recipes are exactly the kind of hard work where AI helps a lot, and custom recipes are a strong solution when you need the same safe transformation across many projects.

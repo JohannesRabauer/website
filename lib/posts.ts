@@ -12,6 +12,7 @@ export interface PostFrontmatter {
   tags: string[];
   youtubeId?: string;
   draft?: boolean;
+  timestamps?: { time: string; label: string }[];
 }
 
 export interface Post {

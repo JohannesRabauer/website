@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import YoutubeEmbed from '@/app/components/YoutubeEmbed';
 import GiscusComments from '@/app/components/GiscusComments';
 import TableOfContents from '@/app/components/TableOfContents';
+import TimestampList from '@/app/components/TimestampList';
+import CoSpeakerCard from '@/app/components/CoSpeakerCard';
 import Link from 'next/link';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -23,9 +25,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
+  const ogImages = post.frontmatter.youtubeId
+    ? [{ url: `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/hqdefault.jpg`, width: 480, height: 360 }]
+    : [];
   return {
     title: `${post.frontmatter.title} | Blog`,
     description: post.frontmatter.summary,
+    openGraph: { images: ogImages },
+    twitter: { card: 'summary_large_image', images: ogImages.map((i) => i.url) },
   };
 }
 
@@ -41,8 +48,8 @@ const mdxOptions = {
   },
 };
 
-/** MDX component overrides — YoutubeEmbed can be used inline in posts */
-const components = { YoutubeEmbed };
+/** MDX component overrides — reusable blog content blocks for posts */
+const components = { YoutubeEmbed, TimestampList, CoSpeakerCard };
 
 export default async function BlogPostPage({
   params,
@@ -116,6 +123,14 @@ export default async function BlogPostPage({
           {youtubeId && (
             <YoutubeEmbed videoId={youtubeId} title={title} />
           )}
+
+          {/* Session timeline — sourced from frontmatter */}
+          {youtubeId && post.frontmatter.timestamps?.length ? (
+            <TimestampList
+              videoId={youtubeId}
+              items={post.frontmatter.timestamps}
+            />
+          ) : null}
 
           {/* MDX prose content */}
           <div className="prose prose-blog prose-lg max-w-none">

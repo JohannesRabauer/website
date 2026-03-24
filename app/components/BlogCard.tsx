@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { FiClock, FiCalendar, FiYoutube } from 'react-icons/fi';
 import type { PostMeta } from '@/lib/posts';
 
@@ -15,8 +16,19 @@ export default function BlogCard({ post }: { post: PostMeta }) {
   return (
     <Link href={`/blog/${slug}`} className="group block h-full">
       <article className="h-full bg-blog-surface rounded-2xl border border-blog-border shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
-        {/* Gradient accent bar */}
-        <div className="h-[3px] bg-gradient-to-r from-blog-purple via-blog-purple-mid to-blog-green flex-shrink-0" />
+        {/* Thumbnail or gradient accent bar */}
+        {youtubeId ? (
+          <div className="relative w-full aspect-video flex-shrink-0 overflow-hidden">
+            <Image
+              src={`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
+              alt={title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        ) : (
+          <div className="h-[3px] bg-gradient-to-r from-blog-purple via-blog-purple-mid to-blog-green flex-shrink-0" />
+        )}
 
         <div className="p-6 flex flex-col flex-1">
           {/* Meta row */}
