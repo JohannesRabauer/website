@@ -19,7 +19,7 @@ const Youtube: React.FC = () => {
                     url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3yantT13lFvvi5fWtqo0fcBQ&pp=gAQB"
                 />
                 <YouTubePlaylist
-                    title="Playlist"
+                    title="Collaborations"
                     url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3yah08kElCyzHtiIKzlWmh6K&pp=gAQB"
                 />
             </div>
