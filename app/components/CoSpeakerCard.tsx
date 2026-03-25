@@ -1,5 +1,5 @@
 import { FiGlobe } from 'react-icons/fi';
-import { FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { FaBluesky, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 
 interface Props {
   name: string;
@@ -11,6 +11,7 @@ interface Props {
   github?: string;
   linkedin?: string;
   x?: string;
+  bluesky?: string;
   youtube?: string;
 }
 
@@ -48,6 +49,7 @@ export default function CoSpeakerCard({
   github,
   linkedin,
   x,
+  bluesky,
   youtube,
 }: Props) {
   if (!name || !role) return null;
@@ -76,7 +78,7 @@ export default function CoSpeakerCard({
           <p className="mb-1 text-xs font-semibold uppercase tracking-[0.24em] text-blog-green">
             Co-Speaker
           </p>
-          <h2 className="!my-0 font-[family-name:var(--font-dm-serif)] text-2xl text-blog-purple">
+          <h2 className="!my-0 font-[family-name:var(--font-heading)] text-2xl text-blog-purple">
             {name}
           </h2>
           <p className="mt-1 text-sm text-blog-muted">
@@ -90,6 +92,7 @@ export default function CoSpeakerCard({
             <SocialLink href={github} label="GitHub" icon={<FaGithub className="h-4 w-4" />} />
             <SocialLink href={linkedin} label="LinkedIn" icon={<FaLinkedin className="h-4 w-4" />} />
             <SocialLink href={x} label="X" icon={<FaXTwitter className="h-4 w-4" />} />
+            <SocialLink href={bluesky} label="Bluesky" icon={<FaBluesky className="h-4 w-4" />} />
             <SocialLink href={youtube} label="YouTube" icon={<FaYoutube className="h-4 w-4" />} />
           </div>
         </div>
