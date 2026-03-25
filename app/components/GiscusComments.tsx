@@ -10,7 +10,7 @@ import Giscus from '@giscus/react';
 export default function GiscusComments() {
   return (
     <section className="mt-16 pt-8 border-t border-blog-border">
-      <h3 className="font-serif text-2xl text-blog-purple mb-6">
+      <h3 className="font-heading text-2xl text-blog-purple mb-6">
         Comments
       </h3>
       <Giscus

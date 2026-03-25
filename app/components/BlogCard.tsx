@@ -51,7 +51,7 @@ export default function BlogCard({ post }: { post: PostMeta }) {
 
           {/* Title */}
           <h2
-            className="font-serif text-xl text-blog-text group-hover:text-blog-purple transition-colors duration-200 mb-2 leading-snug"
+            className="font-heading text-xl text-blog-text group-hover:text-blog-purple transition-colors duration-200 mb-2 leading-snug"
           >
             {title}
           </h2>

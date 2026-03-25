@@ -15,7 +15,7 @@ export default function BlogPage() {
     <main className="max-w-6xl mx-auto px-6 py-14">
       {/* Page header */}
       <div className="mb-14">
-        <h1 className="font-[family-name:var(--font-dm-serif)] text-5xl md:text-6xl text-blog-purple leading-tight mb-5">
+        <h1 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl text-blog-purple leading-tight mb-5">
           Live-Coding Learnings
         </h1>
         <p className="text-blog-muted text-lg max-w-xl leading-relaxed">

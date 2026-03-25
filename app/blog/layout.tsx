@@ -1,12 +1,12 @@
-import { DM_Serif_Display, Inter } from 'next/font/google';
+import { Space_Grotesk, Inter } from 'next/font/google';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Image from 'next/image';
 
-const dmSerif = DM_Serif_Display({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-dm-serif',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-heading',
   display: 'swap',
 });
 
@@ -25,7 +25,7 @@ export const metadata = {
 export default function BlogLayout({ children }: { children: ReactNode }) {
   return (
     <div
-      className={`${dmSerif.variable} ${inter.variable} min-h-screen bg-blog-bg font-[family-name:var(--font-inter)]`}
+      className={`${spaceGrotesk.variable} ${inter.variable} min-h-screen bg-blog-bg font-[family-name:var(--font-inter)]`}
     >
       {/* Sticky top nav */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-blog-border">
@@ -42,7 +42,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
               className="rounded-full shadow-sm ring-1 ring-blog-border"
               priority
             />
-            <span className="font-[family-name:var(--font-dm-serif)] text-lg text-blog-purple group-hover:text-blog-green transition-colors">
+            <span className="font-[family-name:var(--font-heading)] text-lg font-semibold text-blog-purple group-hover:text-blog-green transition-colors">
               Live-Coding Learnings
             </span>
           </Link>

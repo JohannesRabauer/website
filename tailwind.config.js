@@ -60,7 +60,7 @@ module.exports = {
         'fade-in': 'fade-in 1s cubic-bezier(0.4,0,0.2,1) both',
       },
         fontFamily: {
-          serif: ['var(--font-dm-serif)', 'Georgia', 'serif'],
+          heading: ['var(--font-heading)', 'system-ui', 'sans-serif'],
         },
         typography: () => ({
           blog: {
@@ -81,9 +81,9 @@ module.exports = {
               '--tw-prose-pre-bg': '#F0EDF8',
               '--tw-prose-th-borders': '#E5E1F0',
               '--tw-prose-td-borders': '#F0EDF8',
-              h1: { fontFamily: 'var(--font-dm-serif), Georgia, serif' },
-              h2: { fontFamily: 'var(--font-dm-serif), Georgia, serif' },
-              h3: { fontFamily: 'var(--font-dm-serif), Georgia, serif' },
+              h1: { fontFamily: 'var(--font-heading), system-ui, sans-serif' },
+              h2: { fontFamily: 'var(--font-heading), system-ui, sans-serif' },
+              h3: { fontFamily: 'var(--font-heading), system-ui, sans-serif' },
               'h2 a, h3 a, h4 a': { textDecoration: 'none' },
               a: { '&:hover': { color: '#3D2B6B' } },
               'pre code': { backgroundColor: 'transparent' },
