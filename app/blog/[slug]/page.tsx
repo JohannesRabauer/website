@@ -6,6 +6,7 @@ import GiscusComments from '@/app/components/GiscusComments';
 import TableOfContents from '@/app/components/TableOfContents';
 import TimestampList from '@/app/components/TimestampList';
 import CoSpeakerCard from '@/app/components/CoSpeakerCard';
+import MainRepositoryLink from '@/app/components/MainRepositoryLink';
 import Link from 'next/link';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -60,7 +61,7 @@ export default async function BlogPostPage({
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
-  const { title, date, youtubeId, tags, summary } = post.frontmatter;
+  const { title, date, youtubeId, tags, summary, mainRepository } = post.frontmatter;
   const headings = extractHeadings(post.content);
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -123,6 +124,8 @@ export default async function BlogPostPage({
           {youtubeId && (
             <YoutubeEmbed videoId={youtubeId} title={title} />
           )}
+
+          <MainRepositoryLink href={mainRepository} />
 
           {/* Session timeline — sourced from frontmatter */}
           {youtubeId && post.frontmatter.timestamps?.length ? (
