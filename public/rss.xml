@@ -9,8 +9,8 @@
     <copyright>© 2026 Johannes Rabauer</copyright>
   <item>
     <title>AI Assisted Java Modernization: Building OpenRewrite Recipes with Tim te Beek</title>
-    <link>https://rabauer.dev/blog/building-a-live-coding-stream-setup/</link>
-    <guid isPermaLink="true">https://rabauer.dev/blog/building-a-live-coding-stream-setup/</guid>
+    <link>https://rabauer.dev/blog/ai-assisted-java-modernization-openrewrite-recipes-with-tim-te-beek/</link>
+    <guid isPermaLink="true">https://rabauer.dev/blog/ai-assisted-java-modernization-openrewrite-recipes-with-tim-te-beek/</guid>
     <description>What I took away from this session with Tim te Beek: OpenRewrite becomes especially powerful when AI is used to help build deterministic, testable recipes instead of making uncontrolled code changes.</description>
     <pubDate>Thu, 19 Mar 2026 00:00:00 GMT</pubDate>
     <category>openrewrite</category>
