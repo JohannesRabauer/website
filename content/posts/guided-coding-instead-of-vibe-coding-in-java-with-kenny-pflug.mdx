@@ -1,0 +1,128 @@
+---
+title: "Guided Coding instead of Vibe Coding in Java with Kenny Pflug"
+date: "2026-02-26"
+summary: "This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value."
+tags: ["guided-coding", "java", "github-copilot", "vscode", "ai-agents", "live-coding"]
+youtubeId: "vopBYXp9YV0"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "04:22"
+    label: "Vibe Coding"
+  - time: "06:50"
+    label: "Latest Project with Guided Coding"
+  - time: "11:40"
+    label: "Guided Coding Core"
+  - time: "35:34"
+    label: "Explaining Plans / AGENTS.md"
+  - time: "44:40"
+    label: "Exploring Previous Examples"
+  - time: "01:09:33"
+    label: "AGENTS.md (Research)"
+  - time: "01:12:33"
+    label: "Feedback Loops (Automated Tests, Linters, Benchmarks)"
+  - time: "01:17:53"
+    label: "Prompt injection"
+  - time: "01:25:30"
+    label: "Guided Coding Summary"
+  - time: "01:35:03"
+    label: "Vise Coding"
+  - time: "01:37:25"
+    label: "Practical Example / Live Coding"
+  - time: "02:18:43"
+    label: "Conclusion"
+---
+
+In this live session, Kenny Pflug joined me to walk through a more deliberate way of working with AI in Java: **Guided Coding**.
+
+What made the session useful was its focus. This was not about pushing an AI tool to generate as much code as possible. It was about building a workflow where the human stays in control, the architecture stays visible, and the model is used as an implementation engine inside clear boundaries.
+
+<CoSpeakerCard
+  name="Kenny Pflug"
+  role="Guided Coding framework author"
+  bio="Kenny joined the session to explain the principles behind Guided Coding and show how a structured, constraint-driven workflow can keep AI-assisted Java development rigorous and maintainable."
+  imageSrc="https://avatars.githubusercontent.com/feO2x"
+  linkedin="https://www.linkedin.com/in/kenny-pflug-7a1012123/"
+  x="https://x.com/feO2x"
+  github="https://github.com/feO2x"
+/>
+
+## Why This Session Mattered
+
+The core argument was simple: if you want good results from AI in professional software development, you need more than a prompt and good luck.
+
+The session kept returning to a few practical ideas:
+
+- separate planning from implementation
+- define constraints before asking the AI to write code
+- review output against architecture, not just syntax
+- use feedback loops like tests, linters, and benchmarks
+- refactor systematically instead of patching problems reactively
+
+That combination is what gives the approach its shape. The AI is not treated like an autonomous teammate. It is treated like a fast system that needs direction, boundaries, and verification.
+
+## What Guided Coding Means in Practice
+
+The most useful part for me was how concrete the framework became once we talked through the workflow step by step.
+
+### 1. Planning is its own phase
+
+One of the strongest points in the session was the insistence on separating design work from code generation.
+
+Instead of immediately asking the model to implement something, Guided Coding starts by making the plan explicit. That includes the intended structure, the constraints, and the quality bar. In practice, that gives you a much better basis for judging the output later.
+
+### 2. Constraints are part of the prompt, not an afterthought
+
+A recurring theme was that AI performs much better when the operating boundaries are clear.
+
+That means defining things like architectural limits, coding style expectations, interfaces, review criteria, and what the model is allowed to change. Without that, it is easy to drift into locally plausible code that does not fit the system.
+
+### 3. Review has to be architectural
+
+Another important distinction was the difference between code that looks fine and code that actually belongs in the system.
+
+The session emphasized reviewing AI output with architectural intent. That means checking whether the implementation matches the plan, whether responsibilities stay in the right place, and whether the system remains understandable after the change.
+
+### 4. Feedback loops are non-negotiable
+
+The discussion around automated tests, linters, and benchmarks was especially relevant. If you want to use AI heavily without losing control, you need tight loops that tell you when the output is wrong, fragile, or misaligned.
+
+That makes the workflow less about trusting the model and more about building conditions where mistakes are surfaced quickly.
+
+## AGENTS.md and Explicit Guidance
+
+A substantial part of the talk focused on making expectations visible through planning artifacts like `AGENTS.md`.
+
+That matters because good AI collaboration depends on externalized reasoning. If the rules, goals, and constraints only exist in your head, the model cannot reliably follow them and other developers cannot review the process clearly either.
+
+This was one of the best takeaways from the session: **write down the operating model first, then let the AI work inside it.**
+
+## The Live Coding Segment
+
+The live coding section helped ground the earlier theory. After spending the first part of the session on principles and process, the stream moved into a practical Java example in Visual Studio Code with GitHub Copilot.
+
+That structure worked well. The implementation was easier to follow because the reasoning had already been made explicit. Instead of watching random trial and error, you could see how planning, constraints, and review shaped the coding decisions.
+
+## Vibe Coding, Vise Coding, and Guided Coding
+
+The session also touched on related terminology like vibe coding and vise coding.
+
+The useful distinction here was not branding. It was control.
+
+Guided Coding, as Kenny presented it, is built around disciplined execution: define the direction, constrain the agent, review the result, and keep code quality intact over time. That makes it a better fit for real software projects than a workflow centered on speed alone.
+
+## Useful Links
+
+- [Presentation PDF](https://github.com/JohannesRabauer/vaadin-banking-app/blob/main/2026-02-26-guided-coding-instead-of-vibe-coding-in-java.pdf)
+- [Light.PortableResults](https://github.com/feO2x/Light.PortableResults)
+- [Context Rot paper](https://arxiv.org/pdf/2602.11988)
+- [Chroma research: Context Rot](https://research.trychroma.com/context-rot)
+- [Vaadin banking app](https://github.com/JohannesRabauer/vaadin-banking-app)
+- [David Farago post on AI coding assistants](https://www.linkedin.com/posts/david-farago-99b6532_whats-your-experience-with-ai-coding-assistants-activity-7307685533504163842-srKF)
+
+## Final Thought
+
+What stayed with me most is that disciplined AI usage is not mainly about finding the perfect prompt. It is about designing a process.
+
+This session showed a concrete version of that process for Java development: plan first, constrain the model, verify aggressively, and keep architecture in view at every step. That is a much stronger foundation than hoping the model will simply do the right thing on its own.
