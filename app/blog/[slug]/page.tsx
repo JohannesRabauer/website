@@ -72,6 +72,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   const { title, date, youtubeId, tags, summary, mainRepository } = post.frontmatter;
+  const { coSpeakerName } = post;
   const headings = extractHeadings(post.content);
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -108,10 +109,17 @@ export default async function BlogPostPage({
             </div>
           )}
 
-          {/* Title */}
-          <h1 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl lg:text-6xl text-blog-text leading-[1.1] mb-5">
-            {title}
-          </h1>
+          {/* Title + co-speaker badge */}
+          <div className="mb-5">
+            <h1 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl lg:text-6xl text-blog-text leading-[1.1]">
+              {title}
+            </h1>
+            {coSpeakerName && (
+              <span className="inline-block mt-3 text-sm px-3 py-1 rounded-full border border-blog-green/40 bg-blog-green-light text-blog-green font-medium">
+                with {coSpeakerName}
+              </span>
+            )}
+          </div>
 
           {/* Summary */}
           <p className="text-blog-muted text-lg leading-relaxed mb-6 max-w-2xl">

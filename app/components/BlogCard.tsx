@@ -4,7 +4,7 @@ import { FiClock, FiCalendar, FiYoutube } from 'react-icons/fi';
 import type { PostMeta } from '@/lib/posts';
 
 export default function BlogCard({ post }: { post: PostMeta }) {
-  const { slug, frontmatter, readingTime } = post;
+  const { slug, frontmatter, readingTime, coSpeakerName } = post;
   const { title, date, summary, tags, youtubeId } = frontmatter;
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -49,12 +49,17 @@ export default function BlogCard({ post }: { post: PostMeta }) {
             )}
           </div>
 
-          {/* Title */}
-          <h2
-            className="font-heading text-xl text-blog-text group-hover:text-blog-purple transition-colors duration-200 mb-2 leading-snug"
-          >
-            {title}
-          </h2>
+          {/* Title + co-speaker badge */}
+          <div className="mb-2">
+            <h2 className="font-heading text-xl text-blog-text group-hover:text-blog-purple transition-colors duration-200 leading-snug">
+              {title}
+            </h2>
+            {coSpeakerName && (
+              <span className="inline-block mt-2 text-xs px-2.5 py-0.5 rounded-full border border-blog-green/40 bg-blog-green-light text-blog-green font-medium">
+                with {coSpeakerName}
+              </span>
+            )}
+          </div>
 
           {/* Summary */}
           <p className="text-sm text-blog-muted flex-1 line-clamp-3 mb-5 leading-relaxed">

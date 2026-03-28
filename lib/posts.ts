@@ -20,6 +20,7 @@ export interface Post {
   slug: string;
   frontmatter: PostFrontmatter;
   readingTime: string;
+  coSpeakerName?: string;
   content: string;
 }
 
@@ -39,10 +40,12 @@ function parsePost(filename: string): Post {
   const slug = filename.replace(/\.mdx$/, '');
   const raw = fs.readFileSync(path.join(POSTS_DIR, filename), 'utf-8');
   const { data, content } = matter(raw);
+  const coSpeakerMatch = raw.match(/<CoSpeakerCard[\s\S]*?name="([^"]+)"/);
   return {
     slug,
     frontmatter: data as PostFrontmatter,
     readingTime: readingTime(content).text,
+    coSpeakerName: coSpeakerMatch ? coSpeakerMatch[1] : undefined,
     content,
   };
 }
