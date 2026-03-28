@@ -8,6 +8,7 @@ import TableOfContents from '@/app/components/TableOfContents';
 import TimestampList from '@/app/components/TimestampList';
 import CoSpeakerCard from '@/app/components/CoSpeakerCard';
 import MainRepositoryLink from '@/app/components/MainRepositoryLink';
+import ShareButton from '@/app/components/ShareButton';
 import Link from 'next/link';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -136,6 +137,7 @@ export default async function BlogPostPage({
               <FiClock className="w-3.5 h-3.5 flex-shrink-0" />
               {post.readingTime}
             </span>
+            <ShareButton slug={slug} variant="meta" />
           </div>
 
           {/* YouTube embed — featured video before prose */}
@@ -161,6 +163,9 @@ export default async function BlogPostPage({
               components={components}
             />
           </div>
+
+          {/* Share */}
+          <ShareButton slug={slug} variant="footer" />
 
           {/* Comments */}
           <GiscusComments />
