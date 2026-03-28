@@ -1,3 +1,4 @@
+import React from 'react';
 import { getAllPosts, getPostBySlug, extractHeadings } from '@/lib/posts';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
@@ -49,8 +50,17 @@ const mdxOptions = {
   },
 };
 
+/** Wraps MDX tables in a scrollable container so they never overflow the prose column */
+function MdxTable(props: React.ComponentPropsWithoutRef<'table'>) {
+  return (
+    <div className="table-wrapper">
+      <table {...props} />
+    </div>
+  );
+}
+
 /** MDX component overrides — reusable blog content blocks for posts */
-const components = { YoutubeEmbed, TimestampList, CoSpeakerCard };
+const components = { YoutubeEmbed, TimestampList, CoSpeakerCard, table: MdxTable };
 
 export default async function BlogPostPage({
   params,
