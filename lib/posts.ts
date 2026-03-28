@@ -81,6 +81,17 @@ export function getAllTags(): string[] {
   return Array.from(tagSet).sort();
 }
 
+export function getTopTags(n: number): string[] {
+  const counts = new Map<string, number>();
+  getAllPosts().forEach((p) =>
+    p.frontmatter.tags?.forEach((t) => counts.set(t, (counts.get(t) ?? 0) + 1))
+  );
+  return Array.from(counts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, n)
+    .map(([tag]) => tag);
+}
+
 export interface Heading {
   id: string;
   text: string;

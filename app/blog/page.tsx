@@ -1,4 +1,4 @@
-import { getAllPosts, getAllTags } from '@/lib/posts';
+import { getAllPosts, getTopTags } from '@/lib/posts';
 import BlogPageClient from '@/app/components/BlogPageClient';
 import Link from 'next/link';
 
@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function BlogPage() {
   const posts = getAllPosts();
-  const tags = getAllTags();
+  const tags = getTopTags(5);
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-14">

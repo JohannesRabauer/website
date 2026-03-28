@@ -47,9 +47,9 @@ export default function BlogPageClient({ posts, tags }: Props) {
   return (
     <div>
       {/* Search + filter bar */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-8">
+      <div className="flex flex-col gap-3 mb-8">
         {/* Search */}
-        <div className="relative flex-1 max-w-sm">
+        <div className="relative w-full max-w-sm">
           <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blog-muted pointer-events-none" />
           <input
             type="text"
