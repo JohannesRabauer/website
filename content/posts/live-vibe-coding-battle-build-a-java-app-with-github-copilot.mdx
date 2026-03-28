@@ -57,11 +57,11 @@ The repo already came with a strict evaluation pipeline, so this was never about
 
 Quality gates used in the stream:
 
-- [Apache Maven PMD Plugin](https://maven.apache.org/plugins/maven-pmd-plugin/)
-- [SpotBugs Maven Plugin](https://spotbugs.github.io/spotbugs-maven-plugin/)
-- [JaCoCo Maven Plugin](https://www.jacoco.org/jacoco/trunk/doc/maven.html) for coverage checks
-- [Trivy](https://github.com/aquasecurity/trivy) for vulnerability scanning
-- [OWASP ZAP Baseline Scan](https://www.zaproxy.org/docs/docker/baseline-scan/) for DAST
+- [Apache Maven PMD Plugin](https://maven.apache.org/plugins/maven-pmd-plugin/) to catch code style problems, duplication, and common maintainability issues.
+- [SpotBugs Maven Plugin](https://spotbugs.github.io/spotbugs-maven-plugin/) to detect likely defects such as null handling issues, bad API usage, and risky implementation patterns.
+- [JaCoCo Maven Plugin](https://www.jacoco.org/jacoco/trunk/doc/maven.html) to measure test coverage and show how much of the generated code was actually exercised.
+- [Trivy](https://github.com/aquasecurity/trivy) to scan the project for known vulnerabilities in dependencies and build artifacts.
+- [OWASP ZAP Baseline Scan](https://www.zaproxy.org/docs/docker/baseline-scan/) to run a lightweight dynamic security check against the running application.
 
 That setup made the session useful because Copilot output was judged by objective checks, not by first impressions.
 
