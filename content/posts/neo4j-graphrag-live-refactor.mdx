@@ -1,0 +1,98 @@
+---
+title: "Neo4j + GraphRAG in Action: Live Refactor"
+date: "2026-03-29"
+summary: "A two-hour live refactor that moved a file search app from PostgreSQL to Neo4j using GraphRAG and LangChain4j — the session didn't land, but four lessons made it worth the attempt."
+tags: ["neo4j", "graphrag", "java", "quarkus", "langchain4j", "live-coding", "knowledge-graphs", "rag"]
+youtubeId: "KUcZL2yHjGU"
+mainRepository: "https://github.com/JohannesRabauer/quanta"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:11"
+    label: "ai4jvm.com"
+  - time: "02:02"
+    label: "Explaining the plan"
+  - time: "06:05"
+    label: "Existing project with Neo4j changes"
+  - time: "10:10"
+    label: "Fixing dependencies"
+  - time: "15:13"
+    label: "Modeling entities"
+  - time: "34:30"
+    label: "Fixing application.properties"
+  - time: "38:45"
+    label: "Storing/Loading entities"
+  - time: "42:58"
+    label: "Ingest the data"
+  - time: "01:02:30"
+    label: "Testing the app (Spoiler: it fails)"
+  - time: "01:10:50"
+    label: "Fixing the dependency"
+  - time: "01:13:00"
+    label: "Integrating the KnowledgeGraphWriter"
+  - time: "01:25:00"
+    label: "Remodeling entities"
+  - time: "01:34:30"
+    label: "Storing/Loading entities again"
+  - time: "01:42:55"
+    label: "Embedding again"
+  - time: "02:09:30"
+    label: "Fixing startup problems (failing)"
+  - time: "02:20:50"
+    label: "Conclusion"
+---
+
+Jennifer Reif from Neo4j joined me to live-refactor [Quanta](https://github.com/JohannesRabauer/quanta), a file search app, from PostgreSQL to Neo4j. The idea was to replace flat vector similarity search with GraphRAG: model files, embeddings, and their relationships as a native graph for richer AI retrieval. Stack: Quarkus, LangChain4j's `KnowledgeGraphWriter`, Neo4j.
+
+It did not work. Two hours in, no functional result. But the failure was more instructive than a clean demo would have been.
+
+<CoSpeakerCard
+  name="Jennifer Reif"
+  role="Developer Advocate"
+  company="Neo4j"
+  bio="Jennifer joined the session to help migrate the Quanta project from PostgreSQL to Neo4j and integrate GraphRAG via LangChain4j, bringing deep Neo4j expertise to the refactor."
+  imageSrc="https://avatars.githubusercontent.com/jmhreif"
+  github="https://github.com/jmhreif"
+  x="https://x.com/jmhreif"
+/>
+
+## What Is GraphRAG?
+
+Standard RAG retrieves the most similar text chunks and passes them to the LLM. GraphRAG adds structure: it retrieves nodes *and their relationships* from a knowledge graph, so the LLM understands not just *that* two things are similar but *why* they are connected. For a file search app that means context shaped like your actual data, not a flat ranked list.
+
+LangChain4j's `KnowledgeGraphWriter` writes entities and relationships into Neo4j during ingestion and hooks into the retrieval pipeline at query time.
+
+## How the Session Went
+
+Dependency alignment between Neo4j OGM, the Quarkus Neo4j extension, and LangChain4j consumed the first stretch before any meaningful code was written. After modeling entities and wiring the `KnowledgeGraphWriter`, the ingestion ran. Testing at [1:02:30](https://www.youtube.com/watch?v=KUcZL2yHjGU&t=3750) then surfaced failures in how embeddings were stored and retrieved. The rest of the session was a loop of remodeling, re-embedding, and rerunning. At [2:09:30](https://www.youtube.com/watch?v=KUcZL2yHjGU&t=7770) we were still fighting startup failures. Honest conclusion: didn't get there.
+
+## Four Lessons
+
+### 1. GraphRAG Is Not Plug-and-Play Yet
+
+The concept is clear; the tooling is narrow. LangChain4j's Neo4j surface area is still limited and documentation leaves real gaps. What looks obvious in a diagram (write entities, link relationships, query the graph) becomes a chain of version conflicts and undocumented edge cases in practice. Go in with more preparation time than you expect.
+
+### 2. OGM Was the Wrong Abstraction
+
+[Neo4j OGM](https://neo4j.com/docs/ogm-manual/current/) maps Java objects to graph nodes. It is useful in many contexts, but it was the wrong fit here. LangChain4j's `KnowledgeGraphWriter` operates at the Cypher level with plain string values and does not compose with OGM. Skipping OGM and working closer to raw Cypher from the start would have removed a major source of friction. It would be genuinely useful if the KnowledgeGraph tooling eventually extended to support OGM-style abstractions and if the documentation became clearer about which integration styles are actually supported.
+
+### 3. Align on the Concept Before Writing Code
+
+Two minutes of introduction, then straight into code. That was too fast. The `KnowledgeGraphWriter` graph model was never fully shared between us before the session began. Different mental models of the same problem turn every technical decision into friction. A five-minute diagram first would have aligned us and likely surfaced the OGM issue much earlier.
+
+### 4. Projects Need Documentation, Not On-the-Fly Onboarding
+
+Quanta is small, but small does not mean self-explanatory. Explaining the project structure while simultaneously refactoring it means neither gets proper attention. Jennifer brought strong Neo4j expertise. What was missing was a clear, upfront picture of what Quanta does, how it is layered, and what I wanted to change. A short written overview would have paid back immediately.
+
+## Useful Links
+
+- [Neo4j + LangChain4j GraphRAG blog post](https://neo4j.com/blog/developer/langchain4j-graphrag-vector-stores-retrievers/)
+- [LangChain4j Neo4j embedding store docs (KnowledgeGraphWriter)](https://github.com/langchain4j/langchain4j/blob/main/docs/docs/integrations/embedding-stores/neo4j.md#knowledgegraphwriter)
+- [Neo4j OGM manual](https://neo4j.com/docs/ogm-manual/current/)
+- [Session code: Quanta, branch `Add-Tags-and-Relations-with-neo4j`](https://github.com/JohannesRabauer/quanta/tree/Add-Tags-and-Relations-with-neo4j)
+- Jennifers Podcast: [Break Time Tech Talks](https://podfollow.com/breaktime-tech-talks/view)
+
+## Final Thought
+
+GraphRAG is a good idea and Neo4j is a natural fit for it. The tooling just isn't frictionless yet, and that gap only shows up when you try it on a real project. This session was an honest look at where that gap currently is.
