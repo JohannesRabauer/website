@@ -43,7 +43,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
               priority
             />
             <span className="font-[family-name:var(--font-heading)] text-lg font-semibold text-blog-purple group-hover:text-blog-green transition-colors">
-              Live-Coding Learnings
+              Live-Coding Learnings: Modern Java with AI
             </span>
           </Link>
 

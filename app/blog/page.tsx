@@ -3,7 +3,7 @@ import BlogPageClient from '@/app/components/BlogPageClient';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Live-Coding Learnings | Johannes Rabauer',
+  title: 'Live-Coding Learnings: Modern Java with AI | Johannes Rabauer',
   description: 'Summarizing, Concluding and general reflections on my live-coding sessions.',
 };
 
@@ -16,7 +16,7 @@ export default function BlogPage() {
       {/* Page header */}
       <div className="mb-14">
         <h1 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl text-blog-purple leading-tight mb-5">
-          Live-Coding Learnings
+          Live-Coding Learnings: Modern Java with AI
         </h1>
         <p className="text-blog-muted text-lg max-w-xl leading-relaxed">
           Summarizing, Concluding and general reflections on my live-coding sessions. I share insights, challenges, and lessons learned from building real-world projects in Java and beyond.
