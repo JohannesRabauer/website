@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "tsx scripts/generate-rss.ts",
     "prebuild": "tsx scripts/generate-rss.ts",
     "build": "next build && touch out/.nojekyll",
     "start": "next start",
