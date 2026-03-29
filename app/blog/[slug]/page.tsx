@@ -7,6 +7,8 @@ import GiscusComments from '@/app/components/GiscusComments';
 import TableOfContents from '@/app/components/TableOfContents';
 import TimestampList from '@/app/components/TimestampList';
 import CoSpeakerCard from '@/app/components/CoSpeakerCard';
+import MermaidDiagram from '@/app/components/MermaidDiagram';
+import GraphRagDiagram from '@/app/components/GraphRagDiagram';
 import MainRepositoryLink from '@/app/components/MainRepositoryLink';
 import ShareButton from '@/app/components/ShareButton';
 import Link from 'next/link';
@@ -61,7 +63,7 @@ function MdxTable(props: React.ComponentPropsWithoutRef<'table'>) {
 }
 
 /** MDX component overrides — reusable blog content blocks for posts */
-const components = { YoutubeEmbed, TimestampList, CoSpeakerCard, table: MdxTable };
+const components = { YoutubeEmbed, TimestampList, CoSpeakerCard, MermaidDiagram, GraphRagDiagram, table: MdxTable };
 
 export default async function BlogPostPage({
   params,

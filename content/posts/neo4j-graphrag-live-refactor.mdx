@@ -63,6 +63,8 @@ Standard RAG retrieves the most similar text chunks and passes them to the LLM. 
 
 LangChain4j's `KnowledgeGraphWriter` writes entities and relationships into Neo4j during ingestion and hooks into the retrieval pipeline at query time.
 
+<GraphRagDiagram />
+
 ## How the Session Went
 
 Dependency alignment between Neo4j OGM, the Quarkus Neo4j extension, and LangChain4j consumed the first stretch before any meaningful code was written. After modeling entities and wiring the `KnowledgeGraphWriter`, the ingestion ran. Testing at [1:02:30](https://www.youtube.com/watch?v=KUcZL2yHjGU&t=3750) then surfaced failures in how embeddings were stored and retrieved. The rest of the session was a loop of remodeling, re-embedding, and rerunning. At [2:09:30](https://www.youtube.com/watch?v=KUcZL2yHjGU&t=7770) we were still fighting startup failures. Honest conclusion: didn't get there.
