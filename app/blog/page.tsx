@@ -16,7 +16,8 @@ export default function BlogPage() {
       {/* Page header */}
       <div className="mb-14">
         <h1 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl text-blog-purple leading-tight mb-5">
-          Live-Coding Learnings: Modern Java with AI
+          Live-Coding Learnings:
+          <span className="block text-4xl md:text-5xl">Modern Java with AI</span>
         </h1>
         <p className="text-blog-muted text-lg max-w-xl leading-relaxed">
           Summarizing, Concluding and general reflections on my live-coding sessions. I share insights, challenges, and lessons learned from building real-world projects in Java and beyond.
