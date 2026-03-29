@@ -127,11 +127,11 @@ That is why the split approach was easier to steer and easier to trust.
 
 Without automated checks, this stream could have looked like both approaches were "kind of fine" for a while.
 
-The CI gates made the differences visible early:
+The CI gates made the differences visible:
 
 - code quality issues were surfaced quickly by [PMD](https://maven.apache.org/plugins/maven-pmd-plugin/) and [SpotBugs](https://spotbugs.github.io/)
 - security and analysis checks prevented silent regressions with [Trivy](https://github.com/aquasecurity/trivy) and [OWASP ZAP Baseline](https://www.zaproxy.org/docs/docker/baseline-scan/)
-- the team could compare prompting styles using measurable feedback
+- we could compare prompting styles using measurable feedback
 
 This is exactly where vibe coding gets real: if the code cannot pass your guardrails, it is not done.
 
