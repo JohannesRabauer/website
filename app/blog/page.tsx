@@ -66,7 +66,7 @@ export default function BlogPage() {
       {/* Content below banner */}
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Description */}
-        <p className="text-blog-muted text-lg max-w-xl leading-relaxed mb-4">
+        <p className="text-blog-muted text-lg leading-relaxed mb-4">
           Summarizing, Concluding and general reflections on my live-coding sessions. I share insights, challenges, and lessons learned from building real-world projects in Java and beyond.
         </p>
 
