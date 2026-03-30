@@ -18,18 +18,18 @@ const certifications: Certification[] = [
 
 const Certifications: React.FC = () => {
     return (
-        <div className="certifications items-center justify-center text-center">
-            <h2 className="text-cyber-green text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">Certifications</h2>
+        <section aria-labelledby="certifications-heading" className="certifications items-center justify-center text-center">
+            <h2 id="certifications-heading" className="text-cyber-green text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">Certifications</h2>
             <div className="certification-list flex space-x-4 py-6">
                 {certifications.map((cert, index) => (
                     <div key={index} className="certification-item">
-                        <a href={cert.link} target="_blank" rel="noopener noreferrer">
+                        <a href={cert.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${cert.title} certification`}>
                             <img src={cert.badgeUrl} alt={cert.title} className="certification-badge" />
                         </a>
                     </div>
                 ))}
             </div>
-        </div>
+        </section>
     );
 };
 

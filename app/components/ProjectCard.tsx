@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * Interactive project card
@@ -15,12 +15,14 @@ export default function ProjectCard({
   description: string;
   link: string;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.a
       href={link}
       target="_blank"
       rel="noreferrer"
-      whileHover={{ scale: 1.05 }}
+      whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
       className="p-6 rounded-2xl bg-white/5 backdrop-blur border border-cyber-purple/30 shadow-lg hover:shadow-cyber-purple/50 transition"
     >
       <h3 className="text-xl font-semibold mb-2 text-cyber-cyan">{title}</h3>

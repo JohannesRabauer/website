@@ -14,14 +14,14 @@ const publications: Publication[] = [
 
 const Publications: React.FC = () => {
     return (
-        <div className="publications items-center justify-center text-center">
-            <h2 className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">Publications</h2>
+        <section aria-labelledby="publications-heading" className="publications items-center justify-center text-center">
+            <h2 id="publications-heading" className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">Publications</h2>
             <div className="publications-list flex space-x-4 py-6">
                 {publications.map((pub) => (
                     <ProjectCard key={pub.link} title={pub.title} description={pub.publisher} link={pub.link} />
                 ))}
             </div>
-        </div>
+        </section>
     );
 };
 

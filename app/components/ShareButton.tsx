@@ -27,14 +27,15 @@ export default function ShareButton({ slug, variant = 'meta' }: ShareButtonProps
       <div className="pt-8 mb-8 border-t border-blog-border">
         <button
           onClick={handleCopy}
+          aria-label={copied ? 'Link copied' : 'Share post link'}
           className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border border-blog-border text-blog-muted hover:text-blog-purple hover:border-blog-purple transition-colors"
         >
           {copied ? (
-            <FiCheck className="w-4 h-4 text-blog-green flex-shrink-0" />
+            <FiCheck className="w-4 h-4 text-blog-green flex-shrink-0" aria-hidden="true" />
           ) : (
-            <FiLink className="w-4 h-4 flex-shrink-0" />
+            <FiLink className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
           )}
-          {copied ? 'Link copied!' : 'Share'}
+          <span aria-live="assertive">{copied ? 'Link copied!' : 'Share'}</span>
         </button>
       </div>
     );
@@ -44,14 +45,14 @@ export default function ShareButton({ slug, variant = 'meta' }: ShareButtonProps
     <button
       onClick={handleCopy}
       className="inline-flex items-center gap-1.5 text-sm text-blog-muted hover:text-blog-purple transition-colors"
-      title="Copy link to this post"
+      aria-label={copied ? 'Link copied' : 'Share post link'}
     >
       {copied ? (
-        <FiCheck className="w-3.5 h-3.5 text-blog-green flex-shrink-0" />
+        <FiCheck className="w-3.5 h-3.5 text-blog-green flex-shrink-0" aria-hidden="true" />
       ) : (
-        <FiLink className="w-3.5 h-3.5 flex-shrink-0" />
+        <FiLink className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
       )}
-      {copied ? 'Link copied!' : 'Share'}
+      <span aria-live="assertive">{copied ? 'Link copied!' : 'Share'}</span>
     </button>
   );
 }

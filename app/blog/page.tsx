@@ -15,12 +15,14 @@ export default function BlogPage() {
   };
 
   return (
-    <main>
+    <main id="main-content">
       {/* Banner hero with background image */}
       <div className="relative w-full h-40 sm:h-44 md:h-56 lg:h-[270px] overflow-hidden">
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
+          role="img"
+          aria-label="Blog header illustration"
           style={{ backgroundImage: "url('/blog/blog_banner.png')" }}
         />
         {/* Fading edges into page background */}
@@ -88,7 +90,7 @@ export default function BlogPage() {
               href="/"
               className="mt-6 inline-block text-blog-purple underline hover:no-underline text-sm"
             >
-              Back to portfolio
+              Back to Home
             </Link>
           </div>
         ) : (

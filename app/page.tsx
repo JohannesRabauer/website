@@ -9,7 +9,7 @@ import AiExperiment from "./components/AiExperiment";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-start bg-cyber-bg text-white overflow-hidden">
+    <main id="main-content" className="relative min-h-screen flex flex-col items-center justify-start bg-cyber-bg text-white overflow-hidden">
       <ParticlesBackground />
       <Hero />
       <Youtube />

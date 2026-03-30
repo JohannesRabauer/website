@@ -16,6 +16,7 @@ export default function AiExperiment() {
   return (
     <div
       className="ai-experiment"
+      aria-hidden="true"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

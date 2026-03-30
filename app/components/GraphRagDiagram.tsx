@@ -16,5 +16,10 @@ graph LR
 `;
 
 export default function GraphRagDiagram() {
-  return <MermaidDiagram chart={chart} />;
+  return (
+    <MermaidDiagram
+      chart={chart}
+      description="Data flow diagram showing how FileMetadata and Tag objects are vectorized into a Neo4j vector store, and how user input is vectorized into a query that performs similarity search to return FileMetadata with Tags"
+    />
+  );
 }

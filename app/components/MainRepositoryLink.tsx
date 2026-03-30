@@ -17,7 +17,7 @@ export default function MainRepositoryLink({
         Project Source
       </p>
       <h2 className="font-[family-name:var(--font-heading)] text-xl text-blog-purple leading-tight">
-        
+        {title}
       </h2>
       <p className="mt-2 text-sm text-blog-muted">
         Explore prompts, instructions, and examples used in the live modernization workflow.

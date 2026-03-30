@@ -49,13 +49,14 @@ export default function BlogPageClient({ posts, tags }: Props) {
       {/* Search + filter bar */}
       <div className="flex flex-col gap-3 mb-8">
         {/* Search */}
-        <div className="relative w-full max-w-sm">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blog-muted pointer-events-none" />
+        <search aria-label="Search posts" className="relative w-full max-w-sm">
+          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blog-muted pointer-events-none" aria-hidden="true" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search posts…"
+            aria-label="Search posts"
             className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-blog-border bg-blog-surface text-blog-text text-sm placeholder:text-blog-muted focus:outline-none focus:ring-2 focus:ring-blog-purple/25 focus:border-blog-purple transition"
           />
           {query && (
@@ -64,15 +65,16 @@ export default function BlogPageClient({ posts, tags }: Props) {
               className="absolute right-3 top-1/2 -translate-y-1/2 text-blog-muted hover:text-blog-text"
               aria-label="Clear search"
             >
-              <FiX className="w-4 h-4" />
+              <FiX className="w-4 h-4" aria-hidden="true" />
             </button>
           )}
-        </div>
+        </search>
 
         {/* Tag pills */}
         <div className="flex flex-wrap gap-2 items-center">
           <button
             onClick={() => setSelectedTag(null)}
+            aria-pressed={!selectedTag}
             className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${
               !selectedTag
                 ? 'bg-blog-purple text-white shadow-sm'
@@ -85,6 +87,7 @@ export default function BlogPageClient({ posts, tags }: Props) {
             <button
               key={tag}
               onClick={() => toggleTag(tag)}
+              aria-pressed={selectedTag === tag}
               className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${
                 selectedTag === tag
                   ? 'bg-blog-green text-white shadow-sm'
@@ -98,13 +101,13 @@ export default function BlogPageClient({ posts, tags }: Props) {
       </div>
 
       {/* Results count */}
-      {(query || selectedTag) && (
-        <p className="text-sm text-blog-muted mb-6">
-          {filtered.length === 0
-            ? 'No posts found.'
-            : `${filtered.length} post${filtered.length !== 1 ? 's' : ''} found`}
-        </p>
-      )}
+      <p className="text-sm text-blog-muted mb-6" role="status" aria-live="polite">
+        {(query || selectedTag)
+          ? (filtered.length === 0
+              ? 'No posts found.'
+              : `${filtered.length} post${filtered.length !== 1 ? 's' : ''} found`)
+          : ''}
+      </p>
 
       {/* Post grid */}
       {filtered.length > 0 ? (

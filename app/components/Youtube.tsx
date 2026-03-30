@@ -3,8 +3,8 @@ import YouTubePlaylist from './YouTubePlaylist';
 
 const Youtube: React.FC = () => {
     return (
-        <div className="certifications items-center justify-center text-center ">
-            <h2 className="text-cyber-purple text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">YouTube</h2>
+        <section aria-labelledby="youtube-heading" className="certifications items-center justify-center text-center ">
+            <h2 id="youtube-heading" className="text-cyber-purple text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">YouTube</h2>
             <div className="flex flex-col md:flex-row gap-6 justify-between items-start mt-8 space-x-4 py-6">
                 <YouTubePlaylist
                     title="Local AI Chatbot Game in Java"
@@ -23,7 +23,7 @@ const Youtube: React.FC = () => {
                     url="https://www.youtube.com/embed/videoseries?list=PLiY7ZRy4r3yah08kElCyzHtiIKzlWmh6K&pp=gAQB"
                 />
             </div>
-        </div>
+        </section>
     );
 };
 

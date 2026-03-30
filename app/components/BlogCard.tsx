@@ -34,16 +34,16 @@ export default function BlogCard({ post }: { post: PostMeta }) {
           {/* Meta row */}
           <div className="flex flex-wrap items-center gap-4 text-xs text-blog-muted mb-3">
             <span className="flex items-center gap-1.5">
-              <FiCalendar className="w-3 h-3 flex-shrink-0" />
-              {formattedDate}
+              <FiCalendar className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
+              <span className="sr-only">Published: </span>{formattedDate}
             </span>
             <span className="flex items-center gap-1.5">
-              <FiClock className="w-3 h-3 flex-shrink-0" />
-              {readingTime}
+              <FiClock className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
+              <span className="sr-only">Reading time: </span>{readingTime}
             </span>
             {youtubeId && (
               <span className="flex items-center gap-1.5 text-red-500 font-medium">
-                <FiYoutube className="w-3.5 h-3.5 flex-shrink-0" />
+                <FiYoutube className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
                 Video
               </span>
             )}

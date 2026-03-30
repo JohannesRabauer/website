@@ -29,6 +29,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
       className={`${spaceGrotesk.variable} ${inter.variable} min-h-screen bg-blog-bg font-[family-name:var(--font-inter)]`}
     >
       {/* Sticky top nav */}
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-16 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blog-purple focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-blog-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 min-h-14 py-2 flex items-center justify-between gap-2">
           <Link
@@ -49,7 +50,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav className="flex items-center gap-3 sm:gap-5 text-sm font-medium shrink-0">
+          <nav className="flex items-center gap-3 sm:gap-5 text-sm font-medium shrink-0" aria-label="Blog navigation">
             <Link
               href="/"
               className="text-blog-muted hover:text-blog-purple transition-colors"
@@ -76,12 +77,17 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
             © {new Date().getFullYear()} Johannes Rabauer. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <a href="/rss.xml" className="hover:text-blog-green transition-colors">
-              RSS Feed
-            </a>
             <Link href="/" className="hover:text-blog-purple transition-colors">
-              Portfolio
+              Home
             </Link>
+            <a
+              href="/rss.xml"
+              className="text-blog-muted hover:text-blog-green transition-colors"
+              title="RSS Feed"
+              aria-label="RSS Feed"
+            >
+              <FaRss className="text-base" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </footer>
