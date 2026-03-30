@@ -2,6 +2,7 @@ import { Space_Grotesk, Inter } from 'next/font/google';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Image from 'next/image';
+import { FaRss } from 'react-icons/fa';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -29,37 +30,39 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
     >
       {/* Sticky top nav */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-blog-border">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 min-h-14 py-2 flex items-center justify-between gap-2">
           <Link
             href="/blog"
-            className="flex items-center gap-2.5 group"
+            className="flex items-center gap-2 sm:gap-2.5 group min-w-0 flex-1"
           >
             <Image
               src="/Logo_round.png"
               alt="Johannes Rabauer Logo"
               width={28}
               height={28}
-              className="rounded-full shadow-sm ring-1 ring-blog-border"
+              className="rounded-full shadow-sm ring-1 ring-blog-border shrink-0"
               priority
             />
-            <span className="font-[family-name:var(--font-heading)] text-lg font-semibold text-blog-purple group-hover:text-blog-green transition-colors">
-              Live-Coding Learnings: Modern Java with AI
+            <span className="font-[family-name:var(--font-heading)] flex flex-col leading-tight min-w-0 text-blog-purple group-hover:text-blog-green transition-colors">
+              <span className="text-sm sm:text-base md:text-lg font-semibold">Live-Coding Learnings:</span>
+              <span className="text-xs sm:text-sm md:text-base font-medium opacity-80">Modern Java with AI</span>
             </span>
           </Link>
 
-          <nav className="flex items-center gap-5 text-sm font-medium">
+          <nav className="flex items-center gap-3 sm:gap-5 text-sm font-medium shrink-0">
             <Link
               href="/"
               className="text-blog-muted hover:text-blog-purple transition-colors"
             >
-              ← Portfolio
+              Home
             </Link>
             <a
               href="/rss.xml"
               className="text-blog-muted hover:text-blog-green transition-colors"
               title="RSS Feed"
+              aria-label="RSS Feed"
             >
-              RSS
+              <FaRss className="text-base" aria-hidden="true" />
             </a>
           </nav>
         </div>

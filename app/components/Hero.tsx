@@ -40,7 +40,7 @@ function Hero() {
           </div>
         </div>
         
-        <h1 className="text-cyber-green text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in flex items-center justify-center gap-3">
+        <h1 className="text-cyber-green text-3xl sm:text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in flex flex-wrap items-center justify-center gap-2">
           Johannes Rabauer
           <button
             onClick={playPronunciation}
@@ -52,7 +52,7 @@ function Hero() {
           </button>
         </h1>
         <audio ref={audioRef} src="/name-pronunciation.mp3" preload="none" />
-        <h2 className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
+        <h2 className="text-cyber-cyan text-base sm:text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
           Senior Software Engineer at <a href="https://xdev.software">XDEV Software GmbH</a>
         </h2>
         <p className="max-w-xl mx-auto text-lg md:text-xl text-gray-300 mb-10 animate-fade-in delay-200">
