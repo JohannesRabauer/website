@@ -8,12 +8,12 @@ interface Certification {
 
 const certifications: Certification[] = [
     // Add your certifications here
-    { title: 'Kubernetes and Cloud Native Associate', badgeUrl: 'KCNA_badge.png', link: 'https://www.credly.com/badges/a0b03186-758b-4718-9791-24d2583a19fb/public_url' },
-    { title: 'AWS Certified AI Practitioner', badgeUrl: 'AWS_AIP.png', link: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/b75cd180eb8b46f2ae965f14faab0a8d' },
-    { title: 'Certified Vaadin 24 Developer', badgeUrl: 'VaadinV24.png', link: 'https://vaadin.com/learn/certificate/5547711f-53c3-4f6d-b996-b9cec2487229' },
-    { title: 'IBM Certified Advocate - Cloud v2', badgeUrl: 'IBM_Cloud.png', link: 'https://www.credly.com/badges/a5bbae9c-8f0b-43b8-ab57-d84cf0125afb' },
-    { title: 'AWS Certified Cloud Practitioner', badgeUrl: 'AWS_CCP.png', link: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/PDBZJLW1TNQ41ZSH' },
-    { title: 'Oracle ACE Associate', badgeUrl: 'OracleAce.png', link: 'https://ace.oracle.com/ords/ace/profile/johannes' },
+    { title: 'Kubernetes and Cloud Native Associate', badgeUrl: '/KCNA_badge.png', link: 'https://www.credly.com/badges/a0b03186-758b-4718-9791-24d2583a19fb/public_url' },
+    { title: 'AWS Certified AI Practitioner', badgeUrl: '/AWS_AIP.png', link: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/b75cd180eb8b46f2ae965f14faab0a8d' },
+    { title: 'Certified Vaadin 24 Developer', badgeUrl: '/VaadinV24.png', link: 'https://vaadin.com/learn/certificate/5547711f-53c3-4f6d-b996-b9cec2487229' },
+    { title: 'IBM Certified Advocate - Cloud v2', badgeUrl: '/IBM_Cloud.png', link: 'https://www.credly.com/badges/a5bbae9c-8f0b-43b8-ab57-d84cf0125afb' },
+    { title: 'AWS Certified Cloud Practitioner', badgeUrl: '/AWS_CCP.png', link: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/PDBZJLW1TNQ41ZSH' },
+    { title: 'Oracle ACE Associate', badgeUrl: '/OracleAce.png', link: 'https://ace.oracle.com/ords/ace/profile/johannes' },
 ];
 
 const Certifications: React.FC = () => {
