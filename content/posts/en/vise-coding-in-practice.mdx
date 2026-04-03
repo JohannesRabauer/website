@@ -1,0 +1,128 @@
+---
+title: "Vise Coding in Practice: Structured AI Development Across 5 Autonomy Levels"
+date: "2026-04-03"
+summary: "This live session walked through five levels of AI coding autonomy in Java, but the real takeaway was simpler: sustainable AI development depends on small reviewable steps, explicit specs, and deterministic quality gates."
+tags: ["vise-coding", "ai-agents", "java", "github-copilot", "tdd", "spec-driven-development"]
+youtubeId: "7oVisn4cVxY"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Intro video"
+  - time: "00:10"
+    label: "Introduction"
+  - time: "01:20"
+    label: "AI coding autonomy levels"
+  - time: "13:14"
+    label: "What Vise Coding means"
+  - time: "21:24"
+    label: "Demo 1, BDD challenge"
+  - time: "44:40"
+    label: "Question, agent isolation"
+  - time: "51:08"
+    label: "Demo 1, continued"
+  - time: "01:10:40"
+    label: "Static analysis and quality checks"
+  - time: "01:26:09"
+    label: "Spec-Driven Development"
+  - time: "01:42:30"
+    label: "Demo 2, Resilience4J reduce flap"
+  - time: "01:54:08"
+    label: "Comparing agents"
+  - time: "02:13:43"
+    label: "Conclusion"
+  - time: "02:21:45"
+    label: "Finishing demo 2"
+---
+
+Dr. David Farago joined me for a session about Vise Coding and the five levels of AI coding agent autonomy, from simple completion up to fully autonomous development agents. The useful part was not deciding which agent is best. It was seeing where AI workflows stay reviewable, and where they start to drift.
+
+<CoSpeakerCard
+  name="Dr. David Faragó"
+  role="Deep Learning Engineer"
+  bio="David joined the session to explore Vise Coding and work through the five levels of AI coding agent autonomy in a practical Java workflow."
+  imageSrc="https://avatars.githubusercontent.com/DavidFarago"
+  github="https://github.com/DavidFarago"
+  linkedin="https://www.linkedin.com/in/david-farago-99b6532/"
+/>
+
+## Why This Session Mattered
+
+The session started with a useful frame: autonomy is not binary. There is a real spectrum between token completion, block completion, intent-based chat agents, local autonomous agents, and fully autonomous development agents.
+
+That matters because the review burden changes with each level. More autonomy can mean more speed, but it can also mean bigger batches of code, wider diffs, and less clarity about what actually changed.
+
+For me, that was the central lesson of the stream: **the bottleneck is not generation, it is reviewability**.
+
+## Where Vibe Coding Breaks Down
+
+This is also where vibe coding starts to struggle.
+
+If the model produces too much code at once, you stop reviewing properly. At that point, you are no longer steering the change. You are mostly trying to catch problems after the fact, and that does not scale well in a real project.
+
+The live demos made that risk visible. Once the step size gets too large, the workflow becomes harder to reason about, harder to verify, and harder to maintain.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/vibe_vise_coding.png"
+    alt="Comparison of vibe coding and vise coding"
+    width={420}
+  />
+</div>
+
+## What Vise Coding Adds
+
+Vise Coding is the counterproposal: plan the change, keep the step size small, and make every step easy to review.
+
+In the session, that meant working from explicit specifications, splitting the workload into smaller units, and relying heavily on automated tests. BDD-style workflows fit that model naturally because they keep expected behavior visible while the code changes underneath.
+
+That is close to what I described earlier in [Guided Coding instead of Vibe Coding in Java](/en/blog/guided-coding). Both approaches favor structure over improvisation. What stood out here was how strongly Vise Coding tied that structure to automated tests and to small, checkable increments.
+
+## Higher Autonomy Still Works, but It Gets Harder
+
+One of the more important takeaways was that Vise Coding does not stop working at higher autonomy levels. You can still apply it when agents do more of the work.
+
+The problem is that it becomes harder to preserve the same discipline. As autonomy goes up, the steps often get bigger. Bigger steps mean more code to inspect, more context to hold in your head, and more room for subtle regressions.
+
+The question around agent isolation pointed in the same direction. If agents get more freedom, the surrounding environment needs clearer boundaries too. That is where sandboxes and controlled execution environments start to matter more.
+
+## Specs Matter Even More in Larger Systems
+
+The Spec-Driven Development part of the stream was especially relevant for larger or older codebases.
+
+If the specification stays current and code is created from it, the system remains easier to understand over time. That is useful in any project, but it matters even more in legacy systems where code often outlives the original reasoning behind it.
+
+This also connects well to externalized guidance like [AGENTS.md](https://agents.md/). If the operating model is written down, both humans and agents have a clearer contract to work from.
+
+## The Specific Agent Matters Less Than the Workflow
+
+The comparison between agents was a useful reality check.
+
+Codex, GitHub Copilot, Claude Code, and similar tools still differ, but the gap feels less durable than it used to. Good ideas move quickly across products, especially around agent behavior and developer workflow features.
+
+That makes the process around the agent more important than the agent name itself. The durable advantage is not the logo. It is whether the workflow keeps changes understandable, testable, and easy to correct.
+
+## Deterministic Guardrails Become More Valuable
+
+That is why static analysis, quality checks, and automated tests keep becoming more important.
+
+They give you a deterministic quality bar even when the model is not deterministic. That point came through clearly here, and it lines up with the earlier [Live Vibe Coding Battle](/en/blog/vibe-coding-battle), where PMD, SpotBugs, JaCoCo, Trivy, and OWASP ZAP made the difference between code that looked fine and code that actually held up.
+
+This is the part of AI development that I expect to age well: not blind trust in larger models, but stronger guardrails around whatever model is currently in use.
+
+## Useful Links
+
+- [Vise Coding article by David Farago](https://www.linkedin.com/pulse/vise-coding-david-farago-1k5ce/)
+- [Demo 1 repository, Microsoft Copilot Hackathon BDD challenge](https://github.com/microsoft/CopilotHackathon/tree/main/challenges/bdd)
+- [GitHub Spec Kit](https://github.com/github/spec-kit)
+- [Kiro](https://kiro.dev/)
+- [Demo 2 repository, Resilience4J](https://github.com/resilience4j/resilience4j)
+- [Docker Sandboxes](https://www.docker.com/products/docker-sandboxes/)
+- [AI4JVM](https://ai4jvm.com/)
+- [Memory upgrade for AI agents, beads](https://github.com/gastownhall/beads)
+- [AGENTS.md template](https://github.com/JohannesRabauer/agent-template/blob/master/AGENTS.md)
+
+## Final Thought
+
+This session did not make the case for giving agents unlimited freedom. It made the case for building a workflow that stays understandable as autonomy increases.
+
+If you keep the specs explicit, the steps small, and the quality gates strict, AI can be a serious engineering tool in a Java workflow. If you skip those things, the review burden catches up very quickly.
