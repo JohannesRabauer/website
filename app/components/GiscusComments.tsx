@@ -1,6 +1,12 @@
 'use client';
 
-import Giscus from '@giscus/react';
+import dynamic from 'next/dynamic';
+import ExternalContentGate from './ExternalContentGate';
+import { giscusDiscussionUrl } from '@/lib/legal';
+
+const Giscus = dynamic(() => import('@giscus/react'), {
+  ssr: false,
+});
 
 /**
  * Giscus comment section.
@@ -13,20 +19,28 @@ export default function GiscusComments() {
       <h3 className="font-heading text-2xl text-blog-purple mb-6">
         Comments
       </h3>
-      <Giscus
-        repo="JohannesRabauer/website"
-        repoId="R_kgDOPudYiQ"
-        category="giscus"
-        categoryId="DIC_kwDOPudYic4C5MMP"
-        mapping="pathname"
-        strict="0"
-        reactionsEnabled="1"
-        emitMetadata="0"
-        inputPosition="top"
-        theme="light"
-        lang="en"
-        loading="lazy"
-      />
+      <ExternalContentGate
+        title="Kommentare über GitHub laden"
+        description="Mit einem Klick wird die Kommentarfunktion von Giscus geladen. Dabei wird eine Verbindung zu GitHub aufgebaut und es können personenbezogene Daten an GitHub übermittelt werden."
+        loadLabel="Kommentare laden"
+        externalHref={giscusDiscussionUrl}
+        externalLabel="Auf GitHub öffnen"
+      >
+        <Giscus
+          repo="JohannesRabauer/website"
+          repoId="R_kgDOPudYiQ"
+          category="giscus"
+          categoryId="DIC_kwDOPudYic4C5MMP"
+          mapping="pathname"
+          strict="0"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme="light"
+          lang="en"
+          loading="eager"
+        />
+      </ExternalContentGate>
     </section>
   );
 }

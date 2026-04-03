@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { FaRss } from 'react-icons/fa';
+import LegalLinks from '@/app/components/LegalLinks';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -76,7 +77,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
           <p>
             © {new Date().getFullYear()} Johannes Rabauer. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4">
             <Link href="/" className="hover:text-blog-purple transition-colors">
               Home
             </Link>
@@ -88,6 +89,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
             >
               <FaRss className="text-base" aria-hidden="true" />
             </a>
+            <LegalLinks variant="light" />
           </div>
         </div>
       </footer>
