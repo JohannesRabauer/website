@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { FiLink, FiCheck } from 'react-icons/fi';
+import { BLOG_SITE_URL, type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
 
 interface ShareButtonProps {
-  slug: string;
+  locale: BlogLocale;
+  path: string;
   variant?: 'meta' | 'footer';
 }
 
-export default function ShareButton({ slug, variant = 'meta' }: ShareButtonProps) {
+export default function ShareButton({ locale, path, variant = 'meta' }: ShareButtonProps) {
+  const copy = getBlogDictionary(locale);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export default function ShareButton({ slug, variant = 'meta' }: ShareButtonProps
   }, [copied]);
 
   function handleCopy() {
-    const url = `https://rabauer.dev/blog/${slug}`;
+    const url = new URL(path, BLOG_SITE_URL).toString();
     navigator.clipboard.writeText(url).then(() => setCopied(true));
   }
 
@@ -27,7 +30,7 @@ export default function ShareButton({ slug, variant = 'meta' }: ShareButtonProps
       <div className="pt-8 mb-8 border-t border-blog-border">
         <button
           onClick={handleCopy}
-          aria-label={copied ? 'Link copied' : 'Share post link'}
+          aria-label={copied ? copy.post.linkCopied : copy.post.sharePostLink}
           className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border border-blog-border text-blog-muted hover:text-blog-purple hover:border-blog-purple transition-colors"
         >
           {copied ? (
@@ -35,7 +38,7 @@ export default function ShareButton({ slug, variant = 'meta' }: ShareButtonProps
           ) : (
             <FiLink className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
           )}
-          <span aria-live="assertive">{copied ? 'Link copied!' : 'Share'}</span>
+          <span aria-live="assertive">{copied ? copy.post.linkCopied : copy.post.share}</span>
         </button>
       </div>
     );
@@ -45,14 +48,14 @@ export default function ShareButton({ slug, variant = 'meta' }: ShareButtonProps
     <button
       onClick={handleCopy}
       className="inline-flex items-center gap-1.5 text-sm text-blog-muted hover:text-blog-purple transition-colors"
-      aria-label={copied ? 'Link copied' : 'Share post link'}
+      aria-label={copied ? copy.post.linkCopied : copy.post.sharePostLink}
     >
       {copied ? (
         <FiCheck className="w-3.5 h-3.5 text-blog-green flex-shrink-0" aria-hidden="true" />
       ) : (
         <FiLink className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
       )}
-      <span aria-live="assertive">{copied ? 'Link copied!' : 'Share'}</span>
+      <span aria-live="assertive">{copied ? copy.post.linkCopied : copy.post.share}</span>
     </button>
   );
 }

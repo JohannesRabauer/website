@@ -6,7 +6,7 @@
     "dev": "next dev",
     "predev": "tsx scripts/generate-rss.ts",
     "prebuild": "tsx scripts/generate-rss.ts",
-    "build": "next build && touch out/.nojekyll",
+    "build": "next build && node scripts/ensure-nojekyll.mjs",
     "start": "next start",
     "lint": "next lint"
   },

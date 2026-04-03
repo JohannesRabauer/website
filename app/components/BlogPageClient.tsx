@@ -5,13 +5,16 @@ import Fuse from 'fuse.js';
 import { FiSearch, FiX } from 'react-icons/fi';
 import BlogCard from './BlogCard';
 import type { PostMeta } from '@/lib/posts';
+import { type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
 
 interface Props {
+  locale: BlogLocale;
   posts: PostMeta[];
   tags: string[];
 }
 
-export default function BlogPageClient({ posts, tags }: Props) {
+export default function BlogPageClient({ locale, posts, tags }: Props) {
+  const copy = getBlogDictionary(locale);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [query, setQuery] = useState('');
 
@@ -49,21 +52,21 @@ export default function BlogPageClient({ posts, tags }: Props) {
       {/* Search + filter bar */}
       <div className="flex flex-col gap-3 mb-8">
         {/* Search */}
-        <search aria-label="Search posts" className="relative w-full max-w-sm">
+        <search aria-label={copy.listing.searchPosts} className="relative w-full max-w-sm">
           <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blog-muted pointer-events-none" aria-hidden="true" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search posts…"
-            aria-label="Search posts"
+            placeholder={copy.listing.searchPlaceholder}
+            aria-label={copy.listing.searchPosts}
             className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-blog-border bg-blog-surface text-blog-text text-sm placeholder:text-blog-muted focus:outline-none focus:ring-2 focus:ring-blog-purple/25 focus:border-blog-purple transition"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-blog-muted hover:text-blog-text"
-              aria-label="Clear search"
+              aria-label={copy.listing.clearSearch}
             >
               <FiX className="w-4 h-4" aria-hidden="true" />
             </button>
@@ -81,7 +84,7 @@ export default function BlogPageClient({ posts, tags }: Props) {
                 : 'bg-blog-purple-light text-blog-purple hover:bg-blog-purple hover:text-white'
             }`}
           >
-            All
+            {copy.listing.allTags}
           </button>
           {tags.map((tag) => (
             <button
@@ -104,8 +107,8 @@ export default function BlogPageClient({ posts, tags }: Props) {
       <p className="text-sm text-blog-muted mb-6" role="status" aria-live="polite">
         {(query || selectedTag)
           ? (filtered.length === 0
-              ? 'No posts found.'
-              : `${filtered.length} post${filtered.length !== 1 ? 's' : ''} found`)
+              ? copy.listing.noPostsFound
+              : copy.listing.postsFound(filtered.length))
           : ''}
       </p>
 
@@ -119,12 +122,12 @@ export default function BlogPageClient({ posts, tags }: Props) {
       ) : (
         <div className="text-center py-20 text-blog-muted">
           <p className="text-4xl mb-4">🔍</p>
-          <p className="text-lg font-medium">No posts match your search.</p>
+          <p className="text-lg font-medium">{copy.listing.noPostsMatch}</p>
           <button
             onClick={() => { setQuery(''); setSelectedTag(null); }}
             className="mt-4 text-sm text-blog-purple underline hover:no-underline"
           >
-            Clear filters
+            {copy.listing.clearFilters}
           </button>
         </div>
       )}

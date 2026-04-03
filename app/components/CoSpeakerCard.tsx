@@ -1,5 +1,6 @@
 import { FiGlobe } from 'react-icons/fi';
 import { FaBluesky, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
 
 interface Props {
   name: string;
@@ -13,6 +14,7 @@ interface Props {
   x?: string;
   bluesky?: string;
   youtube?: string;
+  locale?: BlogLocale;
 }
 
 function SocialLink({
@@ -51,7 +53,10 @@ export default function CoSpeakerCard({
   x,
   bluesky,
   youtube,
+  locale = 'en',
 }: Props) {
+  const copy = getBlogDictionary(locale);
+
   if (!name || !role) return null;
 
   return (
@@ -76,19 +81,19 @@ export default function CoSpeakerCard({
 
         <div className="min-w-0 flex-1">
           <p className="mb-1 text-xs font-semibold uppercase tracking-[0.24em] text-blog-green">
-            Co-Speaker
+            {copy.post.coSpeaker}
           </p>
           <h2 className="!my-0 font-[family-name:var(--font-heading)] text-2xl text-blog-purple">
             {name}
           </h2>
           <p className="mt-1 text-sm text-blog-muted">
             {role}
-            {company ? ` at ${company}` : ''}
+            {company ? locale === 'de' ? ` bei ${company}` : ` at ${company}` : ''}
           </p>
           {bio && <p className="mt-3 text-sm leading-6 text-blog-text">{bio}</p>}
 
           <div className="mt-4 flex flex-wrap gap-2">
-            <SocialLink href={website} label="Website" icon={<FiGlobe className="h-4 w-4" />} />
+            <SocialLink href={website} label={copy.post.website} icon={<FiGlobe className="h-4 w-4" />} />
             <SocialLink href={github} label="GitHub" icon={<FaGithub className="h-4 w-4" />} />
             <SocialLink href={linkedin} label="LinkedIn" icon={<FaLinkedin className="h-4 w-4" />} />
             <SocialLink href={x} label="X" icon={<FaXTwitter className="h-4 w-4" />} />

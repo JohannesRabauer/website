@@ -1,0 +1,154 @@
+---
+title: "Live Vibe Coding Battle: Eine Java-App mit GitHub Copilot bauen"
+date: "2026-03-05"
+summary: "Zwei vordefinierte Prompts, eine gemeinsame Java-App und strikte CI-Gates: Die One-Shot-Variante startete, scheiterte aber beim Abrufen der Ergebnisse, während der Split-Prompt-Workflow die stabilere App und die besseren Qualitätsmetriken lieferte."
+tags: ["vibe-coding", "java", "github-copilot", "spring-boot", "spring-ai", "vaadin", "live-coding", "prompt-engineering"]
+youtubeId: "emA_olJE6AU"
+mainRepository: "https://github.com/code-with-bellsoft/ai-coding-battle"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Intro-Platzhalter"
+  - time: "00:35"
+    label: "Einführung"
+  - time: "03:41"
+    label: "Das Experiment erklären"
+  - time: "20:58"
+    label: "Catherine startet mit dem Single-Shot-Prompt"
+  - time: "30:18"
+    label: "Johannes startet mit dem iterativen Prompt (Datenbank + Domain-Layer)"
+  - time: "51:30"
+    label: "Kurze Zusammenfassung"
+  - time: "55:30"
+    label: "Prompt Nr. 2 für den iterativen Prompt (OpenAI-Integration)"
+  - time: "01:12:00"
+    label: "Prompt Nr. 3 für den iterativen Prompt (REST-API-Layer)"
+  - time: "01:20:10"
+    label: "Ergebnisse prüfen: Single-Shot-Prompt"
+  - time: "01:27:00"
+    label: "Prompt Nr. 3 braucht eine Weile..."
+  - time: "01:30:30"
+    label: "App ausführen: Single-Shot-Prompt"
+  - time: "01:56:00"
+    label: "Ergebnisse prüfen: Iterativer Prompt"
+  - time: "02:03:00"
+    label: "App ausführen: Interaktiver Prompt"
+  - time: "02:13:30"
+    label: "App ausführen: Iterativer Prompt"
+---
+
+Dieser Stream war ein simples, aber nützliches Experiment: Catherine nutzte den vordefinierten [Master Prompt](https://github.com/code-with-bellsoft/ai-coding-battle/blob/main/prompts/master-prompt.md) in einem Schritt, ich nutzte den vordefinierten [Split Prompt](https://github.com/code-with-bellsoft/ai-coding-battle/blob/main/prompts/split-prompt.md) in sechs kleineren Schritten, und am Ende verglichen wir die Ergebnisse gegen dieselben CI-Gates.
+Die App selbst war ein kleiner Healthcare Assistant für Symptom-Analyse, KI-generierte Ratschläge und die Suche nach passenden Spezialisten.
+
+<CoSpeakerCard
+  name="Catherine Edelveis"
+  role="DevRel"
+  company="BellSoft"
+  bio="Catherine war Teil dieser Live Coding Battle, um Prompting-Strategien unter strikten CI-Qualitäts-Gates in einem realen Java-App-Workflow zu vergleichen."
+  imageSrc="https://avatars.githubusercontent.com/des-felins"
+  github="https://github.com/des-felins"
+  x="https://x.com/cat_edelveis"
+  bluesky="https://bsky.app/profile/edelveis.dev"
+/>
+
+## Setup des Battles
+
+Das Repository brachte bereits eine strikte Evaluierungspipeline mit, deshalb ging es nie darum, möglichst schnell Code zu erzeugen. Es ging darum, Code zu erzeugen, der unter Druck standhält.
+
+Quality-Gates im Stream:
+
+- [Apache Maven PMD Plugin](https://maven.apache.org/plugins/maven-pmd-plugin/), um Stilprobleme, Duplikate und typische Maintainability-Probleme zu finden.
+- [SpotBugs Maven Plugin](https://spotbugs.github.io/spotbugs-maven-plugin/), um mögliche Defekte wie Null-Handling-Probleme, falsche API-Nutzung und riskante Implementierungsmuster aufzudecken.
+- [JaCoCo Maven Plugin](https://www.jacoco.org/jacoco/trunk/doc/maven.html), um Testabdeckung zu messen und sichtbar zu machen, wie viel des generierten Codes tatsächlich ausgeführt wurde.
+- [Trivy](https://github.com/aquasecurity/trivy), um das Projekt auf bekannte Schwachstellen in Abhängigkeiten und Build-Artefakten zu scannen.
+- [OWASP ZAP Baseline Scan](https://www.zaproxy.org/docs/docker/baseline-scan/), um einen leichten dynamischen Sicherheitscheck gegen die laufende Anwendung auszuführen.
+
+Genau dieses Setup machte die Session nützlich, weil Copilot-Output an objektiven Checks gemessen wurde und nicht am ersten Eindruck.
+
+## Ergebnisse aus dem Livestream
+
+GitHub-Action-Ergebnisse von [**One-Shot Prompt**](https://github.com/code-with-bellsoft/ai-coding-battle/actions/runs/22734664933) und [**Split Prompt**](https://github.com/code-with-bellsoft/ai-coding-battle/actions/runs/22736760516).
+
+| Tool / Metrik         | One-Shot | Split Prompt |
+| --------------------- | -------: | -----------: |
+| JaCoCo Coverage       |      11% |           32% |
+| PMD-Verstöße          |        1 |            0 |
+| SpotBugs Gesamtfehler |       26 |           17 |
+| Trivy Schwachstellen  |        3 |            3 |
+| ZAP Medium            |        2 |            2 |
+| ZAP Low               |        6 |            6 |
+
+Das Hauptergebnis war klar:
+
+- der One-Shot Master Prompt erzeugte eine laufende Anwendung, aber das Abrufen der Ergebnisse scheiterte an internen Fehlern
+- der Split-Prompt-Ansatz erzeugte eine laufende Anwendung
+- statische Analyse und testbezogene Ergebnisse fielen klar zugunsten der Split Prompts aus
+
+Wichtiger Kontext: Das war kein Fehler von Catherine. Das eigentliche Problem war die Komplexität des Prompts. Der Master Prompt wollte in einem Schritt zu viel erledigen, was Debugging und Korrekturen schwerer machte.
+
+## Kurzer Vergleich: Master Prompt vs Split Prompt
+
+Hier ist der praktische Unterschied zwischen den beiden Ansätzen, die wir genutzt haben.
+
+| Dimension | Master Prompt (One-Shot) | Split Prompts (6 Schritte) |
+| --- | --- | --- |
+| Scope pro Generierung | Ganze App in einem Durchgang (DB, OpenAI-Services, REST-API, Vaadin-UI, Tests, JMeter, Docker) | Eine Schicht nach der anderen (Domain, AI-Services, API, UI, Tests, Performance/Docker) |
+| Feedback-Loop | Spät und breit: Fehler erscheinen erst nach vielen gekoppelten Änderungen | Früh und lokal: Jeder Schritt kann gebaut und geprüft werden, bevor es weitergeht |
+| Debugging-Aufwand | Hoch, weil Ursachen über mehrere Schichten verteilt sind | Niedriger, weil Regressionen auf den aktuellen Schritt begrenzt sind |
+| Architektonische Kontrolle | Schwächer: mehr Raum für unbeabsichtigte Kopplung zwischen Schichten | Stärker: klarere Grenzen und schrittweise Integration |
+| Session-Ergebnis | App startete, aber das Abrufen zentraler Ergebnisse scheiterte an internen Fehlern | Eine laufende App mit funktionierendem Ergebnisfluss und besseren Qualitätsmetriken |
+
+Die Kurzfassung: Der Master Prompt optimierte auf Vollständigkeit in einem Durchgang, die Split Prompts auf inkrementelle Korrektheit.
+
+## UI-Ergebnis (unerwartet)
+
+Ein überraschender Teil des Streams war die UI-Qualität: Beide generierten Anwendungen sahen rau aus, obwohl wir Vaadin genutzt haben und Vaadin normalerweise solide Default-Stylings mitbringt. Wir konnten während der Session nicht vollständig erklären, warum beide UIs so schlecht aussahen.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/vibe-coding-battle-ui.png"
+    alt="UI-Ergebnis aus der Live Vibe Coding Battle"
+    width={420}
+  />
+</div>
+
+## Was tatsächlich besser funktioniert hat
+
+Der Split-Prompt-Workflow veränderte zwei Dinge, die am meisten zählten:
+
+- jeder Schritt ließ sich sofort validieren
+- wir konnten nachvollziehen und reviewen, was das Modell geändert hatte, bevor wir weitergingen
+
+Das gab mehr architektonische Kontrolle und machte es leichter, Copilot zu korrigieren, wenn selbstbewusst falscher Output entstand.
+
+Genau deshalb ließ sich der Split-Ansatz leichter steuern und leichter vertrauen.
+
+## Warum die Qualitäts-Gates wichtig waren
+
+Ohne automatisierte Checks hätte dieser Stream eine Weile so wirken können, als seien beide Ansätze irgendwie "okay".
+
+Die CI-Gates machten die Unterschiede sichtbar:
+
+- Codequalitätsprobleme wurden schnell von [PMD](https://maven.apache.org/plugins/maven-pmd-plugin/) und [SpotBugs](https://spotbugs.github.io/) sichtbar gemacht
+- Sicherheits- und Analyse-Checks verhinderten stille Regressionen mit [Trivy](https://github.com/aquasecurity/trivy) und [OWASP ZAP Baseline](https://www.zaproxy.org/docs/docker/baseline-scan/)
+- wir konnten Prompting-Stile über messbares Feedback vergleichen
+
+Genau hier wird Vibe Coding real: Wenn der Code deine Guardrails nicht besteht, ist er nicht fertig.
+
+## Praktische Takeaways
+
+- vermeide übergroße One-Shot-Prompts für mehrschichtige Java-Apps
+- zerlege die Arbeit in kleinere Prompts mit klaren Akzeptanzkriterien
+- führe statische Analyse und Tests nach jedem sinnvollen Schritt aus
+- behandle KI-Output als Entwurf, der reviewt werden muss, nicht als Wahrheit
+- optimiere im Entwicklungsprozess für Erklärbarkeit, nicht nur für Geschwindigkeit
+
+## Hilfreiche Links
+
+- [XDEV IntelliJ PMD Plugin](https://github.com/xdev-software/intellij-plugin-pmd)
+
+## Abschließender Gedanke
+
+Diese Session war eine gute Erinnerung daran, dass besseres Prompting nicht bedeutet, einfach einen längeren Prompt zu schreiben. Es geht darum, einen Workflow aufzubauen, in dem jeder Schritt klein genug ist, um validiert zu werden.
+
+Der One-Shot Master Prompt brachte die App zwar zum Starten, scheiterte aber weiterhin beim internen Abrufen der Ergebnisse. Die Split-Prompt-Strategie lieferte den stabileren End-to-End-Flow und die besseren Qualitätssignale. Für produktionsorientierte Java-Teams ist das die stärkere Standardeinstellung.

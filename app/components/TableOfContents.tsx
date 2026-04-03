@@ -5,9 +5,15 @@ import type { Heading } from '@/lib/posts';
 
 interface Props {
   headings: Heading[];
+  title?: string;
+  ariaLabel?: string;
 }
 
-export default function TableOfContents({ headings }: Props) {
+export default function TableOfContents({
+  headings,
+  title = 'On this page',
+  ariaLabel = 'Table of contents',
+}: Props) {
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
@@ -33,9 +39,9 @@ export default function TableOfContents({ headings }: Props) {
   if (headings.length === 0) return null;
 
   return (
-    <nav aria-label="Table of contents">
+    <nav aria-label={ariaLabel}>
       <p className="text-[11px] font-semibold uppercase tracking-widest text-blog-muted mb-4 pl-3">
-        On this page
+        {title}
       </p>
       <ul className="space-y-0.5">
         {headings.map((h) => (

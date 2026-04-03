@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
+import { DEFAULT_BLOG_LOCALE, BLOG_LOCALES, type BlogLocale } from '@/lib/blog-i18n';
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
 
@@ -17,9 +18,10 @@ export interface PostFrontmatter {
 }
 
 export interface Post {
+  locale: BlogLocale;
   slug: string;
   frontmatter: PostFrontmatter;
-  readingTime: string;
+  readingMinutes: number;
   coSpeakerName?: string;
   content: string;
 }
@@ -29,6 +31,9 @@ export type PostMeta = Omit<Post, 'content'>;
 /** Generate a URL-safe ID from heading text — matches rehype-slug output for typical headings. */
 export function headingToId(text: string): string {
   return text
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ß/g, 'ss')
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^\w-]/g, '')
@@ -36,15 +41,22 @@ export function headingToId(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-function parsePost(filename: string): Post {
+function getPostsDir(locale: BlogLocale): string {
+  return path.join(POSTS_DIR, locale);
+}
+
+function parsePost(locale: BlogLocale, filename: string): Post {
   const slug = filename.replace(/\.mdx$/, '');
-  const raw = fs.readFileSync(path.join(POSTS_DIR, filename), 'utf-8');
+  const raw = fs.readFileSync(path.join(getPostsDir(locale), filename), 'utf-8');
   const { data, content } = matter(raw);
   const coSpeakerMatch = raw.match(/<CoSpeakerCard[\s\S]*?name="([^"]+)"/);
+  const readingStats = readingTime(content);
+
   return {
+    locale,
     slug,
     frontmatter: data as PostFrontmatter,
-    readingTime: readingTime(content).text,
+    readingMinutes: Math.max(1, Math.ceil(readingStats.minutes)),
     coSpeakerName: coSpeakerMatch ? coSpeakerMatch[1] : undefined,
     content,
   };
@@ -52,12 +64,15 @@ function parsePost(filename: string): Post {
 
 const isProd = () => process.env.NODE_ENV === 'production';
 
-export function getAllPosts(): PostMeta[] {
-  if (!fs.existsSync(POSTS_DIR)) return [];
+export function getAllPosts(locale: BlogLocale = DEFAULT_BLOG_LOCALE): PostMeta[] {
+  const localeDir = getPostsDir(locale);
+
+  if (!fs.existsSync(localeDir)) return [];
+
   return fs
-    .readdirSync(POSTS_DIR)
+    .readdirSync(localeDir)
     .filter((f) => f.endsWith('.mdx'))
-    .map(parsePost)
+    .map((filename) => parsePost(locale, filename))
     .filter((p) => !(isProd() && p.frontmatter.draft))
     .sort(
       (a, b) =>
@@ -67,25 +82,47 @@ export function getAllPosts(): PostMeta[] {
     .map(({ content: _content, ...meta }) => meta);
 }
 
-export function getPostBySlug(slug: string): Post | null {
-  const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
+export function getPostBySlug(
+  slug: string,
+  locale: BlogLocale = DEFAULT_BLOG_LOCALE
+): Post | null {
+  const filePath = path.join(getPostsDir(locale), `${slug}.mdx`);
+
   if (!fs.existsSync(filePath)) return null;
-  const post = parsePost(`${slug}.mdx`);
+
+  const post = parsePost(locale, `${slug}.mdx`);
+
   if (isProd() && post.frontmatter.draft) return null;
+
   return post;
 }
 
-export function getAllTags(): string[] {
+export function getAvailablePostLocales(slug: string): BlogLocale[] {
+  return BLOG_LOCALES.filter((locale) =>
+    fs.existsSync(path.join(getPostsDir(locale), `${slug}.mdx`))
+  );
+}
+
+export function getAllTags(locale: BlogLocale = DEFAULT_BLOG_LOCALE): string[] {
   const tagSet = new Set<string>();
-  getAllPosts().forEach((p) => p.frontmatter.tags?.forEach((t) => tagSet.add(t)));
+
+  getAllPosts(locale).forEach((p) =>
+    p.frontmatter.tags?.forEach((t) => tagSet.add(t))
+  );
+
   return Array.from(tagSet).sort();
 }
 
-export function getTopTags(n: number): string[] {
+export function getTopTags(
+  n: number,
+  locale: BlogLocale = DEFAULT_BLOG_LOCALE
+): string[] {
   const counts = new Map<string, number>();
-  getAllPosts().forEach((p) =>
+
+  getAllPosts(locale).forEach((p) =>
     p.frontmatter.tags?.forEach((t) => counts.set(t, (counts.get(t) ?? 0) + 1))
   );
+
   return Array.from(counts.entries())
     .sort((a, b) => b[1] - a[1])
     .slice(0, n)
@@ -101,7 +138,8 @@ export interface Heading {
 export function extractHeadings(content: string): Heading[] {
   const result: Heading[] = [];
   const regex = /^(#{2,3})\s+(.+?)(?:\s*\{[^}]*\})?\s*$/gm;
-  let match;
+  let match: RegExpExecArray | null;
+
   while ((match = regex.exec(content)) !== null) {
     result.push({
       level: match[1].length,

@@ -15,12 +15,16 @@ This is a **static portfolio site** for [rabauer.dev](https://rabauer.dev), buil
 - `app/page.tsx` — Home page, composes section components: `Hero`, `Youtube`, `Certifications`, `Publications`
 - `app/meetup/page.tsx` — Server-side redirect to an external Meetup URL
 - `app/components/` — All UI components live here (flat, no nesting)
+- `app/blog/**` — Temporary English alias routes for the blog
+- `app/[locale]/blog/**` — Canonical localized blog routes for `en` and `de`
 
 ### Key Technical Decisions
 
 - **Static export only** — No server-side features (API routes, SSR, middleware). Images use `unoptimized: true`. New pages must work as static HTML.
 - **`"use client"` for interactive components** — Components using Framer Motion, tsparticles, or browser APIs need the `"use client"` directive. Data-only section components (Certifications, Publications, Youtube) are server components.
 - **Particle background** — `ParticlesBackground.tsx` renders a fixed full-screen canvas using `react-particles` + `tsparticles-slim`. It sits behind all content via CSS `z-index: -1`.
+- **Blog localization is route-based** — The blog uses canonical locale-prefixed routes at `/en/blog` and `/de/blog`. The legacy `/blog` route remains as an English alias during migration, so avoid introducing new canonical blog links that point to `/blog`.
+- **Blog content is locale-scoped on disk** — English posts live in `content/posts/en/`, German posts live in `content/posts/de/`. Keep matching slugs across locales unless a change is explicitly required.
 
 ## Conventions
 
@@ -36,9 +40,12 @@ This is a **static portfolio site** for [rabauer.dev](https://rabauer.dev), buil
 
 - Certifications, publications, and YouTube playlists are defined as **inline arrays** within their respective component files — there is no separate data layer or CMS.
 - Badge images for certifications are stored directly in `public/`.
+- Blog posts are stored as locale-specific MDX files under `content/posts/en/` and `content/posts/de/`.
+- New blog posts should be authored in both English and German by default.
 
 ### Component Patterns
 
 - Section components (`Certifications`, `Publications`, `Youtube`) follow a consistent pattern: define a TypeScript interface, declare a data array, render with a heading + flex layout.
 - `ProjectCard` is the reusable card component (used by Publications), featuring Framer Motion hover animation.
 - Icons come from `react-icons` (Font Awesome set via `react-icons/fa`, Simple Icons via `react-icons/si`).
+- Blog UI strings should come from the blog locale utilities rather than hardcoded English text when touching blog routes or blog components.

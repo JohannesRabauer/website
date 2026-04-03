@@ -1,26 +1,31 @@
 import { FiExternalLink, FiGithub } from 'react-icons/fi';
+import { type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
 
 interface Props {
   href?: string;
   title?: string;
+  locale?: BlogLocale;
 }
 
 export default function MainRepositoryLink({
   href,
-  title = 'Working Repository',
+  title,
+  locale = 'en',
 }: Props) {
+  const copy = getBlogDictionary(locale);
+
   if (!href) return null;
 
   return (
     <section className="my-8 rounded-2xl border border-blog-border bg-blog-surface p-5 shadow-sm">
       <p className="mb-1 text-xs font-semibold uppercase tracking-[0.22em] text-blog-green">
-        Project Source
+        {copy.post.projectSource}
       </p>
       <h2 className="font-[family-name:var(--font-heading)] text-xl text-blog-purple leading-tight">
-        {title}
+        {title ?? copy.post.workingRepository}
       </h2>
       <p className="mt-2 text-sm text-blog-muted">
-        Explore prompts, instructions, and examples used in the live modernization workflow.
+        {copy.post.projectSourceDescription}
       </p>
       <a
         href={href}
@@ -29,7 +34,7 @@ export default function MainRepositoryLink({
         className="mt-3 inline-flex items-center gap-2 rounded-lg border border-blog-purple bg-blog-purple px-3.5 py-1.5 text-sm font-semibold text-white no-underline transition hover:bg-blog-purple-mid"
       >
         <FiGithub className="h-4 w-4" />
-        Open {title}
+        {copy.post.openRepository}
         <FiExternalLink className="h-3.5 w-3.5" />
       </a>
     </section>

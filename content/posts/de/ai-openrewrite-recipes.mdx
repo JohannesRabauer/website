@@ -1,0 +1,115 @@
+---
+title: "KI-gestützte Java-Modernisierung: OpenRewrite-Recipes erstellen"
+date: "2026-03-19"
+summary: "Was ich aus dieser Session mit Tim te Beek mitgenommen habe: OpenRewrite wird besonders stark, wenn KI hilft, deterministische und testbare Recipes zu erstellen, statt unkontrollierte Codeänderungen zu produzieren."
+tags: ["openrewrite", "java", "modernization", "github-copilot", "live-coding"]
+youtubeId: "LpGguXsR93A"
+mainRepository: "https://github.com/JohannesRabauer/open-rewrite-with-ai"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "05:26"
+    label: "Moderne CLI Skills"
+  - time: "11:20"
+    label: "Prompts zur Modernisierung der App"
+  - time: "12:33"
+    label: "Schwacher erster Versuch mit Prompt Nr. 1"
+  - time: "26:10"
+    label: "Prompt Nr. 1 neu formulieren"
+  - time: "35:55"
+    label: "Den Create-Recipe-Skill erkunden"
+  - time: "47:15"
+    label: "Ergebnisse der KI-generierten Composite Recipes"
+  - time: "58:18"
+    label: "OpenRewrites Do-no-harm-Policy"
+  - time: "01:01:37"
+    label: "Einen Dry Run ausführen"
+  - time: "01:08:50"
+    label: "Prompt Nr. 2 für Custom Recipes überarbeiten"
+  - time: "01:15:55"
+    label: "Kommentare durchgehen"
+  - time: "01:21:40"
+    label: "Unterschiedliche Arten des Promptings"
+  - time: "01:34:00"
+    label: "Ergebnisse der KI-erstellten imperativen Recipes"
+  - time: "01:58:10"
+    label: "Fazit"
+---
+
+In dieser Session war Tim te Beek von Moderne / OpenRewrite zu Gast, und die zentrale Idee war angenehm bodenständig: KI soll dabei helfen, **strukturierte OpenRewrite-Recipes** zu bauen, statt zufällige Änderungen am Code vorzunehmen und zu hoffen, dass sie funktionieren.
+
+Genau dieser Unterschied machte den Workflow für mich interessant. Das Ergebnis ist deterministisch, reviewbar und reproduzierbar.
+
+<CoSpeakerCard
+  name="Tim te Beek"
+  role="Staff Software Engineer"
+  company="Moderne / OpenRewrite"
+  bio="Tim war dabei, um zu zeigen, wie OpenRewrite-Recipes in der Praxis funktionieren und warum strukturelles Refactoring deutlich mehr Kontrolle bietet als ad-hoc Codegenerierung."
+  imageSrc="https://avatars.githubusercontent.com/u/1027334?v=4"
+  github="https://github.com/timtebeek"
+  linkedin="https://www.linkedin.com/in/timtebeek/"
+  x="https://twitter.com/timtebeek"
+  bluesky="https://bsky.app/profile/timtebeek.github.io"
+/>
+
+## Was ich gelernt habe
+
+### 1. Die Moderne CLI Skills sind schon heute nützlich
+
+Das war vermutlich die erste positive Überraschung. Es gibt bereits eigene Moderne CLI Skills, die der KI helfen, vorhandene Recipes zu nutzen oder neue anzulegen, und sie funktionierten besser, als ich erwartet hatte.
+
+Statt unscharf mit dem Modell zu interagieren, geben die Skills Struktur und Grenzen vor. Dadurch wirkte der Workflow deutlich disziplinierter und deutlich weniger wie Raten.
+
+### 2. Imperative Recipes sind von Hand mühsam zu schreiben
+
+Das wurde in der Session sehr deutlich. In Java geschriebene imperative Recipes sind leistungsfähig, aber nichts, was ich unter Zeitdruck locker von Grund auf schreiben wollte.
+
+Genau dort fühlte sich der KI-gestützte Workflow am stärksten an. Mit den passenden Skills konnte die KI sowohl das Recipe als auch die dazugehörigen Tests erzeugen, und das funktionierte beim ersten Versuch erstaunlich glatt.
+
+Das war für mich eine wichtige Erkenntnis: **KI ist besonders dann hilfreich, wenn die manuelle Variante einer Aufgabe mühsam, detailreich und fehleranfällig ist.**
+
+### 3. Eigene Recipes sind wertvoll, wenn Modernisierung wiederholbar sein soll
+
+Das ist der Punkt, an dem der Ansatz über eine Demo hinaus nützlich wird.
+
+Eigene Recipes passen besonders gut, wenn:
+
+- du eine sehr deterministische Änderung in einem bestehenden System willst
+- du viele Projekte modernisieren möchtest, die alle dieselbe Art von Problem teilen
+
+Genau dort spielt OpenRewrite seine Stärke aus. Du definierst die Transformation einmal, prüfst sie sauber und wendest sie anschließend wiederholt über Repositories hinweg an, ohne in inkonsistente manuelle Änderungen abzudriften.
+
+## Warum dieser Ansatz funktioniert
+
+Einer der stärksten Punkte der Session war der Kontrast zu fragilem textbasiertem Refactoring.
+
+OpenRewrite arbeitet auf einem strukturierten Modell des Codes, inklusive seines verlustfreien semantischen Baums. Die Änderungslogik basiert also auf der tatsächlichen Code-Struktur und nicht auf fragilen regex-artigen Ersetzungen.
+
+Genau das will ich für Modernisierungsarbeit: weniger Raten, mehr Kontrolle.
+
+## Nützliche Links
+
+- [Moderne CLI Skills](https://github.com/JohannesRabauer/open-rewrite-with-ai/tree/main/.github/instructions)  
+  Die Instruction-Dateien, mit denen wir die KI beim Erstellen oder Kombinieren von Recipes geführt haben.
+
+- [Prompts zur Modernisierung der App](https://github.com/JohannesRabauer/open-rewrite-with-ai/blob/main/.github/legacy-banking-modernization-prompts.md)  
+  Die Prompts, die wir in der Session verwendet haben, um den Modernisierungs-Workflow zu steuern.
+
+- [Moderne CLI Dokumentation](https://docs.moderne.io/user-documentation/moderne-cli/getting-started/cli-intro)  
+  Der beste Einstieg, wenn du die CLI selbst ausprobieren willst.
+
+- [Wispr Flow](https://wisprflow.ai)  
+  Voice-Dictation-Tooling, das beim Schreiben von Prompts und Notizen helfen kann.
+
+- [obra/superpowers](https://github.com/obra/superpowers)  
+  Zusätzliche Tools und Workflow-Ideen rund um KI-gestützte Entwicklung.
+
+- [Conductor](https://docs.conductor.build/)  
+  Dokumentation für ein weiteres Tool aus dem Bereich strukturierter KI-Workflows.
+
+## Abschließender Gedanke
+
+Am stärksten hängen geblieben ist bei mir, dass KI deutlich nützlicher wird, wenn sie innerhalb eines kontrollierten Modernisierungs-Workflows arbeitet.
+
+Für mich hat die Session drei Dinge klar gemacht: Die vorhandenen Skills sind bereits gut, imperative Recipes sind genau die Art harter Arbeit, bei der KI stark hilft, und eigene Recipes sind eine überzeugende Lösung, wenn du dieselbe sichere Transformation in vielen Projekten brauchst.
