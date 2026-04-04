@@ -51,7 +51,9 @@ Die Session begann mit einem nützlichen Rahmen: Autonomie ist nicht binär. Es 
 
 Das ist wichtig, weil sich die Review-Last mit jeder Stufe verändert. Mehr Autonomie kann mehr Geschwindigkeit bringen, aber eben auch größere Code-Blöcke, breitere Diffs und weniger Klarheit darüber, was sich tatsächlich geändert hat.
 
-Für mich war das die zentrale Aussage des Streams: **Der Engpass ist nicht die Generierung, sondern die Reviewbarkeit**.
+Für mich war das eines der zentralen Learnings des Streams: **Reviewbarkeit ist ein Kernbestandteil von Vise Coding**.
+
+Auf höheren Autonomie-Stufen verschiebt sich die Priorität aber etwas. Änderungen sollen zwar weiterhin verständlich bleiben, aber der stärkere Kontrollpunkt liegt dann darin, dauerhaft hohe Qualität über deterministische Guardrails wie Quality Gates und statische Analyse sicherzustellen.
 
 ## Wo Vibe Coding an Grenzen stößt
 
@@ -82,6 +84,8 @@ Das liegt nah an dem, was ich bereits in [Guided Coding statt Vibe Coding in Jav
 Eines der wichtigeren Learnings war, dass Vise Coding auf höheren Autonomie-Stufen nicht plötzlich aufhört zu funktionieren. Man kann es weiterhin anwenden, auch wenn Agenten mehr Arbeit übernehmen.
 
 Das Problem ist, dass dieselbe Disziplin schwerer zu halten ist. Mit steigender Autonomie werden die Schritte oft größer. Größere Schritte bedeuten mehr Code zum Prüfen, mehr Kontext im Kopf und mehr Raum für subtile Regressionen.
+
+Genau dort verschiebt sich der Schwerpunkt. Statt sich vor allem darauf zu verlassen, dass Menschen jedes Detail reviewen, braucht es einen Workflow, der über automatisierte Checks, Quality Gates und statische Analyse-Tools weiterhin verlässlich hochwertigen Code produziert.
 
 Die Frage nach Agent Isolation ging in dieselbe Richtung. Wenn Agenten mehr Freiheit bekommen, braucht auch die Umgebung klarere Grenzen. Genau dort werden Sandboxes und kontrollierte Ausführungsumgebungen wichtiger.
 

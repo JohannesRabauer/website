@@ -51,7 +51,9 @@ The session started with a useful frame: autonomy is not binary. There is a real
 
 That matters because the review burden changes with each level. More autonomy can mean more speed, but it can also mean bigger batches of code, wider diffs, and less clarity about what actually changed.
 
-For me, that was the central lesson of the stream: **the bottleneck is not generation, it is reviewability**.
+For me, that was one of the central lessons of the stream: **reviewability is a core part of Vise Coding**.
+
+At higher autonomy levels, though, the priority shifts a bit. You still want code changes to stay understandable, but the stronger control point becomes keeping quality high through deterministic guardrails like quality gates and static analysis.
 
 ## Where Vibe Coding Breaks Down
 
@@ -82,6 +84,8 @@ That is close to what I described earlier in [Guided Coding instead of Vibe Codi
 One of the more important takeaways was that Vise Coding does not stop working at higher autonomy levels. You can still apply it when agents do more of the work.
 
 The problem is that it becomes harder to preserve the same discipline. As autonomy goes up, the steps often get bigger. Bigger steps mean more code to inspect, more context to hold in your head, and more room for subtle regressions.
+
+That is exactly where the emphasis starts to move. Instead of depending mainly on humans to review every detail, you need a workflow that keeps producing high-quality code through automated checks, quality gates, and static analysis tools.
 
 The question around agent isolation pointed in the same direction. If agents get more freedom, the surrounding environment needs clearer boundaries too. That is where sandboxes and controlled execution environments start to matter more.
 
