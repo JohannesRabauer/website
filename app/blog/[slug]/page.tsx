@@ -1,187 +1,68 @@
-import React from 'react';
-import { getAllPosts, getPostBySlug, extractHeadings } from '@/lib/posts';
-import { MDXRemote } from 'next-mdx-remote/rsc';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import YoutubeEmbed from '@/app/components/YoutubeEmbed';
-import GiscusComments from '@/app/components/GiscusComments';
-import TableOfContents from '@/app/components/TableOfContents';
-import TimestampList from '@/app/components/TimestampList';
-import CoSpeakerCard from '@/app/components/CoSpeakerCard';
-import MermaidDiagram from '@/app/components/MermaidDiagram';
-import GraphRagDiagram from '@/app/components/GraphRagDiagram';
-import MainRepositoryLink from '@/app/components/MainRepositoryLink';
-import ShareButton from '@/app/components/ShareButton';
-import Link from 'next/link';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeHighlight from 'rehype-highlight';
-import remarkGfm from 'remark-gfm';
-import { FiClock, FiCalendar, FiArrowLeft } from 'react-icons/fi';
+import BlogAliasRedirect from '@/app/components/BlogAliasRedirect';
+import { getBlogAliasPath } from '@/lib/blog-i18n';
+import { getAllPosts, getAvailablePostLocales, getPostBySlug } from '@/lib/posts';
 
-export async function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return Array.from(
+    new Set([
+      ...getAllPosts('en').map((post) => post.slug),
+      ...getAllPosts('de').map((post) => post.slug),
+    ])
+  ).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
-  if (!post) return {};
+  const post = getPostBySlug(slug, 'en') ?? getPostBySlug(slug, 'de');
+
+  if (!post) {
+    return {};
+  }
+
   const ogImages = post.frontmatter.youtubeId
-    ? [{ url: `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/hqdefault.jpg`, width: 480, height: 360 }]
+    ? [
+        {
+          url: `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/hqdefault.jpg`,
+          width: 480,
+          height: 360,
+        },
+      ]
     : [];
+
   return {
     title: `${post.frontmatter.title} | Blog`,
     description: post.frontmatter.summary,
+    alternates: {
+      canonical: getBlogAliasPath(slug),
+    },
     openGraph: { images: ogImages },
-    twitter: { card: 'summary_large_image', images: ogImages.map((i) => i.url) },
+    twitter: { card: 'summary_large_image', images: ogImages.map((image) => image.url) },
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 
-const mdxOptions = {
-  mdxOptions: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [
-      rehypeSlug,
-      [rehypeAutolinkHeadings, { behavior: 'wrap' }],
-      rehypeHighlight,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ] as any[],
-  },
-};
-
-/** Wraps MDX tables in a scrollable container so they never overflow the prose column */
-function MdxTable(props: React.ComponentPropsWithoutRef<'table'>) {
-  return (
-    <div className="table-wrapper">
-      <table {...props} />
-    </div>
-  );
-}
-
-/** MDX component overrides — reusable blog content blocks for posts */
-const components = { YoutubeEmbed, TimestampList, CoSpeakerCard, MermaidDiagram, GraphRagDiagram, table: MdxTable };
-
-export default async function BlogPostPage({
+export default async function BlogAliasPostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
-  if (!post) notFound();
+  const availableLocales = getAvailablePostLocales(slug);
 
-  const { title, date, youtubeId, tags, summary, mainRepository } = post.frontmatter;
-  const { coSpeakerName } = post;
-  const headings = extractHeadings(post.content);
+  if (availableLocales.length === 0) {
+    notFound();
+  }
 
-  const formattedDate = new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  return (
-    <div id="main-content" className="max-w-6xl mx-auto px-6 py-12">
-      {/* Back link */}
-      <Link
-        href="/blog"
-        className="inline-flex items-center gap-1.5 text-sm text-blog-muted hover:text-blog-purple transition-colors mb-10"
-      >
-        <FiArrowLeft className="w-3.5 h-3.5" />
-        All posts
-      </Link>
-
-      <div className="flex gap-16 items-start">
-        {/* ── Main article ── */}
-        <article className="flex-1 min-w-0">
-          {/* Tags */}
-          {tags?.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-5">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-2.5 py-0.5 rounded-full bg-blog-purple-light text-blog-purple font-medium tracking-wide"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Title + co-speaker badge */}
-          <div className="mb-5">
-            <h1 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl lg:text-6xl text-blog-text leading-[1.1]">
-              {title}
-            </h1>
-            {coSpeakerName && (
-              <span className="inline-block mt-3 text-sm px-3 py-1 rounded-full border border-blog-green/40 bg-blog-green-light text-blog-green font-medium">
-                with {coSpeakerName}
-              </span>
-            )}
-          </div>
-
-          {/* Summary */}
-          <p className="text-blog-muted text-lg leading-relaxed mb-6 max-w-2xl">
-            {summary}
-          </p>
-
-          {/* Meta */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-blog-muted pb-8 mb-8 border-b border-blog-border">
-            <span className="flex items-center gap-1.5">
-              <FiCalendar className="w-3.5 h-3.5 flex-shrink-0" />
-              {formattedDate}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <FiClock className="w-3.5 h-3.5 flex-shrink-0" />
-              {post.readingTime}
-            </span>
-            <ShareButton slug={slug} variant="meta" />
-          </div>
-
-          {/* YouTube embed — featured video before prose */}
-          {youtubeId && (
-            <YoutubeEmbed videoId={youtubeId} title={title} />
-          )}
-
-          <MainRepositoryLink href={mainRepository} />
-
-          {/* Session timeline — sourced from frontmatter */}
-          {youtubeId && post.frontmatter.timestamps?.length ? (
-            <TimestampList
-              videoId={youtubeId}
-              items={post.frontmatter.timestamps}
-            />
-          ) : null}
-
-          {/* MDX prose content */}
-          <div className="prose prose-blog prose-lg max-w-none">
-            <MDXRemote
-              source={post.content}
-              options={mdxOptions}
-              components={components}
-            />
-          </div>
-
-          {/* Share */}
-          <ShareButton slug={slug} variant="footer" />
-
-          {/* Comments */}
-          <GiscusComments />
-        </article>
-
-        {/* ── Sticky TOC ── */}
-        {headings.length > 0 && (
-          <aside className="hidden xl:block w-56 flex-shrink-0">
-            <div className="sticky top-24">
-              <TableOfContents headings={headings} />
-            </div>
-          </aside>
-        )}
-      </div>
-    </div>
-  );
+  return <BlogAliasRedirect slug={slug} availableLocales={availableLocales} />;
 }

@@ -2,19 +2,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FiClock, FiCalendar, FiYoutube } from 'react-icons/fi';
 import type { PostMeta } from '@/lib/posts';
+import {
+  formatBlogDate,
+  formatReadingTime,
+  getBlogDictionary,
+  getBlogPostPath,
+} from '@/lib/blog-i18n';
 
 export default function BlogCard({ post }: { post: PostMeta }) {
-  const { slug, frontmatter, readingTime, coSpeakerName } = post;
+  const { locale, slug, frontmatter, readingMinutes, coSpeakerName } = post;
   const { title, date, summary, tags, youtubeId } = frontmatter;
-
-  const formattedDate = new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const copy = getBlogDictionary(locale);
+  const formattedDate = formatBlogDate(locale, date);
 
   return (
-    <Link href={`/blog/${slug}`} className="group block h-full">
+    <Link href={getBlogPostPath(locale, slug)} className="group block h-full">
       <article className="h-full bg-blog-surface rounded-2xl border border-blog-border shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
         {/* Thumbnail or gradient accent bar */}
         {youtubeId ? (
@@ -35,16 +37,18 @@ export default function BlogCard({ post }: { post: PostMeta }) {
           <div className="flex flex-wrap items-center gap-4 text-xs text-blog-muted mb-3">
             <span className="flex items-center gap-1.5">
               <FiCalendar className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
-              <span className="sr-only">Published: </span>{formattedDate}
+              <span className="sr-only">{copy.post.published}: </span>
+              {formattedDate}
             </span>
             <span className="flex items-center gap-1.5">
               <FiClock className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
-              <span className="sr-only">Reading time: </span>{readingTime}
+              <span className="sr-only">{copy.post.readingTimeLabel}: </span>
+              {formatReadingTime(locale, readingMinutes)}
             </span>
             {youtubeId && (
               <span className="flex items-center gap-1.5 text-red-500 font-medium">
                 <FiYoutube className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
-                Video
+                {copy.post.video}
               </span>
             )}
           </div>
@@ -56,7 +60,7 @@ export default function BlogCard({ post }: { post: PostMeta }) {
             </h2>
             {coSpeakerName && (
               <span className="inline-block mt-2 text-xs px-2.5 py-0.5 rounded-full border border-blog-green/40 bg-blog-green-light text-blog-green font-medium">
-                with {coSpeakerName}
+                {copy.post.withCoSpeaker(coSpeakerName)}
               </span>
             )}
           </div>

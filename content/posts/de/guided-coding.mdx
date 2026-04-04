@@ -1,0 +1,128 @@
+---
+title: "Guided Coding statt Vibe Coding in Java"
+date: "2026-02-26"
+summary: "Diese Live-Session hat ein starkes Argument dafür geliefert, KI als disziplinierte Implementierungsmaschine zu nutzen: erst Grenzen definieren, Planung vom Coden trennen und Ergebnisse gegen die Architektur prüfen, statt sie einfach zu akzeptieren."
+tags: ["guided-coding", "java", "github-copilot", "vscode", "ai-agents", "live-coding"]
+youtubeId: "vopBYXp9YV0"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "04:22"
+    label: "Vibe Coding"
+  - time: "06:50"
+    label: "Aktuelles Projekt mit Guided Coding"
+  - time: "11:40"
+    label: "Der Kern von Guided Coding"
+  - time: "35:34"
+    label: "Pläne erklären / AGENTS.md"
+  - time: "44:40"
+    label: "Frühere Beispiele anschauen"
+  - time: "01:09:33"
+    label: "AGENTS.md (Recherche)"
+  - time: "01:12:33"
+    label: "Feedback-Loops (automatisierte Tests, Linter, Benchmarks)"
+  - time: "01:17:53"
+    label: "Prompt Injection"
+  - time: "01:25:30"
+    label: "Guided Coding Zusammenfassung"
+  - time: "01:35:03"
+    label: "Vise Coding"
+  - time: "01:37:25"
+    label: "Praxisbeispiel / Live Coding"
+  - time: "02:18:43"
+    label: "Fazit"
+---
+
+In dieser Live-Session war Kenny Pflug zu Gast, um mit mir über eine bewusstere Art zu sprechen, mit KI in Java zu arbeiten: **Guided Coding**.
+
+Was die Session nützlich machte, war ihr klarer Fokus. Es ging nicht darum, ein KI-Tool möglichst viel Code erzeugen zu lassen. Es ging darum, einen Workflow zu bauen, in dem der Mensch die Kontrolle behält, die Architektur sichtbar bleibt und das Modell als Implementierungsmaschine innerhalb klarer Grenzen eingesetzt wird.
+
+<CoSpeakerCard
+  name="Kenny Pflug"
+  role="Autor des Guided-Coding-Frameworks"
+  bio="Kenny war dabei, um die Prinzipien hinter Guided Coding zu erklären und zu zeigen, wie ein strukturierter, constraint-getriebener Workflow KI-gestützte Java-Entwicklung rigoros und wartbar halten kann."
+  imageSrc="https://avatars.githubusercontent.com/feO2x"
+  linkedin="https://www.linkedin.com/in/kenny-pflug-7a1012123/"
+  x="https://x.com/feO2x"
+  github="https://github.com/feO2x"
+/>
+
+## Warum diese Session wichtig war
+
+Das Kernargument war simpel: Wenn du in professioneller Softwareentwicklung gute Ergebnisse mit KI willst, brauchst du mehr als einen Prompt und Glück.
+
+Die Session kam immer wieder auf ein paar praktische Ideen zurück:
+
+- Planung von der Implementierung trennen
+- Grenzen definieren, bevor die KI Code schreibt
+- Ergebnisse gegen die Architektur prüfen, nicht nur gegen Syntax
+- Feedback-Loops wie Tests, Linter und Benchmarks nutzen
+- systematisch refactoren statt Probleme reaktiv zu flicken
+
+Diese Kombination gibt dem Ansatz seine Form. Die KI wird nicht wie ein autonomer Teamkollege behandelt. Sie wird wie ein schnelles System behandelt, das Richtung, Grenzen und Verifikation braucht.
+
+## Was Guided Coding in der Praxis bedeutet
+
+Für mich war am nützlichsten, wie konkret das Framework wurde, sobald wir den Workflow Schritt für Schritt durchgesprochen haben.
+
+### 1. Planung ist eine eigene Phase
+
+Einer der stärksten Punkte der Session war die klare Trennung von Designarbeit und Codegenerierung.
+
+Statt das Modell sofort etwas implementieren zu lassen, beginnt Guided Coding damit, den Plan explizit zu machen. Dazu gehören die beabsichtigte Struktur, die Grenzen und die Qualitätslatte. In der Praxis schafft das eine viel bessere Grundlage, um die Ausgabe später zu beurteilen.
+
+### 2. Grenzen gehören in den Prompt, nicht hinterher dazu
+
+Ein wiederkehrendes Thema war, dass KI deutlich besser arbeitet, wenn die Betriebsgrenzen klar sind.
+
+Das bedeutet, Dinge wie architektonische Grenzen, Erwartungen an Stil, Schnittstellen, Review-Kriterien und erlaubte Änderungen vorab festzulegen. Ohne das driftet man schnell zu lokal plausibelem Code ab, der nicht zum System passt.
+
+### 3. Reviews müssen architektonisch sein
+
+Ein weiterer wichtiger Punkt war der Unterschied zwischen Code, der okay aussieht, und Code, der wirklich ins System passt.
+
+Die Session betonte, KI-Ausgaben mit architektonischer Absicht zu prüfen. Das heißt: Passt die Implementierung zum Plan, bleiben Verantwortlichkeiten am richtigen Ort, und bleibt das System nach der Änderung verständlich?
+
+### 4. Feedback-Loops sind nicht verhandelbar
+
+Die Diskussion über automatisierte Tests, Linter und Benchmarks war besonders relevant. Wenn du KI intensiv nutzen willst, ohne die Kontrolle zu verlieren, brauchst du enge Loops, die dir zeigen, wann die Ausgabe falsch, fragil oder fehlgeleitet ist.
+
+Der Workflow dreht sich damit weniger um Vertrauen in das Modell und stärker um Bedingungen, unter denen Fehler schnell sichtbar werden.
+
+## AGENTS.md und explizite Leitplanken
+
+Ein wesentlicher Teil des Talks drehte sich darum, Erwartungen über Planungsartefakte wie `AGENTS.md` sichtbar zu machen.
+
+Das ist wichtig, weil gute KI-Zusammenarbeit von externalisiertem Denken lebt. Wenn Regeln, Ziele und Grenzen nur in deinem Kopf existieren, kann das Modell ihnen nicht zuverlässig folgen und andere Entwickler können den Prozess ebenfalls nicht sauber reviewen.
+
+Das war eines der stärksten Learnings der Session: **Schreibe zuerst das Betriebsmodell auf und lass die KI dann darin arbeiten.**
+
+## Der Live-Coding-Teil
+
+Der Live-Coding-Abschnitt hat die Theorie aus dem ersten Teil gut geerdet. Nachdem wir zunächst über Prinzipien und Prozess gesprochen hatten, wechselte der Stream zu einem praktischen Java-Beispiel in Visual Studio Code mit GitHub Copilot.
+
+Diese Struktur funktionierte gut. Die Implementierung war leichter nachzuvollziehen, weil das Denken vorher schon explizit gemacht worden war. Statt zufälligem Trial-and-Error konnte man sehen, wie Planung, Grenzen und Reviews die Coding-Entscheidungen geprägt haben.
+
+## Vibe Coding, Vise Coding und Guided Coding
+
+Die Session streifte auch verwandte Begriffe wie Vibe Coding und Vise Coding.
+
+Der nützliche Unterschied war hier nicht Branding, sondern Kontrolle.
+
+Guided Coding, wie Kenny es beschrieben hat, basiert auf disziplinierter Ausführung: Richtung vorgeben, den Agenten begrenzen, das Ergebnis reviewen und die Codequalität über die Zeit intakt halten. Das passt deutlich besser zu echten Softwareprojekten als ein Workflow, der sich nur auf Geschwindigkeit konzentriert.
+
+## Nützliche Links
+
+- [Präsentations-PDF](https://github.com/JohannesRabauer/vaadin-banking-app/blob/main/2026-02-26-guided-coding-instead-of-vibe-coding-in-java.pdf)
+- [Light.PortableResults](https://github.com/feO2x/Light.PortableResults)
+- [Context Rot paper](https://arxiv.org/pdf/2602.11988)
+- [Chroma research: Context Rot](https://research.trychroma.com/context-rot)
+- [Vaadin banking app](https://github.com/JohannesRabauer/vaadin-banking-app)
+- [David Farago post on AI coding assistants](https://www.linkedin.com/posts/david-farago-99b6532_whats-your-experience-with-ai-coding-assistants-activity-7307685533504163842-srKF)
+
+## Abschließender Gedanke
+
+Am stärksten hängen geblieben ist bei mir, dass disziplinierter KI-Einsatz nicht in erster Linie davon lebt, den perfekten Prompt zu finden. Es geht darum, einen Prozess zu gestalten.
+
+Diese Session hat eine konkrete Version dieses Prozesses für Java-Entwicklung gezeigt: erst planen, das Modell begrenzen, aggressiv verifizieren und die Architektur bei jedem Schritt im Blick behalten. Das ist eine deutlich stärkere Grundlage, als nur darauf zu hoffen, dass das Modell schon das Richtige tun wird.

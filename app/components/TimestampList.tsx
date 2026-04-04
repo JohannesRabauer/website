@@ -1,4 +1,5 @@
 import { FiClock, FiExternalLink, FiChevronDown } from 'react-icons/fi';
+import { type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
 
 interface TimestampItem {
   time: string;
@@ -9,6 +10,7 @@ interface Props {
   videoId: string;
   items: TimestampItem[];
   title?: string;
+  locale?: BlogLocale;
 }
 
 function toSeconds(time: string): number {
@@ -28,8 +30,11 @@ function toSeconds(time: string): number {
 export default function TimestampList({
   videoId,
   items = [],
-  title = 'Session Timeline',
+  title,
+  locale = 'en',
 }: Props) {
+  const copy = getBlogDictionary(locale);
+
   if (!items.length || !videoId) return null;
 
   return (
@@ -38,7 +43,7 @@ export default function TimestampList({
         <span className="flex items-center gap-2.5">
           <FiClock className="w-4 h-4" />
           <span className="font-[family-name:var(--font-heading)] text-xl font-semibold tracking-tight">
-            {title}
+            {title ?? copy.post.sessionTimeline}
           </span>
         </span>
         <FiChevronDown className="w-4 h-4 text-blog-muted transition-transform duration-200 group-open:rotate-180" />

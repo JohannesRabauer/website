@@ -1,0 +1,128 @@
+---
+title: "Vise Coding in der Praxis: Strukturierte KI-Entwicklung über 5 Autonomie-Level"
+date: "2026-04-03"
+summary: "Diese Live-Session ging durch fünf Stufen der KI-Coding-Autonomie in Java, aber das eigentliche Learning war einfacher: nachhaltige KI-Entwicklung braucht kleine reviewbare Schritte, explizite Spezifikationen und deterministische Quality Gates."
+tags: ["vise-coding", "ai-agents", "java", "github-copilot", "tdd", "spec-driven-development"]
+youtubeId: "7oVisn4cVxY"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Intro-Video"
+  - time: "00:10"
+    label: "Einführung"
+  - time: "01:20"
+    label: "Autonomie-Level von KI-Coding"
+  - time: "13:14"
+    label: "Was Vise Coding bedeutet"
+  - time: "21:24"
+    label: "Demo 1, BDD-Challenge"
+  - time: "44:40"
+    label: "Frage, Agent Isolation"
+  - time: "51:08"
+    label: "Demo 1, weiter"
+  - time: "01:10:40"
+    label: "Statische Analyse und Quality Checks"
+  - time: "01:26:09"
+    label: "Spec-Driven Development"
+  - time: "01:42:30"
+    label: "Demo 2, Resilience4J reduce flap"
+  - time: "01:54:08"
+    label: "Agenten vergleichen"
+  - time: "02:13:43"
+    label: "Fazit"
+  - time: "02:21:45"
+    label: "Demo 2 abschließen"
+---
+
+Dr. David Farago war zu Gast, um mit mir über Vise Coding und die fünf Stufen der Autonomie von KI-Coding-Agenten zu sprechen, von einfacher Completion bis zu vollautonomen Entwicklungsagenten. Der nützliche Teil der Session war nicht die Frage, welcher Agent der beste ist. Es ging darum zu sehen, wo KI-Workflows reviewbar bleiben und wo sie anfangen wegzudriften.
+
+<CoSpeakerCard
+  name="Dr. David Faragó"
+  role="Deep Learning Engineer"
+  bio="David war dabei, um Vise Coding zu beleuchten und die fünf Stufen der Autonomie von KI-Coding-Agenten in einem praktischen Java-Workflow durchzugehen."
+  imageSrc="https://avatars.githubusercontent.com/DavidFarago"
+  github="https://github.com/DavidFarago"
+  linkedin="https://www.linkedin.com/in/david-farago-99b6532/"
+/>
+
+## Warum diese Session wichtig war
+
+Die Session begann mit einem nützlichen Rahmen: Autonomie ist nicht binär. Es gibt ein echtes Spektrum zwischen Token Completion, Block Completion, Intent-basierten Chat-Agenten, lokalen autonomen Agenten und vollautonomen Entwicklungsagenten.
+
+Das ist wichtig, weil sich die Review-Last mit jeder Stufe verändert. Mehr Autonomie kann mehr Geschwindigkeit bringen, aber eben auch größere Code-Blöcke, breitere Diffs und weniger Klarheit darüber, was sich tatsächlich geändert hat.
+
+Für mich war das die zentrale Aussage des Streams: **Der Engpass ist nicht die Generierung, sondern die Reviewbarkeit**.
+
+## Wo Vibe Coding an Grenzen stößt
+
+Genau hier beginnt Vibe Coding zu kippen.
+
+Wenn das Modell zu viel Code auf einmal erzeugt, reviewt man nicht mehr sauber. Ab diesem Punkt steuerst du die Änderung nicht mehr wirklich. Du versuchst dann hauptsächlich, Probleme nachträglich zu finden, und das skaliert in echten Projekten nicht gut.
+
+Die Live-Demos haben dieses Risiko gut sichtbar gemacht. Sobald die Schrittgröße zu groß wird, wird der Workflow schwerer zu verstehen, schwerer zu verifizieren und schwerer wartbar zu halten.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/vibe_vise_coding.png"
+    alt="Vergleich von Vibe Coding und Vise Coding"
+    width={420}
+  />
+</div>
+
+## Was Vise Coding ergänzt
+
+Vise Coding ist der Gegenentwurf: die Änderung planen, die Schrittgröße klein halten und jeden Schritt leicht reviewbar machen.
+
+In der Session hieß das, von expliziten Spezifikationen auszugehen, die Arbeit in kleinere Einheiten zu teilen und stark auf automatisierte Tests zu setzen. BDD-artige Workflows passen gut dazu, weil sie das erwartete Verhalten sichtbar halten, während sich der Code darunter verändert.
+
+Das liegt nah an dem, was ich bereits in [Guided Coding statt Vibe Coding in Java](/de/blog/guided-coding) beschrieben habe. Beide Ansätze bevorzugen Struktur statt Improvisation. Was hier besonders auffiel, war, wie stark Vise Coding diese Struktur an automatisierte Tests und an kleine, überprüfbare Inkremente bindet.
+
+## Höhere Autonomie funktioniert weiter, wird aber schwieriger
+
+Eines der wichtigeren Learnings war, dass Vise Coding auf höheren Autonomie-Stufen nicht plötzlich aufhört zu funktionieren. Man kann es weiterhin anwenden, auch wenn Agenten mehr Arbeit übernehmen.
+
+Das Problem ist, dass dieselbe Disziplin schwerer zu halten ist. Mit steigender Autonomie werden die Schritte oft größer. Größere Schritte bedeuten mehr Code zum Prüfen, mehr Kontext im Kopf und mehr Raum für subtile Regressionen.
+
+Die Frage nach Agent Isolation ging in dieselbe Richtung. Wenn Agenten mehr Freiheit bekommen, braucht auch die Umgebung klarere Grenzen. Genau dort werden Sandboxes und kontrollierte Ausführungsumgebungen wichtiger.
+
+## Spezifikationen werden in größeren Systemen noch wichtiger
+
+Der Teil zu Spec-Driven Development war besonders relevant für größere oder ältere Codebasen.
+
+Wenn die Spezifikation aktuell bleibt und der Code aus ihr heraus entsteht, bleibt das System über die Zeit leichter verständlich. Das ist in jedem Projekt nützlich, aber gerade in Legacy-Systemen wichtig, in denen der ursprüngliche Gedankengang hinter dem Code oft verloren geht.
+
+Das passt auch gut zu externalisierten Leitplanken wie [AGENTS.md](https://agents.md/). Wenn das Betriebsmodell aufgeschrieben ist, haben Menschen und Agenten einen klareren Vertrag, von dem aus sie arbeiten können.
+
+## Der konkrete Agent wird weniger wichtig als der Workflow
+
+Der Vergleich der Agenten war ein guter Reality Check.
+
+Codex, GitHub Copilot, Claude Code und ähnliche Tools unterscheiden sich weiter, aber der Abstand wirkt weniger dauerhaft als noch vor ein paar Monaten. Gute Ideen wandern schnell zwischen Produkten, gerade bei Agent-Verhalten und Workflow-Features.
+
+Dadurch wird der Prozess rund um den Agenten wichtiger als der Agentenname selbst. Der dauerhafte Vorteil ist nicht das Logo. Entscheidend ist, ob der Workflow Änderungen verständlich, testbar und leicht korrigierbar hält.
+
+## Deterministische Guardrails werden wertvoller
+
+Genau deshalb werden statische Analyse, Quality Checks und automatisierte Tests immer wichtiger.
+
+Sie geben dir eine deterministische Qualitätslatte, auch wenn das Modell selbst nicht deterministisch ist. Dieser Punkt wurde hier sehr klar, und er passt gut zum früheren [Live Vibe Coding Battle](/de/blog/vibe-coding-battle), in der PMD, SpotBugs, JaCoCo, Trivy und OWASP ZAP den Unterschied zwischen Code, der okay aussah, und Code, der tatsächlich standhielt, sichtbar gemacht haben.
+
+Das ist der Teil der KI-Entwicklung, von dem ich erwarte, dass er gut altert: nicht blindes Vertrauen in immer größere Modelle, sondern stärkere Guardrails um das jeweils verwendete Modell herum.
+
+## Nützliche Links
+
+- [Vise-Coding-Artikel von David Farago](https://www.linkedin.com/pulse/vise-coding-david-farago-1k5ce/)
+- [Demo-1-Repository, Microsoft Copilot Hackathon BDD Challenge](https://github.com/microsoft/CopilotHackathon/tree/main/challenges/bdd)
+- [GitHub Spec Kit](https://github.com/github/spec-kit)
+- [Kiro](https://kiro.dev/)
+- [Demo-2-Repository, Resilience4J](https://github.com/resilience4j/resilience4j)
+- [Docker Sandboxes](https://www.docker.com/products/docker-sandboxes/)
+- [AI4JVM](https://ai4jvm.com/)
+- [Memory Upgrade für KI-Agenten, beads](https://github.com/gastownhall/beads)
+- [AGENTS.md-Template](https://github.com/JohannesRabauer/agent-template/blob/master/AGENTS.md)
+
+## Abschließender Gedanke
+
+Diese Session hat kein Plädoyer für grenzenlose Agentenfreiheit geliefert. Sie hat gezeigt, wie man einen Workflow baut, der auch bei steigender Autonomie verständlich bleibt.
+
+Wenn Spezifikationen explizit bleiben, Schritte klein bleiben und Quality Gates streng bleiben, kann KI in einem Java-Workflow ein ernstzunehmendes Engineering-Werkzeug sein. Wenn man diese Dinge weglässt, holt einen die Review-Last sehr schnell ein.
