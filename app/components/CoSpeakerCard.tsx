@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { FiGlobe } from 'react-icons/fi';
 import { FaBluesky, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
@@ -63,9 +64,11 @@ export default function CoSpeakerCard({
     <section className="my-10 rounded-3xl border border-blog-border bg-blog-surface p-6 shadow-sm">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
         {imageSrc ? (
-          <img
+          <Image
             src={imageSrc}
             alt={name}
+            width={96}
+            height={96}
             className="h-24 w-24 rounded-2xl object-cover ring-1 ring-blog-border"
           />
         ) : (

@@ -152,7 +152,7 @@ export default function BlogPostContent({ locale, slug }: Props) {
             <ShareButton locale={locale} path={getBlogPostPath(locale, slug)} variant="meta" />
           </div>
 
-          {youtubeId && <YoutubeEmbed videoId={youtubeId} title={title} />}
+          {youtubeId && <YoutubeEmbed videoId={youtubeId} title={title} locale={locale} />}
 
           <MainRepositoryLink href={mainRepository} locale={locale} />
 

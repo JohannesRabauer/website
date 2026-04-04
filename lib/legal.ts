@@ -7,9 +7,5 @@ export const legalContact = {
   updatedAt: '03.04.2026',
 };
 
-export const hasPlaceholderAddress =
-  legalContact.streetAddress.startsWith('[') ||
-  legalContact.postalCodeCity.startsWith('[');
-
 export const giscusDiscussionUrl =
   'https://github.com/JohannesRabauer/website/discussions';

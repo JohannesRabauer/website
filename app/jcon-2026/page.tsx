@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { FaFileAlt, FaQuestionCircle, FaStar } from "react-icons/fa";
 import { Michroma } from "next/font/google";
 import SocialBadges from "../components/SocialBadges";
@@ -21,12 +21,14 @@ const SLIDO_URL = "https://app.sli.do/event/mrbyk6V9atpK4HLuP51qEL/live/question
 /** Replace with the target GitHub repository / Pages URL */
 const GITHUB_URL = "https://github.com/JohannesRabauer";
 
-export default function JConPage() {
-  const [showQRCode, setShowQRCode] = useState(true);
+const subscribeToQrCodeAvailability = () => () => undefined;
 
-  useEffect(() => {
-    setShowQRCode(new Date() < SLIDO_DEADLINE);
-  }, []);
+export default function JConPage() {
+  const showQRCode = useSyncExternalStore(
+    subscribeToQrCodeAvailability,
+    () => new Date() < SLIDO_DEADLINE,
+    () => true
+  );
 
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center bg-[#0a0608] text-white overflow-hidden">

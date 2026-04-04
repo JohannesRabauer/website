@@ -40,6 +40,15 @@ type BlogCopy = {
   post: {
     allPosts: string;
     comments: string;
+    commentsConsentTitle: string;
+    commentsConsentDescription: string;
+    commentsConsentLabel: string;
+    commentsLoadLabel: string;
+    commentsExternalLabel: string;
+    commentsPrivacyNotice: string;
+    commentsConsentRequired: string;
+    commentsHideLabel: string;
+    commentsLoadedNotice: string;
     published: string;
     readingTimeLabel: string;
     share: string;
@@ -101,6 +110,19 @@ const BLOG_COPY: Record<BlogLocale, BlogCopy> = {
     post: {
       allPosts: 'All posts',
       comments: 'Comments',
+      commentsConsentTitle: 'Load comments from GitHub optionally',
+      commentsConsentDescription:
+        'The comment section is provided via Giscus and GitHub Discussions. It will only be loaded after your explicit consent. When loading it, personal data such as your IP address and technical metadata may be transmitted to GitHub, and cookies or similar technologies may be set.',
+      commentsConsentLabel:
+        'I agree that the comment section may be loaded from GitHub/Giscus.',
+      commentsLoadLabel: 'Load comments',
+      commentsExternalLabel: 'Open discussion on GitHub',
+      commentsPrivacyNotice: 'More details are available in the privacy policy.',
+      commentsConsentRequired:
+        'Please confirm first before loading the comment section.',
+      commentsHideLabel: 'Hide comments again',
+      commentsLoadedNotice:
+        'The comment section is active. You can hide it again here at any time.',
       published: 'Published',
       readingTimeLabel: 'Reading time',
       share: 'Share',
@@ -162,6 +184,19 @@ const BLOG_COPY: Record<BlogLocale, BlogCopy> = {
     post: {
       allPosts: 'Alle Beiträge',
       comments: 'Kommentare',
+      commentsConsentTitle: 'Kommentare optional von GitHub laden',
+      commentsConsentDescription:
+        'Die Kommentarfunktion wird über Giscus und GitHub Discussions bereitgestellt. Sie wird erst nach Ihrer ausdrücklichen Einwilligung geladen. Beim Laden können personenbezogene Daten wie Ihre IP-Adresse und technische Metadaten an GitHub übermittelt sowie Cookies oder ähnliche Technologien gesetzt werden.',
+      commentsConsentLabel:
+        'Ich willige ein, dass die Kommentarfunktion von GitHub/Giscus geladen wird.',
+      commentsLoadLabel: 'Kommentare laden',
+      commentsExternalLabel: 'Diskussion auf GitHub öffnen',
+      commentsPrivacyNotice: 'Mehr dazu in der Datenschutzerklärung.',
+      commentsConsentRequired:
+        'Bitte bestätigen Sie zuerst Ihre Einwilligung, bevor die Kommentare geladen werden.',
+      commentsHideLabel: 'Kommentare wieder ausblenden',
+      commentsLoadedNotice:
+        'Die Kommentarfunktion ist aktiv. Sie können sie hier jederzeit wieder ausblenden.',
       published: 'Veröffentlicht',
       readingTimeLabel: 'Lesezeit',
       share: 'Teilen',
@@ -209,7 +244,8 @@ export function getBlogAliasPath(slug?: string): string {
   return slug ? `/blog/${slug}` : '/blog';
 }
 
-export function getBlogRssPath(_locale?: BlogLocale): string {
+export function getBlogRssPath(locale?: BlogLocale): string {
+  void locale;
   return '/rss.xml';
 }
 

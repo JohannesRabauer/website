@@ -18,8 +18,8 @@ function Hero() {
   }
 
   return (
-    <section className="content-layer flex flex-col items-center justify-center text-center py-6 px-4 min-h-screen bg-cyber-bg/80">
-      <div className="w-full max-w-4xl mx-auto mb-12">
+    <section className="content-layer flex flex-col items-center text-center px-4 pb-4 pt-8 bg-cyber-bg/80 sm:pt-10">
+      <div className="w-full max-w-4xl mx-auto mb-4">
         <div className="relative w-full h-48 mb-20">
           <Image
             src="/banner.jpg"

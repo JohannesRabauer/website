@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ReactNode } from "react";
 import FloatingSiteControls from "./components/FloatingSiteControls";
+import SiteFooter from "./components/SiteFooter";
 
 /**
  * Root layout component wrapping all pages
@@ -33,10 +34,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="shortcut icon" href="/favicon.ico"></link>
         <link rel="apple-touch-icon" href="/Logo_round.png"></link>
       </head>
-      <body className="bg-cyber-bg text-white font-sans min-h-screen antialiased selection:bg-cyber-pink/80 selection:text-cyber-bg">
+      <body className="flex min-h-screen flex-col bg-cyber-bg font-sans text-white antialiased selection:bg-cyber-pink/80 selection:text-cyber-bg">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyber-green focus:text-cyber-bg focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
         <FloatingSiteControls />
-        {children}
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );

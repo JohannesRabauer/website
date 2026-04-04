@@ -79,7 +79,11 @@ export function getAllPosts(locale: BlogLocale = DEFAULT_BLOG_LOCALE): PostMeta[
         new Date(b.frontmatter.date).getTime() -
         new Date(a.frontmatter.date).getTime()
     )
-    .map(({ content: _content, ...meta }) => meta);
+    .map((post) => {
+      const { content, ...meta } = post;
+      void content;
+      return meta;
+    });
 }
 
 export function getPostBySlug(

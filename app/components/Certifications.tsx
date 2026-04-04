@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface Certification {
     title: string;
@@ -24,7 +25,13 @@ const Certifications: React.FC = () => {
                 {certifications.map((cert, index) => (
                     <div key={index} className="certification-item">
                         <a href={cert.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${cert.title} certification`}>
-                            <img src={cert.badgeUrl} alt={cert.title} className="certification-badge" />
+                            <Image
+                                src={cert.badgeUrl}
+                                alt={cert.title}
+                                width={100}
+                                height={100}
+                                className="certification-badge"
+                            />
                         </a>
                     </div>
                 ))}

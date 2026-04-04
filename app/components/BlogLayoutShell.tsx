@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { FaRss } from 'react-icons/fa';
 import BlogLanguageSwitcher from '@/app/components/BlogLanguageSwitcher';
+import LegalLinks from '@/app/components/LegalLinks';
 import {
   type BlogLocale,
   getBlogDictionary,
@@ -101,22 +102,32 @@ export default function BlogLayoutShell({ children, locale }: Props) {
       {children}
 
       <footer className="border-t border-blog-border mt-24 py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-blog-muted">
-          <p>
-            © {new Date().getFullYear()} Johannes Rabauer. {copy.layout.footerRights}
-          </p>
-          <div className="flex items-center gap-4">
-            <Link href="/" className="hover:text-blog-purple transition-colors">
-              {copy.layout.home}
-            </Link>
-            <a
-              href={getBlogRssPath(locale)}
-              className="text-blog-muted hover:text-blog-green transition-colors"
-              title={copy.layout.rssFeed}
-              aria-label={copy.layout.rssFeed}
-            >
-              <FaRss className="text-base" aria-hidden="true" />
-            </a>
+        <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4 text-sm text-blog-muted">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>
+              © {new Date().getFullYear()} Johannes Rabauer. {copy.layout.footerRights}
+            </p>
+            <div className="flex items-center gap-4">
+              <Link href="/" className="hover:text-blog-purple transition-colors">
+                {copy.layout.home}
+              </Link>
+              <a
+                href={getBlogRssPath(locale)}
+                className="text-blog-muted hover:text-blog-green transition-colors"
+                title={copy.layout.rssFeed}
+                aria-label={copy.layout.rssFeed}
+              >
+                <FaRss className="text-base" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+
+          <div className="flex justify-center sm:justify-end">
+            <LegalLinks
+              variant="light"
+              className="gap-3 text-[11px] sm:text-xs"
+              linkClassName="text-blog-muted/75 hover:text-blog-purple"
+            />
           </div>
         </div>
       </footer>

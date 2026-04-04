@@ -77,26 +77,33 @@ export default function DatenschutzPage() {
 
       <h2>6. YouTube-Inhalte</h2>
       <p>
-        YouTube-Videos und YouTube-Playlists werden auf dieser Website nicht automatisch geladen.
-        Eine Verbindung zu YouTube wird erst hergestellt, wenn Sie den jeweiligen Inhalt aktiv
-        per Klick freigeben.
+        Auf der Startseite werden YouTube-Playlists nicht eingebettet. Stattdessen werden dort
+        Vorschaubilder angezeigt, die auf die jeweiligen Inhalte bei YouTube verlinken.
       </p>
       <p>
-        Erst nach Ihrer Freigabe wird der eingebettete Inhalt von YouTube beziehungsweise Google
+        In Blogbeiträgen werden einzelne YouTube-Videos ebenfalls nicht automatisch geladen. Eine
+        Verbindung zu YouTube beziehungsweise Google wird erst hergestellt, wenn Sie das jeweilige
+        Video aktiv freigeben und laden.
+      </p>
+      <p>
+        Erst nach dieser Freigabe wird der eingebettete Inhalt von YouTube beziehungsweise Google
         geladen. Dabei können personenbezogene Daten, insbesondere Ihre IP-Adresse und technische
-        Nutzungsdaten, an YouTube oder Google übermittelt werden. Außerdem können durch YouTube
-        Cookies oder ähnliche Technologien eingesetzt werden.
+        Nutzungsdaten, an YouTube oder Google übermittelt werden. Außerdem können Cookies oder
+        ähnliche Technologien eingesetzt werden.
       </p>
       <p>
-        Die Verarbeitung erfolgt erst nach Ihrer Einwilligung auf Grundlage von Art. 6 Abs. 1
-        lit. a DSGVO.
+        Die Verarbeitung des eingebetteten Players erfolgt erst nach Ihrer Einwilligung auf
+        Grundlage von Art. 6 Abs. 1 lit. a DSGVO. Die Vorschaubilder selbst werden bereits beim
+        Aufruf der Seite geladen; die damit verbundene Datenverarbeitung ist im Abschnitt zu
+        externen Bildern beschrieben.
       </p>
 
       <h2>7. Kommentarfunktion mit Giscus</h2>
       <p>
         Die Kommentarfunktion wird auf dieser Website nicht automatisch geladen. Eine Verbindung
-        zu Giscus beziehungsweise GitHub wird erst hergestellt, wenn Sie die Kommentare aktiv per
-        Klick freigeben.
+        zu Giscus beziehungsweise GitHub wird erst hergestellt, wenn Sie die Kommentarfunktion
+        aktiv freigeben, indem Sie die Einwilligungsoption auswählen und anschließend die
+        Kommentare laden.
       </p>
       <p>
         Nach der Freigabe können personenbezogene Daten, insbesondere Ihre IP-Adresse und
@@ -111,6 +118,10 @@ export default function DatenschutzPage() {
         <a href={giscusDiscussionUrl} target="_blank" rel="noopener noreferrer"> GitHub Discussions </a>
         verwaltet.
       </p>
+      <p>
+        Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Bereits
+        erfolgte Datenverarbeitungen bleiben von einem Widerruf unberührt.
+      </p>
 
       <h2>8. Cookies und Reichweitenmessung</h2>
       <p>
@@ -118,9 +129,9 @@ export default function DatenschutzPage() {
         und setzt keine Webanalyse-Tools ein.
       </p>
       <p>
-        Wenn Sie externe Inhalte wie YouTube oder Giscus aktiv freigeben, können die jeweiligen
-        Drittanbieter eigene Cookies oder ähnliche Technologien einsetzen. Darauf habe ich keinen
-        Einfluss.
+        Wenn Sie eingebettete YouTube-Videos in Blogbeiträgen oder die Kommentarfunktion mit
+        Giscus aktiv freigeben, können die jeweiligen Drittanbieter eigene Cookies oder ähnliche
+        Technologien einsetzen. Darauf habe ich keinen Einfluss.
       </p>
 
       <h2>9. Ihre Rechte</h2>
