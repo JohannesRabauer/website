@@ -18,6 +18,23 @@ interface Props {
   label: string;
   unavailableLabel?: string;
   preserveCurrentPath?: boolean;
+  hideOnPostPath?: boolean;
+  hideLabelOnMobile?: boolean;
+  compact?: boolean;
+}
+
+function isBlogPostPath(pathname: string | null): boolean {
+  if (!pathname) {
+    return false;
+  }
+
+  const segments = pathname.split('/').filter(Boolean);
+
+  if (segments[0] === 'blog') {
+    return segments.length >= 2;
+  }
+
+  return segments.length >= 3 && isBlogLocale(segments[0]) && segments[1] === 'blog';
 }
 
 function resolvePathAwareHrefs(
@@ -71,8 +88,16 @@ export default function BlogLanguageSwitcher({
   label,
   unavailableLabel,
   preserveCurrentPath = false,
+  hideOnPostPath = false,
+  hideLabelOnMobile = false,
+  compact = false,
 }: Props) {
   const pathname = usePathname();
+
+  if (hideOnPostPath && isBlogPostPath(pathname)) {
+    return null;
+  }
+
   const resolvedHrefs = preserveCurrentPath
     ? resolvePathAwareHrefs(pathname, hrefs)
     : hrefs;
@@ -85,21 +110,30 @@ export default function BlogLanguageSwitcher({
     window.localStorage.setItem(BLOG_LOCALE_STORAGE_KEY, locale);
   }
 
+  const wrapperClassName = compact ? 'inline-flex items-center gap-1.5' : 'inline-flex items-center gap-2';
+  const labelClassName = compact
+    ? `text-[10px] font-semibold uppercase tracking-[0.18em] text-blog-muted ${hideLabelOnMobile ? 'hidden sm:inline' : ''}`
+    : `text-[11px] font-semibold uppercase tracking-[0.22em] text-blog-muted ${hideLabelOnMobile ? 'hidden sm:inline' : ''}`;
+  const groupClassName = compact
+    ? 'inline-flex items-center rounded-full border border-blog-border bg-white p-0.5 shadow-sm'
+    : 'inline-flex items-center rounded-full border border-blog-border bg-white p-1';
+  const baseClassName = compact
+    ? 'rounded-full px-2 py-0.5 text-[11px] font-semibold leading-5 transition-colors'
+    : 'rounded-full px-3 py-1 text-xs font-semibold transition-colors';
+
   return (
-    <div className="inline-flex items-center gap-2">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blog-muted">
+    <div className={wrapperClassName}>
+      <span className={labelClassName}>
         {label}
       </span>
       <div
-        className="inline-flex items-center rounded-full border border-blog-border bg-white p-1"
+        className={groupClassName}
         role="group"
         aria-label={label}
       >
         {BLOG_LOCALES.map((locale) => {
           const isCurrent = locale === currentLocale;
           const href = resolvedHrefs[locale];
-          const baseClassName =
-            'rounded-full px-3 py-1 text-xs font-semibold transition-colors';
 
           if (isCurrent) {
             return (
