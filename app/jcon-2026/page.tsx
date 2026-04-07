@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import type { IconType } from "react-icons";
 import { useSyncExternalStore } from "react";
-import { FaFileAlt, FaQuestionCircle, FaStar } from "react-icons/fa";
+import { FaAnchor, FaBlog, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot, FaStar } from "react-icons/fa";
 import { Michroma } from "next/font/google";
 import SocialBadges from "../components/SocialBadges";
 
@@ -20,6 +21,60 @@ const SLIDO_URL = "https://app.sli.do/event/mrbyk6V9atpK4HLuP51qEL/live/question
 
 /** Replace with the target GitHub repository / Pages URL */
 const GITHUB_URL = "https://github.com/JohannesRabauer";
+
+type RelatedLink = {
+  href: string;
+  title: string;
+  description: string;
+  meta: string;
+  Icon: IconType;
+  iconPanelClassName: string;
+  iconClassName: string;
+  titleClassName: string;
+};
+
+const RELATED_LINKS: RelatedLink[] = [
+  {
+    href: "https://llm-coding.github.io/Semantic-Anchors",
+    title: "Semantic Anchors",
+    description: "Patterns for creating more stable references while working with AI in codebases.",
+    meta: "llm-coding.github.io/Semantic-Anchors",
+    Icon: FaAnchor,
+    iconPanelClassName: "border-[#f1f4ff]/35 bg-[#f1f4ff]/8",
+    iconClassName: "text-[#f1f4ff] drop-shadow-[0_0_10px_rgba(241,244,255,0.35)]",
+    titleClassName: "text-[#f1f4ff]",
+  },
+  {
+    href: "https://ai4jvm.com",
+    title: "ai4jvm.com",
+    description: "AI-focused JVM material, talks, and experiments around modern development workflows.",
+    meta: "ai4jvm.com",
+    Icon: FaRobot,
+    iconPanelClassName: "border-[#ff2c4d]/35 bg-[#ff2c4d]/10",
+    iconClassName: "text-[#ff2c4d] drop-shadow-[0_0_10px_rgba(214,42,66,0.45)]",
+    titleClassName: "text-[#ff2c4d]",
+  },
+  {
+    href: "https://rabauer.dev/en/blog",
+    title: "rabauer.dev blog",
+    description: "Articles, event recaps, and write-ups that go deeper into the themes behind this session.",
+    meta: "rabauer.dev/en/blog",
+    Icon: FaBlog,
+    iconPanelClassName: "border-[#8f9fcb]/35 bg-[#8f9fcb]/10",
+    iconClassName: "text-[#8f9fcb] drop-shadow-[0_0_10px_rgba(98,114,164,0.4)]",
+    titleClassName: "text-[#8f9fcb]",
+  },
+  {
+    href: "https://xdev.software/ueber-uns/xdev-commit-cards",
+    title: "xdev commit cards",
+    description: "Conversation cards designed to make review and feedback discussions more effective.",
+    meta: "xdev.software/xdev-commit-cards",
+    Icon: FaIdCard,
+    iconPanelClassName: "border-[#f4b25f]/35 bg-[#f4b25f]/10",
+    iconClassName: "text-[#f4b25f] drop-shadow-[0_0_10px_rgba(244,178,95,0.35)]",
+    titleClassName: "text-[#f4b25f]",
+  },
+];
 
 const subscribeToQrCodeAvailability = () => () => undefined;
 
@@ -129,6 +184,54 @@ export default function JConPage() {
             <span className={`${michroma.className} jcon-label w-full text-center text-[#ff2c4d] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Rate the session</span>
           </a>
         </div>
+
+        <section className="w-full max-w-6xl rounded-[1.25rem] border border-[#7f2d3a]/45 bg-[#120c0f]/72 px-5 py-6 shadow-[0_0_30px_rgba(80,28,36,0.18)] backdrop-blur-md">
+          <div className="flex flex-col gap-2 text-center sm:text-left">
+            <p className={`${michroma.className} text-[0.7rem] uppercase tracking-[0.4em] text-[#8f9fcb]`}>
+              After The Talk
+            </p>
+            <div className="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
+              <h3 className={`${michroma.className} text-xl text-[#f1f4ff] md:text-2xl`}>
+                Keep Exploring
+              </h3>
+              <p className="max-w-2xl text-sm leading-relaxed text-[#8f9fcb] md:text-base">
+                A few pages that connect directly to the ideas, tools, and review culture behind this session.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {RELATED_LINKS.map(({ Icon, href, title, description, meta, iconPanelClassName, iconClassName, titleClassName }) => (
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="jcon-card h-full w-full items-start gap-4 text-left"
+                aria-label={`Open ${title}`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`flex h-16 w-16 shrink-0 items-center justify-center rounded border ${iconPanelClassName}`}>
+                    <Icon className={`${iconClassName} text-3xl`} />
+                  </div>
+
+                  <div className="min-w-0">
+                    <h4 className={`${michroma.className} text-lg leading-tight ${titleClassName}`}>
+                      {title}
+                    </h4>
+                    <p className="mt-2 text-sm leading-relaxed text-[#c0c8e5]">
+                      {description}
+                    </p>
+                  </div>
+                </div>
+
+                <span className="text-[0.72rem] uppercase tracking-[0.22em] text-[#8f9fcb]">
+                  {meta}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
 
         <SocialBadges variant="jcon" />
       </div>
