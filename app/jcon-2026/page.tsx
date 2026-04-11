@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { IconType } from "react-icons";
 import { useSyncExternalStore } from "react";
-import { FaAnchor, FaBlog, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot, FaStar } from "react-icons/fa";
+import { FaAnchor, FaBlog, FaBook, FaCodeBranch, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot, FaStar } from "react-icons/fa";
 import { Michroma } from "next/font/google";
 import SocialBadges from "../components/SocialBadges";
 
@@ -73,6 +73,26 @@ const RELATED_LINKS: RelatedLink[] = [
     iconPanelClassName: "border-[#f4b25f]/35 bg-[#f4b25f]/10",
     iconClassName: "text-[#f4b25f] drop-shadow-[0_0_10px_rgba(244,178,95,0.35)]",
     titleClassName: "text-[#f4b25f]",
+  },
+  {
+    href: "https://github.com/JohannesRabauer/vaadin-routes-export-maven-plugin",
+    title: "Vaadin Routes Export",
+    description: "A Maven plugin for exporting Vaadin route information in a form that can be reused outside the app.",
+    meta: "github.com/JohannesRabauer/vaadin-routes-export-maven-plugin",
+    Icon: FaCodeBranch,
+    iconPanelClassName: "border-[#73d2de]/35 bg-[#73d2de]/10",
+    iconClassName: "text-[#73d2de] drop-shadow-[0_0_10px_rgba(115,210,222,0.35)]",
+    titleClassName: "text-[#73d2de]",
+  },
+  {
+    href: "https://github.com/joelparkerhenderson/architecture-decision-record",
+    title: "Architecture Decision Record",
+    description: "The ADR reference repository for capturing architectural decisions as lightweight, durable documents.",
+    meta: "github.com/joelparkerhenderson/architecture-decision-record",
+    Icon: FaBook,
+    iconPanelClassName: "border-[#d596f4]/35 bg-[#d596f4]/10",
+    iconClassName: "text-[#d596f4] drop-shadow-[0_0_10px_rgba(213,150,244,0.32)]",
+    titleClassName: "text-[#d596f4]",
   },
 ];
 
