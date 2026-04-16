@@ -1,0 +1,156 @@
+---
+title: "KI-Coding mit IBM Bob: Ein JavaFX-Schachspiel live bauen"
+date: "2026-04-13"
+summary: "Wir haben IBMs 40-Coin-Trial-Budget genutzt, um ein JavaFX-Schachspiel von Grund auf zu bauen. Prompt Enhancement und Custom Modes haben überzeugt, aber die Tokens waren aufgebraucht, bevor die Tests wieder aktiviert werden konnten."
+tags: ["ai-coding", "java", "javafx", "ibm-bob", "ai-ide", "live-coding"]
+youtubeId: "uvQwVpG3c5A"
+mainRepository: "https://github.com/JohannesRabauer/ibm-bob-javafx-chess"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "01:30"
+    label: "Hintergrund zu IBM Bob"
+  - time: "02:56"
+    label: "Fahrplan und Plan für die Session"
+  - time: "04:15"
+    label: "JavaFX-Skill"
+  - time: "05:36"
+    label: "Bobs Modi"
+  - time: "10:24"
+    label: "Bobs Einstellungen"
+  - time: "13:30"
+    label: "Prompting mit Prompt Enhancement"
+  - time: "23:50"
+    label: "Kontextfenster"
+  - time: "25:00"
+    label: "Plan finalisieren"
+  - time: "31:55"
+    label: "Code-Modus ausführen"
+  - time: "42:25"
+    label: "Orchestrator-Modus nutzen"
+  - time: "54:20"
+    label: "Bob Shell"
+  - time: "56:11"
+    label: "IBM Bob Dokumentation"
+  - time: "56:40"
+    label: "Bobs Modi und Custom Modes"
+  - time: "57:50"
+    label: "Prompting und Ausführung"
+  - time: "01:11:53"
+    label: "Eine lauffähige Anwendung"
+  - time: "01:14:00"
+    label: "Pläne als Markdown-Dateien"
+  - time: "01:22:40"
+    label: "Tests evaluieren"
+  - time: "01:39:20"
+    label: "Repository und Custom Modes"
+  - time: "01:43:15"
+    label: "Bob Hackathon und JCON"
+  - time: "01:46:40"
+    label: "Outputs prüfen"
+  - time: "01:53:30"
+    label: "Budget aufgebraucht!"
+  - time: "01:58:50"
+    label: "Letzter Blick auf die (un-)fertige Anwendung"
+  - time: "02:01:30"
+    label: "Fazit"
+---
+
+Ryan Jarvinen war zu Gast für eine Live-Session rund um [IBM Bob](http://bob.ibm.com/), IBMs KI-first-Entwicklungsumgebung. Das Ziel war einfach: Mit einem limitierten Trial-Budget von 40 Bobcoins ein funktionsfähiges JavaFX-Schachspiel von Grund auf bauen und schauen, wie weit eine KI-IDE ein Projekt realistisch bringen kann.
+
+<CoSpeakerCard
+  name="Ryan Jarvinen"
+  role="Principle Developer Advocate"
+  company="IBM"
+  bio="Ryan war dabei, um IBM Bob zu erkunden und das Trial-Budget beim Bau eines JavaFX-Schachspiels bis ans Limit auszureizen."
+  imageSrc="https://avatars.githubusercontent.com/ryanj"
+  github="https://github.com/ryanj"
+  linkedin="https://www.linkedin.com/in/ryanjarvinen"
+  x="https://x.com/ryanj"
+  bluesky="https://bsky.app/profile/rynj.bsky.social"
+/>
+
+## Was ist IBM Bob?
+
+Bob ist IBMs KI-first-IDE für Chat-gesteuerte Entwicklung, Echtzeit-Code-Review und sicherheitsbewusstes Refactoring. IBM bewirbt das Tool mit starkem Java-Support für Modernisierung und umfangreiche Refactorings. Ein auffälliger Punkt: Bob läuft intern auf IBMs eigenem LLM, und welches Modell konkret verwendet wird, bleibt verborgen.
+
+<div className="mdx-image-compact mdx-image-half">
+  <img
+    src="/blog/bob.png"
+    alt="IBM Bob logo"
+  />
+</div>
+
+Wir sind mit einer praktischen Frage reingegangen: Hält dieses Versprechen bei ungeskripteter Live-Entwicklung stand?
+
+## Was wir beobachtet haben
+
+### Prompt Enhancement: Ein paar Sekunden, aber es lohnt sich
+
+Bob hat ein Feature, das den Prompt anreichert, bevor er ans Modell geschickt wird. Die Anreicherung dauert ein paar Sekunden, liefert aber einen deutlich detaillierteren Prompt, den man vor dem Absenden noch bearbeiten kann. Die Ergebnisse waren spürbar besser, wenn es aktiv war. Für eine geplante Entwicklungssession ist das ein sinnvoller Tausch, beim schnellen Hin-und-Her kommt ein kleiner Zeitverzug dazu.
+
+### Modi sind das zentrale Konzept
+
+Bobs [Modi](https://bob.ibm.com/docs/ide/features/modes) definieren, wie sich der Agent verhält. Wir haben den Code-Modus für direkte Implementierung und den Orchestrator-Modus für Planung und Koordination genutzt. Modi sind hochgradig [anpassbar](https://bob.ibm.com/docs/ide/configuration/custom-modes), und sie zu verstehen ist essenziell für gute Ergebnisse. IBM stellt auch ein [Demo-Repository](https://github.com/IBM/bob-demo) mit Beispiel-Custom-Modes bereit.
+
+### Auto-Approval ist stufenweise einstellbar
+
+Anders als ein einfacher Ein/Aus-Schalter lässt Bob feinjustieren, wie viel Autonomie der Agent hat, bevor eine Freigabe nötig ist. Diese Granularität ist nützlich, weil man die Leine lockern kann, wenn man im Laufe einer Session Vertrauen aufbaut, ohne von Anfang an komplett die Kontrolle abzugeben.
+
+### Checkpoints nach jedem Edit
+
+Bob erstellt Checkpoints nach Änderungen, sodass sich sehr spezifische Schritte zurücksetzen lassen. Das ist ein sinnvolles Feature für agentische Workflows, in denen das Tool viele aufeinanderfolgende Änderungen vornimmt. Einen einzelnen Schritt rückgängig machen zu können, ohne alles andere zu verlieren, gibt mehr Kontrolle als ein einfaches Undo.
+
+### Single-Tasked by Design
+
+Bob pausiert, wenn man den Fokus auf eine andere Aufgabe wechselt. Das unterscheidet sich von anderen KI-IDE-Tools, die im Hintergrund weiterarbeiten. Es fühlte sich zunächst einschränkend an, aber Bob Shell bietet einen Workaround: Über die Shell lassen sich parallele Tasks starten, während der Hauptagent auf seine aktuelle Arbeit fokussiert bleibt.
+
+### LLM-Attribution
+
+Bob kann an das Ende generierter Dateien eine "Made with Bob"-Attribution anfügen. Das ist optional und lässt sich ein- oder ausschalten. Ein kleines Detail, aber gut zu wissen, wenn man generierte Dateien sauber halten möchte.
+
+### Das 40-Coin-Budget
+
+Die 40 Bobcoins aus dem Trial reichten für etwa eine Stunde reiner KI-Arbeit. Das war genug, um eine lauffähige JavaFX-Schachanwendung mit Brett, Figuren und grundlegender Spiellogik zu erhalten, aber nicht genug, um sie fertigzustellen und zu polieren. Als die Coins aufgebraucht waren, mussten wir die Session abbrechen.
+
+## Was nicht gut funktioniert hat
+
+### Fokuswechsel während des Schreibens von Dateien
+
+Das war die größte Frustration. Wenn Bob Dateien schrieb und man den Fokus auf einen anderen Editor-Tab oder ein anderes Fenster wechselte, wurde der Prozess gestört. Das fühlte sich wie ein echter Workflow-Blocker an, und wir hoffen, dass das in einem zukünftigen Update behoben wird.
+
+### Tests wurden deaktiviert und kamen nie zurück
+
+An einem Punkt entschied Bob, Tests vorübergehend zu deaktivieren, um zu isolieren, woher die Fehler kamen. Das ist im Prinzip eine vernünftige Debugging-Strategie. Das Problem war, dass die Bobcoins aufgebraucht waren, bevor die Tests wieder aktiviert werden konnten. Der Endzustand des Projekts hatte deaktivierte Tests, und genau das ist das Risiko, wenn ein agentisches Tool die Test-Suite unter eingeschränktem Budget verwaltet.
+
+## Endzustand des Projekts
+
+Nach etwa einer Stunde aktiver KI-Arbeit hatten wir eine JavaFX-Schachanwendung, die ein Brett renderte, Figuren platzierte und grundlegende Zuglogik beherrschte. Fertig war sie nicht. Die UI brauchte Arbeit, einige Spielregeln waren unvollständig, und die Tests waren in einem kaputten Zustand.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/chess_game.png"
+    alt="Screenshot des JavaFX-Schachspiels aus der Session"
+    width={420}
+  />
+</div>
+
+Trotzdem: Innerhalb dieses Zeitrahmens von null zu einer lauffähigen Anwendung zu kommen, mit einer unbekannten KI-IDE und einem festen Token-Budget, war ein nützlicher Datenpunkt.
+
+## Fazit
+
+Bob zeigt interessante Ideen, besonders rund um Modi, Prompt Enhancement, Checkpoints und stufenweise Auto-Approval. Die Java-first-Positionierung wirkt authentisch, und die Anpassbarkeit des Agentenverhaltens geht weiter als bei den meisten Konkurrenz-Tools.
+
+Die praktischen Grenzen waren ebenfalls klar: Das Trial-Budget geht bei echter Entwicklung schnell zur Neige, Fokuswechsel während des Dateischreibens ist ein echtes Problem, und agentisches Test-Management braucht mehr Leitplanken.
+
+Wer KI-IDEs jenseits von GitHub Copilot und Cursor evaluiert, sollte Bob einen Blick gönnen, besonders in Java-lastigen Enterprise-Umgebungen.
+
+## Nützliche Links
+
+- [IBM Bob](http://bob.ibm.com/)
+- [Bob IDE Dokumentation](https://bob.ibm.com/docs/ide)
+- [Bob Modi](https://bob.ibm.com/docs/ide/features/modes)
+- [Custom Modes Konfiguration](https://bob.ibm.com/docs/ide/configuration/custom-modes)
+- [IBM Bob Demo Repository](https://github.com/IBM/bob-demo)
+- [Bob Hackathon](https://ibmdevday-bob.bemyapp.com/)

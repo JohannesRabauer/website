@@ -1,0 +1,156 @@
+---
+title: "AI Coding with IBM Bob: Building a JavaFX Chess Game Live"
+date: "2026-04-13"
+summary: "We used IBM Bob's 40-coin trial budget to build a JavaFX chess game from scratch. The prompt enhancement and custom modes impressed, but we ran out of tokens before the tests could be reactivated."
+tags: ["ai-coding", "java", "javafx", "ibm-bob", "ai-ide", "live-coding"]
+youtubeId: "uvQwVpG3c5A"
+mainRepository: "https://github.com/JohannesRabauer/ibm-bob-javafx-chess"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:30"
+    label: "Background on IBM Bob"
+  - time: "02:56"
+    label: "Roadmap and plan for the session"
+  - time: "04:15"
+    label: "JavaFX skill"
+  - time: "05:36"
+    label: "Bob's modes"
+  - time: "10:24"
+    label: "Bob's settings"
+  - time: "13:30"
+    label: "Prompting with prompt enhancement"
+  - time: "23:50"
+    label: "Context window"
+  - time: "25:00"
+    label: "Finalizing the plan"
+  - time: "31:55"
+    label: "Executing Code mode"
+  - time: "42:25"
+    label: "Using Orchestrator mode"
+  - time: "54:20"
+    label: "Bob Shell"
+  - time: "56:11"
+    label: "IBM Bob documentation"
+  - time: "56:40"
+    label: "Bob's modes and custom modes"
+  - time: "57:50"
+    label: "Prompting and executing"
+  - time: "01:11:53"
+    label: "Having a runnable application"
+  - time: "01:14:00"
+    label: "Plans as Markdown files"
+  - time: "01:22:40"
+    label: "Evaluating the tests"
+  - time: "01:39:20"
+    label: "Repository and custom modes"
+  - time: "01:43:15"
+    label: "Bob Hackathon and JCON"
+  - time: "01:46:40"
+    label: "Checking outputs"
+  - time: "01:53:30"
+    label: "Running out of budget!"
+  - time: "01:58:50"
+    label: "Last look at the unfinished application"
+  - time: "02:01:30"
+    label: "Conclusion"
+---
+
+Ryan Jarvinen joined me for a live session exploring [IBM Bob](http://bob.ibm.com/), IBM's AI-first development environment. The goal was straightforward: use a limited trial budget of 40 Bobcoins to build a functional JavaFX chess game from scratch and see how far an AI IDE can realistically take a project.
+
+<CoSpeakerCard
+  name="Ryan Jarvinen"
+  role="Principle Developer Advocate"
+  company="IBM"
+  bio="Ryan joined this live session to explore IBM Bob and help push its trial budget to the limit while building a JavaFX chess game."
+  imageSrc="https://avatars.githubusercontent.com/ryanj"
+  github="https://github.com/ryanj"
+  linkedin="https://www.linkedin.com/in/ryanjarvinen"
+  x="https://x.com/ryanj"
+  bluesky="https://bsky.app/profile/rynj.bsky.social"
+/>
+
+## What Is IBM Bob?
+
+Bob is IBM's AI-first IDE, built for chat-driven development, real-time code review, and security-aware refactoring. It claims strong first-class Java support for tasks like modernization and large-scale refactoring. One notable aspect: Bob runs on IBM's own LLM internally, and you do not see which model is actually used.
+
+<div className="mdx-image-compact mdx-image-half">
+  <img
+    src="/blog/bob.png"
+    alt="IBM Bob logo"
+  />
+</div>
+
+We went in with a practical question: does that promise hold up during unscripted live development?
+
+## What We Observed
+
+### Prompt Enhancement: Slow, but Powerful
+
+Bob has a feature that takes your prompt and enriches it before sending it to the model. Enhancement takes a few seconds, but the result is a much more detailed prompt that you can review and refine before it goes to the model. The results were noticeably better when it was active. For a planned development session that is a good trade-off, but for quick back-and-forth it adds a small delay.
+
+### Modes Are the Central Concept
+
+Bob's [modes](https://bob.ibm.com/docs/ide/features/modes) define how the agent behaves. We used Code mode for direct implementation and Orchestrator mode for higher-level planning and coordination. Modes are highly [customizable](https://bob.ibm.com/docs/ide/configuration/custom-modes), and understanding them is essential to getting good results. IBM also provides a [demo repository](https://github.com/IBM/bob-demo) with example custom modes.
+
+### Auto-Approval Is Gradually Adjustable
+
+Unlike a simple on/off toggle, Bob lets you fine-tune how much autonomy the agent has before requiring approval. That kind of granularity is useful because it lets you loosen the leash as you build trust during a session, without going fully hands-off from the start.
+
+### Checkpoints After Every Edit
+
+Bob creates checkpoints after edits, letting you revert very specific steps. That is a meaningful feature for agentic workflows where the tool makes many sequential changes. Being able to roll back a single step without losing everything else gives you more control than a simple undo.
+
+### Single-Tasked by Design
+
+Bob pauses when you switch focus to a different task. That is different from other AI IDE tools that continue working in the background. It felt limiting at first, but Bob Shell offers a workaround: you can use the shell to run parallel tasks.
+
+### LLM Attribution
+
+Bob can append a "Made with Bob" attribution at the end of generated files. It is optional and can be toggled on or off. A small detail, but worth knowing if you care about keeping generated files clean.
+
+### The 40-Coin Budget
+
+The 40 Bobcoins from the trial lasted about one hour of pure AI work. That was enough to get a runnable JavaFX chess application with a board, pieces, and basic game logic, but not enough to finish and polish it. When the coins ran out, we had to stop mid-session.
+
+## What Did Not Work Well
+
+### Focus Switching While Writing Files
+
+This was the biggest frustration. When Bob was writing files, switching focus to another editor tab or window disrupted the process. It felt like a real workflow blocker, and we hope it gets fixed in a future update.
+
+### Tests Got Disabled and Never Came Back
+
+At one point, Bob decided to temporarily disable tests to isolate where errors were coming from. That is a reasonable debugging strategy in principle. The problem was that we ran out of Bobcoins before the tests could be reactivated. The final state of the project had tests disabled, which is exactly the kind of risk you take when an agentic tool manages your test suite under a constrained budget.
+
+## Final State of the Project
+
+After roughly an hour of active AI work, we had a JavaFX chess application that rendered a board, placed pieces, and handled some basic move logic. It was not finished. The UI needed work and the tests were in a broken state.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/chess_game.png"
+    alt="Screenshot of the JavaFX chess game from the session"
+    width={420}
+  />
+</div>
+
+Still, getting to a runnable application from zero in that timeframe, with an unfamiliar AI IDE and a hard token budget, was a useful data point.
+
+## Takeaway
+
+Bob shows interesting ideas, especially around modes, prompt enhancement, checkpoints, and gradual auto-approval. The Java-first positioning feels genuine, and the customizability of agent behavior goes further than most competing tools.
+
+The practical limits were also clear: the trial budget runs out fast during real development, focus switching during file writes is a real problem, and agentic test management needs more guardrails.
+
+If you are evaluating AI IDEs beyond GitHub Copilot and Cursor, Bob is worth a look, particularly if you work in Java-heavy enterprise environments.
+
+## Useful Links
+
+- [IBM Bob](http://bob.ibm.com/)
+- [Bob IDE Documentation](https://bob.ibm.com/docs/ide)
+- [Bob Modes](https://bob.ibm.com/docs/ide/features/modes)
+- [Custom Modes Configuration](https://bob.ibm.com/docs/ide/configuration/custom-modes)
+- [IBM Bob Demo Repository](https://github.com/IBM/bob-demo)
+- [Bob Hackathon](https://ibmdevday-bob.bemyapp.com/)

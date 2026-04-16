@@ -226,6 +226,10 @@
     margin: 0 auto;
   }
 
+  .prose-blog .mdx-image-half {
+    width: min(100%, 210px);
+  }
+
   .prose-blog .mdx-image-compact > img {
     width: 100%;
   }
