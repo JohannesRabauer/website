@@ -16,11 +16,9 @@ const michroma = Michroma({
 /** Slido Q&A link is shown until midnight on 22 April 2026 */
 const SLIDO_DEADLINE = new Date("2026-04-22T23:59:59");
 
-/** Replace with your actual Slido event URL */
 const SLIDO_URL = "https://app.sli.do/event/mrbyk6V9atpK4HLuP51qEL/live/questions?section=ce0c8c2b-1ebc-4f04-bf89-c718917ad6f2";
 
-/** Replace with the target GitHub repository / Pages URL */
-const GITHUB_URL = "https://github.com/JohannesRabauer";
+const GITHUB_URL = "https://github.com/JohannesRabauer/website/blob/main/public/jcon-2026/Ten%20Angry%20Comments%20Later.pdf";
 
 type RelatedLink = {
   href: string;
