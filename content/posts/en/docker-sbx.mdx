@@ -1,0 +1,152 @@
+---
+title: "How Safe Is Docker Sandbox? Testing AI Agents with Java"
+date: "2026-04-30"
+summary: "Kevin Wittek and I ran a deliberately vulnerable Java project through Docker Sandbox to find out whether sbx can actually contain an AI agent in YOLO mode. The isolation held, and it changed how I think about running agents safely."
+tags: ["docker", "docker-sandbox", "ai-agents", "java", "maven", "github-copilot", "security", "testcontainers", "spring-boot", "vaadin", "live-coding"]
+youtubeId: "I-FqemEnUAc"
+mainRepository: "https://github.com/JohannesRabauer/docker-sandbox-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Countdown"
+  - time: "00:10"
+    label: "Introduction"
+  - time: "10:41"
+    label: "Creating our first sandbox"
+  - time: "17:30"
+    label: "Explaining credential proxying"
+  - time: "23:30"
+    label: "Starting the first sandbox"
+  - time: "26:30"
+    label: "Running our malicious project"
+  - time: "33:40"
+    label: "Rerunning without Readme - Part 1"
+  - time: "37:30"
+    label: "Sidetrack: Working in a team with AI"
+  - time: "40:30"
+    label: "Rerunning without Readme - Part 2"
+  - time: "43:00"
+    label: "Looking at the blocked network request"
+  - time: "45:45"
+    label: "Sidetrack: Is there a need for a human in the loop?"
+  - time: "53:40"
+    label: "Sidetrack: Does sbx do prompt scrubbing / sanitising?"
+  - time: "55:50"
+    label: "Docker inside Docker sbx"
+  - time: "01:02:55"
+    label: "Sidetrack: My Keyboard and European Layout"
+  - time: "01:05:30"
+    label: "Docker inside sbx (Testcontainers)"
+  - time: "01:22:40"
+    label: "k3s / k8s in sbx?"
+  - time: "01:23:30"
+    label: "Using Claude with sbx CLI — Port forwarding in sbx"
+  - time: "01:33:30"
+    label: "Using a local LLM with sbx"
+  - time: "01:43:50"
+    label: "Fun-Project — Result"
+  - time: "01:46:36"
+    label: "Conclusion / Summary"
+  - time: "01:48:15"
+    label: "Fun-Project — Code Analysis / Debugging"
+  - time: "01:54:00"
+    label: "Conclusion / Summary"
+---
+
+The question behind this session was simple: if you give an AI agent broad access and minimal restrictions, what stops it from doing something harmful? [Docker Sandbox (sbx)](https://docs.docker.com/ai/sandboxes/) is Docker's answer to that. Kevin Wittek joined me to test it with a real, intentionally vulnerable Java and Maven project designed to leak credentials when given the chance.
+
+<CoSpeakerCard
+  name="Kevin Wittek"
+  role="Engineering Leader"
+  company="Docker"
+  bio="Kevin is part of the Docker and Testcontainers organizations and brings deep expertise in containerization, developer tooling, and testing workflows. He joined the session to put Docker Sandbox through its paces against a real security scenario."
+  imageSrc="https://avatars.githubusercontent.com/kiview"
+  github="https://github.com/kiview"
+  linkedin="https://www.linkedin.com/in/kevin-wittek/"
+  x="https://twitter.com/Kiview"
+  bluesky="https://bsky.app/profile/wittek.dev"
+/>
+
+## What Is Docker Sandbox?
+
+Docker Sandbox creates isolated container environments specifically for AI agent execution. Each sandbox gets its own file system, network, and credential scope. The key properties:
+
+- **Files are only mounted**, not permanently modified. The host file system is not exposed beyond what you explicitly mount.
+- **Network is restricted** by default. Outbound connections to unknown hosts are blocked unless you explicitly allow them.
+- **Credentials are never stored in the sandbox.** They are proxied through Docker's credential layer, so the agent sees something that works but cannot extract the real token.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/sbx-security.png"
+    alt="Docker Sandbox security model: isolated file system, restricted network, and proxied credentials"
+    width={600}
+  />
+  <p className="text-sm text-center text-blog-muted mt-1">Source: <a href="https://docs.docker.com/ai/sandboxes/security/" target="_blank" rel="noopener noreferrer">Docker Sandbox Security — Docker Docs</a> &copy; Docker, Inc.</p>
+</div>
+
+There are two ways to interact: a TUI with mouse support that is simple to navigate, and the [sbx CLI](https://docs.docker.com/reference/cli/sbx/) for scripted or more direct workflows.
+
+## Setting Up GitHub Copilot
+
+This was the most non-obvious part of the session. Connecting GitHub Copilot to a sandbox required two specific commands to wire the credential proxy:
+
+```bash
+gh auth refresh -h http://github.com/ -s copilot
+gh auth token | sbx secret set -g github
+```
+
+After that, both GitHub Copilot and Claude Code worked without issues. The important detail is that even the AI agent's own credentials are not stored inside the sandbox. They are proxied, so the sandbox can authenticate requests on behalf of the agent without exposing the underlying token.
+
+## The Security Test: Blocking a Credential Leak
+
+The demo project at [github.com/JohannesRabauer/docker-sandbox-demo](https://github.com/JohannesRabauer/docker-sandbox-demo) is designed to do something specific when run: it attempts to send a request to an unknown external URL that would carry credential data. A classic accidental exfiltration scenario.
+
+We ran the agent in YOLO mode, minimal restrictions, broad permissions, let it do whatever it wants. We ran the project twice.
+
+The first time, the README was present. LLMs are actually quite good at recognizing malicious intent from documentation, and that is exactly what happened: the agent read the README, understood the code was designed to leak credentials, and did not execute the problematic part. No sandbox intervention needed.
+
+The second time, we removed the README. Without that context, the agent had no way to know the code was harmful and executed it. That is when the sandbox stepped in: the outbound request to the unknown URL was blocked. At [43:00](https://www.youtube.com/watch?v=I-FqemEnUAc&t=2580) we looked at the blocked request directly. The network isolation caught exactly what the missing README could no longer prevent.
+
+## Docker Inside Docker: Testcontainers Works
+
+One of the more practical questions for Java developers: can you run Testcontainers inside a Docker Sandbox? The answer is yes. We ran a Testcontainers project inside sbx and it worked as expected. Starting containers within the sandbox is supported.
+
+We also briefly discussed running k3s or Kubernetes inside a sandbox at [01:22:40](https://www.youtube.com/watch?v=I-FqemEnUAc&t=4960), but did not try it.
+
+## Fun Project: Real-Time Racing Dashboard
+
+For the second half of the session we built a small project inside the sandbox: a live racing data dashboard using Vaadin, Spring Boot, and the [xdev chartjs-java-model](https://github.com/xdev-software/chartjs-java-model) component for chart rendering. Both Claude (via the sbx CLI) and GitHub Copilot contributed to building it.
+
+One feature we tested specifically was [port forwarding](https://docs.docker.com/reference/cli/sbx/ports/), which lets you map a port from the running sandbox to your host machine. That made it possible to open the running Vaadin app in a browser on the host while the entire Spring Boot process stayed inside the sandbox.
+
+## What Came Up Along the Way
+
+A few topics came up as productive sidetracks:
+
+**Human in the loop** ([45:45](https://www.youtube.com/watch?v=I-FqemEnUAc&t=2745)) — we discussed whether you still need active human oversight when the sandbox handles isolation. No definitive conclusion, but the premise shifts: instead of watching every step, you can focus on reviewing results.
+
+**Prompt scrubbing** ([53:40](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3220)) — does sbx sanitize or filter prompts before they reach the model? Discussed briefly; this is not a current sbx feature.
+
+**Custom agent templates with sbx-kits** — [sbx-kits](https://github.com/docker/sbx-kits-contrib) let you define custom sandbox environments as templates. We did not have time to try them, but it is a useful extension point for teams that need a consistent sandbox configuration across projects.
+
+**Local LLMs** ([01:33:30](https://www.youtube.com/watch?v=I-FqemEnUAc&t=5610)) — the path is: spin up OpenCode inside the sandbox and connect it to a local [Docker Model](https://docs.docker.com/ai/compose/models-and-compose/). The two gists cover two different ways to set up that connection: [kiview's gist](https://gist.github.com/kiview/8db14a06b493da0bdfd0291dcf47a0f4) and [doringeman's gist](https://gist.github.com/doringeman/7d52d319914e86e797ce6bd5f14af04b). We ran out of time before being able to demo it.
+
+**Keyboard layout** ([01:02:55](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3775)) — brief detour on typing European characters on an American keyboard layout. [EurKey](https://eurkey.steffen.bruentjen.eu/layout.html) was the recommendation.
+
+## Conclusion
+
+Docker Sandbox is now my preferred way to run AI agents. The core reason is simple: the isolation is real. Files are mounted, not owned. Network connections to unknown hosts are blocked. Credentials are proxied, not exposed.
+
+That changes the dynamic significantly. Instead of watching every action an agent takes, you can give it the space to work and then review what it produced. The sandbox handles the containment. That is a much more sustainable way to work with agents that need broad tool access.
+
+## Useful Links
+
+- [sbx CLI reference](https://docs.docker.com/reference/cli/sbx/)
+- [sbx port forwarding](https://docs.docker.com/reference/cli/sbx/ports/)
+- [sbx-kits for custom sandbox templates](https://github.com/docker/sbx-kits-contrib)
+- [xdev chartjs-java-model](https://github.com/xdev-software/chartjs-java-model)
+- [OpenCode inside sbx with local LLM — kiview's gist](https://gist.github.com/kiview/8db14a06b493da0bdfd0291dcf47a0f4)
+- [OpenCode inside sbx — doringeman's gist](https://gist.github.com/doringeman/7d52d319914e86e797ce6bd5f14af04b)
+- [Docker Models](https://docs.docker.com/ai/compose/models-and-compose/)
+- [EurKey European keyboard layout](https://eurkey.steffen.bruentjen.eu/layout.html)
+- [Demo repository](https://github.com/JohannesRabauer/docker-sandbox-demo)
