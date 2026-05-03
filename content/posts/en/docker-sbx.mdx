@@ -2,7 +2,7 @@
 title: "How Safe Is Docker Sandbox? Testing AI Agents with Java"
 date: "2026-04-30"
 summary: "Kevin Wittek and I ran a deliberately vulnerable Java project through Docker Sandbox to find out whether sbx can actually contain an AI agent in YOLO mode. The isolation held, and it changed how I think about running agents safely."
-tags: ["docker", "docker-sandbox", "ai-agents", "java", "maven", "github-copilot", "security", "testcontainers", "spring-boot", "vaadin", "live-coding"]
+tags: ["docker", "docker-sandbox", "ai-agents", "java", "maven", "github-copilot", "security", "testcontainers", "spring-boot", "vaadin"]
 youtubeId: "I-FqemEnUAc"
 mainRepository: "https://github.com/JohannesRabauer/docker-sandbox-demo"
 draft: false
@@ -123,15 +123,15 @@ One feature we tested specifically was [port forwarding](https://docs.docker.com
 
 A few topics came up as productive sidetracks:
 
-**Human in the loop** ([45:45](https://www.youtube.com/watch?v=I-FqemEnUAc&t=2745)) — we discussed whether you still need active human oversight when the sandbox handles isolation. No definitive conclusion, but the premise shifts: instead of watching every step, you can focus on reviewing results.
+**Human in the loop** ([45:45](https://www.youtube.com/watch?v=I-FqemEnUAc&t=2745)) we discussed where human oversight still matters when AI writes the code. My take: a human needs to review AI-generated code at some point, and pull requests are a natural place for that. Kevin pushed back a bit: maybe the PR is not the right level, and what really matters is that whole releases get thoroughly validated, whether by automated tests or by humans. No final answer, but it is a useful distinction.
 
-**Prompt scrubbing** ([53:40](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3220)) — does sbx sanitize or filter prompts before they reach the model? Discussed briefly; this is not a current sbx feature.
+**Prompt scrubbing** ([53:40](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3220)) does sbx sanitize or filter prompts before they reach the model? Discussed briefly; this is not a current sbx feature.
 
 **Custom agent templates with sbx-kits** — [sbx-kits](https://github.com/docker/sbx-kits-contrib) let you define custom sandbox environments as templates. We did not have time to try them, but it is a useful extension point for teams that need a consistent sandbox configuration across projects.
 
-**Local LLMs** ([01:33:30](https://www.youtube.com/watch?v=I-FqemEnUAc&t=5610)) — the path is: spin up OpenCode inside the sandbox and connect it to a local [Docker Model](https://docs.docker.com/ai/compose/models-and-compose/). The two gists cover two different ways to set up that connection: [kiview's gist](https://gist.github.com/kiview/8db14a06b493da0bdfd0291dcf47a0f4) and [doringeman's gist](https://gist.github.com/doringeman/7d52d319914e86e797ce6bd5f14af04b). We ran out of time before being able to demo it.
+**Local LLMs** ([01:33:30](https://www.youtube.com/watch?v=I-FqemEnUAc&t=5610)) the path is: spin up OpenCode inside the sandbox and connect it to a local [Docker Model](https://docs.docker.com/ai/compose/models-and-compose/). The two gists cover two different ways to set up that connection: [kiview's gist](https://gist.github.com/kiview/8db14a06b493da0bdfd0291dcf47a0f4) and [doringeman's gist](https://gist.github.com/doringeman/7d52d319914e86e797ce6bd5f14af04b). We ran out of time before being able to demo it.
 
-**Keyboard layout** ([01:02:55](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3775)) — brief detour on typing European characters on an American keyboard layout. [EurKey](https://eurkey.steffen.bruentjen.eu/layout.html) was the recommendation.
+**Keyboard layout** ([01:02:55](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3775)) brief detour on typing European characters on an American keyboard layout. [EurKey](https://eurkey.steffen.bruentjen.eu/layout.html) was the recommendation.
 
 ## Conclusion
 

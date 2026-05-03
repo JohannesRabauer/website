@@ -2,7 +2,7 @@
 title: "Wie sicher ist Docker Sandbox? KI-Agenten mit Java testen"
 date: "2026-04-30"
 summary: "Kevin Wittek und ich haben ein absichtlich verwundbares Java-Projekt durch Docker Sandbox laufen lassen, um zu prüfen, ob sbx einen KI-Agenten im YOLO-Modus wirklich einsperren kann. Die Isolation hat gehalten, und das verändert die Art, wie ich über sicheres Arbeiten mit Agenten denke."
-tags: ["docker", "docker-sandbox", "ai-agents", "java", "maven", "github-copilot", "security", "testcontainers", "spring-boot", "vaadin", "live-coding"]
+tags: ["docker", "docker-sandbox", "ai-agents", "java", "maven", "github-copilot", "security", "testcontainers", "spring-boot", "vaadin"]
 youtubeId: "I-FqemEnUAc"
 mainRepository: "https://github.com/JohannesRabauer/docker-sandbox-demo"
 draft: false
@@ -123,15 +123,15 @@ Eine Funktion, die wir gezielt getestet haben, war [Port Forwarding](https://doc
 
 Ein paar Themen kamen als produktive Abstecher auf:
 
-**Human in the loop** ([45:45](https://www.youtube.com/watch?v=I-FqemEnUAc&t=2745)) — wir haben diskutiert, ob man noch aktive menschliche Aufsicht braucht, wenn die Sandbox die Isolation übernimmt. Kein eindeutiges Fazit, aber die Ausgangslage ändert sich: Statt jeden Schritt zu beobachten, kann man sich auf das Review der Ergebnisse konzentrieren.
+**Human in the loop** ([45:45](https://www.youtube.com/watch?v=I-FqemEnUAc&t=2745)) wir haben diskutiert, wo menschliche Kontrolle noch wichtig ist, wenn KI den Code schreibt. Meine Position: KI-generierter Code muss irgendwann von einem Menschen geprüft werden, und Pull Requests sind dafür ein naheliegender Zeitpunkt. Kevin hat das etwas hinterfragt: Vielleicht ist der PR nicht die richtige Ebene, sondern es kommt darauf an, dass ganze Releases gründlich validiert werden, ob durch automatisierte Tests oder durch Menschen. Kein abschließendes Fazit, aber eine nützliche Unterscheidung.
 
-**Prompt-Scrubbing** ([53:40](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3220)) — filtert oder bereinigt sbx Prompts, bevor sie das Modell erreichen? Kurz diskutiert; das ist kein aktuelles sbx-Feature.
+**Prompt-Scrubbing** ([53:40](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3220)) filtert oder bereinigt sbx Prompts, bevor sie das Modell erreichen? Kurz diskutiert; das ist kein aktuelles sbx-Feature.
 
 **Eigene Agenten-Templates mit sbx-kits** — [sbx-kits](https://github.com/docker/sbx-kits-contrib) ermöglichen es, eigene Sandbox-Umgebungen als Templates zu definieren. Wir hatten keine Zeit, das auszuprobieren, aber es ist ein nützlicher Erweiterungspunkt für Teams, die eine einheitliche Sandbox-Konfiguration über Projekte hinweg brauchen.
 
-**Lokale LLMs** ([01:33:30](https://www.youtube.com/watch?v=I-FqemEnUAc&t=5610)) — der Weg ist: OpenCode innerhalb der Sandbox starten und mit einem lokalen [Docker Model](https://docs.docker.com/ai/compose/models-and-compose/) verbinden. Die beiden Gists beschreiben zwei verschiedene Wege, diese Verbindung einzurichten: [kiview's Gist](https://gist.github.com/kiview/8db14a06b493da0bdfd0291dcf47a0f4) und [doringeman's Gist](https://gist.github.com/doringeman/7d52d319914e86e797ce6bd5f14af04b). Für ein Demo reichte die Zeit nicht mehr.
+**Lokale LLMs** ([01:33:30](https://www.youtube.com/watch?v=I-FqemEnUAc&t=5610)) der Weg ist: OpenCode innerhalb der Sandbox starten und mit einem lokalen [Docker Model](https://docs.docker.com/ai/compose/models-and-compose/) verbinden. Die beiden Gists beschreiben zwei verschiedene Wege, diese Verbindung einzurichten: [kiview's Gist](https://gist.github.com/kiview/8db14a06b493da0bdfd0291dcf47a0f4) und [doringeman's Gist](https://gist.github.com/doringeman/7d52d319914e86e797ce6bd5f14af04b). Für ein Demo reichte die Zeit nicht mehr.
 
-**Tastaturlayout** ([01:02:55](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3775)) — kurzer Abstecher zum Thema europäische Sonderzeichen auf amerikanischen Tastaturen. [EurKey](https://eurkey.steffen.bruentjen.eu/layout.html) war die Empfehlung.
+**Tastaturlayout** ([01:02:55](https://www.youtube.com/watch?v=I-FqemEnUAc&t=3775)) kurzer Abstecher zum Thema europäische Sonderzeichen auf amerikanischen Tastaturen. [EurKey](https://eurkey.steffen.bruentjen.eu/layout.html) war die Empfehlung.
 
 ## Fazit
 
