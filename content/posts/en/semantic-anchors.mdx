@@ -1,0 +1,145 @@
+---
+title: "LLM Coding with Semantic Anchors: From Vibe Coding to a Real Java App"
+date: "2026-05-10"
+summary: "Ralf D. Müller introduced Semantic Anchors, Semantic Contracts, and Spec-Driven Development — a structured path from a rough idea to a full architecture document, specification, and GitHub Issues, without writing a single line of code."
+tags: ["semantic-anchors", "ai-agents", "java", "spec-driven-development", "arc42", "doctoolchain", "vibe-coding"]
+youtubeId: "Q_DWMayAQEQ"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "06:22"
+    label: "Semantic Anchors"
+  - time: "17:40"
+    label: "Spec-Driven Development"
+  - time: "21:12"
+    label: "Add Feature Request - TDD Hamburg School"
+  - time: "24:09"
+    label: "Semantic Contracts"
+  - time: "27:20"
+    label: "Start Coding with Semantic Contracts and Docker sbx"
+  - time: "34:22"
+    label: "Creating Requirements with the Socratic Method"
+  - time: "51:20"
+    label: "Vibe-Coding Risk Radar"
+  - time: "01:04:00"
+    label: "Installing docToolchain (small failure ^^)"
+  - time: "01:11:05"
+    label: "Create an arc42 document from the Requirements"
+  - time: "01:26:00"
+    label: "Looking at one ADR in depth"
+  - time: "01:29:00"
+    label: "Core advantage of Semantic Contracts"
+  - time: "01:32:15"
+    label: "Create the Specification"
+  - time: "01:42:40"
+    label: "Create Epic- and Story-Issues for implementation"
+  - time: "01:43:51"
+    label: "Why use CLAUDE.md for Semantic Contracts and not Skills?"
+  - time: "01:45:26"
+    label: "What about Stale Documentation?"
+  - time: "01:48:45"
+    label: "Cucumber or Gherkin tests"
+  - time: "01:49:20"
+    label: "Do LLMs ignore tests?"
+  - time: "01:50:58"
+    label: "Check the Issues"
+  - time: "01:54:05"
+    label: "Analyse Issues through the LLM"
+  - time: "02:00:00"
+    label: "Implementing the Issues"
+  - time: "02:15:20"
+    label: "Summary / Conclusion"
+---
+
+Ralf D. Müller joined me for a session that started with a question: can you take a vague application idea and turn it into a complete architecture document, a full specification, and a ready-to-implement GitHub backlog, using only prompts? That is what we set out to show, building a train scheduling application for model railroads in Java with Quarkus, Vaadin, and PostgreSQL, without writing a line of code ourselves.
+
+<CoSpeakerCard
+  name="Ralf D. Müller"
+  role="arc42 committer and creator of docToolchain"
+  bio="Ralf is an arc42 committer and the creator of docToolchain, the docs-as-code toolchain for software teams. He has spent years arguing that documentation belongs in the same repository as the code — which turned out to be a smart bet in the AI era."
+  imageSrc="https://avatars.githubusercontent.com/rdmueller"
+  github="https://github.com/rdmueller"
+  linkedin="https://www.linkedin.com/in/rdmueller/"
+/>
+
+## One Word Does a Lot of Work
+
+**Semantic Anchors** are established terms that activate full knowledge domains inside any modern LLM. You do not install or download them. You type them.
+
+Instead of writing a long prompt explaining what Gherkin is, you just say "Write acceptance criteria in Gherkin." The model already knows the format, the conventions, and the intent. The same applies to terms like *arc42*, *MECE*, *Clean Architecture*, or *ADR according to Nygard*. Each one pulls in a deep body of knowledge with a single word.
+
+**Semantic Contracts** go one step further. While Anchors reference public knowledge, Contracts define what specific terms mean *in your project*. You write them as compact rules in your `CLAUDE.md` or `AGENTS.md` file. The AI reads them at the start of every session. A Contract might specify: "Architecture documentation follows arc42 with C4 diagrams. Every architecture decision is an ADR according to Nygard, evaluated with a Pugh Matrix." Now every session starts with that shared context, without repeating it in every prompt.
+
+**Spec-Driven Development** is the workflow that connects both. The idea is simple: before the AI writes a single line of code, you build up a complete specification through a series of structured prompts. That includes requirements, an architecture document, use cases, and acceptance criteria. Once those exist, you turn them into GitHub Issues. Then you tell the agent to implement them one by one. The smaller the issue, the more reliably the agent handles it on its own.
+
+## From Blank Page to GitHub Issues
+
+The most impressive part of the session was how fast we moved from nothing to a structured set of artifacts.
+
+We started with the **Socratic Method**. The AI asked at most three questions at a time, challenged our assumptions, and kept going until it had a clear picture of what we wanted to build. That back-and-forth was surprisingly efficient, and it produced requirements that were clearer and more complete than a free-form description would have been. This was my personal highlight of the session.
+
+From there we generated a PRD, then a full **arc42** architecture document. If you have not used arc42 before, it is a template that covers 12 sections: goals, constraints, context, building blocks, deployment, and more. The AI filled all of it from our requirements. It also produced **Architecture Decision Records** for choices like the database and the UI framework, each with a Pugh Matrix that evaluated the alternatives.
+
+After that came the specification: Persona Use Cases in Cockburn's Fully Dressed format, Activity Diagrams, and acceptance criteria in Gherkin. Then the AI generated GitHub Issues from those, Epics and User Stories, with dependencies marked between them.
+
+At that point the backlog was ready. We started implementation but ran out of time before finishing. That is not a failure. The whole point is that once the issues exist and the spec is solid, the implementation step becomes almost mechanical. You tell the agent to pick the next issue and implement it according to the spec and the architecture docs.
+
+One thing we noticed at the end: the issues contained nothing about a GUI. That was our own oversight. We had not specified the GUI clearly enough in the requirements, so the AI left it out of the backlog. The spec drives what gets built — if something is missing from the spec, it will be missing from the issues too.
+
+We did hit two rough edges along the way: docToolchain failed to install on my WSL setup during the session, and PlantUML diagrams had minor rendering issues. Neither stopped us.
+
+## Why Ralf Was Well Prepared for This
+
+One of the more interesting moments in the session was realizing how much Ralf's pre-AI habits are paying off now.
+
+Ralf has maintained documentation-as-code for years, AsciiDoc files in the same repository as the code, built automatically by [docToolchain](https://doctoolchain.org/). He did not do this because of AI. He did it because good documentation belongs close to the code.
+
+The AI payoff is direct. When a model has access to structured, up-to-date documentation in the same repository, it has far better context for what the system is, what decisions were made, and why. That context leads to better implementation decisions, fewer wrong assumptions, and less back-and-forth.
+
+If you have been writing docs-as-code before AI became relevant, this session was a small vindication. If you have not, it is a good reason to start.
+
+## A Few Things Worth Knowing
+
+**Docker sbx** — We used Docker sbx to let the AI execute commands freely without constant permission prompts. It runs the agent in an isolated container so it can do whatever it needs to without security interruptions. I wrote about this approach in the [docker-sbx session recap](/en/blog/docker-sbx).
+
+**Ralf's dedicated AI profile** — Ralf uses a separate GitHub account ([raifdmueller](https://github.com/raifdmueller)) for his AI work. This gives him two things: stricter permissions for that account, and a clear audit trail. Looking at the commit history, you can always see whether it was Ralf or his AI alter ego that made a given change.
+
+**Vibe-Coding Risk Radar** — We also talked about the [Vibe-Coding Risk Radar](https://llm-coding.github.io/vibe-coding-risk-radar/), a tool that helps you assess how much safety infrastructure your project needs. It groups measures into tiers: Tier 1 is automated gates that are always active (linter, type checking, pre-commit hooks, dependency checks, CI tests). Higher tiers add probabilistic and organizational measures as your project's risk profile grows.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/risk_radar.png"
+    alt="Vibe-Coding Risk Radar showing cumulative tiers of mitigation measures"
+    width={420}
+  />
+</div>
+
+**CLAUDE.md vs Skills** — A question came up about why Ralf puts Semantic Contracts into `CLAUDE.md` rather than as reusable Skills. The answer is scope. `CLAUDE.md` is repository-specific and auto-loaded at the start of every session, with no manual invocation needed. Skills require an explicit call. For project-level conventions that should always apply, `CLAUDE.md` is the right place.
+
+**Stale documentation** — Another concern was whether the spec would drift away from the code over time. The spec-first approach inverts the usual dynamic. Instead of documenting after the fact, the spec is the authoritative source. When implementation reveals gaps, you update the spec first, then continue. The documentation stays current by design.
+
+## Useful Links
+
+- [Demo repository](https://github.com/JohannesRabauer/semantic-anchors-demo): Code, CLAUDE.md, and docs from the session
+- [Semantic Anchors](https://llm-coding.github.io/Semantic-Anchors/): The full catalog of Semantic Anchors
+- [Semantic Contracts](https://llm-coding.github.io/Semantic-Anchors/#/contracts): How to compose project-specific contracts
+- [Spec-Driven Development](https://llm-coding.github.io/Semantic-Anchors/#/spec-driven-development): The full workflow with prompts and cheat sheet
+- [Vibe-Coding Risk Radar](https://llm-coding.github.io/vibe-coding-risk-radar/): Risk tier assessment for AI-generated code
+- [arc42](https://arc42.org/): Architecture documentation template
+- [docToolchain](https://doctoolchain.org/): Docs-as-code toolchain
+  - [dacli](https://doctoolchain.org/dacli): CLI for docs-as-code workflows
+  - [AsciiDoc Linter](https://doctoolchain.org/asciidoc-linter): Linter for AsciiDoc files
+  - [Bausteinsicht](https://doctoolchain.org/Bausteinsicht/): Architecture-as-code with bidirectional draw.io sync
+- [Ralf D. Müller Blog](https://rdmueller.github.io/pages/blog.html): Ralf's writing on docs-as-code and software architecture
+- [Martinelli Unified Process](https://unifiedprocess.ai/): A complementary requirements-driven AI development methodology
+
+## My Takeaway
+
+Semantic Contracts feel like the most practical piece of this session. They solve a real problem: how do you maintain shared context across sessions without rewriting the same instructions every time?
+
+The workflow as a whole is a compelling answer to the blank-page problem. Instead of staring at an empty file wondering what to build first, you start with a conversation. The Socratic Method builds requirements. Requirements drive the architecture. Architecture shapes the specification. The specification becomes GitHub Issues. Issues drive implementation.
+
+In theory, you could hand the agent the full backlog and walk away. We ran out of time before getting there, but the foundation was solid.
+
+This approach fits alongside [Guided Coding](/en/blog/guided-coding) and [Vise Coding](/en/blog/vise-coding-in-practice) as another layer in a structured AI workflow. Each one tackles a different part of the problem. Semantic Contracts tackle the blank page and the context problem. The others handle quality and review discipline during implementation.

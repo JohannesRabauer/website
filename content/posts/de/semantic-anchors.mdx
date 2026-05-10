@@ -1,0 +1,145 @@
+---
+title: "LLM Coding mit Semantic Anchors: Von Vibe Coding zur echten Java-App"
+date: "2026-05-10"
+summary: "Ralf D. Müller hat Semantic Anchors, Semantic Contracts und Spec-Driven Development vorgestellt — ein strukturierter Weg von einer groben Idee zu einem vollständigen Architekturdokument, einer Spezifikation und einem GitHub-Backlog, ohne eine einzige Zeile Code zu schreiben."
+tags: ["semantic-anchors", "ai-agents", "java", "spec-driven-development", "arc42", "doctoolchain", "vibe-coding"]
+youtubeId: "Q_DWMayAQEQ"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "06:22"
+    label: "Semantic Anchors"
+  - time: "17:40"
+    label: "Spec-Driven Development"
+  - time: "21:12"
+    label: "Feature Request – TDD Hamburg School"
+  - time: "24:09"
+    label: "Semantic Contracts"
+  - time: "27:20"
+    label: "Start mit Semantic Contracts und Docker sbx"
+  - time: "34:22"
+    label: "Requirements mit der Sokrates-Methode erstellen"
+  - time: "51:20"
+    label: "Vibe-Coding Risk Radar"
+  - time: "01:04:00"
+    label: "docToolchain installieren (kleiner Fehlschlag ^^)"
+  - time: "01:11:05"
+    label: "arc42-Dokument aus den Requirements erstellen"
+  - time: "01:26:00"
+    label: "Ein ADR im Detail anschauen"
+  - time: "01:29:00"
+    label: "Kernvorteil von Semantic Contracts"
+  - time: "01:32:15"
+    label: "Spezifikation erstellen"
+  - time: "01:42:40"
+    label: "Epic- und Story-Issues für die Implementierung anlegen"
+  - time: "01:43:51"
+    label: "Warum CLAUDE.md statt Skills für Semantic Contracts?"
+  - time: "01:45:26"
+    label: "Was ist mit veralteter Dokumentation?"
+  - time: "01:48:45"
+    label: "Cucumber oder Gherkin Tests"
+  - time: "01:49:20"
+    label: "Ignorieren LLMs Tests?"
+  - time: "01:50:58"
+    label: "Issues prüfen"
+  - time: "01:54:05"
+    label: "Issues durch das LLM analysieren"
+  - time: "02:00:00"
+    label: "Issues implementieren"
+  - time: "02:15:20"
+    label: "Zusammenfassung / Fazit"
+---
+
+Ralf D. Müller war zu Gast für eine Session mit einer klaren Frage: Kann man aus einer vagen App-Idee ein vollständiges Architekturdokument, eine Spezifikation und einen fertigen GitHub-Backlog bauen, nur mit Prompts? Genau das wollten wir zeigen — mit einer Fahrplan-App für Modellbahnen in Java, Quarkus, Vaadin und PostgreSQL, ohne selbst eine einzige Zeile Code zu schreiben.
+
+<CoSpeakerCard
+  name="Ralf D. Müller"
+  role="arc42-Committer und Autor von docToolchain"
+  bio="Ralf ist arc42-Committer und der Autor von docToolchain, der Docs-as-Code-Toolchain für Software-Teams. Er argumentiert seit Jahren, dass Dokumentation in dasselbe Repository gehört wie der Code — was sich im KI-Zeitalter als kluges Investment erwiesen hat."
+  imageSrc="https://avatars.githubusercontent.com/rdmueller"
+  github="https://github.com/rdmueller"
+  linkedin="https://www.linkedin.com/in/rdmueller/"
+/>
+
+## Ein Wort leistet viel
+
+**Semantic Anchors** sind etablierte Begriffe, die in modernen LLMs ganze Wissensdomänen aktivieren. Man installiert sie nicht und lädt sie nicht herunter. Man tippt sie einfach.
+
+Statt einem langen Prompt, der erklärt was Gherkin ist, schreibt man: „Schreib die Akzeptanzkriterien in Gherkin." Das Modell kennt das Format, die Konventionen und die Intention bereits. Dasselbe gilt für Begriffe wie *arc42*, *MECE*, *Clean Architecture* oder *ADR according to Nygard*. Jeder davon zieht ein tiefes Wissensfeld mit einem einzigen Wort an.
+
+**Semantic Contracts** gehen einen Schritt weiter. Während Anchors auf öffentlich bekanntes Wissen verweisen, legen Contracts fest, was bestimmte Begriffe *in deinem Projekt* bedeuten. Man schreibt sie als kompakte Regeln in die `CLAUDE.md` oder `AGENTS.md`. Das Modell liest sie am Anfang jeder Session. Ein Contract könnte lauten: „Architekturdokumentation folgt arc42 mit C4-Diagrammen. Jede Architekturentscheidung ist ein ADR according to Nygard, bewertet mit einer Pugh-Matrix." Jede Session startet dann mit diesem gemeinsamen Kontext, ohne ihn jedes Mal neu zu schreiben.
+
+**Spec-Driven Development** ist der Workflow, der beides verbindet. Die Idee: Bevor das Modell eine einzige Code-Zeile schreibt, baut man durch strukturierte Prompts eine vollständige Spezifikation auf. Requirements, Architekturdokument, Use Cases, Akzeptanzkriterien. Daraus werden GitHub Issues. Dann implementiert der Agent sie einzeln. Je kleiner das Issue, desto zuverlässiger handhabt der Agent es selbstständig.
+
+## Von der leeren Seite zu GitHub Issues
+
+Der beeindruckendste Teil der Session war, wie schnell wir von nichts zu einem strukturierten Set an Artefakten kamen.
+
+Wir starteten mit der **Sokrates-Methode**. Das Modell stellte uns maximal drei Fragen auf einmal, hinterfragte unsere Annahmen und fragte so lange weiter, bis es ein klares Bild von dem hatte, was wir bauen wollten. Dieser Dialog war überraschend effizient, und er lieferte klarere Requirements, als eine freie Beschreibung es getan hätte. Das war für mich das persönliche Highlight der Session.
+
+Daraus erzeugten wir ein PRD, dann ein vollständiges **arc42**-Architekturdokument. Falls du arc42 nicht kennst: Es ist ein Template mit 12 Abschnitten — Ziele, Randbedingungen, Kontext, Baustein-Ansicht, Deployment und mehr. Das Modell hat alles davon aus unseren Requirements gefüllt. Es hat auch **Architecture Decision Records** für Entscheidungen wie Datenbank und UI-Framework erstellt, jeweils mit einer Pugh-Matrix, die die Alternativen bewertet.
+
+Dann folgte die Spezifikation: Persona Use Cases im Fully-Dressed-Format nach Cockburn, Activity Diagrams und Akzeptanzkriterien in Gherkin. Schließlich hat das Modell daraus GitHub Issues generiert — Epics und User Stories, mit Abhängigkeiten zwischen den Issues.
+
+An diesem Punkt war der Backlog fertig. Wir haben mit der Implementierung angefangen, aber die Zeit ist uns ausgegangen. Das ist kein Scheitern. Der Kernpunkt ist: Wenn die Issues existieren und die Spezifikation solide ist, wird die Implementierung fast mechanisch. Du sagst dem Agenten, er soll das nächste Issue nehmen und es gemäß Spec und Architekturdokument implementieren.
+
+Etwas ist uns am Ende aufgefallen: In den Issues stand nichts über eine GUI. Das war unser eigener Fehler. Wir hatten die Benutzeroberfläche in den Requirements nicht klar genug beschrieben, also hat das Modell sie auch nicht in den Backlog aufgenommen. Die Spec bestimmt, was gebaut wird — was in der Spec fehlt, fehlt auch in den Issues.
+
+Wir hatten zwei kleinere Probleme unterwegs: docToolchain ließ sich während der Session auf meinem WSL nicht installieren, und PlantUML-Diagramme hatten kleinere Rendering-Probleme. Beides hat uns nicht aufgehalten.
+
+## Warum sich Ralfs Dokumentationsarbeit jetzt auszahlt
+
+Einer der interessanteren Momente in der Session war die Erkenntnis, wie sehr Ralfs Gewohnheiten von vor der KI-Ära jetzt Früchte tragen.
+
+Ralf pflegt seit Jahren Dokumentation als Code — AsciiDoc-Dateien im selben Repository wie der Code, automatisch gebaut von [docToolchain](https://doctoolchain.org/). Das hat er nicht wegen der KI gemacht. Er hat es gemacht, weil gute Dokumentation nah am Code sein sollte.
+
+Der KI-Vorteil ist direkt. Wenn ein Modell Zugriff auf strukturierte, aktuelle Dokumentation im selben Repository hat, hat es einen viel besseren Kontext: was das System ist, welche Entscheidungen getroffen wurden und warum. Das führt zu besseren Implementierungsentscheidungen, weniger falschen Annahmen und weniger Hin-und-Her.
+
+Wer Docs-as-Code schon vor der KI-Ära gepflegt hat, kann sich in dieser Session bestätigt fühlen. Wer noch nicht damit angefangen hat, hat jetzt einen guten Grund.
+
+## Noch ein paar nützliche Dinge
+
+**Docker sbx** — Wir haben Docker sbx genutzt, damit das Modell Befehle frei ausführen kann, ohne ständige Berechtigungsanfragen. Es läuft in einem isolierten Container, sodass es alles Nötige tun kann, ohne Sicherheitsunterbrechungen. Ich habe das im [docker-sbx-Session-Recap](/de/blog/docker-sbx) beschrieben.
+
+**Ralfs dediziertes KI-Profil** — Ralf verwendet ein eigenes GitHub-Konto ([raifdmueller](https://github.com/raifdmueller)) für seine KI-Arbeit. Das bringt zwei Vorteile: strengere Berechtigungen für dieses Konto und einen klaren Audit-Trail. In der Commit-History sieht man immer, ob Ralf selbst oder sein KI-Alter-Ego eine Änderung gemacht hat.
+
+**Vibe-Coding Risk Radar** — Wir haben auch über den [Vibe-Coding Risk Radar](https://llm-coding.github.io/vibe-coding-risk-radar/) gesprochen, ein Tool das dabei hilft einzuschätzen, wie viel Sicherheits-Infrastruktur ein Projekt braucht. Die Maßnahmen sind in Tiers gruppiert: Tier 1 sind automatisierte Gates, die immer aktiv sind (Linter, Type Checking, Pre-Commit Hooks, Dependency Checks, CI-Tests). Höhere Tiers fügen probabilistische und organisatorische Maßnahmen hinzu, je nachdem wie hoch das Risikoprofil des Projekts ist.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/risk_radar.png"
+    alt="Vibe-Coding Risk Radar mit kumulativen Tiers an Schutzmaßnahmen"
+    width={420}
+  />
+</div>
+
+**CLAUDE.md vs. Skills** — Es kam die Frage auf, warum Ralf Semantic Contracts in die `CLAUDE.md` packt statt als wiederverwendbare Skills. Der Grund ist der Scope. `CLAUDE.md` ist repository-spezifisch und wird am Anfang jeder Session automatisch geladen, ohne manuellen Aufruf. Skills müssen explizit aufgerufen werden. Für Konventionen, die immer gelten sollen, ist `CLAUDE.md` der richtige Ort.
+
+**Veraltete Dokumentation** — Ein weiteres Thema war, ob die Spec mit der Zeit vom Code wegdriftet. Der Spec-first-Ansatz dreht die übliche Dynamik um: Statt nach dem Schreiben zu dokumentieren, ist die Spec die maßgebliche Quelle. Wenn die Implementierung Lücken aufdeckt, wird erst die Spec aktualisiert, dann weitergemacht. Die Dokumentation bleibt by Design aktuell.
+
+## Nützliche Links
+
+- [Demo-Repository](https://github.com/JohannesRabauer/semantic-anchors-demo): Code, CLAUDE.md und Docs aus der Session
+- [Semantic Anchors](https://llm-coding.github.io/Semantic-Anchors/): Der vollständige Katalog der Semantic Anchors
+- [Semantic Contracts](https://llm-coding.github.io/Semantic-Anchors/#/contracts): Wie man projekt-spezifische Contracts zusammenstellt
+- [Spec-Driven Development](https://llm-coding.github.io/Semantic-Anchors/#/spec-driven-development): Der vollständige Workflow mit Prompts und Cheat Sheet
+- [Vibe-Coding Risk Radar](https://llm-coding.github.io/vibe-coding-risk-radar/): Risiko-Tier-Bewertung für KI-generierten Code
+- [arc42](https://arc42.org/): Architekturdokumentation-Template
+- [docToolchain](https://doctoolchain.org/): Docs-as-Code-Toolchain
+  - [dacli](https://doctoolchain.org/dacli): CLI für Docs-as-Code-Workflows
+  - [AsciiDoc Linter](https://doctoolchain.org/asciidoc-linter): Linter für AsciiDoc-Dateien
+  - [Bausteinsicht](https://doctoolchain.org/Bausteinsicht/): Architecture-as-Code mit bidirektionaler draw.io-Synchronisierung
+- [Ralf D. Müller Blog](https://rdmueller.github.io/pages/blog.html): Ralfs Texte zu Docs-as-Code und Softwarearchitektur
+- [Martinelli Unified Process](https://unifiedprocess.ai/): Eine komplementäre anforderungsgetriebene KI-Entwicklungsmethodik
+
+## Mein Fazit
+
+Semantic Contracts sind für mich das praktischste Stück dieser Session. Sie lösen ein echtes Problem: Wie behält man über Sessions hinweg gemeinsamen Kontext, ohne dieselben Anweisungen jedes Mal neu zu schreiben?
+
+Der Workflow als Ganzes ist eine überzeugende Antwort auf das Blank-Page-Problem. Statt vor einer leeren Datei zu sitzen, startet man mit einem Dialog. Die Sokrates-Methode baut Requirements auf. Requirements treiben die Architektur. Architektur formt die Spezifikation. Spezifikation wird zu GitHub Issues. Issues treiben die Implementierung.
+
+In der Theorie könnte man dem Agenten den fertigen Backlog geben und gehen. Wir hatten dafür keine Zeit mehr — aber das Fundament war solide.
+
+Dieser Ansatz passt gut neben [Guided Coding](/de/blog/guided-coding) und [Vise Coding](/de/blog/vise-coding-in-practice) als weitere Schicht in einem strukturierten KI-Workflow. Jeder davon löst einen anderen Teil des Problems. Semantic Contracts lösen das Blank-Page-Problem und das Kontext-Problem. Die anderen helfen bei Qualität und Review-Disziplin während der Implementierung.
