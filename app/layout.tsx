@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ReactNode } from "react";
+import Script from "next/script";
 import FloatingSiteControls from "./components/FloatingSiteControls";
 import SiteFooter from "./components/SiteFooter";
 
@@ -39,6 +40,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <FloatingSiteControls />
         <div className="flex-1">{children}</div>
         <SiteFooter />
+        <Script
+          data-goatcounter="https://rabauer.goatcounter.com/count"
+          src="//gc.zgo.at/count.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
