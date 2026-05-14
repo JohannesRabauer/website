@@ -16,6 +16,10 @@ export const metadata = {
   title: "Johannes Rabauer | Senior Software Engineer",
   description:
     "Personal site, portfolio, and links for Johannes Rabauer - Java Developer, Public Speaker, and Tech Enthusiast.",
+  twitter: {
+    site: '@JohannesRabauer',
+    creator: '@JohannesRabauer',
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

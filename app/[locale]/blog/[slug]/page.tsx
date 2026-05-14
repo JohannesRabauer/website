@@ -54,6 +54,7 @@ export async function generateMetadata({
       canonical: getBlogPostPath(locale, slug),
       languages: getBlogAlternates(slug, availableLocales),
     },
+    authors: [{ name: 'Johannes Rabauer', url: 'https://rabauer.dev' }],
     openGraph: {
       locale: copy.openGraphLocale,
       title: `${post.frontmatter.title} | ${copy.layout.blogLabel}`,
@@ -62,6 +63,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
+      creator: '@JohannesRabauer',
       images: ogImages.map((image) => image.url),
     },
   };
