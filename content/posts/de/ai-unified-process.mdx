@@ -1,0 +1,115 @@
+---
+title: "Spec-Driven Development und der AI Unified Process: Eine Vaadin-App von Null bis zum Deployment"
+date: "2026-05-14"
+summary: "Simon Martinelli hat Spec-Driven Development und den AI Unified Process vorgestellt und alle vier Phasen live durchgespielt — vom Vision-Dokument bis zu einer laufenden Vaadin-App, die aus einem Maven-Archetype aufgebaut wurde."
+tags: ["spec-driven-development", "ai-unified-process", "java", "vaadin", "jooq", "claude-code", "flyio", "neon"]
+youtubeId: "4Fw4Qne9z8E"
+mainRepository: "https://github.com/JohannesRabauer/spec-driven-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "06:50"
+    label: "Spec-Driven Development"
+  - time: "25:45"
+    label: "AI Unified Process"
+  - time: "48:03"
+    label: "Creating the Vision"
+  - time: "53:50"
+    label: "Creating the Requirements"
+  - time: "01:00:18"
+    label: "Creating the Entity Model"
+  - time: "01:05:32"
+    label: "Creating the Use Cases"
+  - time: "01:08:54"
+    label: "Creating one Use Case Specification"
+  - time: "01:14:30"
+    label: "Creating the Java Project (from a Maven Archetype)"
+  - time: "01:24:55"
+    label: "Creating Flyway migration"
+  - time: "01:30:10"
+    label: "Implementing one Use Case"
+  - time: "01:35:18"
+    label: "neon.tech / Fly.io"
+  - time: "01:40:50"
+    label: "Looking at the implementation"
+  - time: "01:48:00"
+    label: "Some debugging"
+  - time: "02:00:30"
+    label: "Looking at the running App"
+  - time: "02:07:30"
+    label: "Failing Deployment"
+  - time: "02:19:45"
+    label: "Conclusion"
+---
+
+Simon Martinelli war zu Gast für eine Session rund um zwei sich ergänzende Ideen: Spec-Driven Development als Philosophie und den AI Unified Process als strukturierten Workflow, um sie in die Praxis umzusetzen. Wir haben alle vier Phasen live durchlaufen, beginnend mit einem leeren Vision-Dokument bis hin zu einer laufenden Vaadin-App — und einem Deployment, das sehr nah dran war.
+
+<CoSpeakerCard
+  name="Simon Martinelli"
+  role="Java Architect and author of the Vaadin-JOOQ Archetype"
+  bio="Simon joined the session to introduce Spec-Driven Development and walk through the AI Unified Process end-to-end, from Vision document to a running Vaadin app."
+  imageSrc="https://avatars.githubusercontent.com/simasch"
+  github="https://github.com/simasch"
+/>
+
+## Was Spec-Driven Development bedeutet
+
+Simons Kernidee ist klar: Eine Spezifikation enthält nichts Technisches. Es ist ein reines Business-Anforderungsdokument — was das System tun soll, für wen und unter welchen Rahmenbedingungen. Keine Framework-Entscheidungen, keine Datenmodelle, keine API-Signaturen.
+
+Sobald diese Spezifikation existiert, gibt man sie der KI und lässt sie die Anwendung implementieren. Wenn sich Anforderungen ändern, aktualisiert man zuerst die Spezifikation und lässt die KI die Änderungen in den Code übertragen. Die Spezifikation ist die einzige Quelle der Wahrheit, die alles steuert.
+
+Das ist eine saubere Trennung. Sie hält fachliche Belange und technische Entscheidungen in verschiedenen Bereichen und gibt der KI eine fokussiertere Aufgabe.
+
+## Der AI Unified Process
+
+Der [AI Unified Process](https://unifiedprocess.ai/methodology.html) (AIUP) ist ein strukturierter Ansatz für KI-gestützte Entwicklung, inspiriert vom klassischen Unified Process. Er organisiert die Arbeit in vier Phasen:
+
+**Inception**: Man erstellt ein Vision-Dokument, einen Anforderungskatalog und eine Teststrategie. Diese Phase geht um Ausrichtung — was bauen wir und warum?
+
+**Elaboration**: Man erarbeitet die Architekturartefakte: ein Entity Model (die Domänenobjekte), eine System-Use-Cases-Datei mit Akteuren und ihren Aktionen, ein Software Architecture Document mit Entscheidungen zu Tech-Stack, Programmiersprache und Bibliotheken sowie Akzeptanztests.
+
+**Construction**: Man implementiert und testet Code auf Basis der Spezifikationen. Jedes Ergebnis — Code und Dokumente gleichermaßen — wird reviewt.
+
+**Transition**: Man deployt die Anwendung und führt User Acceptance Tests durch.
+
+Für jede Phase gibt es dedizierte KI-Skills im [AIUP Marketplace](https://github.com/AI-Unified-Process/marketplace). Der Marketplace ist das, was den Prozess praktikabel macht: Statt für jedes Artefakt von Grund auf zu prompten, ruft man einen speziell entwickelten Skill auf, der bereits weiß, was zu erstellen ist und wie.
+
+## Die Phasen live durchlaufen
+
+Wir haben alle Phasen live durchgespielt und dabei für jeden Schritt Marketplace-Skills eingesetzt.
+
+In der **Inception**-Phase haben wir das Vision-Dokument und den Anforderungskatalog erstellt. Das gab uns ein klares Bild davon, was die Anwendung sein soll, bevor wir irgendeinen Code angefasst haben.
+
+In der **Elaboration** haben wir das Entity Model erstellt, dann die Use-Cases-Datei, danach einzelne Use-Case-Spezifikationen und schließlich das Software Architecture Document.
+
+Sobald Elaboration abgeschlossen war, wechselten wir in die **Construction** und nutzten Simons [Vaadin-JOOQ Archetype](https://github.com/martinellich/vaadin-jooq-archetype), um das Java-Projekt aufzusetzen. Der Archetype leistet viel: Er richtet Projektstruktur, Build und Stack-Defaults in einem Schritt ein. Danach haben wir Flyway-Migrationen aus dem Entity Model generiert und einen Use Case von Ende bis Ende implementiert.
+
+## Claude Code und der Archetype
+
+Der Vaadin-JOOQ Archetype hat uns schnell vorankommen lassen. In Kombination mit Simons zusätzlichen AIUP-Skills fühlten sich Scaffolding und erste Implementierungsschritte reibungslos an.
+
+Eines haben wir dabei herausgefunden: Wir brauchten das [Vaadin Claude Plugin](https://github.com/vaadin/claude-plugin) überhaupt nicht. Der Archetype und die Marketplace-Skills gaben Claude Code genug Kontext, um Vaadin-spezifische Ausgaben korrekt zu behandeln.
+
+Was uns verlangsamte, war Claude Code selbst. Es war an diesem Tag spürbar träge. Die wahrscheinlichste Ursache war entweder ein Rate Limit des Pro-Abonnements oder Docker sbx, das ausgehende Netzwerkanfragen blockiert hat — etwas, das wir erst gegen Ende der Session vermuteten. Das zwang uns, mehr Zeit in der Construction-Phase zu verbringen als geplant.
+
+## Fast in Produktion
+
+Gegen Ende haben wir [neon.tech](https://neon.tech) eingerichtet und das Deployment auf [Fly.io](https://fly.io) vorbereitet. Beide Dienste brauchen wenig Konfiguration, und die Fähigkeit von neon.tech, eine PostgreSQL-Datenbank auf null zu skalieren, wenn sie nicht genutzt wird, macht es zu einer guten Wahl für Demo-Setups.
+
+Das Deployment haben wir nicht abgeschlossen. Ein kleines Problem mit der Fly.io-Konfiguration verhinderte, dass die App innerhalb der Session live ging. Das war ein Zeit- und Tooling-Problem, keine strukturelle Lücke im Prozess.
+
+## Fazit
+
+Spec-Driven Development fühlt sich wie eine natürliche Erweiterung der Ideen hinter Guided Coding, Vise Coding und Semantic Contracts an: Der KI ein klares, eingegrenztes Ziel geben, und sie arbeitet besser. Die Spezifikation rein in fachlichen Begriffen zu halten, ohne technische Details einfließen zu lassen, ist eine sinnvolle Einschränkung, die man leicht unterschätzt.
+
+Der AI Unified Process ist ein echter Schritt hin zu einem Standardansatz für KI-gestützte Softwareentwicklung. Die Vier-Phasen-Struktur, die Artefaktdefinitionen und die Marketplace-Skills senken die Einstiegshürde. Der ehrliche Nachteil: AIUP ist beim ersten Kontakt nicht einfach — es gibt viele bewegliche Teile, und es braucht einige Übungsrunden, bis der Prozess sich natürlich anfühlt. Aber das gilt für die meisten strukturierten Workflows. Sobald man ihn verinnerlicht hat, kann man abweichen, wo es sinnvoll ist. AIUP ist ein Prozessvorschlag, keine starre Spezifikation.
+
+## Nützliche Links
+
+- [AI Unified Process Methodologie](https://unifiedprocess.ai/methodology.html)
+- [AIUP Skills Marketplace](https://github.com/AI-Unified-Process/marketplace)
+- [Vaadin-JOOQ Archetype](https://github.com/martinellich/vaadin-jooq-archetype)
+- [Simons Petclinic-Beispiel mit AIUP](https://github.com/simasch/aiup-petclinic)
+- [neon.tech — Serverless PostgreSQL](https://neon.tech)
+- [Fly.io — App-Deployment](https://fly.io)

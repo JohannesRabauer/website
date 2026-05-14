@@ -1,0 +1,115 @@
+---
+title: "Spec-Driven Development and the AI Unified Process: Building a Vaadin App End-to-End"
+date: "2026-05-14"
+summary: "Simon Martinelli introduced Spec-Driven Development and the AI Unified Process, then walked through all four phases live — from Vision document to a running Vaadin app scaffolded from a Maven archetype, with Claude Code handling most of the implementation."
+tags: ["spec-driven-development", "ai-unified-process", "java", "vaadin", "jooq", "claude-code", "flyio", "neon"]
+youtubeId: "4Fw4Qne9z8E"
+mainRepository: "https://github.com/JohannesRabauer/spec-driven-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "06:50"
+    label: "Spec-Driven Development"
+  - time: "25:45"
+    label: "AI Unified Process"
+  - time: "48:03"
+    label: "Creating the Vision"
+  - time: "53:50"
+    label: "Creating the Requirements"
+  - time: "01:00:18"
+    label: "Creating the Entity Model"
+  - time: "01:05:32"
+    label: "Creating the Use Cases"
+  - time: "01:08:54"
+    label: "Creating one Use Case Specification"
+  - time: "01:14:30"
+    label: "Creating the Java Project (from a Maven Archetype)"
+  - time: "01:24:55"
+    label: "Creating Flyway migration"
+  - time: "01:30:10"
+    label: "Implementing one Use Case"
+  - time: "01:35:18"
+    label: "neon.tech / Fly.io"
+  - time: "01:40:50"
+    label: "Looking at the implementation"
+  - time: "01:48:00"
+    label: "Some debugging"
+  - time: "02:00:30"
+    label: "Looking at the running App"
+  - time: "02:07:30"
+    label: "Failing Deployment"
+  - time: "02:19:45"
+    label: "Conclusion"
+---
+
+Simon Martinelli joined me for a session built around two complementary ideas: Spec-Driven Development as a philosophy, and the AI Unified Process as a structured workflow to put it into practice. We worked through all four phases live, starting from a blank Vision document and finishing with a running Vaadin app — and a deployment that came very close.
+
+<CoSpeakerCard
+  name="Simon Martinelli"
+  role="Java Architect and author of the Vaadin-JOOQ Archetype"
+  bio="Simon joined the session to introduce Spec-Driven Development and walk through the AI Unified Process end-to-end, from Vision document to a running Vaadin app."
+  imageSrc="https://avatars.githubusercontent.com/simasch"
+  github="https://github.com/simasch"
+/>
+
+## What Spec-Driven Development Means
+
+Simon's core idea is straightforward: a specification contains nothing technical. It is a pure business requirements document — what the system should do, for whom, and under what constraints. No framework choices, no data models, no API signatures.
+
+Once that spec exists, you hand it to the AI and let it implement the application. When requirements change, you update the spec first, then let the AI propagate those changes into the code. The spec is the single source of truth that drives everything.
+
+That is a clean separation. It keeps business concerns and technical choices in different places, and it gives the AI a more focused job.
+
+## The AI Unified Process
+
+The [AI Unified Process](https://unifiedprocess.ai/methodology.html) (AIUP) is a structured approach to AI-assisted development, inspired by the classic Unified Process. It organizes work into four phases:
+
+**Inception**: You create a Vision document, a Requirements catalog, and a Test Strategy. This phase is about alignment — what are we building and why?
+
+**Elaboration**: You build out the architecture artifacts: an Entity Model (the domain objects), a System Use Cases file listing actors and their actions, a Software Architecture Document covering tech stack choices, programming language, and library decisions, and Acceptance Tests.
+
+**Construction**: You implement and test code from the specs. Every piece of output — code and documents alike — goes through review.
+
+**Transition**: You deploy the application and run User Acceptance Tests.
+
+Each phase has dedicated AI skills available at the [AIUP marketplace](https://github.com/AI-Unified-Process/marketplace). That marketplace is what makes the process practical: instead of prompting from scratch for each artifact, you invoke a purpose-built skill that already knows what to produce and how.
+
+## Walking Through Each Phase
+
+We went through every phase live, using marketplace skills at each step.
+
+In **Inception**, we created the Vision document and the Requirements catalog. That gave us a clear picture of what the application was before we touched any code.
+
+In **Elaboration**, we produced the Entity Model, then the Use Cases file, then individual Use Case Specifications, and finally the Software Architecture Document.
+
+Once Elaboration was done, we moved to **Construction** and used Simon's [Vaadin-JOOQ Archetype](https://github.com/martinellich/vaadin-jooq-archetype) to scaffold the Java project. The archetype does a lot: it sets up the project structure, the build, and the stack defaults in one step. After scaffolding we generated Flyway migrations from the Entity Model and started implementing one Use Case end-to-end.
+
+## Claude Code and the Archetype
+
+The Vaadin-JOOQ Archetype got us moving fast. Combined with Simon's additional AIUP skills, the scaffolding and first implementation steps felt smooth.
+
+One thing we discovered along the way: we did not need the [Vaadin Claude Plugin](https://github.com/vaadin/claude-plugin) at all. The archetype plus the marketplace skills gave Claude Code enough context to handle Vaadin-specific output correctly.
+
+What did slow us down was Claude Code itself. It was noticeably sluggish that day. The most likely cause was either a Pro subscription rate limit or Docker sbx blocking outbound network requests — something we only suspected toward the end of the session. That forced us to spend more time in the Construction phase than we had planned.
+
+## Almost to Production
+
+Toward the end we set up [neon.tech](https://neon.tech) and prepared for deployment to [Fly.io](https://fly.io). Both services need minimal configuration, and neon.tech's ability to scale a PostgreSQL database to zero when idle makes it a good fit for demo setups.
+
+We did not finish the deployment. A minor issue with the Fly.io configuration meant the app did not go live inside the session. That was a time and tooling problem, not a structural gap in the process.
+
+## Takeaways
+
+Spec-Driven Development feels like a natural extension of the ideas behind Guided Coding, Vise Coding, and Semantic Contracts: give the AI a clear, scoped target and it performs better. Keeping the spec in purely business terms, with no technical detail leaking in, is a sensible constraint that is easy to underestimate.
+
+The AI Unified Process is a genuine step toward a standard approach for AI-assisted software development. The four-phase structure, the artifact definitions, and the marketplace skills lower the activation energy for getting started. The honest downside is that AIUP is not simple on first contact — there are many moving parts, and it takes a few practice runs before the process starts to feel natural. But that is true of most structured workflows. Once you internalize it, you can adapt and deviate where it makes sense. AIUP is a process suggestion, not a rigid specification.
+
+## Useful Links
+
+- [AI Unified Process methodology](https://unifiedprocess.ai/methodology.html)
+- [AIUP Skills marketplace](https://github.com/AI-Unified-Process/marketplace)
+- [Vaadin-JOOQ Archetype](https://github.com/martinellich/vaadin-jooq-archetype)
+- [Simon's petclinic example with AIUP](https://github.com/simasch/aiup-petclinic)
+- [neon.tech — serverless PostgreSQL](https://neon.tech)
+- [Fly.io — app deployment](https://fly.io)
