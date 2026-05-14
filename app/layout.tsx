@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import Script from "next/script";
 import FloatingSiteControls from "./components/FloatingSiteControls";
 import SiteFooter from "./components/SiteFooter";
+import { BLOG_SITE_URL } from "@/lib/blog-i18n";
 
 /**
  * Root layout component wrapping all pages
@@ -11,6 +12,7 @@ import SiteFooter from "./components/SiteFooter";
  */
 
 export const metadata = {
+  metadataBase: new URL(BLOG_SITE_URL),
   title: "Johannes Rabauer | Senior Software Engineer",
   description:
     "Personal site, portfolio, and links for Johannes Rabauer - Java Developer, Public Speaker, and Tech Enthusiast.",
