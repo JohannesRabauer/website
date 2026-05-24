@@ -30,7 +30,7 @@ function extractText(node: ReactNode): string {
     }
 
     if (isValidElement(child)) {
-      text += extractText(child.props.children);
+      text += extractText((child.props as { children?: ReactNode }).children);
     }
   });
 
