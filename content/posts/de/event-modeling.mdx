@@ -1,0 +1,111 @@
+---
+title: "Event Modeling und Event Sourcing mit KI"
+date: "2026-05-21"
+summary: "Eine Live Session mit Adam Dymitruk, in der wir Event Sourcing klar von Event Modeling getrennt haben, ein erstes Modell in Miro erstellt haben und mit Copilot in Docker sbx ein lauffaehiges Java Demo erzeugen konnten, trotz wenig Zeit fuer einen tiefen Code Walkthrough."
+tags: ["event-modeling", "event-sourcing", "java", "copilot", "live-coding", "miro"]
+youtubeId: "9Tt33UZYA6M"
+mainRepository: "https://github.com/JohannesRabauer/event-modeling-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einfuehrung"
+  - time: "17:11"
+    label: "Event Sourcing"
+  - time: "30:36"
+    label: "Start mit Event Modeling"
+  - time: "01:18:07"
+    label: "Event Modell mit KI implementieren"
+  - time: "01:27:39"
+    label: "Video aus aelterer KI Implementierung"
+  - time: "01:31:14"
+    label: "Basisanwendung testen"
+  - time: "01:36:57"
+    label: "Implementierung mit GitHub Copilot"
+  - time: "01:37:47"
+    label: "Adams fertiges Beispiel"
+  - time: "01:52:15"
+    label: "Laufende Food Delivery Demo"
+  - time: "01:56:17"
+    label: "Zurueck zu Adams fertigem Beispiel"
+  - time: "02:19:16"
+    label: "Blick auf die Java Anwendung"
+  - time: "02:30:00"
+    label: "Fazit"
+---
+
+Adam Dymitruk war bei mir zu Gast fuer eine praktische Session zu Event Sourcing und Event Modeling. Fuer tiefes Java Coding blieb weniger Zeit als geplant, aber wir haben trotzdem eine generierte Anwendung zum Laufen gebracht und den Ablauf von Ende zu Ende validiert.
+
+<CoSpeakerCard
+  name="Adam Dymitruk"
+  role="Co-Host"
+  company="Adaptech Group"
+  bio="Adam hat den Begriff Event Modeling gepragt und entwickelt die Methode seit ueber zehn Jahren weiter. Er programmiert seit 1983 und ist der Gruender von eventmodeling.org. In dieser Session hat er die Grundkonzepte erklaert und geholfen, aus einem skizzierten Modell ein laufendes Java Beispiel zu machen."
+  imageSrc="https://avatars.githubusercontent.com/adymitruk"
+  website="https://eventmodeling.org"
+  github="https://github.com/adymitruk"
+  youtube="https://www.youtube.com/@AdamDymitruk"
+  locale="de"
+/>
+
+## Event Sourcing vs Event Modeling, kurz erklaert
+
+Der wertvollste Teil der Session war die klare Trennung von zwei Ideen, die oft vermischt werden.
+
+**Event Sourcing** ist eine Speicherstrategie. Fakten werden als Events nur angehaengt und Views werden durch Aggregation dieser Events aufgebaut. Die Historie bleibt erhalten, weil alte Events nicht ueberschrieben werden.
+
+**[Event Modeling](https://eventmodeling.org/resources)** ist eine Entwurfsmethode. Man beschreibt Aktionen und Verhalten als Commands, Events, Views und Aggregate, inklusive Rollen, die mit dem System interagieren. Automationen koennen spaeter ergänzt werden.
+
+Kurz gesagt, Event Sourcing beantwortet wie Daten persistiert werden, Event Modeling beantwortet wie Verhalten entworfen wird.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/event_sourcing.png"
+    alt="Hand-drawn comparison of CRUD and Event Sourcing"
+    width={1200}
+  />
+</div>
+
+## Erst das Event Modell, dann die Implementierung
+
+Nach der Begriffsabgrenzung haben wir in Miro ein erstes Event Modell skizziert. Das war einfach und produktiv und gab uns schnell ein gemeinsames Bild aus Akteuren, Commands, Events und Views.
+
+Adam hat mehrfach betont, dass das Board nicht nur ein Workshop Ergebnis ist, sondern auch die lebende Spezifikation. Ich denke weiterhin, dass die Synchronisierung mit dem Quellcode Disziplin braucht, aber KI Tools koennen solche Strukturen heute schon erstaunlich gut lesen und als Implementierungsgrundlage verwenden.
+
+Wer tiefer in das Thema Tooling einsteigen moechte: [Martin Dilger](https://github.com/dilgerma) und das Team bei [Nebulit](https://www.nebulit.de/eventmodeling-tooling) haben dedizierte Event Modeling Werkzeuge entwickelt, die sich lohnen.
+
+Das folgende Board ist ein vereinfachter Ausschnitt aus dem Modell, das wir in der Session skizziert haben.
+
+<div className="my-6 overflow-x-auto rounded-lg border border-blog-border bg-white p-2">
+  <img
+    src="/blog/event_modeling_example_miro.png"
+    alt="Event modeling Miro board"
+    width={2600}
+    className="h-auto max-w-none min-w-[1200px]"
+  />
+</div>
+
+## Vom Modell Screenshot zur laufenden Demo
+
+Nach dem Board haben wir einen Screenshot genommen und ihn in GitHub Copilot in Docker sbx importiert. Daraus konnten wir ein erstes laufendes Beispiel generieren.
+
+Die generierte Anwendung war ausfuehrlicher als erwartet, vor allem weil das Repository schon Kontext enthielt, dass es sich um ein Event Modeling Demo handelt. Die Ausgabe hatte dadurch mehr Erklaertext und Struktur als noetig fuer ein minimales Beispiel, lief aber.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/event_modeling_example_app.png"
+    alt="Generierte Event Modeling Demo Anwendung"
+    width={820}
+  />
+</div>
+
+Fuer eine tiefe Java Code Analyse reichte die Zeit in der Session nicht. Details zur Implementierung findest du im oeffentlichen [Session Repository](https://github.com/JohannesRabauer/event-modeling-demo).
+
+## Mein Fazit
+
+Event Sourcing wirkt fuer mich weiterhin wie eine sehr praktikable Persistenzstrategie, besonders wenn Historie und Nachvollziehbarkeit wichtig sind.
+
+Bei Event Modeling bin ich positiv, aber noch vorsichtig. Die Methode ist stark fuer gemeinsames Design, grosse Boards koennen aber schwer uebersichtlich werden. Der naechste Schritt ist fuer mich klar, ich muss es in einem weiteren echten Projekt testen und die Skalierung sehen.
+
+Waehrend der Session wollten wir uns auch [dieses kurze Video von Adam](https://www.youtube.com/watch?v=HJ63_wIrCQI) anschauen, hatten aber Probleme mit dem Audio. Lohnt sich separat nachzuholen.
+
+Wer weiterlesen moechte: die [Event Modeling Ressourcen](https://eventmodeling.org/resources) und der [Community Discord](https://discord.gg/Sw4MvagftJ) sind gute Einstiegspunkte. Es gibt ausserdem ein [Event Modeling Buch auf Deutsch](https://www.eventmodelers.de/eventmodeling-book/).

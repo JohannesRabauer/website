@@ -1,0 +1,110 @@
+---
+title: "Event Modeling and Event Sourcing with AI"
+date: "2026-05-21"
+summary: "A live session with Adam Dymitruk where we separated Event Sourcing from Event Modeling, sketched a first model in Miro, and generated a running Java demo with Copilot in Docker sbx, even though we had limited time for a deep code walkthrough."
+tags: ["event-modeling", "event-sourcing", "java", "copilot", "live-coding", "miro"]
+youtubeId: "9Tt33UZYA6M"
+mainRepository: "https://github.com/JohannesRabauer/event-modeling-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "17:11"
+    label: "Event Sourcing"
+  - time: "30:36"
+    label: "Starting Event Modeling"
+  - time: "01:18:07"
+    label: "Using AI to implement the event model"
+  - time: "01:27:39"
+    label: "Video from older AI implementation"
+  - time: "01:31:14"
+    label: "Testing base application"
+  - time: "01:36:57"
+    label: "Using GitHub Copilot for implementation"
+  - time: "01:37:47"
+    label: "Adam's completed example"
+  - time: "01:52:15"
+    label: "Running food delivery demo"
+  - time: "01:56:17"
+    label: "Back to Adam's completed example"
+  - time: "02:19:16"
+    label: "Looking at the Java application"
+  - time: "02:30:00"
+    label: "Conclusion"
+---
+
+Adam Dymitruk joined me for a practical session on Event Sourcing and Event Modeling. We had less time than expected for deep Java coding, but we still got a generated program running and validated the main workflow end to end.
+
+<CoSpeakerCard
+  name="Adam Dymitruk"
+  role="Co-host"
+  company="Adaptech Group"
+  bio="Adam coined the term Event Modeling and has been refining the methodology for over a decade. He started coding in 1983 and is the founder of eventmodeling.org. In this session he explained the core concepts and helped turn a sketched model into a running Java example."
+  imageSrc="https://avatars.githubusercontent.com/adymitruk"
+  website="https://eventmodeling.org"
+  github="https://github.com/adymitruk"
+  youtube="https://www.youtube.com/@AdamDymitruk"
+/>
+
+## Event Sourcing vs Event Modeling, in Plain Terms
+
+The most useful part of the stream was separating two ideas that often get mixed together.
+
+**Event Sourcing** is a storage strategy. You append facts as events, and build views by aggregating those events. You keep full history because you do not overwrite past events.
+
+**[Event Modeling](https://eventmodeling.org/resources)** is a design method. You map user actions and system behavior as commands, events, views, and aggregates, with roles that interact with the system. Automation can be added later as the model grows.
+
+In short, Event Sourcing answers how data is persisted, Event Modeling answers how behavior is designed.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/event_sourcing.png"
+    alt="Hand-drawn comparison of CRUD and Event Sourcing"
+    width={1200}
+  />
+</div>
+
+## Building the Event Model First
+
+After the concept split, we sketched an initial event model on a Miro board. That part was simple and productive. It gave us a concrete shared picture of actors, commands, events, and views.
+
+Adam repeated one key point during the stream: the board is not just a workshop artifact, it is also the living specification. I still think synchronization with source code needs discipline, but AI tools can already read these structures surprisingly well and use them as implementation input.
+
+If you want to go deeper on tooling for this approach, [Martin Dilger](https://github.com/dilgerma) and the team at [Nebulit](https://www.nebulit.de/eventmodeling-tooling) have built dedicated Event Modeling tooling worth exploring.
+
+The following board is a simplified snapshot of the model we sketched in the session.
+
+<div className="my-6 overflow-x-auto rounded-lg border border-blog-border bg-white p-2">
+  <img
+    src="/blog/event_modeling_example_miro.png"
+    alt="Event modeling Miro board"
+    width={2600}
+    className="h-auto max-w-none min-w-[1200px]"
+  />
+</div>
+
+## From Model Screenshot to Running Demo
+
+After creating the board, we took a screenshot and fed it into GitHub Copilot in Docker sbx. From that, we generated a first running example.
+
+The generated app was more verbose than expected, mostly because the repository already contained context that framed the project as an Event Modeling demo. So the output included more explanation and structure than we wanted for a minimal sample, but it still ran.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/event_modeling_example_app.png"
+    alt="Generated event modeling demo application"
+    width={820}
+  />
+</div>
+
+We did not have enough time to fully dissect the Java code in the stream. If you want to inspect the implementation details, the [session repository](https://github.com/JohannesRabauer/event-modeling-demo) is public.
+
+## What I Take Away
+
+Event Sourcing still looks like a very practical persistence strategy when history and traceability matter.
+
+For Event Modeling, I am optimistic but still cautious. The method is strong for collaborative design, but large boards can become hard to navigate. The next step for me is simple, I need to apply it in another real project and see how it scales.
+
+During the stream we also wanted to watch [this short video by Adam](https://www.youtube.com/watch?v=HJ63_wIrCQI), but ran into audio issues. Worth watching separately.
+
+If you want to explore further, the [Event Modeling resources page](https://eventmodeling.org/resources) and the [community Discord](https://discord.gg/Sw4MvagftJ) are good starting points. There is also an [Event Modeling book in German](https://www.eventmodelers.de/eventmodeling-book/) if that is your preferred language.
