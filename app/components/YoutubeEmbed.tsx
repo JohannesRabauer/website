@@ -66,19 +66,25 @@ export default function YoutubeEmbed({
   return (
     <div className="my-8">
       <div className="overflow-hidden rounded-[1.5rem] border border-blog-border bg-blog-surface shadow-md ring-1 ring-blog-purple/10">
-        <div className="relative aspect-video overflow-hidden bg-blog-purple-light">
+        <a
+          href={watchUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Watch "${title}" on YouTube`}
+          className="group relative block aspect-video overflow-hidden bg-blog-purple-light"
+        >
           <Image
             src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
             alt={title}
             fill
             sizes="(max-width: 1024px) 100vw, 896px"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20" />
 
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-red-600/95 text-white shadow-lg">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-red-600/95 text-white shadow-lg transition duration-300 group-hover:scale-110 group-hover:bg-red-500">
               <FaPlay className="ml-1 h-6 w-6" aria-hidden="true" />
             </span>
           </div>
@@ -91,7 +97,7 @@ export default function YoutubeEmbed({
               {title}
             </h3>
           </div>
-        </div>
+        </a>
 
         <div className="space-y-4 px-5 py-5 text-sm text-blog-muted">
           <div>
