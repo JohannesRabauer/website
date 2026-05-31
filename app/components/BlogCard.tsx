@@ -22,7 +22,7 @@ export default function BlogCard({ post }: { post: PostMeta }) {
         {youtubeId ? (
           <div className="relative w-full aspect-video flex-shrink-0 overflow-hidden">
             <Image
-              src={`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
+              src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
               alt={title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"

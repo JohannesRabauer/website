@@ -74,7 +74,7 @@ export default function YoutubeEmbed({
           className="group relative block aspect-video overflow-hidden bg-blog-purple-light"
         >
           <Image
-            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
             alt={title}
             fill
             sizes="(max-width: 1024px) 100vw, 896px"

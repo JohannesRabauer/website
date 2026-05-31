@@ -40,7 +40,7 @@ export async function generateMetadata({
   const ogImages = post.frontmatter.youtubeId
     ? [
         {
-          url: `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/hqdefault.jpg`,
+          url: `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/maxresdefault.jpg`,
           width: 480,
           height: 360,
         },
