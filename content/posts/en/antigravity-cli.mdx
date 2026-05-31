@@ -1,0 +1,115 @@
+---
+title: "How Good Is Google's New Antigravity CLI?"
+date: "2026-05-31"
+summary: "We built a Java marathon tracking app with Google's new Antigravity CLI — live, with Google's Abdel Sghiouar. Here's what we found."
+tags: ["Antigravity CLI", "Google AI", "Java", "Quarkus", "Vaadin", "AI Coding", "Live Coding"]
+youtubeId: "61KMU_3SPQI"
+mainRepository: "https://github.com/JohannesRabauer/antigravity-marathon-demo"
+timestamps:
+  - time: "0:00"
+    label: "Introduction"
+  - time: "3:44"
+    label: "History of Google Gemini and Antigravity"
+  - time: "8:49"
+    label: "Preparing Implementation"
+  - time: "14:00"
+    label: "Installing Skills"
+  - time: "28:03"
+    label: "Looking at the Implementation Plan"
+  - time: "31:45"
+    label: "Overwrite Implementation Plan or Add to it?"
+  - time: "36:30"
+    label: "Implementing the plan"
+  - time: "48:11"
+    label: "Agents and Skills"
+  - time: "51:55"
+    label: "Looking at the implementation"
+  - time: "55:44"
+    label: "Looking at the Walkthrough"
+  - time: "59:40"
+    label: "Starting the application - First try"
+  - time: "1:03:00"
+    label: "TDD with AI"
+  - time: "1:07:50"
+    label: "Debugging"
+  - time: "1:25:00"
+    label: "Debugging try: Vaadin Skills"
+  - time: "1:40:10"
+    label: "Debugging try: Update to Vaadin 25"
+  - time: "2:02:40"
+    label: "Debugging try: Change Quarkus to Spring Boot"
+  - time: "2:10:10"
+    label: "Conference Talk"
+  - time: "2:22:46"
+    label: "Conclusion"
+---
+
+We wanted to evaluate Google's new Antigravity CLI on something real, not a toy example. So Abdel and I built a Java marathon tracking app: GPX file imports, interactive route maps via OpenStreetMap, and pace, speed, and elevation charts — all using Quarkus, Vaadin, and Antigravity CLI. Here is what we found.
+
+<CoSpeakerCard
+  name="Abdel Sghiouar"
+  role="Cloud Developer Advocate"
+  company="Google"
+  github="https://github.com/boredabdel"
+  linkedin="https://www.linkedin.com/in/sabdelfettah/"
+  x="https://x.com/boredabdel"
+  bluesky="https://bsky.app/profile/boredabdel.bsky.social"
+/>
+
+## What Is Antigravity CLI?
+
+Antigravity CLI is a complete rewrite of Gemini CLI — same concept, new language. Where Gemini CLI was written in TypeScript, Antigravity is written in Go. Despite the name change and the rewrite, it feels immediately familiar: shortcuts, commands, and core behaviors carry over from other AI coding CLIs. For anyone who has used similar tools before, the learning curve is low.
+
+## Skills, Agents, and Tasks
+
+Antigravity CLI supports three extension points: skills, agents, and tasks. Skills teach the model domain-specific knowledge. Agents add specialized behavior. Tasks define units of work.
+
+If you are working on a Java or JVM project, two repositories are worth knowing:
+
+- [agent-skills](https://github.com/addyosmani/agent-skills) — a community collection of reusable skills
+- [jvm-skills](https://github.com/jvm-skills/jvm-skills) — skills specifically for the JVM ecosystem
+
+## How It Structures Work: Plans, Tasks, Walkthroughs
+
+Before writing any code, Antigravity CLI produces an implementation plan. You can read it, edit it, and choose whether to extend an existing plan or replace it. That decision point is genuinely useful — it gives you a natural moment to course-correct before the agent commits to a direction.
+
+As work progresses, it maintains a visible task list showing what has been completed. We noticed a few minor display bugs in that view, but nothing that blocked the workflow. When a batch of work is done, the tool writes a walkthrough summarizing what it did. That structure makes the process more transparent than most other tools in this space.
+
+## Permissions and the Sandbox
+
+Like other AI coding agents, Antigravity CLI asks for permission before touching the filesystem or running commands. You can approve individually, deny, or switch to "yolo mode" to allow everything without prompts.
+
+One standout feature: you can configure the client to run inside a sandbox, set directly in the settings file. It's a solid idea for keeping the agent's side effects contained and predictable. Unfortunately, the sandbox did not work during our session — it appears to still need some work. Worth watching in future releases.
+
+## Only Google AI Models
+
+Only Google AI models are available. That is expected for a Google product, but worth noting for teams already invested in other model providers.
+
+## The Debug Marathon
+
+We set out to build and run the app. We never got there.
+
+After the initial implementation was generated, we hit a runtime issue. The rest of the session was three debugging attempts, none of them successful:
+
+1. We installed the [Vaadin skills for Claude](https://github.com/vaadin/claude-plugin) to give the model better Vaadin knowledge. No fix.
+2. We upgraded Vaadin from version 24 to 25. The app used [vaadin-maps-leaflet-flow](https://github.com/xdev-software/vaadin-maps-leaflet-flow) for the map and [vaadin-chartjs-wrapper](https://github.com/xdev-software/vaadin-chartjs-wrapper) for the charts. No fix.
+3. We migrated the backend from Quarkus to Spring Boot, hoping a different framework would resolve the issue. No fix.
+
+The app never ran. That is an honest result, and it is worth reporting as one.
+
+## Off the Clock
+
+We took some time off-topic as well. Abdel shared his marathon running background — fitting, given the app we were building — and we talked about upcoming Java conferences and our respective talks and presentations.
+
+## Verdict
+
+Antigravity CLI is a solid entry into the AI coding CLI space. It feels familiar from the first session, the planning and walkthrough features add genuine structure to the workflow, and the sandbox idea shows thoughtful design thinking. The rough edges are real: task tracking has minor display bugs, the sandbox did not work, and we could not get the demo app to run. But none of those are structural problems; they are the kind of thing a young tool works through. It is worth keeping an eye on.
+
+## Links
+
+- [antigravity-marathon-demo](https://github.com/JohannesRabauer/antigravity-marathon-demo)
+- [agent-skills](https://github.com/addyosmani/agent-skills)
+- [jvm-skills](https://github.com/jvm-skills/jvm-skills)
+- [vaadin-maps-leaflet-flow](https://github.com/xdev-software/vaadin-maps-leaflet-flow)
+- [vaadin-chartjs-wrapper](https://github.com/xdev-software/vaadin-chartjs-wrapper)
+- [vaadin/claude-plugin](https://github.com/vaadin/claude-plugin)
