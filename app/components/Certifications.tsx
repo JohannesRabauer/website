@@ -14,7 +14,8 @@ const certifications: Certification[] = [
     { title: 'Certified Vaadin 24 Developer', badgeUrl: '/VaadinV24.png', link: 'https://vaadin.com/learn/certificate/5547711f-53c3-4f6d-b996-b9cec2487229' },
     { title: 'IBM Certified Advocate - Cloud v2', badgeUrl: '/IBM_Cloud.png', link: 'https://www.credly.com/badges/a5bbae9c-8f0b-43b8-ab57-d84cf0125afb' },
     { title: 'AWS Certified Cloud Practitioner', badgeUrl: '/AWS_CCP.png', link: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/PDBZJLW1TNQ41ZSH' },
-    { title: 'Oracle ACE Associate', badgeUrl: '/OracleAce.png', link: 'https://ace.oracle.com/ords/ace/profile/johannes' },
+    { title: 'Oracle ACE Associate', badgeUrl: '/OracleAce_badge_2026.png', link: 'https://ace.oracle.com/ords/ace/profile/johannes' },
+    { title: 'Microsoft MVP', badgeUrl: '/MVP_badge.jpg', link: 'https://mvp.microsoft.com/en-US/MVP/profile/021645ec-0219-43b1-9d22-f46801a146fc' },
 ];
 
 const Certifications: React.FC = () => {
