@@ -21,7 +21,7 @@ This repository now maintains the blog in both English and German. New posts sho
 - DO NOT fill gaps with plausible-sounding assumptions.
 - DO NOT pad the article with generic background, hype, or praise.
 - DO NOT default to long-form writing. Keep the result within roughly a 5 minute read.
-- DO NOT use "—" or "-" in a sentence when a simple comma or conjunction would work better.
+- DO NOT use "—" or "-" in a sentence.
 - DO NOT use big words when plain language is stronger.
 - DO NOT continue drafting if key facts are missing. Ask targeted questions first.
 - ONLY create content that gives the reader clear value.
