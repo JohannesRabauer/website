@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { type BlogLocale } from '@/lib/blog-i18n';
+import { getYouTubeThumbnail } from '@/lib/post-media';
 
 interface Props {
   videoId: string;
@@ -74,7 +75,7 @@ export default function YoutubeEmbed({
           className="group relative block aspect-video overflow-hidden bg-blog-purple-light"
         >
           <Image
-            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+            src={getYouTubeThumbnail(videoId)}
             alt={title}
             fill
             sizes="(max-width: 1024px) 100vw, 896px"
