@@ -7,7 +7,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import SocialBadges from "./SocialBadges";
 import { getBlogListingPath } from "@/lib/blog-i18n";
-import { HOMEPAGE_ANSWER, PERSON_NAME } from "@/lib/site-data";
+import { HOMEPAGE_INTRO, PERSON_NAME } from "@/lib/site-data";
 
 /**
  * Hero section with animated headline and social links
@@ -57,14 +57,35 @@ function Hero() {
         <h2 className="text-cyber-cyan text-base sm:text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
           Senior Software Engineer at <a href="https://xdev.software" target="_blank" rel="noopener noreferrer">XDEV Software GmbH</a>
         </h2>
-        <p className="mx-auto mb-4 max-w-4xl text-lg text-gray-200 md:text-2xl animate-fade-in delay-200">
-          {HOMEPAGE_ANSWER}
+        <p className="mx-auto mb-8 max-w-2xl text-base text-gray-300 md:text-xl animate-fade-in delay-200">
+          {HOMEPAGE_INTRO}
         </p>
-        <p className="mx-auto mb-10 max-w-3xl text-base leading-8 text-gray-300 md:text-lg animate-fade-in delay-200">
-          On this site you can find his blog posts, conference material, videos, certifications, publications, and profile links around modern Java, engineering craft, and practical AI workflows.
-        </p>
+        <div className="mx-auto mb-8 w-full max-w-2xl animate-fade-in delay-300">
+          <Link
+            href={getBlogListingPath("en")}
+            className="group block rounded-3xl border-2 border-cyber-green bg-cyber-green/10 p-5 text-left shadow-[0_0_30px_rgba(57,255,20,0.12)] transition-all hover:-translate-y-1 hover:bg-cyber-green/15 hover:shadow-[0_0_36px_rgba(57,255,20,0.18)] md:p-6"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-[0.35em] text-cyber-cyan">
+                  Featured
+                </p>
+                <h3 className="mt-2 text-2xl font-extrabold text-cyber-green md:text-3xl">
+                  Read the blog
+                </h3>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-gray-200 md:text-base">
+                  Live-Coding Learnings: modern Java, AI, experiments, conference takeaways, and practical engineering notes.
+                </p>
+              </div>
+              <FaLaptopCode
+                className="hidden text-5xl text-cyber-green drop-shadow-cyber transition-transform group-hover:scale-110 md:block"
+                aria-hidden="true"
+              />
+            </div>
+          </Link>
+        </div>
         <SocialBadges />
-        <div className="flex flex-wrap justify-center gap-4 animate-fade-in delay-400">
+        <div className="flex flex-wrap justify-center gap-4 animate-fade-in delay-400 mt-8">
           <span className="inline-block px-4 py-2 rounded-full bg-cyber-green/20 text-cyber-green text-xs tracking-widest uppercase">
             Java Developer
           </span>
@@ -74,15 +95,6 @@ function Hero() {
           <span className="inline-block px-4 py-2 rounded-full bg-cyber-cyan/20 text-cyber-cyan text-xs tracking-widest uppercase">
             Tech Enthusiast
           </span>
-        </div>
-        <div className="mt-8 animate-fade-in delay-500">
-          <Link
-            href={getBlogListingPath("en")}
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-cyber-green text-cyber-green text-base md:text-lg font-semibold tracking-wide hover:bg-cyber-green/10 hover:scale-[1.02] transition-all shadow-lg shadow-cyber-green/10"
-          >
-            <FaLaptopCode className="text-lg md:text-xl" aria-hidden="true" />
-            Live-Coding Learnings: Modern Java with AI
-          </Link>
         </div>
       </div>
     </section>

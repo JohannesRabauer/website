@@ -1,4 +1,5 @@
 import type { Post } from './posts';
+import { getPostCoverImage } from './post-media';
 import { getBlogPostPath } from './blog-i18n';
 import {
   HOMEPAGE_FAQS,
@@ -26,6 +27,12 @@ function ensureTrailingSlash(path: string): string {
 
 export function toAbsoluteUrl(path = '/'): string {
   return new URL(ensureTrailingSlash(path), `${SITE_URL}/`).toString();
+}
+
+export function toAbsoluteAssetUrl(path: string): string {
+  return path.startsWith('http://') || path.startsWith('https://')
+    ? path
+    : new URL(path, `${SITE_URL}/`).toString();
 }
 
 export const PERSON_SCHEMA_ID = `${toAbsoluteUrl()}#person`;
@@ -115,9 +122,7 @@ export function getHomepageJsonLd() {
 
 export function getArticleJsonLd(post: Post) {
   const articleUrl = toAbsoluteUrl(getBlogPostPath(post.locale, post.slug));
-  const image = post.frontmatter.youtubeId
-    ? `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/maxresdefault.jpg`
-    : toAbsoluteUrl('/blog/blog_banner.png');
+  const image = toAbsoluteAssetUrl(getPostCoverImage(post.frontmatter));
 
   return {
     '@context': 'https://schema.org',

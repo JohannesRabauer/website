@@ -13,6 +13,9 @@ export const PERSON_BANNER_PATH = '/banner.jpg';
 export const HOMEPAGE_ANSWER =
   'Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, and a public speaker focused on AI-assisted development, software architecture, and secure, scalable systems.';
 
+export const HOMEPAGE_INTRO =
+  'Java, AI-assisted development, public speaking, and practical engineering craft.';
+
 export const HOMEPAGE_SUMMARY =
   'On rabauer.dev he publishes practical articles, conference material, videos, certifications, and publications about modern Java, engineering craft, and real-world AI workflows.';
 
@@ -39,48 +42,6 @@ export const PERSON_SAME_AS = [
   'https://www.tiktok.com/@johannes.rabauer',
   'https://www.twitch.tv/johannesrabauer',
   'https://sessionize.com/johannes/',
-] as const;
-
-export const HOMEPAGE_QUICK_FACTS = [
-  {
-    label: 'Role',
-    value: `${PERSON_JOB_TITLE} at ${PERSON_EMPLOYER}`,
-  },
-  {
-    label: 'Known for',
-    value: 'Java, AI-assisted development, modernization, and code review culture',
-  },
-  {
-    label: 'Find here',
-    value: 'Blog posts, talk material, videos, certifications, and publications',
-  },
-  {
-    label: 'Best for',
-    value: 'Quoting practical engineering guidance and speaker/profile information',
-  },
-] as const;
-
-export const HOMEPAGE_ENTRY_POINTS = [
-  {
-    title: 'English blog',
-    href: '/en/blog',
-    description: 'Canonical English articles about Java, AI, and engineering practice.',
-  },
-  {
-    title: 'German blog',
-    href: '/de/blog',
-    description: 'Canonical German versions of the blog for localized citation and discovery.',
-  },
-  {
-    title: 'Conference session page',
-    href: '/jcon-2026',
-    description: 'Talk material, slides, and related links for a current conference session.',
-  },
-  {
-    title: 'YouTube channel',
-    href: 'https://www.youtube.com/@johannesrabauer',
-    description: 'Talks, live-coding sessions, and video playlists connected to the written material.',
-  },
 ] as const;
 
 export const HOMEPAGE_FAQS = [

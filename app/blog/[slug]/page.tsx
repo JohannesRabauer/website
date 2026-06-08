@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import BlogAliasRedirect from '@/app/components/BlogAliasRedirect';
 import { getBlogPostPath } from '@/lib/blog-i18n';
 import { getAllPosts, getAvailablePostLocales, getPostBySlug } from '@/lib/posts';
+import { getPostCoverImage } from '@/lib/post-media';
+import { toAbsoluteAssetUrl } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -28,15 +30,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const ogImages = post.frontmatter.youtubeId
-    ? [
-        {
-          url: `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/maxresdefault.jpg`,
-          width: 480,
-          height: 360,
-        },
-      ]
-    : [];
+  const ogImages = [{ url: toAbsoluteAssetUrl(getPostCoverImage(post.frontmatter)) }];
 
   const canonicalLocale = availableLocales.includes('en')
     ? 'en'

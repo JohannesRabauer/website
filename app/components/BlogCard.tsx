@@ -8,10 +8,12 @@ import {
   getBlogDictionary,
   getBlogPostPath,
 } from '@/lib/blog-i18n';
+import { getPostCoverImage } from '@/lib/post-media';
 
 export default function BlogCard({ post }: { post: PostMeta }) {
   const { locale, slug, frontmatter, readingMinutes, coSpeakerName } = post;
   const { title, date, summary, tags, youtubeId } = frontmatter;
+  const coverImage = getPostCoverImage(frontmatter);
   const copy = getBlogDictionary(locale);
   const formattedDate = formatBlogDate(locale, date);
 
@@ -19,10 +21,10 @@ export default function BlogCard({ post }: { post: PostMeta }) {
     <Link href={getBlogPostPath(locale, slug)} className="group block h-full">
       <article className="h-full bg-blog-surface rounded-2xl border border-blog-border shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
         {/* Thumbnail or gradient accent bar */}
-        {youtubeId ? (
+        {youtubeId || frontmatter.coverImage ? (
           <div className="relative w-full aspect-video flex-shrink-0 overflow-hidden">
             <Image
-              src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+              src={coverImage}
               alt={title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"

@@ -9,7 +9,8 @@ import {
   isBlogLocale,
 } from '@/lib/blog-i18n';
 import { getAllPosts, getAvailablePostLocales, getPostBySlug } from '@/lib/posts';
-import { getArticleJsonLd, stringifyJsonLd } from '@/lib/seo';
+import { getPostCoverImage } from '@/lib/post-media';
+import { getArticleJsonLd, stringifyJsonLd, toAbsoluteAssetUrl } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -38,15 +39,7 @@ export async function generateMetadata({
 
   const availableLocales = getAvailablePostLocales(slug);
   const copy = getBlogDictionary(locale);
-  const ogImages = post.frontmatter.youtubeId
-    ? [
-        {
-          url: `https://img.youtube.com/vi/${post.frontmatter.youtubeId}/maxresdefault.jpg`,
-          width: 480,
-          height: 360,
-        },
-      ]
-    : [];
+  const ogImages = [{ url: toAbsoluteAssetUrl(getPostCoverImage(post.frontmatter)) }];
 
   return {
     title: `${post.frontmatter.title} | ${copy.layout.blogLabel}`,

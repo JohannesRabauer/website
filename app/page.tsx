@@ -5,7 +5,6 @@ import Hero from "./components/Hero";
 import Certifications from "./components/Certifications";
 import Publications from "./components/Publications";
 import Youtube from "./components/Youtube";
-import HomeEntitySection from "./components/HomeEntitySection";
 import { getHomepageJsonLd, stringifyJsonLd } from "@/lib/seo";
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
       />
       <ParticlesBackground />
       <Hero />
-      <HomeEntitySection />
       <Youtube />
       <Certifications />
       <Publications />

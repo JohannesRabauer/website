@@ -13,6 +13,7 @@ export interface PostFrontmatter {
   summary: string;
   tags: string[];
   youtubeId?: string;
+  coverImage?: string;
   mainRepository?: string;
   draft?: boolean;
   timestamps?: { time: string; label: string }[];
