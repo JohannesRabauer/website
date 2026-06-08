@@ -1,9 +1,18 @@
 import "./globals.css";
+import type { Metadata } from "next";
 import { ReactNode } from "react";
 import Script from "next/script";
 import FloatingSiteControls from "./components/FloatingSiteControls";
 import SiteFooter from "./components/SiteFooter";
 import { BLOG_SITE_URL } from "@/lib/blog-i18n";
+import {
+  PERSON_BANNER_PATH,
+  PERSON_DESCRIPTION,
+  PERSON_NAME,
+  PERSON_JOB_TITLE,
+  SITE_NAME,
+} from "@/lib/site-data";
+import { getGlobalJsonLd, stringifyJsonLd } from "@/lib/seo";
 
 /**
  * Root layout component wrapping all pages
@@ -11,21 +20,59 @@ import { BLOG_SITE_URL } from "@/lib/blog-i18n";
  * - Applies global background and font
  */
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(BLOG_SITE_URL),
-  title: "Johannes Rabauer | Senior Software Engineer",
-  description:
-    "Personal site, portfolio, and links for Johannes Rabauer - Java Developer, Public Speaker, and Tech Enthusiast.",
+  title: `${PERSON_NAME} | ${PERSON_JOB_TITLE}`,
+  description: PERSON_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: PERSON_NAME, url: BLOG_SITE_URL }],
+  creator: PERSON_NAME,
+  publisher: PERSON_NAME,
+  keywords: [
+    "Johannes Rabauer",
+    "Senior Software Engineer",
+    "Java",
+    "AI-assisted development",
+    "software architecture",
+    "public speaker",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: `${PERSON_NAME} | ${PERSON_JOB_TITLE}`,
+    description: PERSON_DESCRIPTION,
+    url: BLOG_SITE_URL,
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: PERSON_BANNER_PATH,
+        alt: `${PERSON_NAME} speaking and engineering banner`,
+      },
+    ],
+  },
   twitter: {
+    card: "summary_large_image",
     site: '@JohannesRabauer',
     creator: '@JohannesRabauer',
+    title: `${PERSON_NAME} | ${PERSON_JOB_TITLE}`,
+    description: PERSON_DESCRIPTION,
+    images: [PERSON_BANNER_PATH],
   },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const globalJsonLd = stringifyJsonLd(getGlobalJsonLd());
+
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: globalJsonLd }}
+        />
         <link
           rel="icon"
           type="image/png"

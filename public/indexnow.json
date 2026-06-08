@@ -1,0 +1,8 @@
+{
+  "host": "rabauer.dev",
+  "key": "9c0a4dd5-acde-4b3c-a9e5-7f7506e15f62",
+  "keyLocation": "https://rabauer.dev/9c0a4dd5-acde-4b3c-a9e5-7f7506e15f62.txt",
+  "sitemap": "https://rabauer.dev/sitemap.xml",
+  "llms": "https://rabauer.dev/llms.txt",
+  "note": "Static descriptor for the repository's IndexNow setup. Actual submission happens from GitHub Actions after deployment."
+}

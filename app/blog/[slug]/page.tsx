@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BlogAliasRedirect from '@/app/components/BlogAliasRedirect';
-import { getBlogAliasPath } from '@/lib/blog-i18n';
+import { getBlogPostPath } from '@/lib/blog-i18n';
 import { getAllPosts, getAvailablePostLocales, getPostBySlug } from '@/lib/posts';
 
 export const dynamicParams = false;
@@ -22,6 +22,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug, 'en') ?? getPostBySlug(slug, 'de');
+  const availableLocales = getAvailablePostLocales(slug);
 
   if (!post) {
     return {};
@@ -37,11 +38,15 @@ export async function generateMetadata({
       ]
     : [];
 
+  const canonicalLocale = availableLocales.includes('en')
+    ? 'en'
+    : availableLocales[0] ?? post.locale;
+
   return {
     title: `${post.frontmatter.title} | Blog`,
     description: post.frontmatter.summary,
     alternates: {
-      canonical: getBlogAliasPath(slug),
+      canonical: getBlogPostPath(canonicalLocale, slug),
     },
     openGraph: { images: ogImages },
     twitter: { card: 'summary_large_image', images: ogImages.map((image) => image.url) },

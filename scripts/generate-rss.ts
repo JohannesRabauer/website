@@ -5,7 +5,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { type BlogLocale, getBlogAliasPath, getBlogDictionary, getBlogRssPath } from '../lib/blog-i18n';
+import { type BlogLocale, getBlogDictionary, getBlogListingPath, getBlogPostPath, getBlogRssPath } from '../lib/blog-i18n';
 
 const SITE_URL = 'https://rabauer.dev';
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
@@ -61,8 +61,8 @@ function buildRss(locale: BlogLocale, posts: PostData[]): string {
       (p) => `
   <item>
     <title>${escapeXml(p.title)}</title>
-    <link>${SITE_URL}${getBlogAliasPath(p.slug)}/</link>
-    <guid isPermaLink="true">${SITE_URL}${getBlogAliasPath(p.slug)}/</guid>
+    <link>${SITE_URL}${getBlogPostPath('en', p.slug)}/</link>
+    <guid isPermaLink="true">${SITE_URL}${getBlogPostPath('en', p.slug)}/</guid>
     <description>${escapeXml(p.summary)}</description>
     <pubDate>${new Date(p.date).toUTCString()}</pubDate>${
       p.tags?.map((t) => `\n    <category>${escapeXml(t)}</category>`).join('') ?? ''
@@ -75,7 +75,7 @@ function buildRss(locale: BlogLocale, posts: PostData[]): string {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(copy.feeds.title)}</title>
-    <link>${SITE_URL}${getBlogAliasPath()}/</link>
+    <link>${SITE_URL}${getBlogListingPath('en')}/</link>
     <description>${escapeXml(copy.feeds.description)}</description>
     <language>en</language>
     <atom:link href="${SITE_URL}${getBlogRssPath()}" rel="self" type="application/rss+xml"/>
@@ -95,4 +95,3 @@ if (fs.existsSync(germanFeedPath)) {
 }
 
 console.log(`✓ RSS feed  → public/rss.xml (${englishPosts.length} posts)`);
-

@@ -9,6 +9,7 @@ import {
   isBlogLocale,
 } from '@/lib/blog-i18n';
 import { getAllPosts, getAvailablePostLocales, getPostBySlug } from '@/lib/posts';
+import { getArticleJsonLd, stringifyJsonLd } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -56,9 +57,13 @@ export async function generateMetadata({
     },
     authors: [{ name: 'Johannes Rabauer', url: 'https://rabauer.dev' }],
     openGraph: {
+      type: 'article',
       locale: copy.openGraphLocale,
       title: `${post.frontmatter.title} | ${copy.layout.blogLabel}`,
       description: post.frontmatter.summary,
+      url: getBlogPostPath(locale, slug),
+      publishedTime: post.frontmatter.date,
+      authors: ['Johannes Rabauer'],
       images: ogImages,
     },
     twitter: {
@@ -86,5 +91,15 @@ export default async function LocalizedBlogPostPage({
     notFound();
   }
 
-  return <BlogPostContent locale={locale} slug={slug} />;
+  const articleJsonLd = stringifyJsonLd(getArticleJsonLd(post));
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: articleJsonLd }}
+      />
+      <BlogPostContent locale={locale} slug={slug} />
+    </>
+  );
 }

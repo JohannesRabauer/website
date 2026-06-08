@@ -9,6 +9,7 @@ const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
 export interface PostFrontmatter {
   title: string;
   date: string;
+  updated?: string;
   summary: string;
   tags: string[];
   youtubeId?: string;

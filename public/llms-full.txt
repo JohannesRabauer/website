@@ -1,0 +1,147 @@
+# rabauer.dev full context
+
+## Site summary
+Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, and a public speaker focused on AI-assisted development, software architecture, and secure, scalable systems. On rabauer.dev he publishes practical articles, conference material, videos, certifications, and publications about modern Java, engineering craft, and real-world AI workflows.
+
+## Homepage
+- URL: https://rabauer.dev/
+- Summary: On rabauer.dev he publishes practical articles, conference material, videos, certifications, and publications about modern Java, engineering craft, and real-world AI workflows.
+
+## FAQ
+### Who is Johannes Rabauer?
+Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, a public speaker, and the author of rabauer.dev.
+
+### What topics does Johannes Rabauer write and speak about?
+He focuses on Java, AI-assisted development, software modernization, software architecture, code review culture, and practical engineering workflows.
+
+### What can I find on rabauer.dev?
+The site collects portfolio information, blog posts, conference material, YouTube playlists, certifications, publications, and links to Johannes Rabauer’s public profiles.
+
+### Which pages are the best citation targets?
+The homepage is the best source for identity and profile information, while the locale-specific blog posts are the best source for detailed technical explanations and attributable quotes.
+
+## Main sections
+- English blog: https://rabauer.dev/en/blog/
+- German blog: https://rabauer.dev/de/blog/
+- YouTube: https://www.youtube.com/@johannesrabauer
+- LinkedIn: https://www.linkedin.com/in/johannes-rabauer
+- Sessionize: https://sessionize.com/johannes/
+- Conference page: https://rabauer.dev/jcon-2026/
+
+## English posts (11)
+
+## English blog posts
+### How Good Is Google's New Antigravity CLI?
+- URL: https://rabauer.dev/en/blog/antigravity-cli/
+- Date: 2026-05-31
+- Summary: We built a Java marathon tracking app with Google's new Antigravity CLI — live, with Google's Abdel Sghiouar. Here's what we found.
+
+### Event Modeling and Event Sourcing with AI
+- URL: https://rabauer.dev/en/blog/event-modeling/
+- Date: 2026-05-21
+- Summary: A live session with Adam Dymitruk where we separated Event Sourcing from Event Modeling, sketched a first model in Miro, and generated a running Java demo with Copilot in Docker sbx, even though we had limited time for a deep code walkthrough.
+
+### Spec-Driven Development and the AI Unified Process
+- URL: https://rabauer.dev/en/blog/ai-unified-process/
+- Date: 2026-05-13
+- Summary: Simon Martinelli introduced Spec-Driven Development and the AI Unified Process, then walked through all four phases live — from Vision document to a running Vaadin app scaffolded from a Maven archetype, with Claude Code handling most of the implementation.
+
+### LLM Coding with Semantic Anchors: From Vibe Coding to a Real Java App
+- URL: https://rabauer.dev/en/blog/semantic-anchors/
+- Date: 2026-05-10
+- Summary: Ralf D. Müller introduced Semantic Anchors, Semantic Contracts, and Spec-Driven Development — a structured path from a rough idea to a full architecture document, specification, and GitHub Issues, without writing a single line of code.
+
+### How Safe Is Docker Sandbox? Testing AI Agents with Java
+- URL: https://rabauer.dev/en/blog/docker-sbx/
+- Date: 2026-04-30
+- Summary: Kevin Wittek and I ran a deliberately vulnerable Java project through Docker Sandbox to find out whether sbx can actually contain an AI agent in YOLO mode. The isolation held, and it changed how I think about running agents safely.
+
+### AI Coding with IBM Bob: Building a JavaFX Chess Game Live
+- URL: https://rabauer.dev/en/blog/ibm-bob/
+- Date: 2026-04-13
+- Summary: We used IBM Bob's 40-coin trial budget to build a JavaFX chess game from scratch. The prompt enhancement and custom modes impressed, but we ran out of tokens before the tests could be reactivated.
+
+### Vise Coding in Practice: Structured AI Development Across 5 Autonomy Levels
+- URL: https://rabauer.dev/en/blog/vise-coding-in-practice/
+- Date: 2026-04-03
+- Summary: This live session walked through five levels of AI coding autonomy in Java, but the real takeaway was simpler: sustainable AI development depends on small reviewable steps, explicit specs, and deterministic quality gates.
+
+### Neo4j + GraphRAG in Action: Live Refactor
+- URL: https://rabauer.dev/en/blog/neo4j-graphrag-live-refactor/
+- Date: 2026-03-26
+- Summary: A two-hour live refactor that moved a file search app from PostgreSQL to Neo4j using GraphRAG and LangChain4j. The session didn't land, but four lessons made it worth the attempt.
+
+### AI Assisted Java Modernization: Building OpenRewrite Recipes
+- URL: https://rabauer.dev/en/blog/ai-openrewrite-recipes/
+- Date: 2026-03-19
+- Summary: What I took away from this session with Tim te Beek: OpenRewrite becomes especially powerful when AI is used to help build deterministic, testable recipes instead of making uncontrolled code changes.
+
+### Live Vibe Coding Battle: Build a Java App with GitHub Copilot
+- URL: https://rabauer.dev/en/blog/vibe-coding-battle/
+- Date: 2026-03-05
+- Summary: Two predefined prompts, one shared Java app, and strict CI gates: the one-shot version started but failed when retrieving results, while the split-prompt workflow produced the more stable app and better quality metrics.
+
+### Guided Coding instead of Vibe Coding in Java
+- URL: https://rabauer.dev/en/blog/guided-coding/
+- Date: 2026-02-26
+- Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
+
+
+## German posts (11)
+
+## German blog posts
+### Wie gut ist Googles neues Antigravity CLI?
+- URL: https://rabauer.dev/de/blog/antigravity-cli/
+- Date: 2026-05-31
+- Summary: Wir haben live mit Googles Abdel Sghiouar eine Java-Marathon-Tracking-App mit dem neuen Antigravity CLI gebaut. Hier ist, was wir herausgefunden haben.
+
+### Event Modeling und Event Sourcing mit KI
+- URL: https://rabauer.dev/de/blog/event-modeling/
+- Date: 2026-05-21
+- Summary: Eine Live Session mit Adam Dymitruk, in der wir Event Sourcing klar von Event Modeling getrennt haben, ein erstes Modell in Miro erstellt haben und mit Copilot in Docker sbx ein lauffaehiges Java Demo erzeugen konnten, trotz wenig Zeit fuer einen tiefen Code Walkthrough.
+
+### Spec-Driven Development und der AI Unified Process
+- URL: https://rabauer.dev/de/blog/ai-unified-process/
+- Date: 2026-05-13
+- Summary: Simon Martinelli hat Spec-Driven Development und den AI Unified Process vorgestellt und alle vier Phasen live durchgespielt — vom Vision-Dokument bis zu einer laufenden Vaadin-App, die aus einem Maven-Archetype aufgebaut wurde.
+
+### LLM Coding mit Semantic Anchors: Von Vibe Coding zur echten Java-App
+- URL: https://rabauer.dev/de/blog/semantic-anchors/
+- Date: 2026-05-10
+- Summary: Ralf D. Müller hat Semantic Anchors, Semantic Contracts und Spec-Driven Development vorgestellt — ein strukturierter Weg von einer groben Idee zu einem vollständigen Architekturdokument, einer Spezifikation und einem GitHub-Backlog, ohne eine einzige Zeile Code zu schreiben.
+
+### Wie sicher ist Docker Sandbox? KI-Agenten mit Java testen
+- URL: https://rabauer.dev/de/blog/docker-sbx/
+- Date: 2026-04-30
+- Summary: Kevin Wittek und ich haben ein absichtlich verwundbares Java-Projekt durch Docker Sandbox laufen lassen, um zu prüfen, ob sbx einen KI-Agenten im YOLO-Modus wirklich einsperren kann. Die Isolation hat gehalten, und das verändert die Art, wie ich über sicheres Arbeiten mit Agenten denke.
+
+### KI-Coding mit IBM Bob: Ein JavaFX-Schachspiel live bauen
+- URL: https://rabauer.dev/de/blog/ibm-bob/
+- Date: 2026-04-13
+- Summary: Wir haben IBMs 40-Coin-Trial-Budget genutzt, um ein JavaFX-Schachspiel von Grund auf zu bauen. Prompt Enhancement und Custom Modes haben überzeugt, aber die Tokens waren aufgebraucht, bevor die Tests wieder aktiviert werden konnten.
+
+### Vise Coding in der Praxis: Strukturierte KI-Entwicklung über 5 Autonomie-Level
+- URL: https://rabauer.dev/de/blog/vise-coding-in-practice/
+- Date: 2026-04-03
+- Summary: Diese Live-Session ging durch fünf Stufen der KI-Coding-Autonomie in Java, aber das eigentliche Learning war einfacher: nachhaltige KI-Entwicklung braucht kleine reviewbare Schritte, explizite Spezifikationen und deterministische Quality Gates.
+
+### Neo4j + GraphRAG in Aktion: Live-Refactor
+- URL: https://rabauer.dev/de/blog/neo4j-graphrag-live-refactor/
+- Date: 2026-03-26
+- Summary: Ein zweistündiger Live-Refactor, der eine Dateisuche-App mit GraphRAG und LangChain4j von PostgreSQL auf Neo4j umstellen sollte. Das Ziel wurde nicht erreicht, aber vier Learnings machten den Versuch trotzdem wertvoll.
+
+### KI-gestützte Java-Modernisierung: OpenRewrite-Recipes erstellen
+- URL: https://rabauer.dev/de/blog/ai-openrewrite-recipes/
+- Date: 2026-03-19
+- Summary: Was ich aus dieser Session mit Tim te Beek mitgenommen habe: OpenRewrite wird besonders stark, wenn KI hilft, deterministische und testbare Recipes zu erstellen, statt unkontrollierte Codeänderungen zu produzieren.
+
+### Live Vibe Coding Battle: Eine Java-App mit GitHub Copilot bauen
+- URL: https://rabauer.dev/de/blog/vibe-coding-battle/
+- Date: 2026-03-05
+- Summary: Zwei vordefinierte Prompts, eine gemeinsame Java-App und strikte CI-Gates: Die One-Shot-Variante startete, scheiterte aber beim Abrufen der Ergebnisse, während der Split-Prompt-Workflow die stabilere App und die besseren Qualitätsmetriken lieferte.
+
+### Guided Coding statt Vibe Coding in Java
+- URL: https://rabauer.dev/de/blog/guided-coding/
+- Date: 2026-02-26
+- Summary: Diese Live-Session hat ein starkes Argument dafür geliefert, KI als disziplinierte Implementierungsmaschine zu nutzen: erst Grenzen definieren, Planung vom Coden trennen und Ergebnisse gegen die Architektur prüfen, statt sie einfach zu akzeptieren.
+

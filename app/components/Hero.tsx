@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useRef } from "react";
 import Link from "next/link";
 import SocialBadges from "./SocialBadges";
+import { getBlogListingPath } from "@/lib/blog-i18n";
+import { HOMEPAGE_ANSWER, PERSON_NAME } from "@/lib/site-data";
 
 /**
  * Hero section with animated headline and social links
@@ -41,7 +43,7 @@ function Hero() {
         </div>
         
         <h1 className="text-cyber-green text-3xl sm:text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in flex flex-wrap items-center justify-center gap-2">
-          Johannes Rabauer
+          {PERSON_NAME}
           <button
             onClick={playPronunciation}
             aria-label="Play name pronunciation"
@@ -55,8 +57,11 @@ function Hero() {
         <h2 className="text-cyber-cyan text-base sm:text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
           Senior Software Engineer at <a href="https://xdev.software" target="_blank" rel="noopener noreferrer">XDEV Software GmbH</a>
         </h2>
-        <p className="max-w-xl mx-auto text-lg md:text-xl text-gray-300 mb-10 animate-fade-in delay-200">
-          Java Craftsman • Public Speaker • Father of three • Nature & Tech Enthusiast. Building secure and scalable systems with passion for elegant, expressive code.
+        <p className="mx-auto mb-4 max-w-4xl text-lg text-gray-200 md:text-2xl animate-fade-in delay-200">
+          {HOMEPAGE_ANSWER}
+        </p>
+        <p className="mx-auto mb-10 max-w-3xl text-base leading-8 text-gray-300 md:text-lg animate-fade-in delay-200">
+          On this site you can find his blog posts, conference material, videos, certifications, publications, and profile links around modern Java, engineering craft, and practical AI workflows.
         </p>
         <SocialBadges />
         <div className="flex flex-wrap justify-center gap-4 animate-fade-in delay-400">
@@ -72,7 +77,7 @@ function Hero() {
         </div>
         <div className="mt-8 animate-fade-in delay-500">
           <Link
-            href="/blog"
+            href={getBlogListingPath("en")}
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-cyber-green text-cyber-green text-base md:text-lg font-semibold tracking-wide hover:bg-cyber-green/10 hover:scale-[1.02] transition-all shadow-lg shadow-cyber-green/10"
           >
             <FaLaptopCode className="text-lg md:text-xl" aria-hidden="true" />

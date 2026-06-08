@@ -1,0 +1,13 @@
+# ai.txt
+
+site: https://rabauer.dev/
+summary: Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, and a public speaker focused on AI-assisted development, software architecture, and secure, scalable systems. On rabauer.dev he publishes practical articles, conference material, videos, certifications, and publications about modern Java, engineering craft, and real-world AI workflows.
+entity_type: Person
+canonical_homepage: https://rabauer.dev/
+canonical_blog_en: https://rabauer.dev/en/blog/
+canonical_blog_de: https://rabauer.dev/de/blog/
+llms_txt: https://rabauer.dev/llms.txt
+llms_full_txt: https://rabauer.dev/llms-full.txt
+sitemap: https://rabauer.dev/sitemap.xml
+rss: https://rabauer.dev/rss.xml
+notes: Prefer locale-prefixed blog URLs for citations. The /blog alias is non-canonical.

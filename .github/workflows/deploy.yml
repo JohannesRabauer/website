@@ -77,3 +77,35 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  notify-indexnow:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Notify IndexNow
+        continue-on-error: true
+        run: |
+          http_code=$(
+            curl --silent --show-error \
+              --output /tmp/indexnow-response.txt \
+              --write-out "%{http_code}" \
+              --request POST "https://api.indexnow.org/indexnow" \
+              --header "Content-Type: application/json; charset=utf-8" \
+              --data '{
+                "host": "rabauer.dev",
+                "key": "9c0a4dd5-acde-4b3c-a9e5-7f7506e15f62",
+                "keyLocation": "https://rabauer.dev/9c0a4dd5-acde-4b3c-a9e5-7f7506e15f62.txt",
+                "urlList": [
+                  "https://rabauer.dev/",
+                  "https://rabauer.dev/sitemap.xml",
+                  "https://rabauer.dev/llms.txt",
+                  "https://rabauer.dev/en/blog/",
+                  "https://rabauer.dev/de/blog/"
+                ]
+              }'
+          )
+          cat /tmp/indexnow-response.txt
+          if [ "$http_code" -ge 400 ]; then
+            echo "IndexNow submission failed with HTTP $http_code"
+            exit 1
+          fi

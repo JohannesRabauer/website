@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "rabauer.dev discovery manifest",
+  "name_for_model": "rabauer_dev_discovery",
+  "description_for_human": "Read-only discovery metadata for the rabauer.dev website.",
+  "description_for_model": "This manifest describes rabauer.dev, a static personal website for Johannes Rabauer. The referenced OpenAPI document is intentionally read-only and exposes no callable operations. Use the site's canonical URLs, llms.txt, and sitemap for discovery.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://rabauer.dev/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://rabauer.dev/Logo_round.png",
+  "contact_email": "johannes@rabauer.dev",
+  "legal_info_url": "https://rabauer.dev/impressum/"
+}

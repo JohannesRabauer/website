@@ -9,7 +9,7 @@ const links = [
   { href: "https://github.com/JohannesRabauer",            label: "GitHub",    Icon: FaGithub,   defaultClass: "text-cyber-green hover:text-cyber-purple" },
   { href: "https://www.linkedin.com/in/johannes-rabauer",  label: "LinkedIn",  Icon: FaLinkedin, defaultClass: "text-cyber-cyan hover:text-cyber-green" },
   { href: "https://www.youtube.com/@johannesrabauer",      label: "YouTube",   Icon: FaYoutube,  defaultClass: "text-cyber-purple hover:text-cyber-cyan" },
-  { href: "https://twitter.com/JohannesRabauer",           label: "Twitter",   Icon: FaTwitter,  defaultClass: "text-cyber-green hover:text-cyber-purple" },
+  { href: "https://x.com/JohannesRabauer",                 label: "X",         Icon: FaTwitter,  defaultClass: "text-cyber-green hover:text-cyber-purple" },
   { href: "https://mastodon.online/@rabauer",              label: "Mastodon",  Icon: SiMastodon, defaultClass: "text-cyber-cyan hover:text-cyber-green" },
   { href: "https://bsky.app/profile/rabauer.dev",          label: "Bluesky",   Icon: SiBluesky,  defaultClass: "text-cyber-purple hover:text-cyber-cyan" },
   { href: "https://www.tiktok.com/@johannes.rabauer",      label: "TikTok",    Icon: SiTiktok,   defaultClass: "text-cyber-green hover:text-cyber-purple" },

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import BlogAliasRedirect from '@/app/components/BlogAliasRedirect';
-import { getBlogDictionary } from '@/lib/blog-i18n';
+import { getBlogDictionary, getBlogListingPath } from '@/lib/blog-i18n';
 
 const copy = getBlogDictionary('en');
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: '/blog',
+    canonical: getBlogListingPath('en'),
   },
 };
 

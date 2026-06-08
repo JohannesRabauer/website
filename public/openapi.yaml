@@ -1,0 +1,10 @@
+openapi: 3.1.0
+info:
+  title: rabauer.dev discovery document
+  version: 1.0.0
+  description: >
+    Read-only discovery document for rabauer.dev. The site is a static website and
+    does not expose callable API operations through this specification.
+servers:
+  - url: https://rabauer.dev
+paths: {}
