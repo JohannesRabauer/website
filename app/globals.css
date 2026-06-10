@@ -141,6 +141,36 @@
     position: absolute;
     left: -9999px;
   }
+
+  /* ── Glassmorphism card (homepage sections) ── */
+  .cyber-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.25rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+  }
+
+  .cyber-card:hover {
+    border-color: rgba(0, 242, 254, 0.35);
+    box-shadow: 0 0 28px rgba(0, 242, 254, 0.09), 0 8px 32px rgba(0, 0, 0, 0.35);
+    transform: translateY(-3px);
+  }
+
+  /* ── Gradient hero text ── */
+  .gradient-text-hero {
+    background: linear-gradient(135deg, #00ff9d 0%, #00f2fe 55%, #7b2ff7 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ── Updated certification list: wraps on small screens ── */
+  .certification-list {
+    @apply flex flex-wrap justify-center gap-6;
+  }
 }
 
   /* ─── Blog: highlight.js custom theme (light + purple/green) ─── */

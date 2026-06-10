@@ -23,7 +23,7 @@ export default function FloatingSiteControls() {
           alt="JR Logo"
           width={40}
           height={40}
-          className="rounded-full shadow-lg hover:scale-110 transition-transform"
+          className="rounded-full shadow-lg transition-all hover:scale-110 hover:shadow-[0_0_18px_rgba(0,255,157,0.45)]"
         />
       </Link>
     </>

@@ -2,6 +2,20 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import Script from "next/script";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500"],
+});
 import FloatingSiteControls from "./components/FloatingSiteControls";
 import SiteFooter from "./components/SiteFooter";
 import { BLOG_SITE_URL } from "@/lib/blog-i18n";
@@ -67,7 +81,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const globalJsonLd = stringifyJsonLd(getGlobalJsonLd());
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -88,7 +102,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="shortcut icon" href="/favicon.ico"></link>
         <link rel="apple-touch-icon" href="/Logo_round.png"></link>
       </head>
-      <body className="flex min-h-screen flex-col bg-cyber-bg font-sans text-white antialiased selection:bg-cyber-pink/80 selection:text-cyber-bg">
+      <body className="flex min-h-screen flex-col bg-cyber-bg font-sans text-white antialiased selection:bg-cyber-pink/70 selection:text-black">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyber-green focus:text-cyber-bg focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
         <FloatingSiteControls />
         <div className="flex-1">{children}</div>

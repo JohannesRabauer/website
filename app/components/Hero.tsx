@@ -1,7 +1,7 @@
 "use client";
 
-import { FaVolumeUp } from "react-icons/fa";
-import { FaLaptopCode } from "react-icons/fa";
+import { motion, useReducedMotion } from "framer-motion";
+import { FaVolumeUp, FaLaptopCode, FaChevronDown } from "react-icons/fa";
 import Image from "next/image";
 import { useRef } from "react";
 import Link from "next/link";
@@ -9,94 +9,185 @@ import SocialBadges from "./SocialBadges";
 import { getBlogListingPath } from "@/lib/blog-i18n";
 import { HOMEPAGE_INTRO, PERSON_NAME } from "@/lib/site-data";
 
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.11,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 22 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
+    },
+  },
+};
+
 /**
- * Hero section with animated headline and social links
+ * Hero section — near-full-viewport with staggered entrance,
+ * gradient avatar ring, gradient name text, and a scroll cue.
  */
 function Hero() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const reducedMotion = useReducedMotion();
 
   function playPronunciation() {
     audioRef.current?.play();
   }
 
   return (
-    <section className="content-layer flex flex-col items-center text-center px-4 pb-4 pt-8 bg-cyber-bg/80 sm:pt-10">
-      <div className="w-full max-w-4xl mx-auto mb-4">
-        <div className="relative w-full h-48 mb-20">
+    <section className="content-layer relative w-full flex flex-col items-center px-4 pb-16 text-center">
+      {/* Banner image with avatar overlapping bottom edge */}
+      <div className="relative w-full max-w-4xl mx-auto mb-20">
+        <div className="relative w-full h-48 overflow-hidden rounded-xl shadow-2xl">
           <Image
             src="/banner.jpg"
             alt="Tech conference speaking banner"
             fill
-            className="object-cover rounded-lg shadow-xl"
+            className="object-cover"
             priority
           />
-          <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
-            <Image
-              src="https://avatars.githubusercontent.com/u/8188460?v=4"
-              alt="Johannes Rabauer"
-              width={128}
-              height={128}
-              className="rounded-full border-4 border-cyber-bg shadow-xl"
-              priority
-            />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b1e]/70 to-transparent" />
+        </div>
+        {/* Avatar with animated neon ring, overlapping banner bottom */}
+        <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
+          <div className="p-[3px] rounded-full bg-gradient-to-br from-cyber-green via-cyber-purple to-cyber-cyan animate-glow-pulse inline-block">
+            <div className="rounded-full overflow-hidden bg-[#0d0b1e] p-0.5">
+              <Image
+                src="https://avatars.githubusercontent.com/u/8188460?v=4"
+                alt="Johannes Rabauer"
+                width={116}
+                height={116}
+                className="rounded-full"
+                priority
+              />
+            </div>
           </div>
         </div>
-        
-        <h1 className="text-cyber-green text-3xl sm:text-5xl md:text-7xl font-extrabold drop-shadow-cyber mb-4 animate-fade-in flex flex-wrap items-center justify-center gap-2">
-          {PERSON_NAME}
+      </div>
+
+      {/* Staggered entrance container */}
+      <motion.div
+        variants={containerVariants}
+        initial={reducedMotion ? false : "hidden"}
+        animate="show"
+        className="flex flex-col items-center w-full max-w-3xl mx-auto"
+      >
+
+        {/* Name — gradient text */}
+        <motion.h1
+          variants={itemVariants}
+          className="mb-4 flex flex-wrap items-center justify-center gap-3 text-4xl font-extrabold sm:text-6xl md:text-7xl"
+        >
+          <span className="gradient-text-hero leading-tight">
+            {PERSON_NAME}
+          </span>
           <button
             onClick={playPronunciation}
             aria-label="Play name pronunciation"
             title="Hear how to pronounce my name"
-            className="text-cyber-green/70 hover:text-cyber-green text-xl md:text-2xl transition drop-shadow-cyber focus:outline-none focus:ring-2 focus:ring-cyber-green rounded"
+            className="text-cyber-green/55 hover:text-cyber-green text-2xl md:text-3xl transition-colors focus:outline-none focus:ring-2 focus:ring-cyber-green rounded-full p-1"
           >
-            <FaVolumeUp />
+            <FaVolumeUp aria-hidden="true" />
           </button>
-        </h1>
+        </motion.h1>
         <audio ref={audioRef} src="/name-pronunciation.mp3" preload="none" />
-        <h2 className="text-cyber-cyan text-base sm:text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">
-          Senior Software Engineer at <a href="https://xdev.software" target="_blank" rel="noopener noreferrer">XDEV Software GmbH</a>
-        </h2>
-        <p className="mx-auto mb-8 max-w-2xl text-base text-gray-300 md:text-xl animate-fade-in delay-200">
+
+        {/* Job title */}
+        <motion.h2
+          variants={itemVariants}
+          className="text-cyber-cyan text-lg sm:text-2xl font-semibold mb-6"
+        >
+          Senior Software Engineer at{" "}
+          <a
+            href="https://xdev.software"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-cyber-green transition-colors underline decoration-cyber-cyan/30 underline-offset-4"
+          >
+            XDEV Software GmbH
+          </a>
+        </motion.h2>
+
+        {/* Intro text */}
+        <motion.p
+          variants={itemVariants}
+          className="mx-auto mb-8 max-w-2xl text-base text-white/65 md:text-lg leading-relaxed"
+        >
           {HOMEPAGE_INTRO}
-        </p>
-        <div className="mx-auto mb-8 w-full max-w-2xl animate-fade-in delay-300">
+        </motion.p>
+
+        {/* Blog CTA */}
+        <motion.div variants={itemVariants} className="mx-auto mb-8 w-full max-w-xl">
           <Link
             href={getBlogListingPath("en")}
-            className="group block rounded-3xl border-2 border-cyber-green bg-cyber-green/10 p-5 text-left shadow-[0_0_30px_rgba(57,255,20,0.12)] transition-all hover:-translate-y-1 hover:bg-cyber-green/15 hover:shadow-[0_0_36px_rgba(57,255,20,0.18)] md:p-6"
+            className="group flex items-center justify-between gap-4 rounded-2xl border border-cyber-green/35 bg-cyber-green/[0.07] p-5 text-left shadow-[0_0_24px_rgba(0,255,157,0.07)] transition-all hover:-translate-y-0.5 hover:border-cyber-green/60 hover:bg-cyber-green/[0.11] hover:shadow-[0_0_36px_rgba(0,255,157,0.14)] md:p-6"
           >
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.35em] text-cyber-cyan">
-                  Featured
-                </p>
-                <h3 className="mt-2 text-2xl font-extrabold text-cyber-green md:text-3xl">
-                  Read the blog
-                </h3>
-                <p className="mt-3 max-w-xl text-sm leading-7 text-gray-200 md:text-base">
-                  Live-Coding Learnings: modern Java, AI, experiments, conference takeaways, and practical engineering notes.
-                </p>
-              </div>
-              <FaLaptopCode
-                className="hidden text-5xl text-cyber-green drop-shadow-cyber transition-transform group-hover:scale-110 md:block"
-                aria-hidden="true"
-              />
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-cyber-cyan/75 mb-1">
+                {"// featured"}
+              </p>
+              <h3 className="text-xl font-extrabold text-cyber-green md:text-2xl">
+                Read the blog
+              </h3>
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/55">
+                Live-Coding Learnings: modern Java, AI, experiments, conference takeaways, and practical engineering notes.
+              </p>
             </div>
+            <FaLaptopCode
+              className="hidden shrink-0 text-5xl text-cyber-green/50 transition-all group-hover:text-cyber-green group-hover:drop-shadow-cyber-green md:block"
+              aria-hidden="true"
+            />
           </Link>
-        </div>
-        <SocialBadges />
-        <div className="flex flex-wrap justify-center gap-4 animate-fade-in delay-400 mt-8">
-          <span className="inline-block px-4 py-2 rounded-full bg-cyber-green/20 text-cyber-green text-xs tracking-widest uppercase">
+        </motion.div>
+
+        {/* Social badges */}
+        <motion.div variants={itemVariants} className="w-full">
+          <SocialBadges />
+        </motion.div>
+
+        {/* Skill pills */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-wrap justify-center gap-3 mt-2"
+        >
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-cyber-green/30 bg-cyber-green/[0.08] text-cyber-green text-[11px] tracking-widest uppercase font-mono">
             Java Developer
           </span>
-          <span className="inline-block px-4 py-2 rounded-full bg-cyber-purple/20 text-cyber-purple text-xs tracking-widest uppercase">
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-cyber-purple/30 bg-cyber-purple/[0.08] text-cyber-purple text-[11px] tracking-widest uppercase font-mono">
             Public Speaker
           </span>
-          <span className="inline-block px-4 py-2 rounded-full bg-cyber-cyan/20 text-cyber-cyan text-xs tracking-widest uppercase">
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-cyber-cyan/30 bg-cyber-cyan/[0.08] text-cyber-cyan text-[11px] tracking-widest uppercase font-mono">
             Tech Enthusiast
           </span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll cue */}
+      {!reducedMotion && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6, duration: 0.6 }}
+          className="mt-14 text-white/25"
+          aria-hidden="true"
+        >
+          <motion.div
+            animate={{ y: [0, 7, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <FaChevronDown className="text-base mx-auto" />
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 }

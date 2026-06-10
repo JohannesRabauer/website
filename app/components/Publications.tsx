@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectCard from "./ProjectCard";
+import SectionHeading from './SectionHeading';
 
 interface Publication {
     title: string;
@@ -14,9 +15,15 @@ const publications: Publication[] = [
 
 const Publications: React.FC = () => {
     return (
-        <section aria-labelledby="publications-heading" className="publications items-center justify-center text-center">
-            <h2 id="publications-heading" className="text-cyber-cyan text-2xl md:text-3xl font-semibold mb-6 animate-fade-in delay-100">Publications</h2>
-            <div className="publications-list flex space-x-4 py-6">
+        <section aria-labelledby="publications-heading" className="w-full max-w-4xl px-4 pb-20 text-center">
+            <SectionHeading
+                id="publications-heading"
+                kicker="// writing"
+                title="Publications"
+                colorClass="text-cyber-cyan"
+                dividerColor="#00f2fe"
+            />
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 {publications.map((pub) => (
                     <ProjectCard key={pub.link} title={pub.title} description={pub.publisher} link={pub.link} />
                 ))}

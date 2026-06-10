@@ -16,41 +16,43 @@ const YouTubePlaylist: React.FC<YouTubePlaylistProps> = ({
   const playlistUrl = `https://www.youtube.com/playlist?list=${playlistId}`;
 
   return (
-    <div className="youtube-playlist w-full">
+    <div className="youtube-playlist w-full h-full">
       <a
         href={playlistUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-cyber-purple/30 bg-black/30 text-white shadow-lg shadow-black/20 transition hover:-translate-y-1 hover:border-cyber-cyan/60"
+        className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/8 bg-white/[0.04] backdrop-blur-sm text-white shadow-xl shadow-black/30 transition-all duration-300 hover:-translate-y-1 hover:border-cyber-cyan/40 hover:shadow-[0_0_28px_rgba(0,242,254,0.1)]"
       >
-        <div className="relative aspect-video overflow-hidden bg-cyber-bg">
+        <div className="relative aspect-video overflow-hidden bg-black/40">
           <Image
             src={`https://img.youtube.com/vi/${thumbnailVideoId}/maxresdefault.jpg`}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 25vw"
-            className="object-cover transition duration-300 group-hover:scale-[1.03]"
+            className="object-cover transition duration-500 group-hover:scale-[1.04]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+          {/* Play button */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-red-600/95 text-white shadow-lg transition duration-300 group-hover:scale-110 group-hover:bg-red-500">
+            <span className="flex h-13 w-13 items-center justify-center rounded-full bg-red-600/90 text-white shadow-lg shadow-black/50 transition-all duration-300 group-hover:scale-110 group-hover:bg-red-500 group-hover:shadow-red-500/30">
               <FaPlay className="ml-1 h-5 w-5" aria-hidden="true" />
             </span>
           </div>
-          <div className="absolute inset-x-0 bottom-0 p-5 text-left">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/70">
-              Playlist
+          {/* Overlay text */}
+          <div className="absolute inset-x-0 bottom-0 p-4 text-left">
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/55 mb-1">
+              {"// playlist"}
             </p>
-            <h3 className="mt-2 text-lg font-semibold leading-snug text-white">
+            <h3 className="text-base font-semibold leading-snug text-white">
               {title}
             </h3>
           </div>
         </div>
 
-        <div className="flex flex-1 items-center justify-between gap-4 px-5 py-4 text-left text-sm text-white/70">
-          <span>Watch directly on YouTube</span>
-          <span className="font-medium text-cyber-cyan transition group-hover:text-cyber-green">
-            Open playlist
+        <div className="flex flex-1 items-center justify-between gap-4 px-4 py-3 text-left text-xs text-white/50">
+          <span>Watch on YouTube</span>
+          <span className="font-mono font-medium text-cyber-cyan/80 transition-colors duration-200 group-hover:text-cyber-green">
+            Open →
           </span>
         </div>
       </a>
