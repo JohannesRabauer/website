@@ -1,0 +1,135 @@
+---
+title: "Junie, IntelliJ, and Spec-Driven Development with Anton Arhipov"
+date: "2026-06-11"
+summary: "Junie refused to cooperate, but that turned out to be the best possible demo: switching to another agent mid-session was seamless, and Anton's spec-driven workflow proved its value regardless of which agent was running."
+tags: ["junie", "intellij", "javafx", "spec-driven-development", "ai-agents", "jetbrains", "live-coding", "java"]
+youtubeId: "LekXCf-FJ00"
+mainRepository: "https://github.com/JohannesRabauer/junie-midi-javafx-app"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "07:05"
+    label: "Look at a pre-made MIDI application"
+  - time: "35:00"
+    label: "Starting with an empty repository"
+  - time: "36:05"
+    label: "Installing Anton's Skills"
+  - time: "50:30"
+    label: "Starting \"specification\""
+  - time: "01:05:30"
+    label: "Move on with \"criteria\""
+  - time: "01:08:50"
+    label: "Anton's take on Spec-Driven Development"
+  - time: "01:20:30"
+    label: "Trying Junie for the second time"
+  - time: "01:24:00"
+    label: "Navigating with Junie"
+  - time: "01:28:55"
+    label: "Move on to \"rules\""
+  - time: "01:34:40"
+    label: "Move on to \"spec-review\""
+  - time: "02:02:15"
+    label: "IntelliJ AI Features"
+  - time: "02:08:47"
+    label: "Analyzing the pre-made MIDI application"
+  - time: "02:27:00"
+    label: "\"Running\" application (but still fails)"
+  - time: "02:30:00"
+    label: "Conclusion"
+---
+
+Anton Arhipov joined me to build a JavaFX MIDI visualizer inside IntelliJ, primarily using Junie, JetBrains' own AI agent. Junie had other plans and crashed repeatedly, so we switched to Claude and kept going. Turns out that was the most instructive part of the whole session.
+
+<CoSpeakerCard
+  name="Anton Arhipov"
+  role="Developer Advocate"
+  company="JetBrains"
+  bio="Anton is a Java Champion, frequent conference speaker, and the author of the spec-driven agent workflow we explored in this session."
+  imageSrc="https://avatars.githubusercontent.com/antonarhipov"
+  github="https://github.com/antonarhipov"
+  x="https://x.com/antonarhipov"
+  linkedin="https://www.linkedin.com/in/antonarhipov"
+/>
+
+## When the Star Agent Refuses to Work
+
+We wanted to demo Junie, the native IntelliJ AI agent, and it produced unknown exceptions from the start, on multiple models, on a fully up-to-date IntelliJ installation. We retried, switched models, restarted. Nothing helped.
+
+What happened next was more useful than a smooth Junie demo would have been: we selected Claude agent in the same chat window, re-ran the exact same prompt, and continued without losing any context or changing any files. The agent skills Anton had installed were still there. The workflow was identical. The only thing that changed was the model provider.
+
+This is the point Anton made explicitly, and it stuck: IntelliJ treats all agents equally. Junie is JetBrains' own agent, but it is not privileged in the platform. If it breaks, you pick another one and keep going.
+
+## Anton's Spec-Driven Workflow
+
+Anton's [agent skills](https://github.com/antonarhipov/agentskills) define a staged pipeline for turning a vague idea into a working application. The stages run roughly in this order:
+
+1. **spec** -- takes your rough proposal (a markdown file with bullet points) and clarifies it through structured questions: what kind of visualization, which interaction model, what constraints apply
+2. **criteria** -- synthesizes the clarified requirements into numbered acceptance criteria (use cases by another name)
+3. **rules** -- establishes technical constraints: which libraries, which Java version, which patterns to follow
+4. **spec-review** -- cross-checks everything before implementation starts
+5. **tasks** -- generates a YAML-structured implementation plan broken into phases and individual tasks
+6. **execute** -- works through the task list phase by phase, checking off tasks and stopping at defined checkpoints for review
+
+Each stage creates or updates a markdown file in a `spec/` folder. The files stay in the repo and serve as a record of every decision made during planning.
+
+What surprised me was his stance on what happens after implementation: **throw the spec away, or archive it**. The spec is not meant to be a living document kept in sync with the code. It is a function that transforms an empty project into a defined one. Once that transformation is done, it has served its purpose. If you want to add a feature, you write a new spec for that feature -- on top of the existing codebase, not as an update to the old one.
+
+This is different from how I thought about specs. I would have kept everything and tried to maintain it as documentation. Anton's version is more pragmatic and probably easier to actually follow through on.
+
+## The YAML Task List
+
+The `tasks` skill produces a structured YAML file before the agent writes a single line of code. It looks roughly like this:
+
+```yaml
+tasks:
+  feature: "MIDI Playback and Guitar Hero-Style Visualization"
+  organizing_principle: "walking_skeleton"
+  decisions:
+    - id: dec-1
+      decision: "Use a walking skeleton plan that reaches runnable file-load and playback flows before thickening visualization."
+      reason: "The main delivery risk is integration across JavaFX, MIDI playback, and canvas rendering."
+  phases:
+    - id: phase-1
+      name: "Scaffold runnable shell"
+      tasks:
+        - id: task-1.1
+          name: "Create Maven and module skeleton"
+          covers: [RULE-1, RULE-2, RULE-3]
+          complexity: "M"
+          validation: "Project builds and launches through Maven with the declared module path."
+    - id: phase-2
+      name: "Parse MIDI into domain data"
+      ...
+```
+
+The full version lists every task with its acceptance criteria references, complexity estimate, and a concrete validation check. Before the `execute` skill runs, you review this file and confirm the plan. If the session is interrupted mid-phase, the agent picks up from the last incomplete task rather than starting over.
+
+The `execute` skill then works through the phases in order, stopping at each checkpoint for a review before moving on. You stay in the loop at defined moments rather than approving every individual file write.
+
+## IntelliJ as an Agent Platform
+
+Anton's framing of IntelliJ is useful: it is an agent platform, not a Junie product. The same MCP tools, the same IDE-native search (find usages, navigate to symbol), the same debugger integration -- these are exposed to any ACP-compatible agent. Junie happens to be built by JetBrains, but it has no special access.
+
+One practical implication: the IDE's semantic search tools make agent context more accurate and cheaper. Instead of grep-style scanning, the agent can call "find usages" and get back the exact call graph. Less noise in the context window.
+
+## The `/remote` Command
+
+A small Junie-specific feature worth knowing about: `/remote` starts a remote session that tunnels commands through your local machine while exposing a browser-accessible control panel. You walk away from the desk, the agent keeps running, and you confirm or redirect it from your phone. Useful for long runs where you want to stay loosely in the loop without sitting in front of the screen.
+
+## What We Did Not Finish During the Session
+
+The MIDI visualizer did not reach a running state during the stream. The application compiled but the visualization was not working yet when we ran out of time.
+
+## Update: Finished After the Session
+
+After the stream I ran the `tasks` and `execute` skills on the same repository with minimal additional prompting. The application reached a fully working state. Falling notes, audio playback, transport controls -- everything.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/intelliJ-midi-app.png"
+    alt="Running MIDI visualizer application built with the spec-driven workflow"
+  />
+</div>
+
+Anton's pre-built version was the reference throughout -- the repository is linked above if you want to see both.

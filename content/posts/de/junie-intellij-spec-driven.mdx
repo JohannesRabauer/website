@@ -1,0 +1,135 @@
+---
+title: "Junie, IntelliJ und Spec-Driven Development mit Anton Arhipov"
+date: "2026-06-11"
+summary: "Junie wollte nicht mitmachen – was sich als bestes mögliches Demo herausstellte: Der Wechsel auf einen anderen Agenten mitten in der Session war nahtlos, und Antons Spec-Driven-Workflow funktionierte unabhängig davon, welcher Agent gerade lief."
+tags: ["junie", "intellij", "javafx", "spec-driven-development", "ai-agents", "jetbrains", "live-coding", "java"]
+youtubeId: "LekXCf-FJ00"
+mainRepository: "https://github.com/JohannesRabauer/junie-midi-javafx-app"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einleitung"
+  - time: "07:05"
+    label: "Blick auf eine fertige MIDI-Anwendung"
+  - time: "35:00"
+    label: "Start mit leerem Repository"
+  - time: "36:05"
+    label: "Antons Skills installieren"
+  - time: "50:30"
+    label: "Start mit \"specification\""
+  - time: "01:05:30"
+    label: "Weiter mit \"criteria\""
+  - time: "01:08:50"
+    label: "Antons Sicht auf Spec-Driven Development"
+  - time: "01:20:30"
+    label: "Zweiter Versuch mit Junie"
+  - time: "01:24:00"
+    label: "Navigation mit Junie"
+  - time: "01:28:55"
+    label: "Weiter mit \"rules\""
+  - time: "01:34:40"
+    label: "Weiter mit \"spec-review\""
+  - time: "02:02:15"
+    label: "IntelliJ AI-Features"
+  - time: "02:08:47"
+    label: "Analyse der fertigen MIDI-Anwendung"
+  - time: "02:27:00"
+    label: "Anwendung \"starten\" (schlägt noch fehl)"
+  - time: "02:30:00"
+    label: "Fazit"
+---
+
+Anton Arhipov war zu Gast, um gemeinsam einen JavaFX MIDI-Visualizer in IntelliJ zu bauen, hauptsächlich mit Junie, dem eigenen KI-Agenten von JetBrains. Junie hatte andere Pläne und ist wiederholt abgestürzt. Also haben wir auf Claude umgestellt und weitergemacht. Das war am Ende der lehrreichste Teil der ganzen Session.
+
+<CoSpeakerCard
+  name="Anton Arhipov"
+  role="Developer Advocate"
+  company="JetBrains"
+  bio="Anton ist Java Champion, häufiger Konferenzsprecher und der Autor des Spec-Driven-Workflows, den wir in dieser Session erkundet haben."
+  imageSrc="https://avatars.githubusercontent.com/antonarhipov"
+  github="https://github.com/antonarhipov"
+  x="https://x.com/antonarhipov"
+  linkedin="https://www.linkedin.com/in/antonarhipov"
+/>
+
+## Wenn der Hauptagent nicht mitmacht
+
+Wir wollten Junie vorführen, den nativen IntelliJ AI-Agenten, und er hat von Anfang an mit unbekannten Exceptions geworfen, auf mehreren Modellen, auf einer aktuellen IntelliJ-Installation. Neustart, Modellwechsel, nochmal versucht. Nichts half.
+
+Was dann passierte, war nützlicher als eine reibungslose Junie-Demo: Wir haben im selben Chat-Fenster den Claude-Agenten ausgewählt, exakt denselben Prompt erneut abgeschickt und weitergemacht -- ohne Kontextverlust, ohne Dateiänderungen. Antons installierte Agent Skills waren noch vorhanden. Der Workflow war identisch. Das Einzige, was sich geändert hatte, war der Model-Provider.
+
+Genau das war Antons Kernaussage, und sie hat sich eingebrannt: IntelliJ behandelt alle Agenten gleich. Junie ist zwar von JetBrains, aber auf der Plattform nicht privilegiert. Wenn er ausfällt, nimmt man einen anderen und macht weiter.
+
+## Antons Spec-Driven Workflow
+
+Antons [Agent Skills](https://github.com/antonarhipov/agentskills) definieren eine mehrstufige Pipeline, die eine vage Idee in eine funktionierende Anwendung überführt. Die Stufen laufen grob in dieser Reihenfolge:
+
+1. **spec** -- nimmt den groben Vorschlag (eine Markdown-Datei mit Stichpunkten) und klärt ihn durch strukturierte Fragen: Welche Art Visualisierung? Welches Interaktionsmodell? Welche Einschränkungen gelten?
+2. **criteria** -- fasst die geklärten Anforderungen in nummerierte Akzeptanzkriterien zusammen (Use Cases unter anderem Namen)
+3. **rules** -- legt technische Einschränkungen fest: welche Bibliotheken, welche Java-Version, welche Muster
+4. **spec-review** -- prüft alles nochmals, bevor die Implementierung beginnt
+5. **tasks** -- erstellt einen YAML-strukturierten Implementierungsplan, aufgeteilt in Phasen mit einzelnen Tasks
+6. **execute** -- arbeitet den Taskplan Phase für Phase ab, hakt Tasks ab und hält an definierten Checkpoints an
+
+Jede Stufe erstellt oder aktualisiert eine Markdown-Datei in einem `spec/`-Ordner. Die Dateien bleiben im Repository und dokumentieren jede Entscheidung während der Planung.
+
+Was mich überraschte, war seine Haltung zu dem, was nach der Implementierung passiert: **Spec wegwerfen oder archivieren**. Die Spec soll kein lebendes Dokument sein, das mit dem Code synchron gehalten wird. Sie ist eine Funktion, die ein leeres Projekt in ein definiertes überführt. Sobald diese Transformation abgeschlossen ist, hat sie ihren Zweck erfüllt. Wer ein Feature hinzufügen möchte, schreibt eine neue Spec für dieses Feature -- auf Basis des bestehenden Codes, nicht als Aktualisierung der alten.
+
+Das unterscheidet sich von meiner bisherigen Vorstellung. Ich hätte alles behalten und versucht, es als Dokumentation aktuell zu halten. Antons Version ist pragmatischer und wahrscheinlich leichter konsequent durchzuhalten.
+
+## Die YAML-Aufgabenliste
+
+Der `tasks`-Skill erzeugt eine strukturierte YAML-Datei, bevor der Agent eine einzige Codezeile schreibt. Sie sieht ungefähr so aus:
+
+```yaml
+tasks:
+  feature: "MIDI Playback and Guitar Hero-Style Visualization"
+  organizing_principle: "walking_skeleton"
+  decisions:
+    - id: dec-1
+      decision: "Walking Skeleton: erst lauffähige Datei-Lade- und Playback-Flows, dann Visualisierung."
+      reason: "Das Hauptrisiko liegt in der Integration von JavaFX, MIDI-Playback und Canvas-Rendering."
+  phases:
+    - id: phase-1
+      name: "Lauffähiges Shell-Gerüst"
+      tasks:
+        - id: task-1.1
+          name: "Maven- und Modul-Skeleton anlegen"
+          covers: [RULE-1, RULE-2, RULE-3]
+          complexity: "M"
+          validation: "Projekt baut und startet den JavaFX-Einstiegspunkt über Maven."
+    - id: phase-2
+      name: "MIDI-Daten parsen"
+      ...
+```
+
+Die vollständige Datei listet jeden Task mit seinen Akzeptanzkriterien-Referenzen, einer Komplexitätsschätzung und einer konkreten Validierungsprüfung. Bevor der `execute`-Skill läuft, prüft man diese Datei und bestätigt den Plan. Wird die Session unterbrochen, setzt der Agent beim letzten unvollständigen Task an, statt von vorne zu beginnen.
+
+Der `execute`-Skill arbeitet die Phasen dann der Reihe nach ab und hält an jedem Checkpoint an, bevor er weitermacht. Man bleibt an definierten Stellen im Loop, ohne jeden einzelnen Datei-Schreibvorgang bestätigen zu müssen.
+
+## IntelliJ als Agentenplattform
+
+Antons Framing von IntelliJ ist nützlich: es ist eine Agentenplattform, kein Junie-Produkt. Dieselben MCP-Tools, dieselbe IDE-native Suche (Find Usages, Navigate to Symbol), dieselbe Debugger-Integration -- all das steht jedem ACP-kompatiblen Agenten offen. Junie wird zufällig von JetBrains gebaut, hat aber keinen Sonderzugang.
+
+Eine praktische Konsequenz: Die semantischen Suchwerkzeuge der IDE machen den Agentenkontext genauer und günstiger. Statt grep-artiger Suche kann der Agent "Find Usages" aufrufen und bekommt den exakten Call-Graphen zurück. Weniger Rauschen im Kontextfenster.
+
+## Der `/remote`-Befehl
+
+Ein kleines Junie-Feature, das man kennen sollte: `/remote` startet eine Remote-Session, die Befehle durch die lokale Maschine tunnelt und dabei eine browser-zugängliche Steuerungsoberfläche bereitstellt. Man geht vom Schreibtisch weg, der Agent läuft weiter, und man bestätigt oder korrigiert ihn vom Smartphone aus. Praktisch bei langen Läufen, bei denen man locker im Loop bleiben möchte, ohne vor dem Bildschirm zu sitzen.
+
+## Was wir nicht fertig bekommen haben
+
+Der MIDI-Visualizer hat während der Session keinen lauffähigen Zustand erreicht. Die Anwendung hat compiliert, aber die Visualisierung funktionierte noch nicht, als uns die Zeit ausging.
+
+## Update: Nach der Session fertiggestellt
+
+Nach dem Stream habe ich die `tasks`- und `execute`-Skills auf demselben Repository ausgeführt, mit minimalen zusätzlichen Prompts. Die Anwendung hat einen vollständig funktionierenden Zustand erreicht. Fallende Noten, Audio-Playback, Transport-Steuerung -- alles.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/intelliJ-midi-app.png"
+    alt="Fertig gestellter MIDI-Visualizer, gebaut mit dem Spec-Driven-Workflow"
+  />
+</div>
+
+Antons fertige Version war die Referenz -- das Repository ist oben verlinkt.

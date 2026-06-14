@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (11)
+## English posts (12)
 
 ## English blog posts
+### Junie, IntelliJ, and Spec-Driven Development with Anton Arhipov
+- URL: https://rabauer.dev/en/blog/junie-intellij-spec-driven/
+- Date: 2026-06-11
+- Summary: Junie refused to cooperate, but that turned out to be the best possible demo: switching to another agent mid-session was seamless, and Anton's spec-driven workflow proved its value regardless of which agent was running.
+
 ### How Good Is Google's New Antigravity CLI?
 - URL: https://rabauer.dev/en/blog/antigravity-cli/
 - Date: 2026-05-31
@@ -87,9 +92,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (11)
+## German posts (12)
 
 ## German blog posts
+### Junie, IntelliJ und Spec-Driven Development mit Anton Arhipov
+- URL: https://rabauer.dev/de/blog/junie-intellij-spec-driven/
+- Date: 2026-06-11
+- Summary: Junie wollte nicht mitmachen – was sich als bestes mögliches Demo herausstellte: Der Wechsel auf einen anderen Agenten mitten in der Session war nahtlos, und Antons Spec-Driven-Workflow funktionierte unabhängig davon, welcher Agent gerade lief.
+
 ### Wie gut ist Googles neues Antigravity CLI?
 - URL: https://rabauer.dev/de/blog/antigravity-cli/
 - Date: 2026-05-31
