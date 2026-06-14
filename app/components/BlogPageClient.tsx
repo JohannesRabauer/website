@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import Fuse from 'fuse.js';
 import { FiSearch, FiX } from 'react-icons/fi';
 import BlogCard from './BlogCard';
@@ -15,8 +16,18 @@ interface Props {
 
 export default function BlogPageClient({ locale, posts, tags }: Props) {
   const copy = getBlogDictionary(locale);
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [selectedTag, setSelectedTag] = useState<string | null>(
+    () => searchParams.get('tag')
+  );
   const [query, setQuery] = useState('');
+
+  // Keep selectedTag in sync when the URL changes externally (e.g. browser back/forward)
+  useEffect(() => {
+    setSelectedTag(searchParams.get('tag'));
+  }, [searchParams]);
 
   const fuse = useMemo(
     () =>
@@ -44,8 +55,16 @@ export default function BlogPageClient({ locale, posts, tags }: Props) {
     return result;
   }, [posts, query, selectedTag, fuse]);
 
-  const toggleTag = (tag: string) =>
-    setSelectedTag((prev) => (prev === tag ? null : tag));
+  const toggleTag = (tag: string) => {
+    const next = selectedTag === tag ? null : tag;
+    const params = new URLSearchParams(searchParams.toString());
+    if (next) {
+      params.set('tag', next);
+    } else {
+      params.delete('tag');
+    }
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div>
@@ -76,7 +95,11 @@ export default function BlogPageClient({ locale, posts, tags }: Props) {
         {/* Tag pills */}
         <div className="flex flex-wrap gap-2 items-center">
           <button
-            onClick={() => setSelectedTag(null)}
+            onClick={() => {
+              const params = new URLSearchParams(searchParams.toString());
+              params.delete('tag');
+              router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+            }}
             aria-pressed={!selectedTag}
             className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${
               !selectedTag
@@ -124,7 +147,12 @@ export default function BlogPageClient({ locale, posts, tags }: Props) {
           <p className="text-4xl mb-4">🔍</p>
           <p className="text-lg font-medium">{copy.listing.noPostsMatch}</p>
           <button
-            onClick={() => { setQuery(''); setSelectedTag(null); }}
+            onClick={() => {
+              setQuery('');
+              const params = new URLSearchParams(searchParams.toString());
+              params.delete('tag');
+              router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+            }}
             className="mt-4 text-sm text-blog-purple underline hover:no-underline"
           >
             {copy.listing.clearFilters}

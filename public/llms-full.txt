@@ -31,7 +31,7 @@ The homepage is the best source for identity and profile information, while the 
 ## English posts (12)
 
 ## English blog posts
-### Junie, IntelliJ, and Spec-Driven Development with Anton Arhipov
+### Junie, IntelliJ, and Spec-Driven Development
 - URL: https://rabauer.dev/en/blog/junie-intellij-spec-driven/
 - Date: 2026-06-11
 - Summary: Junie refused to cooperate, but that turned out to be the best possible demo: switching to another agent mid-session was seamless, and Anton's spec-driven workflow proved its value regardless of which agent was running.
@@ -95,7 +95,7 @@ The homepage is the best source for identity and profile information, while the 
 ## German posts (12)
 
 ## German blog posts
-### Junie, IntelliJ und Spec-Driven Development mit Anton Arhipov
+### Junie, IntelliJ und Spec-Driven Development
 - URL: https://rabauer.dev/de/blog/junie-intellij-spec-driven/
 - Date: 2026-06-11
 - Summary: Junie wollte nicht mitmachen – was sich als bestes mögliches Demo herausstellte: Der Wechsel auf einen anderen Agenten mitten in der Session war nahtlos, und Antons Spec-Driven-Workflow funktionierte unabhängig davon, welcher Agent gerade lief.

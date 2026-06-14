@@ -116,12 +116,13 @@ export default function BlogPostContent({ locale, slug }: Props) {
           {tags?.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-5">
               {tags.map((tag) => (
-                <span
+                <Link
                   key={tag}
-                  className="text-xs px-2.5 py-0.5 rounded-full bg-blog-purple-light text-blog-purple font-medium tracking-wide"
+                  href={`${getBlogListingPath(locale)}?tag=${encodeURIComponent(tag)}`}
+                  className="text-xs px-2.5 py-0.5 rounded-full bg-blog-purple-light text-blog-purple font-medium tracking-wide hover:bg-blog-purple hover:text-white transition-colors"
                 >
                   #{tag}
-                </span>
+                </Link>
               ))}
             </div>
           )}
