@@ -16,6 +16,7 @@ import GraphRagDiagram from '@/app/components/GraphRagDiagram';
 import MainRepositoryLink from '@/app/components/MainRepositoryLink';
 import ShareButton from '@/app/components/ShareButton';
 import BlogLanguageSwitcher from '@/app/components/BlogLanguageSwitcher';
+import ZoomableImage from '@/app/components/ZoomableImage';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -87,6 +88,8 @@ export default function BlogPostContent({ locale, slug }: Props) {
       <MainRepositoryLink {...props} locale={locale} />
     ),
     table: MdxTable,
+    img: (props: React.ComponentPropsWithoutRef<'img'>) => <ZoomableImage {...props} />,
+    ZoomableImage: (props: React.ComponentPropsWithoutRef<'img'>) => <ZoomableImage {...props} />,
   };
 
   return (
