@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import BlogPageClient from '@/app/components/BlogPageClient';
 import { getAllPosts, getTopTags } from '@/lib/posts';
@@ -84,7 +85,9 @@ export default function BlogIndexContent({ locale }: Props) {
             </Link>
           </div>
         ) : (
-          <BlogPageClient locale={locale} posts={posts} tags={tags} />
+          <Suspense>
+            <BlogPageClient locale={locale} posts={posts} tags={tags} />
+          </Suspense>
         )}
       </div>
     </main>
