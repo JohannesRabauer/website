@@ -9,6 +9,7 @@ import { FiArrowLeft, FiCalendar, FiClock } from 'react-icons/fi';
 import YoutubeEmbed from '@/app/components/YoutubeEmbed';
 import GiscusComments from '@/app/components/GiscusComments';
 import TableOfContents from '@/app/components/TableOfContents';
+import FloatingTableOfContents from '@/app/components/FloatingTableOfContents';
 import TimestampList from '@/app/components/TimestampList';
 import CoSpeakerCard from '@/app/components/CoSpeakerCard';
 import MermaidDiagram from '@/app/components/MermaidDiagram';
@@ -114,8 +115,8 @@ export default function BlogPostContent({ locale, slug }: Props) {
         />
       </div>
 
-      <div className="flex gap-16 items-start">
-        <article className="flex-1 min-w-0">
+      <div className="flex gap-16">
+        <article className="flex-1 min-w-0 self-start">
           {tags?.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-5">
               {tags.map((tag) => (
@@ -186,7 +187,7 @@ export default function BlogPostContent({ locale, slug }: Props) {
         </article>
 
         {headings.length > 0 && (
-          <aside className="hidden xl:block w-56 flex-shrink-0">
+          <aside className="hidden lg:block w-56 flex-shrink-0">
             <div className="sticky top-24">
               <TableOfContents
                 headings={headings}
@@ -196,7 +197,12 @@ export default function BlogPostContent({ locale, slug }: Props) {
             </div>
           </aside>
         )}
+
       </div>
+
+      {headings.length > 0 && (
+        <FloatingTableOfContents headings={headings} title={copy.post.onThisPage} />
+      )}
     </div>
   );
 }
