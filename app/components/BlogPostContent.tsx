@@ -17,6 +17,7 @@ import MainRepositoryLink from '@/app/components/MainRepositoryLink';
 import ShareButton from '@/app/components/ShareButton';
 import BlogLanguageSwitcher from '@/app/components/BlogLanguageSwitcher';
 import ZoomableImage from '@/app/components/ZoomableImage';
+import ImageGallery, { GalleryImage } from '@/app/components/ImageGallery';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -90,6 +91,8 @@ export default function BlogPostContent({ locale, slug }: Props) {
     table: MdxTable,
     img: (props: React.ComponentPropsWithoutRef<'img'>) => <ZoomableImage {...props} />,
     ZoomableImage: (props: React.ComponentPropsWithoutRef<'img'>) => <ZoomableImage {...props} />,
+    ImageGallery: (props: React.ComponentProps<typeof ImageGallery>) => <ImageGallery {...props} />,
+    GalleryImage: (props: React.ComponentProps<typeof GalleryImage>) => <GalleryImage {...props} />,
   };
 
   return (

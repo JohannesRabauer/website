@@ -57,5 +57,7 @@ PASTE HERE
 - Do not pad — cut anything that doesn't add value.
 - Create matching slugs for both locales (e.g. `my-topic.mdx` in both `en/` and `de/`).
 - Frontmatter format must match the existing MDX posts exactly.
-- Use Plain English according to Strunk & White
+- Use Plain English according to Strunk & White and for german Gutes Deutsch nach Wolf Schneider
 - Ask if any required information is missing before writing.
+- Add a list of relevant links at the end.
+- Add a conclusion / Takeaway

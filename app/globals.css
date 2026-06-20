@@ -237,7 +237,8 @@
   /* ─── Blog: media framing for inline images ─── */
   .prose-blog p > img,
   .prose-blog > img,
-  .prose-blog .mdx-image-compact > img {
+  .prose-blog .mdx-image-compact > img,
+  .prose-blog .mdx-screenshot-grid > img {
     width: 100%;
     display: block;
     border-radius: 0.9rem;
@@ -260,13 +261,28 @@
     width: min(100%, 210px);
   }
 
+  .prose-blog .mdx-screenshot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    width: min(100%, 560px);
+    margin: 0 auto;
+  }
+
+  .prose-blog .mdx-screenshot-grid > img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
   .prose-blog .mdx-image-compact > img {
     width: 100%;
   }
 
   .prose-blog p > img:hover,
   .prose-blog > img:hover,
-  .prose-blog .mdx-image-compact > img:hover {
+  .prose-blog .mdx-image-compact > img:hover,
+  .prose-blog .mdx-screenshot-grid > img:hover {
     transform: translateY(-2px);
     border-color: #C5B8E3;
     box-shadow:
