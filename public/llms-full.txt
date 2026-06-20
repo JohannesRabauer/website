@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (12)
+## English posts (13)
 
 ## English blog posts
+### Can Kiro Change Java Development?
+- URL: https://rabauer.dev/en/blog/kiro-java-hero-game/
+- Date: 2026-06-18
+- Summary: James Ward joined to build a Spring Boot card game using Amazon Kiro's spec-driven workflow. The app actually finished, the task list parallelized itself, and Java turned out to be surprisingly token-efficient with agentic tools.
+
 ### Junie, IntelliJ, and Spec-Driven Development
 - URL: https://rabauer.dev/en/blog/junie-intellij-spec-driven/
 - Date: 2026-06-11
@@ -92,9 +97,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (12)
+## German posts (13)
 
 ## German blog posts
+### Kann Kiro Java-Entwicklung verändern?
+- URL: https://rabauer.dev/de/blog/kiro-java-hero-game/
+- Date: 2026-06-18
+- Summary: James Ward war zu Gast, um mit Amazon Kiros Spec-Driven-Workflow ein Spring-Boot-Kartenspiel zu bauen. Die App wurde tatsächlich fertig, die Aufgabenliste parallelisierte sich von selbst, und Java erwies sich als überraschend tokeneffizient mit agentischen Tools.
+
 ### Junie, IntelliJ und Spec-Driven Development
 - URL: https://rabauer.dev/de/blog/junie-intellij-spec-driven/
 - Date: 2026-06-11

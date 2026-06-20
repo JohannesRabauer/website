@@ -1,0 +1,195 @@
+---
+title: "Can Kiro Change Java Development?"
+date: "2026-06-18"
+summary: "James Ward joined to build a Spring Boot card game using Amazon Kiro's spec-driven workflow. The app actually finished, the task list parallelized itself, and Java turned out to be surprisingly token-efficient with agentic tools."
+tags: ["kiro", "java", "spring-boot", "aws", "agentic-development", "spec-driven-development", "mcp", "live-coding"]
+youtubeId: "Vp5AspPXN-4"
+mainRepository: "https://github.com/JohannesRabauer/kiro-java-hero-game"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "06:25"
+    label: "Project Overview"
+  - time: "09:16"
+    label: "Setting up the Desktop App"
+  - time: "15:00"
+    label: "Start Specification"
+  - time: "22:20"
+    label: "Proceed to Design (refining requirements)"
+  - time: "26:50"
+    label: "Creating the design (design.md)"
+  - time: "37:40"
+    label: "Spec-Driven-Design discussion"
+  - time: "46:15"
+    label: "Writing the task list"
+  - time: "56:22"
+    label: "Implement the tasks"
+  - time: "01:00:20"
+    label: "Checking the MCP Server"
+  - time: "01:07:55"
+    label: "Kiro, MCP Servers and ACP"
+  - time: "01:09:55"
+    label: "Kiro CLI"
+  - time: "01:15:00"
+    label: "Looking through produced code"
+  - time: "01:20:33"
+    label: "Why Java is efficient with AI"
+  - time: "01:22:23"
+    label: "Javadocs MCP"
+  - time: "01:26:33"
+    label: "Property-Based Tests"
+  - time: "01:31:35"
+    label: "IntelliJ as MCP Server for Kiro"
+  - time: "01:39:05"
+    label: "Looking through produced code"
+  - time: "01:42:00"
+    label: "Kiro App (Preview)"
+  - time: "01:55:59"
+    label: "Final touches"
+  - time: "02:04:40"
+    label: "Looking at the finished app"
+  - time: "02:08:00"
+    label: "Conclusion"
+---
+
+James Ward joined me to build a Spring Boot collectible card game with Amazon Kiro. We walked through Kiro's full spec-driven workflow: from a rough vision file to requirements, design, a complete task list, and finally a working application. The app actually finished. Both of us were delighted.
+
+<CoSpeakerCard
+  name="James Ward"
+  role="Principal Developer Advocate"
+  company="AWS"
+  bio="James is a Java Champion, Testcontainers Community Champion, developer, author, and podcaster. He has spent the past year on the road with Josh Long teaching Spring AI with Amazon Bedrock, and recently joined the Agentic AI Foundation technical committee."
+  imageSrc="https://avatars.githubusercontent.com/jamesward"
+  github="https://github.com/jamesward"
+  x="https://x.com/JamesWard"
+  linkedin="https://www.linkedin.com/in/jamesward"
+/>
+
+## The App: Java Hero Cards
+
+The idea was a collectible learning game for Java developers. Users unlock animated hero cards by completing quizzes on Java and Spring concepts. Each card explains a single concept with a short description, a code example, and a question to answer. Collect all cards and you reach a new level.
+
+It is a small but realistic Spring Boot application: a backend with JPA entities, REST controllers, Thymeleaf templates, a quiz engine, an unlock system, and some CSS animations. Not hello world, but also not an enterprise monolith.
+
+## Kiro's Four Surfaces
+
+Before we started building, James gave a quick overview of how Kiro can be used:
+
+- **Kiro IDE** — a VS Code-based desktop app with the full spec-driven workflow we used in this session
+- **Kiro CLI** — a terminal-based agent; James uses this as his primary tool alongside IntelliJ
+- **Kiro Web** — browser-based, connects to a GitHub repository, good for async or remote work
+- **Kiro Mobile** — in preview, request access required; James is already planning to use it to keep prompting after going to bed
+
+For this session we used Kiro IDE and had a look at the CLI toward the end.
+
+## The Spec-Driven Workflow
+
+The most interesting part of Kiro IDE is its structured spec mode. Instead of a single chat prompt, it walks you through four connected phases:
+
+1. **Requirements** — Kiro reads your idea (we pointed it at `vision.md`) and generates a structured requirements document with user stories and acceptance criteria for each feature. It uses Gherkin-style language: _given_, _when_, _shall_.
+2. **Design** — from the requirements, Kiro produces a technical design document. It decided on Spring Boot, Thymeleaf, vanilla JS, and H2 for persistence without us specifying anything. Each design decision cross-references the requirements it addresses.
+3. **Task list** — a checklist of implementation tasks, each tagged with the design properties and requirements it covers. Tasks are grouped into waves.
+4. **Implement** — "Run all tasks." That is the button we pressed.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/kiro_workflow.png"
+    alt="Overview of the Kiro spec-driven workflow showing the progression from requirements to design to tasks"
+  />
+</div>
+
+Each phase produces a markdown file that stays in the [`.kiro/specs/`](https://github.com/JohannesRabauer/kiro-java-hero-game/tree/main/.kiro/specs/java-hero-cards) directory. This means the requirements and design documents are committed to your repository alongside the code, which I liked.
+
+One small quirk: Kiro Web did not pick up spec files automatically when we connected it to the repository. Explicitly prompting it to look in `.kiro` was enough. Worth knowing if you switch surfaces mid-project.
+
+## Running the Task List
+
+After clicking "Run all tasks," Kiro started working through the task list autonomously. Two things stood out:
+
+**Parallel execution.** Tasks within a wave that had no dependencies on each other ran simultaneously. You could see multiple tasks marked as "in progress" at the same time. The explicit wave structure in the task list markdown seems to be what enables this.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/kiro_task_overview.png"
+    alt="Kiro task overview showing tasks in different states: queued, in progress, and completed"
+  />
+</div>
+
+**Separate terminal window.** Every shell command Kiro ran during implementation appeared in a dedicated terminal tab, so you could follow Maven builds and test runs without digging through the chat. Small thing, but it made the session much easier to follow.
+
+The full implementation, including tests, took roughly an hour. 50+ meaningful files created. Both of us were in the session, occasionally reviewing code or answering questions from the chat, while Kiro worked through the list.
+
+## The JavaDocs MCP Server
+
+Before starting, James added his [javadocs.dev](https://javadocs.dev) MCP server to Kiro. It exposes every library on Maven Central as searchable Java doc and source content — so the agent can look up current API docs and latest versions without unpacking jars locally or doing web searches.
+
+Adding it took about two minutes: paste the MCP URL into Kiro's MCP configuration, save, and the tool list updates immediately. We could even add it mid-session while tasks were still running.
+
+One thing we noticed: without an explicit steering document, the agent sometimes reached for web search instead of the MCP. We added an [`agents.md`](https://github.com/JohannesRabauer/kiro-java-hero-game/blob/main/AGENTS.md) steering file with a single instruction — "use the JavaDocs tools for fetching documentation about libraries" — and after that Kiro picked up the MCP without nudging.
+
+James mentioned that [**powers**](https://kiro.dev/powers/) are Kiro's way to bundle an MCP server and a matching steering skill together, so the nudging is built in. His javadocs power would have handled this automatically.
+
+## IntelliJ as an MCP Server for Kiro
+
+James mentioned that IntelliJ exposes itself as an MCP server. The plugin is bundled in IntelliJ IDEA 2025.2 and later ([Marketplace](https://plugins.jetbrains.com/plugin/26071-mcp-server), [documentation](https://www.jetbrains.com/help/idea/mcp-server.html)). We enabled it, copied the local server URL from Settings | Tools | MCP Server (something like `http://127.0.0.1:64342/stream`), added it to Kiro's MCP list, and it worked immediately — even while the implementation was still running.
+
+With IntelliJ connected, Kiro could call "find files by name" and "find usages" against IntelliJ's full semantic index instead of globbing through the file system. The difference is visible: index-based search is fast and accurate, grep-based scanning generates a lot of unnecessary turns with the model.
+
+James also mentioned connecting Kiro CLI to IntelliJ's AI assistant through ACP (Agent Client Protocol), which would bring the same integration to the terminal-based workflow. We did not try that live, but it is possible.
+
+## Why Java is Token-Efficient with AI
+
+One observation from James that was worth highlighting: Java projects tend to be unusually token-efficient when working with agentic tools. His explanation:
+
+- Models have deep, well-trained knowledge of Java and the Spring ecosystem, so there is little need to look things up
+- When docs are needed, a focused MCP server like javadocs.dev delivers precisely what the agent needs in one call, instead of requiring several turns to find and unpack a jar
+- Java source is structured and typed, which keeps context windows smaller per file
+
+When James works on TypeScript projects, he noticed much higher token consumption because the model would download entire `node_modules` source trees to understand an unfamiliar library. With Java and the javadocs MCP, that problem largely disappears.
+
+## The Spec as a Transformation Function
+
+Kiro's philosophy puts the spec at the center: every implementation decision traces back to a requirement, and if you want to change the app, you update the spec first. This came up in conversation, and James had a different perspective from his day-to-day workflow.
+
+He typically archives or discards the spec once implementation is done. His reasoning: the code becomes the source of truth, and the spec was the function that created it. If the code is expressive enough, you can always ask an agent to describe the architecture and regenerate a description on demand. The spec as a persistent, synchronized document adds maintenance overhead for unclear gain — unless the codebase is very large, very legacy, or needs to be understood quickly by new team members.
+
+James takes this further with [ai4jvm.com](https://ai4jvm.com/), a community site cataloguing AI resources for Java developers. The [contributing process](https://github.com/jamesward/ai4jvm/blob/main/CONTRIBUTING.md) makes the philosophy explicit: contributors only edit `SPEC.md`, then let an AI assistant update the actual website from that file. Humans own the spec; the AI owns the code.
+
+Anton Arhipov made the same point in our [Junie and IntelliJ session](/en/blog/junie-intellij-spec-driven/): once implementation is done, the spec gets archived or deleted. It was a transformation function — it turned an empty project into a defined one. Keeping it around and trying to stay in sync with the code just adds maintenance overhead.
+
+That is a very different stance from Simon Martinelli's [AI Unified Process approach](/en/blog/ai-unified-process/), where the spec is the persistent, authoritative source of truth. When requirements change, you update the spec first and let the AI propagate those changes into the code. The two philosophies reflect genuinely different views on where the understanding of a system should live.
+
+Kiro as a tool leans toward spec-as-truth. James and Anton lean toward code-as-truth. This session sat at the intersection.
+
+## The Finished App
+
+After roughly two hours total, Kiro had produced a working Spring Boot application with a learning path, quiz engine, hero card collection, unlock system, and animated cards. We ran it, clicked through the quizzes, and it worked.
+
+<ImageGallery>
+  <GalleryImage src="https://raw.githubusercontent.com/JohannesRabauer/kiro-java-hero-game/main/docs/screenshots/roadmap.png" alt="Java Hero Cards – learning roadmap" />
+  <GalleryImage src="https://raw.githubusercontent.com/JohannesRabauer/kiro-java-hero-game/main/docs/screenshots/learning.png" alt="Java Hero Cards – learning view" />
+  <GalleryImage src="https://raw.githubusercontent.com/JohannesRabauer/kiro-java-hero-game/main/docs/screenshots/quiz.png" alt="Java Hero Cards – quiz view" />
+  <GalleryImage src="https://raw.githubusercontent.com/JohannesRabauer/kiro-java-hero-game/main/docs/screenshots/collection.png" alt="Java Hero Cards – card collection" />
+</ImageGallery>
+
+The implementation was not perfect out of the box — we did some final touches — but the core application worked, the UI was usable, and the quiz logic was correct. For a spec-to-working-app run of under two hours with no manual coding, that is impressive. Want to try it yourself? The [Getting Started guide](https://github.com/JohannesRabauer/kiro-java-hero-game#getting-started) has everything you need to run it locally.
+
+## Takeaway
+
+Kiro's spec-driven workflow enforces a useful discipline: write down what you want before asking a model to build it. The resulting requirements and design documents stay in the repository as context for every future change. Whether you treat them as living documentation or discard them once the code is done, writing them first tends to produce better-structured output from the agent.
+
+The IntelliJ MCP integration is worth adding to any Java project using an agentic tool. Index-based search is faster and more precise than globbing through the file system, and routing build output, test results, and file lookups through the IDE keeps the workflow readable.
+
+## What We Did Not Try
+
+- Kiro CLI connected to IntelliJ via ACP — technically possible, needs a dedicated session to explore properly
+
+
+## Relevant Links
+
+- [Amazon Kiro](https://kiro.dev) — Kiro IDE, CLI, and Web
+- [javadocs.dev](https://javadocs.dev) — James Ward's MCP server for Maven Central documentation
+- [IntelliJ MCP Server documentation](https://www.jetbrains.com/help/idea/mcp-server.html) — JetBrains guide for setting up IntelliJ as an MCP server
+- [IntelliJ MCP Server plugin](https://plugins.jetbrains.com/plugin/26071-mcp-server) — plugin page on JetBrains Marketplace
+- [Java Hero Cards on GitHub](https://github.com/JohannesRabauer/kiro-java-hero-game) — source code from this session
