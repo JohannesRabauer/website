@@ -1,0 +1,132 @@
+---
+title: "Wie gut ist die GitHub Copilot App für Java Entwicklung?"
+date: "2026-06-25"
+summary: "Bruno Borges war zu Gast für einen Live-Java-Test der GitHub Copilot App von Anfang bis Ende. Das Scaffolding war einfach, der PR-Workflow wirkte rund, und /create-canvas hat einen i18n-Editor gebaut, der direkt im Repo lebt. Hier ist, was funktioniert hat, was uns überrascht hat und wo die aktuellen Lücken sind."
+tags: ["github-copilot", "copilot-app", "java", "ai-assisted-development", "live-coding", "developer-productivity"]
+youtubeId: "Xg3uYN6AMCA"
+mainRepository: "https://github.com/JohannesRabauer/hr-onboarding-java-app"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Intro und Begrüßung"
+  - time: "01:35"
+    label: "Copilot App vs GitHub Desktop"
+  - time: "11:33"
+    label: "Slash Commands und Java Scaffolding"
+  - time: "13:09"
+    label: "Interaktiv vs Autopilot"
+  - time: "14:13"
+    label: "Auto Model Router"
+  - time: "20:08"
+    label: "Parallele Sessions und Worktrees"
+  - time: "23:13"
+    label: "/remote"
+  - time: "35:17"
+    label: "Pull Request erstellen"
+  - time: "57:33"
+    label: "/commit und als PR pushen"
+  - time: "01:02:59"
+    label: "Review und Merge"
+  - time: "01:26:41"
+    label: "/create-canvas"
+  - time: "01:31:31"
+    label: "Canvas als i18n Editor"
+  - time: "01:34:06"
+    label: "Canvas mit Opus neu aufbauen"
+  - time: "01:40:01"
+    label: "Grenzen bei mehreren Repositories"
+  - time: "01:46:19"
+    label: "Cross Repo Themen"
+  - time: "01:55:31"
+    label: "Abschluss"
+---
+
+Die GitHub Copilot App ist nicht [GitHub Desktop](https://desktop.github.com/). Das klingt selbstverständlich, war aber das Erste, was Bruno zu Beginn der Session klargestellt hat, und es verändert alles, was danach kommt. [01:35](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=95s) Bruno Borges war zu Gast, um gemeinsam eine Java Spring Boot Anwendung von Grund auf zu bauen und den gesamten Workflow zu testen: Scaffolding, parallele Sessions, PR-Flow, Remote-Ausführung und ein Feature, mit dem wir beide noch kaum Zeit verbracht hatten.
+
+<CoSpeakerCard
+  name="Bruno Borges"
+  role="Principal Product Manager for Java"
+  company="Microsoft"
+  bio="Bruno ist Java Champion und Principal Product Manager für Java bei Microsoft. Zuvor war er bei Oracle und im Azure DevRel tätig. Er bringt tiefes Wissen über das Java-Ökosystem mit, und eine sehr praktische Sicht darauf, was Entwickler von ihren Tools wirklich brauchen."
+  imageSrc="https://avatars.githubusercontent.com/brunoborges"
+  github="https://github.com/brunoborges"
+  x="https://x.com/brunoborges?lang=en"
+  linkedin="https://ca.linkedin.com/in/brunocborges"
+  website="http://brunoborges.io/"
+  locale="de"
+/>
+
+## Was die App wirklich ist
+
+GitHub Desktop verwaltet lokale Git-Repositories. Die Copilot App ist etwas anderes: eine projektbasierte Coding-Agent-Laufzeit. Man öffnet ein Repository, und der Agent hat sofort vollständigen Kontext über den Code. Slash Commands, Session-Verwaltung, Worktrees, PR-Erstellung und Remote-Ausführung liegen alle in einer Oberfläche.
+
+Etwas, das ich nicht erwartet hatte: Man kann ein neues GitHub-Repository direkt in der App anlegen, ohne Browser. Wir haben "HR Onboarding" mit einem Klick als neues öffentliches Repo erstellt und danach im Autopilot-Modus eine vollständige [Spring Boot](https://spring.io/projects/spring-boot) plus [Thymeleaf](https://www.thymeleaf.org/) Onboarding-Anwendung aus einem kurzen Prompt heraus aufgebaut. [11:33](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=693s)
+
+Der Auto Model Router hat für dieses Scaffolding [Claude Haiku 4.5](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models) gewählt. [14:13](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=853s) Das ist die richtige Entscheidung. Boilerplate-Generierung braucht kein schweres Modell. Der Router spart die stärkeren Modelle für Aufgaben, die sie wirklich erfordern, und der Unterschied in Kosten und Geschwindigkeit ist spürbar.
+
+## Sessions, Worktrees und /remote
+
+Jede Session läuft auf einem eigenen [Git-Worktree](https://git-scm.com/docs/git-worktree), einem separaten Verzeichnis auf der Festplatte. [20:08](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=1208s) Zwei Agenten können parallel arbeiten, ohne sich gegenseitig zu blockieren. Wir haben das für Internationalisierung genutzt: drei separate Sessions nacheinander, eine für Deutsche Übersetzungen, eine für Portugiesische, eine für Niederländische. Jede Session hat das aktuelle `main` direkt von GitHub gezogen (nicht eine veraltete lokale Kopie) und einen eigenen PR geöffnet.
+
+Der Befehl `/remote` [23:13](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=1393s) verschiebt eine Session auf die Infrastruktur von GitHub. Ein Befehl. Fertig. Man kann den Fortschritt über den Browser oder die [GitHub Mobile App](https://github.com/mobile) verfolgen und steuern, auch wenn der Laptop zugeklappt ist. Bruno nutzt das, um Arbeit weiterlaufen zu lassen, wenn er seinen Rechner für den Tag schließt. Das wirkte wie echter Nutzen, nicht wie ein Demo-Feature.
+
+## Der PR-Workflow
+
+Brunos Muster: auf `main` bleiben, Änderungen akkumulieren, dann `/commit and push as PR` eingeben. [57:33](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=3453s) Der Agent legt den Branch an, committet die Änderungen, pusht und öffnet den PR. Wenn Build oder Lint fehlschlagen, behebt er das Problem, bevor er den Merge abschließt. Den ersten PR haben wir direkt in der Copilot App reviewed und gemergt. [01:02:59](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=3779s)
+
+Während der Session hat die scaffoldete Anwendung beim ersten Start einen Compile-Fehler geworfen. Der Agent hat ihn behoben, ohne Aufforderung. Kurz danach kam ein Port-Konflikt. Ebenfalls selbst gelöst. [35:17](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=2117s)
+
+Es gibt auch ein "Pick and Polish" Feature: Man wählt einen visuellen Bereich im eingebetteten Browser aus und beschreibt die gewünschte Änderung. Der Agent wendet das Update direkt an. Eine Kleinigkeit, aber sehr praktisch.
+
+## /create-canvas: Das Highlight
+
+Bei [01:26:41](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=5201s) hat Bruno `/create-canvas` eingeführt. Das ist das Feature, das am meisten hängengeblieben ist.
+
+Man promptet den Agenten, eine kleine Web-App zu bauen, die als Panel direkt in der Copilot App läuft. Der Canvas wird in `.github/` im Repository gespeichert, zieht also mit dem Code mit und steht jedem Entwickler zur Verfügung, der das Projekt klont.
+
+Wir haben einen i18n-Editor gebaut: Englische, Deutsche und Portugiesische Übersetzungsfelder, alle in einer Ansicht, alle bearbeitbar. [01:31:31](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=5491s) Dann haben wir ihn mit Opus neu gebaut [01:34:06](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=5646s) und das Ergebnis war spürbar besser.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/copilot_create_canvas.png"
+    alt="GitHub Copilot App Canvas als Side-by-Side i18n Editor"
+    width={1200}
+  />
+</div>
+
+Das Potenzial ist breiter als das i18n-Beispiel vermuten lässt. Umgebungskonfigurations-Switcher. Ein-Klick-Login-Helfer für verschiedene Nutzerrollen. Kleine Datenverwaltungs-UIs, die man bei Bedarf baut. Nichts davon braucht ein eigenes Projekt oder ein deployetes Tool. Es lebt dort, wo der Code liegt, und wird mit ihm ausgeliefert.
+
+## Zwei aktuelle Lücken
+
+Zwei Dinge sind ehrlich während der Session aufgetaucht:
+
+**Commit-Historie und Dateiänderungen.** Einen schnellen visuellen Überblick darüber zu bekommen, was sich über Commits hinweg verändert hat, ist in der Copilot App schwieriger als in GitHub Desktop. [01:35](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=95s) [GitHub Desktop](https://desktop.github.com/) bleibt für mich das richtige Tool dafür. Es ist das einzige, das ich noch nicht aus meinem Workflow herausnehmen möchte.
+
+**Multi-Repo-Workflows.** Die App funktioniert gut für ein einzelnes Repository. Wenn die Arbeit mehrere Repos umspannt, wird der Ein-Repo-Fokus zur echten Einschränkung. [01:40:01](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=6001s), [01:46:19](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=6379s) Mehrere Zuschauer haben das im Livestream angesprochen, und es gibt noch keine saubere Antwort darauf.
+
+Den Automation-Tab haben wir in der Session nicht mehr geschafft. Das braucht eine eigene Session.
+
+## Fazit
+
+Die GitHub Copilot App ist ein starkes Tool für Entwickler, die bereits tief im GitHub-Ökosystem arbeiten. Worktree-Isolation, PR-Workflow, Remote-Sessions und vor allem `/create-canvas` wirken wie ein kohärentes System, nicht wie eine Sammlung von Features.
+
+Modus und Modellwahl machen mehr aus, als es auf den ersten Blick scheint. Interaktiv versus Autopilot verändert den gesamten Arbeitsstil, [13:09](https://www.youtube.com/watch?v=Xg3uYN6AMCA&t=789s) und der Auto Model Router, der für Routinearbeit Haiku statt Opus wählt, ist wirklich nützlich.
+
+Brunos tägliches Toolkit besteht heute aus drei Dingen: der Copilot App, der [Copilot CLI](https://docs.github.com/en/copilot/how-tos/using-copilot-in-the-cli) und github.com. [VS Code](https://code.visualstudio.com/) öffnet er nur noch gelegentlich für die Code-Navigation. Das ist ein deutliches Signal dafür, wohin die Entwicklung geht.
+
+Das Risiko, das man benennen sollte: Geschwindigkeit kann sich wie Vollständigkeit anfühlen. Das ist sie nicht. Generieren, reviewen, testen, Security prüfen, mergen: dieser Kreislauf muss trotzdem stattfinden. Das Tool macht ihn schneller. Es macht ihn nicht optional.
+
+Wenn du als Java-Entwickler bereits im GitHub-Workflow arbeitest und KI möchtest, die sich tief integriert statt nebenher zu laufen, ist das hier einen Blick wert.
+
+## Links und Ressourcen
+
+- [YouTube Session](https://www.youtube.com/watch?v=Xg3uYN6AMCA)
+- [Repository der Session](https://github.com/JohannesRabauer/hr-onboarding-java-app)
+- [GitHub Copilot App](https://github.com/features/copilot)
+- [GitHub Copilot Dokumentation](https://docs.github.com/en/copilot)
+- [Modelle in Copilot verwalten](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models)
+- [git worktree Dokumentation](https://git-scm.com/docs/git-worktree)
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Thymeleaf](https://www.thymeleaf.org/)
+- [GitHub Desktop](https://desktop.github.com/)
+- [GitHub Mobile App](https://github.com/mobile)
