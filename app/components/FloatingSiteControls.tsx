@@ -10,8 +10,9 @@ import { usePathname } from 'next/navigation';
 export default function FloatingSiteControls() {
   const pathname = usePathname();
   const isBlogRoute = pathname?.startsWith('/blog') || /^\/(en|de)\/blog(?:\/|$)/.test(pathname ?? '');
+  const isMethodsRoute = /^\/methods(?:\/|$)/.test(pathname ?? '');
 
-  if (isBlogRoute) {
+  if (isBlogRoute || isMethodsRoute) {
     return null;
   }
 

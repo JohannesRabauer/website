@@ -1,0 +1,37 @@
+---
+title: "Vise Coding"
+tagline: "Keep the change between the spec and the gates. Move in small steps."
+category: "Workflow"
+icon: "sliders"
+maturity: "Emerging"
+order: 6
+diagram:
+  type: vise
+  title: "The spec and the gates squeeze the change in the middle."
+  specLabel: "Spec"
+  agentLabel: "Agent"
+  gates:
+    - "Tests"
+    - "Lint"
+    - "Build"
+  highlightLabel: "Keep each step small and reviewable."
+sources:
+  - label: "Vise Coding in Practice (slides)"
+    href: "https://docs.google.com/presentation/d/1G-0khMxuvVTvgWZMT4LAMyMnSGYFIAooDaK8o7GUMoI/edit?usp=sharing"
+  - label: "Vise Coding blog post"
+    href: "https://rabauer.dev/en/blog/vise-coding-in-practice/"
+relatedPosts:
+  - "vise-coding-in-practice"
+draft: false
+---
+
+## What it is
+
+Vise Coding keeps the change between two jaws. One jaw is the spec. The other is the quality
+gate. The agent works in the middle. It moves forward only when the step is small and the checks
+pass.
+
+## Why it matters
+
+This keeps review simple. It also catches drift early. The approach works best when you already
+have real tests and static checks.

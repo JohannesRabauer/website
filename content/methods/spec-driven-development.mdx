@@ -1,0 +1,37 @@
+---
+title: "Spec-Driven Development (Living Docs)"
+tagline: "Write the spec, keep it alive, and let it drive the code."
+category: "Spec-Driven"
+icon: "refresh-cw"
+maturity: "Established"
+order: 4
+diagram:
+  type: sync
+  title: "The spec and the code move together."
+  specLabel: "Business spec"
+  codeLabel: "Working code"
+  specSummary: "Describe what the system must do."
+  codeSummary: "Generate code from the spec."
+  cycleLabel: "Change the spec first. Regenerate second."
+  notes:
+    - "The spec carries intent."
+    - "The code follows it."
+sources:
+  - label: "Simon Martinelli — 42talents"
+    href: "https://www.42talents.com/"
+  - label: "AI Unified Process write-up"
+    href: "https://rabauer.dev/en/blog/ai-unified-process/"
+relatedPosts:
+  - "ai-unified-process"
+draft: false
+---
+
+## What it is
+
+Spec-driven development keeps the spec alive. The spec says what the system should do. It does
+not lock in the framework or the database. That keeps the document focused on business intent.
+
+## Why it matters
+
+When behavior changes, update the spec first. Then regenerate the code. That keeps the spec useful
+instead of stale.

@@ -1,12 +1,13 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { FaVolumeUp, FaLaptopCode, FaChevronDown } from "react-icons/fa";
+import { FaVolumeUp, FaLaptopCode, FaChevronDown, FaProjectDiagram } from "react-icons/fa";
 import Image from "next/image";
 import { useRef } from "react";
 import Link from "next/link";
 import SocialBadges from "./SocialBadges";
 import { getBlogListingPath } from "@/lib/blog-i18n";
+import { getMethodsListingPath } from "@/lib/methods-i18n";
 import { HOMEPAGE_INTRO, PERSON_NAME } from "@/lib/site-data";
 
 const containerVariants = {
@@ -20,10 +21,9 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    y: 0,
     transition: {
       duration: 0.6,
       ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
@@ -144,6 +144,30 @@ function Hero() {
             </div>
             <FaLaptopCode
               className="hidden shrink-0 text-5xl text-cyber-green/50 transition-all group-hover:text-cyber-green group-hover:drop-shadow-cyber-green md:block"
+              aria-hidden="true"
+            />
+          </Link>
+        </motion.div>
+
+        {/* Methods CTA */}
+        <motion.div variants={itemVariants} className="mx-auto mb-8 w-full max-w-xl">
+          <Link
+            href={getMethodsListingPath()}
+            className="group flex items-center justify-between gap-4 rounded-2xl border border-cyber-purple/35 bg-cyber-purple/[0.07] p-5 text-left shadow-[0_0_24px_rgba(123,47,247,0.07)] transition-all hover:-translate-y-0.5 hover:border-cyber-purple/60 hover:bg-cyber-purple/[0.11] hover:shadow-[0_0_36px_rgba(123,47,247,0.16)] md:p-6"
+          >
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-cyber-cyan/75 mb-1">
+                {"// field guide"}
+              </p>
+              <h3 className="text-xl font-extrabold text-cyber-purple md:text-2xl">
+                Agentic Methods
+              </h3>
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/55">
+                A visual catalog of architectures and methodics for working with agentic AI — pros, cons, and where to use each.
+              </p>
+            </div>
+            <FaProjectDiagram
+              className="hidden shrink-0 text-5xl text-cyber-purple/50 transition-all group-hover:text-cyber-purple group-hover:drop-shadow-cyber-sm md:block"
               aria-hidden="true"
             />
           </Link>

@@ -7,7 +7,6 @@
 @layer base {
   html,
   body {
-    scroll-behavior: smooth;
     @apply relative;
   }
 }
@@ -348,9 +347,141 @@
     border-bottom: 0;
   }
 
+/* ─── Agentic Methods: sleek modern light section ─── */
+
+/* Animated gradient aura blobs used behind hero / cards */
+@keyframes method-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(0, -14px, 0) scale(1.05); }
+}
+@keyframes method-aura {
+  0%   { opacity: 0.55; }
+  50%  { opacity: 0.9; }
+  100% { opacity: 0.55; }
+}
+.method-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+  animation: method-float 14s ease-in-out infinite, method-aura 9s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Gradient hairline border card (glassy, sleek) */
+.method-gradient-border {
+  position: relative;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.method-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.55), rgba(6, 182, 212, 0.35) 55%, rgba(139, 92, 246, 0.55));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.method-gradient-text {
+  background: linear-gradient(120deg, #4F46E5 0%, #06B6D4 50%, #8B5CF6 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* prose-method: inline code outside pre blocks */
+.prose-method :not(pre) > code {
+  background: #EEF0FE;
+  color: #4F46E5;
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+  font-size: 0.85em;
+}
+.prose-method :not(pre) > code::before,
+.prose-method :not(pre) > code::after { content: none; }
+
+/* prose-method: heading anchor links (shareable) */
+.prose-method h2 a,
+.prose-method h3 a,
+.prose-method h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+.prose-method h2:hover a::after,
+.prose-method h3:hover a::after {
+  content: ' #';
+  color: #8B5CF6;
+  font-size: 0.75em;
+}
+
+/* prose-method: media framing */
+.prose-method p > img,
+.prose-method > img {
+  width: 100%;
+  display: block;
+  border-radius: 0.9rem;
+  border: 1px solid #E4E4F5;
+  background: linear-gradient(180deg, #ffffff, #f7f8ff);
+  padding: 0.55rem;
+  box-shadow: 0 12px 26px rgba(79, 70, 229, 0.08), 0 2px 6px rgba(6, 182, 212, 0.08);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+.prose-method p > img:hover,
+.prose-method > img:hover {
+  transform: translateY(-2px);
+  border-color: #C7C6F0;
+  box-shadow: 0 16px 32px rgba(79, 70, 229, 0.12), 0 3px 10px rgba(139, 92, 246, 0.12);
+}
+
+/* prose-method: tables */
+.prose-method .table-wrapper {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border: 1px solid #E4E4F5;
+  border-radius: 0.9rem;
+  background: #FFFFFF;
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.08);
+}
+.prose-method table {
+  width: 100%;
+  display: table;
+  margin: 0;
+  border-spacing: 0;
+  border-collapse: separate;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.prose-method thead th {
+  background: linear-gradient(180deg, #F2F3FE 0%, #ECEDFC 100%);
+  color: #1E1B4B;
+  font-weight: 700;
+  border-bottom: 1px solid #DEDEF4;
+}
+.prose-method th,
+.prose-method td {
+  padding: 0.85rem 1rem;
+  border-right: 1px solid #EEEFFB;
+  border-bottom: 1px solid #EEEFFB;
+  white-space: normal;
+}
+.prose-method th:last-child,
+.prose-method td:last-child { border-right: 0; }
+.prose-method tbody tr:nth-child(even) { background: rgba(238, 240, 254, 0.4); }
+.prose-method tbody tr:hover { background: rgba(231, 247, 241, 0.5); }
+.prose-method tbody tr:last-child td { border-bottom: 0; }
+
 /* ─── Accessibility: focus-visible indicators ─── */
 :focus-visible {
-  outline: 2px solid #00ff9d;
   outline-offset: 2px;
 }
 
@@ -359,6 +490,12 @@
 [class*="bg-blog"] :focus-visible,
 .bg-white\/90 :focus-visible {
   outline-color: #3D2B6B;
+}
+
+/* Methods pages: indigo focus ring on light background */
+.bg-method-bg :focus-visible,
+[class*="bg-method"] :focus-visible {
+  outline-color: #4F46E5;
 }
 
 /* Jcon page focus ring */

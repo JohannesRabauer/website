@@ -1,0 +1,44 @@
+---
+title: "Semantic Anchors & Contracts"
+tagline: "Use one known term to steer the model. Define your own meaning when the project needs it."
+category: "Prompting"
+icon: "anchor"
+maturity: "Emerging"
+order: 2
+diagram:
+  type: cluster
+  title: "A public term opens the cluster. A contract fixes the meaning in your repo."
+  anchor: "Semantic anchor"
+  anchors:
+    - label: "arc42"
+      note: "Architecture template"
+    - label: "MECE"
+      note: "Split things cleanly"
+    - label: "BLUF"
+      note: "Lead with the answer"
+    - label: "Gherkin"
+      note: "Acceptance language"
+    - label: "ADR"
+      note: "Decision record"
+  contractLabel: "Semantic contract"
+  contractText: "Write the local meaning down in AGENTS.md or CLAUDE.md."
+sources:
+  - label: "Semantic Anchors catalog"
+    href: "https://llm-coding.github.io/Semantic-Anchors/"
+  - label: "Semantic Anchors contracts"
+    href: "https://llm-coding.github.io/Semantic-Anchors/contracts/"
+relatedPosts:
+  - "semantic-anchors"
+draft: false
+---
+
+## What it is
+
+Semantic Anchors are public terms you can say to an LLM and expect a useful result. The term
+pulls in a known pattern. For example, arc42 points to an architecture template, BLUF means lead
+with the answer, and Gherkin points to acceptance tests.
+
+## What contracts add
+
+Contracts are local. They tell the team what a term means in this repository. That keeps the
+anchor useful and keeps the output consistent.

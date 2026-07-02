@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next';
 import { getAvailablePostLocales, getAllPosts } from '@/lib/posts';
 import { getBlogListingPath, getBlogPostPath } from '@/lib/blog-i18n';
+import { getAllMethods } from '@/lib/methods';
+import { getMethodPath, getMethodsListingPath } from '@/lib/methods-i18n';
 import { toAbsoluteUrl } from '@/lib/seo';
 
 export const dynamic = 'force-static';
@@ -55,5 +57,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       };
     });
 
-  return [...staticEntries, ...listingEntries, ...postEntries];
+  const methodEntries: MetadataRoute.Sitemap = [
+    {
+      url: toAbsoluteUrl(getMethodsListingPath()),
+      lastModified: now,
+    },
+    ...getAllMethods().map((method) => ({
+      url: toAbsoluteUrl(getMethodPath(method.slug)),
+      lastModified: now,
+    })),
+  ];
+
+  return [...staticEntries, ...listingEntries, ...postEntries, ...methodEntries];
 }

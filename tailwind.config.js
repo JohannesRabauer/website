@@ -55,6 +55,23 @@ module.exports = {
           border: '#E5E1F0',
           'code-bg': '#F0EDF8',
         },
+        // Agentic Methods — cool, sleek, modern light palette (distinct from blog)
+        method: {
+          bg: '#FAFAFF',
+          surface: '#FFFFFF',
+          ink: '#0B1020',
+          muted: '#5B6478',
+          accent: '#4F46E5', // indigo
+          'accent-soft': '#EEF0FE',
+          accent2: '#06B6D4', // cyan
+          accent3: '#8B5CF6', // violet
+          border: '#E8E8F5',
+          pros: '#0E9F6E',
+          'pros-soft': '#E7F7F1',
+          cons: '#E11D48',
+          'cons-soft': '#FDECF1',
+          'code-bg': '#F3F4FD',
+        },
       },
       dropShadow: {
         cyber: [
@@ -72,8 +89,8 @@ module.exports = {
       },
       keyframes: {
         'fade-in': {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
         'glow-pulse': {
           '0%, 100%': { boxShadow: '0 0 8px rgba(123,47,247,0.4), 0 0 16px rgba(0,255,157,0.15)' },
@@ -118,6 +135,32 @@ module.exports = {
               h3: { fontFamily: 'var(--font-heading), system-ui, sans-serif' },
               'h2 a, h3 a, h4 a': { textDecoration: 'none' },
               a: { '&:hover': { color: '#3D2B6B' } },
+              'pre code': { backgroundColor: 'transparent' },
+            },
+          },
+          method: {
+            css: {
+              '--tw-prose-body': '#232A3D',
+              '--tw-prose-headings': '#0B1020',
+              '--tw-prose-lead': '#5B6478',
+              '--tw-prose-links': '#4F46E5',
+              '--tw-prose-bold': '#0B1020',
+              '--tw-prose-counters': '#5B6478',
+              '--tw-prose-bullets': '#8B5CF6',
+              '--tw-prose-hr': '#E8E8F5',
+              '--tw-prose-quotes': '#232A3D',
+              '--tw-prose-quote-borders': '#4F46E5',
+              '--tw-prose-captions': '#5B6478',
+              '--tw-prose-code': '#4F46E5',
+              '--tw-prose-pre-code': '#0B1020',
+              '--tw-prose-pre-bg': '#F3F4FD',
+              '--tw-prose-th-borders': '#E8E8F5',
+              '--tw-prose-td-borders': '#F3F4FD',
+              h1: { fontFamily: 'var(--font-heading), system-ui, sans-serif' },
+              h2: { fontFamily: 'var(--font-heading), system-ui, sans-serif' },
+              h3: { fontFamily: 'var(--font-heading), system-ui, sans-serif' },
+              'h2 a, h3 a, h4 a': { textDecoration: 'none' },
+              a: { '&:hover': { color: '#4F46E5' } },
               'pre code': { backgroundColor: 'transparent' },
             },
           },

@@ -1,0 +1,39 @@
+---
+title: "Guided Coding (Archived Specs / ADR)"
+tagline: "Write a guide for the change, then file it away as a record."
+category: "Spec-Driven"
+icon: "archive"
+maturity: "Emerging"
+order: 5
+diagram:
+  type: flow
+  variant: linear
+  title: "One change, one guide, one record."
+  steps:
+    - label: "Write the guide"
+      description: "State the goal and the limits."
+    - label: "Agent implements"
+      description: "Work inside those limits."
+    - label: "Review and merge"
+      description: "Check the change against the guide."
+    - label: "Archive the record"
+      description: "Keep the reason, not the draft."
+sources:
+  - label: "Guided Coding PDF"
+    href: "https://github.com/JohannesRabauer/vaadin-banking-app/blob/main/2026-02-26-guided-coding-instead-of-vibe-coding-in-java.pdf"
+  - label: "Guided Coding blog post"
+    href: "https://rabauer.dev/en/blog/guided-coding/"
+relatedPosts:
+  - "guided-coding"
+draft: false
+---
+
+## What it is
+
+Guided Coding keeps the plan, the limits, and the review rules visible. You write the guide
+before the code. The guide tells the agent what to do and what not to do.
+
+## Why it matters
+
+This keeps the human in control. It also makes review easier, because you compare the code against
+the guide instead of against memory.

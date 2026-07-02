@@ -11,10 +11,18 @@ function isBlogPath(pathname: string | null) {
   return /^\/(blog|en\/blog|de\/blog)(?:\/|$)/.test(pathname);
 }
 
+function isMethodsPath(pathname: string | null) {
+  if (!pathname) {
+    return false;
+  }
+
+  return /^\/methods(?:\/|$)/.test(pathname);
+}
+
 export default function SiteFooter() {
   const pathname = usePathname();
 
-  if (isBlogPath(pathname)) {
+  if (isBlogPath(pathname) || isMethodsPath(pathname)) {
     return null;
   }
 
