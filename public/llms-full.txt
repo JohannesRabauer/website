@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (13)
+## English posts (14)
 
 ## English blog posts
+### How Good Is GitHub Copilot App for Java Development?
+- URL: https://rabauer.dev/en/blog/github-copilot-app-java-development/
+- Date: 2026-06-25
+- Summary: Bruno Borges joined a live Java session to test the GitHub Copilot App from scratch. The scaffolding was easy, the PR workflow felt complete, and /create-canvas built a side-by-side i18n tool that lives in the repo. Here is what worked, what surprised us, and where the current gaps are.
+
 ### Can Kiro Change Java Development?
 - URL: https://rabauer.dev/en/blog/kiro-java-hero-game/
 - Date: 2026-06-18
@@ -97,9 +102,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (13)
+## German posts (14)
 
 ## German blog posts
+### Wie gut ist die GitHub Copilot App für Java Entwicklung?
+- URL: https://rabauer.dev/de/blog/github-copilot-app-java-development/
+- Date: 2026-06-25
+- Summary: Bruno Borges war zu Gast für einen Live-Java-Test der GitHub Copilot App von Anfang bis Ende. Das Scaffolding war einfach, der PR-Workflow wirkte rund, und /create-canvas hat einen i18n-Editor gebaut, der direkt im Repo lebt. Hier ist, was funktioniert hat, was uns überrascht hat und wo die aktuellen Lücken sind.
+
 ### Kann Kiro Java-Entwicklung verändern?
 - URL: https://rabauer.dev/de/blog/kiro-java-hero-game/
 - Date: 2026-06-18

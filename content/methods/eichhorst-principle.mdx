@@ -1,0 +1,77 @@
+---
+title: "Eichhorst Principle"
+tagline: "Treat the LLM as a noisy channel. Let feedback loops do the error correction."
+category: "Workflow"
+icon: "refresh-cw"
+maturity: "Emerging"
+order: 8
+diagram:
+  type: flow
+  variant: loop
+  title: "The loop can only fix what it can detect."
+  steps:
+    - label: "Generate"
+      description: "The LLM writes code through a noisy channel."
+    - label: "Compile"
+      description: "Catch syntax and wiring errors first."
+    - label: "Test"
+      description: "Catch logic and behavior errors next."
+    - label: "Correct"
+      description: "Feed failures back into the next pass."
+pros:
+  - "Gives a clear theory for why agentic loops beat one-shot prompting."
+  - "Makes test coverage the main reliability lever, not prompt cleverness."
+  - "Explains AI coding quality in terms engineers and CTOs already know."
+  - "Works well with existing compile, unit-test, and acceptance-test pipelines."
+cons:
+  - "Needs real tests to work; untested behavior still slips through."
+  - "Adds token cost and time because the loop repeats."
+  - "Green tests do not guarantee a good architecture."
+  - "Weak or wrong tests create a false sense of safety."
+whereToUse:
+  best:
+    - "Agentic coding workflows that compile and test on every step."
+    - "Teams debating why AI works well in one repo and fails in another."
+    - "Codebases where you can improve the test suite over time."
+    - "Leadership conversations about why test investment matters in the AI era."
+  avoid:
+    - "Fast prototypes where no automated feedback exists yet."
+    - "Tasks that cannot be checked by compilers, tests, or other hard signals."
+    - "Situations where token cost is the main constraint."
+sources:
+  - label: "Ralf D. Muller — Eichhorst's Principle"
+    href: "https://rdmueller.github.io/pages/blog/eichhorsts-principle.html"
+  - label: "Ralf D. Muller — LinkedIn post"
+    href: "https://www.linkedin.com/posts/rdmueller_ai-softwareengineering-llm-activity-7440287236526481409-q7Py/"
+  - label: "Podcast — Das Eichhorst Prinzip mit Ingo Eichhorst"
+    href: "https://www.youtube.com/watch?v=eyvs7deP9CU"
+  - label: "Podcast — KI Coding Produktivitat mit Ingo Eichhorst"
+    href: "https://www.youtube.com/watch?v=WxO1ms6svC8"
+draft: false
+---
+
+## What it is
+
+The Eichhorst Principle applies Claude Shannon's noisy-channel idea to AI coding. The large
+language model is the noisy channel. It can guess right, drift, or fail. The feedback loop is what
+makes the result reliable.
+
+In practice, the loop is simple: generate code, compile it, run the tests, read the failures, and
+try again. Each check catches a different error class. The compiler catches syntax and wiring
+errors. Tests catch logic and behavior errors.
+
+## Why it matters
+
+The key rule is blunt: the loop can only fix what it can detect. That means better tests usually
+matter more than better prompts. A strong test suite turns an unreliable generator into a much more
+reliable coding partner.
+
+This makes the Eichhorst Principle a useful lens for agentic development. If the agent keeps
+breaking the same kind of behavior, the first question is not "how do I rewrite the prompt?" It is
+"what check is missing from the loop?"
+
+## Source note
+
+The clearest public write-up comes from Ralf D. Muller's blog post and LinkedIn post, both of
+which attribute the principle to Ingo Eichhorst. The two podcast links above also discuss the idea,
+but the source-backed wording here stays anchored to the accessible text sources.

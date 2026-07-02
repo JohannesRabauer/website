@@ -1,0 +1,74 @@
+---
+title: "SBCE"
+tagline: "Keep the spec in code, inside the business component it governs."
+category: "Spec-Driven"
+icon: "layers"
+maturity: "Emerging"
+order: 7
+diagram:
+  type: flow
+  variant: loop
+  title: "Declare the business component, keep the spec in package-info.java, then converge spec and code."
+  steps:
+    - label: "Declare the BC"
+      description: "Start from a business component or a feature."
+    - label: "Write package-info.java"
+      description: "Put ops, requirements, and scope next to the code."
+    - label: "Converge"
+      description: "Add methods, tests, and code from the spec."
+    - label: "Run the real tests"
+      description: "Green tests decide when you are done."
+pros:
+  - "The spec lives beside the code, so it moves with refactors."
+  - "There is no parallel specs tree to drift out of sync."
+  - "Requirement ids can trace straight to tests."
+  - "It adds no runtime dependency to the project."
+cons:
+  - "It fits code-first teams better than markdown-first teams."
+  - "The approach is tied to BCE-style business components."
+  - "You need discipline to keep package docs clear and current."
+  - "It is less natural outside ecosystems with strong package-level docs, such as Java."
+whereToUse:
+  best:
+    - "Java projects that already use package-level documentation."
+    - "Teams using BCE or business-component architecture."
+    - "Projects that want traceable requirements without a separate spec tree."
+    - "Agent workflows where spec, code, and tests must stay tightly linked."
+  avoid:
+    - "Projects that want the main spec in markdown or a docs portal."
+    - "Codebases without a clear business-component structure."
+    - "Teams that are not willing to write requirement ids and matching tests."
+sources:
+  - label: "SBCE"
+    href: "https://sbce.space/"
+  - label: "Boundary-Control-Entity"
+    href: "https://bce.design/"
+  - label: "EARS"
+    href: "https://alistairmavin.com/ears/"
+draft: false
+---
+
+## What it is
+
+SBCE means spec-driven development for BCE-style business components. The main idea is simple:
+the spec does not live in a `specs/` folder. It lives in the component's own `package-info.java`.
+
+That package doc names the boundary operations, lists the requirements, names the entities, and
+states what is out of scope. In other words, the contract sits beside the code it governs.
+
+## What makes it different
+
+SBCE is code-first, not markdown-first. It treats the package doc as the spec and uses Javadoc as
+the published contract. The workflow then converges spec and code in both directions:
+
+- `spec -> code`: add boundary methods, tests, and implementation from the stated requirements
+- `code -> spec`: surface drift when code or tests exist without matching requirement statements
+
+The requirements are meant to be strict and traceable. SBCE recommends EARS-style statements with
+stable ids such as `R1.2`, and each id should map to a test.
+
+## Why it matters
+
+This is a good fit when your team already thinks in business components and prefers code over a
+parallel markdown tree. It removes one whole sync problem: there is only one place where the
+component contract lives.
