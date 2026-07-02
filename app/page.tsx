@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <main
       id="main-content"
-      className="relative min-h-screen flex flex-col items-center justify-start bg-cyber-bg text-white overflow-x-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-start bg-cyber-bg text-white"
     >
       <script
         type="application/ld+json"

@@ -102,7 +102,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="shortcut icon" href="/favicon.ico"></link>
         <link rel="apple-touch-icon" href="/Logo_round.png"></link>
       </head>
-      <body className="flex min-h-screen flex-col bg-cyber-bg font-sans text-white antialiased selection:bg-cyber-pink/70 selection:text-black">
+      <body className="flex min-h-screen flex-col overflow-x-hidden bg-cyber-bg font-sans text-white antialiased selection:bg-cyber-pink/70 selection:text-black">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyber-green focus:text-cyber-bg focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
         <FloatingSiteControls />
         <div className="flex-1">{children}</div>
