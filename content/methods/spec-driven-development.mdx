@@ -16,11 +16,56 @@ diagram:
   notes:
     - "The spec carries intent."
     - "The code follows it."
+codeExamples:
+  title: "Spec-driven loop in three steps"
+  subtitle: "Business spec first, tests second, implementation third — then repeat."
+  loops: true
+  steps:
+    - title: "Write a business spec"
+      goal: "Describe behavior without committing to technical details."
+      java: |-
+        String spec = """
+        feature: Transfer money
+        rule: transfer fails when funds are insufficient
+        rule: successful transfer returns a receipt
+        """;
+      agnostic: |-
+        spec:
+          feature: transfer money
+          rules:
+            - fail on insufficient funds
+            - return receipt on success
+      check: "The spec names behavior, not framework choices."
+    - title: "Derive one test from the spec"
+      goal: "Turn one rule into executable feedback."
+      java: |-
+        @Test
+        void transferFailsOnInsufficientFunds() {
+          assertThat(service.transfer(alice, bob, euros(200)).success()).isFalse();
+        }
+      agnostic: |-
+        test "transfer fails on insufficient funds":
+          run transfer(alice, bob, 200)
+          expect success == false
+      check: "A spec rule is now enforced by a test."
+    - title: "Implement, verify, and loop"
+      goal: "Complete behavior, then update the spec when requirements change."
+      java: |-
+        Receipt receipt = service.transfer(alice, bob, euros(25));
+        assertThat(receipt.success()).isTrue();
+      agnostic: |-
+        implement transfer behavior
+        rerun spec-derived tests
+        update spec before next behavior change
+      check: "Spec and code aligned. For the next change → update the spec first."
 sources:
   - label: "Simon Martinelli — 42talents"
     href: "https://www.42talents.com/"
   - label: "AI Unified Process write-up"
     href: "https://rabauer.dev/en/blog/ai-unified-process/"
+inventor:
+  name: "Simon Martinelli"
+  github: "simasch"
 relatedPosts:
   - "ai-unified-process"
 draft: false

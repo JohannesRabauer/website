@@ -38,6 +38,46 @@ whereToUse:
     - "Projects that want the main spec in markdown or a docs portal."
     - "Codebases without a clear business-component structure."
     - "Teams that are not willing to write requirement ids and matching tests."
+codeExamples:
+  title: "SBCE in three minimal steps"
+  subtitle: "Put requirements in package docs, then trace to tests and code."
+  steps:
+    - title: "Step 1 — Declare requirements in package-info.java"
+      goal: "Keep the component contract beside its code."
+      java: |-
+        /**
+         * R1.1: Transfer succeeds when funds are sufficient.
+         * R1.2: Transfer fails when funds are insufficient.
+         */
+        package com.example.transfer;
+      agnostic: |-
+        component Transfer:
+          requirements:
+            - R1.1 transfer succeeds with sufficient funds
+            - R1.2 transfer fails with insufficient funds
+      check: "Requirement ids are explicit and stable."
+    - title: "Step 2 — Define boundary operation"
+      goal: "Expose one operation that maps to requirement ids."
+      java: |-
+        public interface TransferBoundary {
+          Receipt transfer(Account from, Account to, Money amount);
+        }
+      agnostic: |-
+        boundary Transfer:
+          operation transfer(from, to, amount) -> receipt
+      check: "Boundary operation matches documented intent."
+    - title: "Step 3 — Verify requirement-to-test trace"
+      goal: "Map each requirement id to executable checks."
+      java: |-
+        @Test // verifies R1.2
+        void transferFailsWhenFundsAreInsufficient() {
+          assertThat(boundary.transfer(alice, bob, euros(200)).success()).isFalse();
+        }
+      agnostic: |-
+        test R1.2:
+          run transfer(alice, bob, 200)
+          expect success == false
+      check: "At least one test references each requirement id."
 sources:
   - label: "SBCE"
     href: "https://sbce.space/"
@@ -45,6 +85,9 @@ sources:
     href: "https://bce.design/"
   - label: "EARS"
     href: "https://alistairmavin.com/ears/"
+inventor:
+  name: "Adam Bien"
+  github: "AdamBien"
 draft: false
 ---
 

@@ -95,6 +95,32 @@ export interface MethodWhereToUse {
   avoid?: string[];
 }
 
+export interface MethodCodeStep {
+  title: string;
+  goal?: string;
+  java: string;
+  agnostic?: string;
+  check?: string;
+}
+
+export interface MethodCodeExamples {
+  title?: string;
+  subtitle?: string;
+  /** When true, a "returns to step 1" loop indicator is shown after the last step. */
+  loops?: boolean;
+  steps: MethodCodeStep[];
+}
+
+export interface MethodInventor {
+  name: string;
+  /** GitHub username — used for the avatar image and profile link. */
+  github?: string;
+  /** Fallback URL when no GitHub handle is available. */
+  url?: string;
+  /** Custom avatar URL — overrides the GitHub-derived one when set. */
+  avatar?: string;
+}
+
 export interface MethodFrontmatter {
   title: string;
   tagline: string;
@@ -110,6 +136,10 @@ export interface MethodFrontmatter {
   cons?: string[];
   /** Best-for / avoid-when guidance. */
   whereToUse?: MethodWhereToUse;
+  /** Optional swipeable minimal code walkthrough. */
+  codeExamples?: MethodCodeExamples;
+  /** Person or team who introduced the method. Shown on cards when available. */
+  inventor?: MethodInventor;
   sources?: MethodSource[];
   /** Slugs of related English blog posts to cross-link. */
   relatedPosts?: string[];

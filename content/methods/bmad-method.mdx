@@ -36,6 +36,69 @@ diagram:
         - "Security"
         - "DevOps"
         - "Stories"
+codeExamples:
+  title: "One method, three tracks"
+  subtitle: "Swipe to see how each planning track looks in practice."
+  steps:
+    - title: "Quick Flow"
+      goal: "Bug fix or small feature — minimal ceremony."
+      java: |-
+        // Tech spec (one short comment block)
+        // Goal: fix transfer rounding error
+        // Acceptance: result is always two decimal places
+
+        BigDecimal amount = value.setScale(2, RoundingMode.HALF_UP);
+        assertThat(service.transfer(alice, bob, amount).success()).isTrue();
+      agnostic: |-
+        tech_spec:
+          goal: fix transfer rounding error
+          acceptance: result is always two decimal places
+
+        implement fix
+        run acceptance test
+      check: "Spec and test fit in one block. No planning ceremonies needed."
+    - title: "BMad Method"
+      goal: "New product feature — plan before implementing."
+      java: |-
+        // Analysis: what does the user need?
+        Story story = new Story("ST-42", "Transfer money", "funded transfer succeeds");
+
+        // Planning: break into tasks
+        List<String> tasks = List.of("validate input", "debit account", "credit account");
+
+        // Implementation (per task, tested before next)
+        Receipt receipt = service.transfer(alice, bob, euros(25));
+        assertThat(receipt.success()).isTrue();
+      agnostic: |-
+        analysis: customer needs reliable transfer
+        story ST-42:
+          goal: transfer money
+          acceptance: funded transfer succeeds
+
+        tasks: [validate, debit, credit]
+        implement each task with tests
+      check: "Story acceptance drives implementation. Agent stays in scope."
+    - title: "Enterprise"
+      goal: "Complex or regulated system — add architecture and security layers."
+      java: |-
+        // PRD: product requirements documented
+        // Architecture: component diagram updated
+        // Security: threat model reviewed for transfer path
+
+        @PreAuthorize("hasRole('TRANSFER')")
+        Receipt transfer(Account from, Account to, Money amount) {
+            auditLog.record(from, to, amount);
+            return core.transfer(from, to, amount);
+        }
+      agnostic: |-
+        prd: requirements documented
+        architecture: component diagram updated
+        security: threat model reviewed
+
+        enforce authorization on transfer path
+        record audit trail
+        run full acceptance + security tests
+      check: "Governance gates are defined before implementation starts."
 sources:
   - label: "BMad Method docs"
     href: "https://docs.bmad-method.org/"
@@ -43,6 +106,9 @@ sources:
     href: "https://github.com/bmad-code-org/BMAD-METHOD"
   - label: "BMad Builder docs"
     href: "https://bmad-builder-docs.bmad-method.org/"
+inventor:
+  name: "Brian (BMadCode)"
+  github: "bmadcode"
 draft: false
 ---
 

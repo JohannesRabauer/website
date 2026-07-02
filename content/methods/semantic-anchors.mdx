@@ -22,11 +22,50 @@ diagram:
       note: "Decision record"
   contractLabel: "Semantic contract"
   contractText: "Write the local meaning down in AGENTS.md or CLAUDE.md."
+codeExamples:
+  title: "Anchor → Contract in two steps"
+  subtitle: "Use a known term first, then fix its meaning for your project."
+  steps:
+    - title: "Anchor: invoke a known term"
+      goal: "Use an established term so the model activates its full knowledge."
+      java: |-
+        String prompt = "Use TDD, London School for the transfer service.";
+      agnostic: |-
+        prompt: "use TDD, London School for transfer service"
+      check: "The model applies outside-in design, mocks at boundaries, no extra explanation needed."
+    - title: "Contract: define local meaning in AGENTS.md"
+      goal: "Pin what your team's terms mean so every agent reads them the same way."
+      java: |-
+        // AGENTS.md (project root)
+        // ## Semantic Contracts
+        //
+        // ### service
+        // A Spring Boot bounded context, packaged as a single Docker image.
+        //
+        // ### done
+        // - Unit tests green
+        // - Integration tests green
+        // - ADR updated
+      agnostic: |-
+        # AGENTS.md
+
+        ## Semantic Contracts
+
+        ### service
+        A bounded context, one deployable unit.
+
+        ### done
+        - Tests green
+        - ADR updated
+      check: "Every prompt that references 'service' or 'done' now uses the project definition."
 sources:
   - label: "Semantic Anchors catalog"
     href: "https://llm-coding.github.io/Semantic-Anchors/"
   - label: "Semantic Anchors contracts"
     href: "https://llm-coding.github.io/Semantic-Anchors/contracts/"
+inventor:
+  name: "Ralf D. Muller"
+  github: "raifdmueller"
 relatedPosts:
   - "semantic-anchors"
 draft: false

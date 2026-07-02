@@ -15,11 +15,44 @@ diagram:
     - "Lint"
     - "Build"
   highlightLabel: "Keep each step small and reviewable."
+codeExamples:
+  title: "Vise Coding in three minimal steps"
+  subtitle: "Define gates, apply a small change, release only on green."
+  steps:
+    - title: "Step 1 — Define the vise gates"
+      goal: "Make quality checks explicit before coding."
+      java: |-
+        List<String> gates = List.of("lint", "build", "tests");
+      agnostic: |-
+        gates = ["lint", "build", "tests"]
+      check: "Everyone knows what must pass."
+    - title: "Step 2 — Keep the change small"
+      goal: "Constrain the agent to one narrow outcome."
+      java: |-
+        String task = "Add transfer endpoint validation only. No schema changes.";
+      agnostic: |-
+        task:
+          scope: transfer endpoint validation
+          do_not_change: database schema
+      check: "The task has a tight, reviewable boundary."
+    - title: "Step 3 — Run gates and merge on green"
+      goal: "Use objective signals to accept or reject."
+      java: |-
+        pipeline.run("lint");
+        pipeline.run("build");
+        pipeline.run("tests");
+      agnostic: |-
+        run gates sequentially
+        merge only if all are green
+      check: "Merge happens only after all gates pass."
 sources:
   - label: "Vise Coding in Practice (slides)"
     href: "https://docs.google.com/presentation/d/1G-0khMxuvVTvgWZMT4LAMyMnSGYFIAooDaK8o7GUMoI/edit?usp=sharing"
   - label: "Vise Coding blog post"
     href: "https://rabauer.dev/en/blog/vise-coding-in-practice/"
+inventor:
+  name: "Dr. David Faragó"
+  github: "DavidFarago"
 relatedPosts:
   - "vise-coding-in-practice"
 draft: false

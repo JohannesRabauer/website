@@ -38,6 +38,55 @@ whereToUse:
     - "Fast prototypes where no automated feedback exists yet."
     - "Tasks that cannot be checked by compilers, tests, or other hard signals."
     - "Situations where token cost is the main constraint."
+codeExamples:
+  title: "Three-step loop (minimal code)"
+  subtitle: "Each step adds one hard feedback signal. Keep the loop short."
+  steps:
+    - title: "Step 1 — State one precise contract"
+      goal: "Tell the model what must stay true."
+      java: |-
+        interface TransferService {
+          Receipt transfer(Account from, Account to, Money amount);
+        }
+      agnostic: |-
+        contract Transfer:
+          input: from, to, amount
+          output: receipt
+          invariant: balances remain consistent
+      check: "The contract is specific and testable."
+    - title: "Step 2 — Add one failing test"
+      goal: "Create a clear signal before generation."
+      java: |-
+        @Test
+        void transferUpdatesBothAccounts() {
+          var receipt = service.transfer(alice, bob, euros(25));
+          assertThat(receipt.success()).isTrue();
+          assertThat(alice.balance()).isEqualTo(euros(75));
+          assertThat(bob.balance()).isEqualTo(euros(125));
+        }
+      agnostic: |-
+        test "transfer updates both balances":
+          run transfer(alice, bob, 25)
+          expect success == true
+          expect alice.balance == 75
+          expect bob.balance == 125
+      check: "The test fails first and names expected behavior."
+    - title: "Step 3 — Implement and rerun loop"
+      goal: "Generate a small implementation and verify."
+      java: |-
+        class DefaultTransferService implements TransferService {
+          public Receipt transfer(Account from, Account to, Money amount) {
+            from.debit(amount);
+            to.credit(amount);
+            return Receipt.ok();
+          }
+        }
+      agnostic: |-
+        function transfer(from, to, amount):
+          from.debit(amount)
+          to.credit(amount)
+          return success_receipt()
+      check: "Compile passes and the test turns green."
 sources:
   - label: "Ralf D. Muller — Eichhorst's Principle"
     href: "https://rdmueller.github.io/pages/blog/eichhorsts-principle.html"
@@ -47,6 +96,10 @@ sources:
     href: "https://www.youtube.com/watch?v=eyvs7deP9CU"
   - label: "Podcast — KI Coding Produktivitat mit Ingo Eichhorst"
     href: "https://www.youtube.com/watch?v=WxO1ms6svC8"
+inventor:
+  name: "Ingo Eichhorst"
+  github: "ingo-eichhorst"
+  avatar: "https://media.licdn.com/dms/image/v2/D4D03AQEGHuxWLvFIpQ/profile-displayphoto-crop_800_800/B4DZ6ZojCDH4AI-/0/1780694004937?e=1784764800&v=beta&t=X9jKm3iL0kGuQqOo9IRXptT7HP2LgnAda8LeSbyHsgs"
 draft: false
 ---
 

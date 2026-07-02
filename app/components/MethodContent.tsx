@@ -13,6 +13,7 @@ import MethodPhasesDiagram from '@/app/components/MethodPhasesDiagram';
 import MethodSyncDiagram from '@/app/components/MethodSyncDiagram';
 import MethodTracksDiagram from '@/app/components/MethodTracksDiagram';
 import MethodViseDiagram from '@/app/components/MethodViseDiagram';
+import MethodStepCarousel from '@/app/components/MethodStepCarousel';
 import WhereToUse from '@/app/components/WhereToUse';
 import MethodFlow from '@/app/components/MethodFlow';
 import MermaidDiagram from '@/app/components/MermaidDiagram';
@@ -119,6 +120,7 @@ export default function MethodContent({ slug }: Props) {
     pros,
     cons,
     whereToUse,
+    codeExamples,
     sources,
     relatedPosts,
   } = method.frontmatter;
@@ -188,6 +190,15 @@ export default function MethodContent({ slug }: Props) {
           </div>
 
           <DiagramRenderer diagram={diagram} />
+
+          {codeExamples?.steps?.length ? (
+            <MethodStepCarousel
+              title={codeExamples.title}
+              subtitle={codeExamples.subtitle}
+              loops={codeExamples.loops}
+              steps={codeExamples.steps}
+            />
+          ) : null}
 
           {hasProsCons && (
             <div className="prose prose-method prose-lg max-w-none">

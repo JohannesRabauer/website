@@ -33,11 +33,54 @@ diagram:
       artifacts:
         - "Deployment"
         - "User Acceptance Tests"
+codeExamples:
+  title: "AIUP in three minimal steps"
+  subtitle: "Keep artifacts explicit, then let implementation follow."
+  steps:
+    - title: "Step 1 — Capture Inception output"
+      goal: "State the business problem and expected outcome."
+      java: |-
+        record Vision(String problem, String outcome) {}
+
+        interface InceptionPhase {
+          Vision defineVision();
+        }
+      agnostic: |-
+        phase Inception:
+          output vision { problem, outcome }
+      check: "The vision is explicit and reviewable."
+    - title: "Step 2 — Shape Elaboration artifacts"
+      goal: "Name a core use case before writing implementation details."
+      java: |-
+        record UseCase(String name, String actor, String outcome) {}
+
+        UseCase transferUseCase =
+            new UseCase("Transfer money", "Customer", "Money moved safely");
+      agnostic: |-
+        phase Elaboration:
+          define use_case "Transfer money"
+          actor: Customer
+          result: Money moved safely
+      check: "A concrete use case exists before coding."
+    - title: "Step 3 — Build and verify Transition"
+      goal: "Implement from the spec and verify end-to-end behavior."
+      java: |-
+        Receipt receipt = transferService.transfer(alice, bob, euros(25));
+        assertThat(receipt.success()).isTrue();
+        acceptance.verify("Transfer works end-to-end");
+      agnostic: |-
+        run transfer(alice, bob, 25)
+        assert success == true
+        run acceptance_check "Transfer works end-to-end"
+      check: "Code and acceptance checks both pass."
 sources:
   - label: "AI Unified Process methodology"
     href: "https://unifiedprocess.ai/methodology.html"
   - label: "AIUP marketplace"
     href: "https://github.com/AI-Unified-Process/marketplace"
+inventor:
+  name: "Simon Martinelli"
+  github: "simasch"
 relatedPosts:
   - "ai-unified-process"
 draft: false
