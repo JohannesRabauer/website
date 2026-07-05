@@ -6,58 +6,76 @@ icon: "anchor"
 maturity: "Emerging"
 order: 2
 diagram:
-  type: cluster
-  title: "A public term opens the cluster. A contract fixes the meaning in your repo."
-  anchor: "Semantic anchor"
-  anchors:
-    - label: "arc42"
-      note: "Architecture template"
-    - label: "MECE"
-      note: "Split things cleanly"
-    - label: "BLUF"
-      note: "Lead with the answer"
-    - label: "Gherkin"
-      note: "Acceptance language"
-    - label: "ADR"
-      note: "Decision record"
-  contractLabel: "Semantic contract"
-  contractText: "Write the local meaning down in AGENTS.md or CLAUDE.md."
-codeExamples:
-  title: "Anchor → Contract in two steps"
-  subtitle: "Use a known term first, then fix its meaning for your project."
+  type: flow
+  variant: linear
+  title: "Use known anchors, then lock local meaning in AGENTS.md."
   steps:
-    - title: "Anchor: invoke a known term"
-      goal: "Use an established term so the model activates its full knowledge."
+    - label: "Start with anchor examples"
+      description: "Use known terms such as arc42, ADR, Gherkin, or BLUF in prompts."
+    - label: "Define semantic contracts"
+      description: "Write project-specific meanings in AGENTS.md."
+    - label: "Prompt with contract terms"
+      description: "Agents reuse those definitions consistently in each implementation pass."
+codeExamples:
+  title: "Anchors first, contracts second"
+  subtitle: "Show a few anchor examples, then use Semantic Contracts via AGENTS.md."
+  steps:
+    - title: "Step 1 — Start with concrete anchor examples"
+      goal: "Use known terms so the model loads familiar patterns immediately."
       java: |-
-        String prompt = "Use TDD, London School for the transfer service.";
+        String architecturePrompt =
+            "Structure this service using arc42 sections and capture major decisions as ADRs.";
+        String testingPrompt =
+            "Write acceptance criteria in Gherkin for transfer and reversal scenarios.";
+        String writingPrompt =
+            "Summarize the rollout plan with BLUF, then list risks and mitigations.";
       agnostic: |-
-        prompt: "use TDD, London School for transfer service"
-      check: "The model applies outside-in design, mocks at boundaries, no extra explanation needed."
-    - title: "Contract: define local meaning in AGENTS.md"
-      goal: "Pin what your team's terms mean so every agent reads them the same way."
+        prompt_examples:
+          - "Use arc42 for the architecture outline."
+          - "Write acceptance criteria in Gherkin."
+          - "Respond in BLUF style."
+      check: "The model applies known methods without extra explanation."
+    - title: "Step 2 — Define Semantic Contracts in AGENTS.md"
+      goal: "Pin your team's local terminology so all agents use the same meaning."
       java: |-
-        // AGENTS.md (project root)
+        // AGENTS.md
+        //
         // ## Semantic Contracts
         //
         // ### service
-        // A Spring Boot bounded context, packaged as a single Docker image.
+        // A Spring Boot bounded context, deployed as one container image.
         //
         // ### done
         // - Unit tests green
         // - Integration tests green
         // - ADR updated
+        // - Feature toggle documented
       agnostic: |-
         # AGENTS.md
 
         ## Semantic Contracts
 
         ### service
-        A bounded context, one deployable unit.
+        A bounded context, deployed as one service unit.
 
         ### done
         - Tests green
         - ADR updated
-      check: "Every prompt that references 'service' or 'done' now uses the project definition."
+        - Toggle documented
+      check: "Terms like 'service' and 'done' now resolve to project-local definitions."
+    - title: "Step 3 — Implement using contract terms"
+      goal: "Drive implementation prompts with the contract language from AGENTS.md."
+      java: |-
+        String implementationPrompt = """
+        Implement transfer retry for the payments service.
+        Follow the Semantic Contracts in AGENTS.md.
+        Mark as done only when every done item is satisfied.
+        """;
+      agnostic: |-
+        implement "transfer retry" in payments service
+        follow Semantic Contracts from AGENTS.md
+        verify all "done" criteria before merge
+      check: "Implementation and review follow the same shared vocabulary."
 sources:
   - label: "Semantic Anchors catalog"
     href: "https://llm-coding.github.io/Semantic-Anchors/"
@@ -77,7 +95,19 @@ Semantic Anchors are public terms you can say to an LLM and expect a useful resu
 pulls in a known pattern. For example, arc42 points to an architecture template, BLUF means lead
 with the answer, and Gherkin points to acceptance tests.
 
-## What contracts add
+## Example anchors you can use directly
+
+- arc42 for architecture structure
+- ADR for architecture decisions
+- Gherkin for acceptance criteria
+- BLUF for concise executive summaries
+
+These terms are useful immediately, even before you define any repository-specific rules.
+
+## How Semantic Contracts in AGENTS.md help
 
 Contracts are local. They tell the team what a term means in this repository. That keeps the
 anchor useful and keeps the output consistent.
+
+Put those definitions in `AGENTS.md` (or `CLAUDE.md` if that is your repo standard), then prompt
+agents with those contract terms during implementation and review.
