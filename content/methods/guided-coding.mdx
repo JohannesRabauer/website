@@ -19,47 +19,56 @@ diagram:
     - label: "Archive the record"
       description: "Keep the reason, not the draft."
 codeExamples:
-  title: "Guided Coding in three minimal steps"
-  subtitle: "Guide first, implementation second, decision record last."
+  title: "Guided Coding in a repeatable 3-step loop"
+  subtitle: "Natural-language spec, spec refactor, implementation — then repeat."
+  loops: true
   steps:
-    - title: "Step 1 — Write a focused guide"
-      goal: "Define goal and constraints before coding."
+    - title: "Step 1 — Write a natural-language specification"
+      goal: "Capture intent in plain language before touching implementation."
       java: |-
-        record ChangeGuide(
-            String goal,
-            List<String> constraints,
-            List<String> outOfScope) {}
+        String specV1 = """
+        Add a transfer endpoint.
+        Keep package boundaries unchanged.
+        Do not change the database schema.
+        Return 200 on valid transfer requests.
+        """;
       agnostic: |-
-        guide:
-          goal: add transfer endpoint
+        spec_v1:
+          - add transfer endpoint
+          - keep package boundaries
+          - no schema change
+          - valid request returns 200
+      check: "The first draft states intent in human language."
+    - title: "Step 2 — Refactor the specification"
+      goal: "Turn the natural-language draft into a tighter, testable spec."
+      java: |-
+        record TransferSpec(
+            String endpoint,
+            List<String> constraints,
+            List<String> acceptanceChecks) {}
+
+        TransferSpec specV2 = new TransferSpec(
+            "/api/transfer",
+            List.of("keep package boundaries", "no schema change"),
+            List.of("valid transfer returns HTTP 200"));
+      agnostic: |-
+        spec_v2:
+          endpoint: /api/transfer
           constraints: [keep package boundaries, no schema change]
-          out_of_scope: [new auth model]
-      check: "The guide sets clear boundaries for the agent."
-    - title: "Step 2 — Implement against the guide"
-      goal: "Validate the change with the guide's acceptance checks."
+          acceptance_checks: [valid transfer returns HTTP 200]
+      check: "The refined spec is precise enough to drive implementation and review."
+    - title: "Step 3 — Implement from the refactored spec"
+      goal: "Build only what spec v2 describes, then run checks."
       java: |-
         @Test
-        void transferEndpointMatchesGuide() {
+        void transferEndpointMatchesSpecV2() {
           assertThat(api.transfer(alice, bob, euros(25)).status()).isEqualTo(200);
         }
       agnostic: |-
-        implement according to guide
-        run acceptance test for transfer endpoint
-      check: "Behavior matches the guide, not assumptions."
-    - title: "Step 3 — Archive the decision"
-      goal: "Keep the reasoning as a durable team record."
-      java: |-
-        String adr = """
-        # ADR-042 Transfer endpoint
-        Decision: keep existing auth boundary.
-        Rationale: minimize blast radius for this change.
-        """;
-      agnostic: |-
-        archive adr:
-          id: ADR-042
-          decision: keep existing auth boundary
-          rationale: minimize blast radius
-      check: "The why is preserved for future changes."
+        implement against spec_v2
+        run acceptance checks
+        if checks fail: refine spec and repeat from step 1
+      check: "Implementation is guided by the spec, and the loop continues on failures."
 sources:
   - label: "Guided Coding PDF"
     href: "https://github.com/JohannesRabauer/vaadin-banking-app/blob/main/2026-02-26-guided-coding-instead-of-vibe-coding-in-java.pdf"

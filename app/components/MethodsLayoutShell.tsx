@@ -82,8 +82,12 @@ export default function MethodsLayoutShell({ children }: Props) {
       <header className="sticky top-0 z-40 border-b border-method-border/70 bg-white/70 backdrop-blur-xl">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-2">
           <div className="flex min-h-14 items-center justify-between gap-3">
-            {/* Logo returns to the main site home */}
-            <Link href="/" className="group flex items-center gap-2.5" aria-label={copy.section.home}>
+            {/* Logo returns to the methods index */}
+            <Link
+              href={getMethodsListingPath()}
+              className="group flex items-center gap-2.5"
+              aria-label={copy.section.allMethods}
+            >
               <Image
                 src="/Logo_round.png"
                 alt="Johannes Rabauer Logo"
