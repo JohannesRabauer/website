@@ -1,6 +1,6 @@
 ---
 title: "Eichhorst Principle"
-tagline: "Treat the LLM as a noisy channel. Let feedback loops do the error correction."
+tagline: "Treat the LLM as a noisy channel inside a Software Factory with hard quality gates."
 category: "Workflow"
 icon: "refresh-cw"
 maturity: "Emerging"
@@ -8,85 +8,36 @@ order: 8
 diagram:
   type: flow
   variant: loop
-  title: "The loop can only fix what it can detect."
+  title: "A Software Factory turns noisy generation into reliable delivery."
   steps:
+    - label: "Specify"
+      description: "Define intent, constraints, and acceptance criteria first."
     - label: "Generate"
-      description: "The LLM writes code through a noisy channel."
-    - label: "Compile"
-      description: "Catch syntax and wiring errors first."
-    - label: "Test"
-      description: "Catch logic and behavior errors next."
+      description: "The LLM produces code through a noisy channel."
+    - label: "Evaluate"
+      description: "Compile, test, lint, and check contracts through quality gates."
     - label: "Correct"
-      description: "Feed failures back into the next pass."
+      description: "Feed failures back into the next pass until all gates are green."
 pros:
-  - "Gives a clear theory for why agentic loops beat one-shot prompting."
-  - "Makes test coverage the main reliability lever, not prompt cleverness."
-  - "Explains AI coding quality in terms engineers and CTOs already know."
-  - "Works well with existing compile, unit-test, and acceptance-test pipelines."
+  - "Gives a clear theory for why Software Factory loops beat one-shot prompting."
+  - "Shifts focus from prompt cleverness to measurable quality signals."
+  - "Makes acceptance criteria and tests first-class design artifacts."
+  - "Fits existing compile, unit-test, integration-test, and CI/CD pipelines."
 cons:
-  - "Needs real tests to work; untested behavior still slips through."
-  - "Adds token cost and time because the loop repeats."
-  - "Green tests do not guarantee a good architecture."
-  - "Weak or wrong tests create a false sense of safety."
+  - "Needs real specifications and tests; unmeasured behavior still slips through."
+  - "Adds token cost and time because generation and evaluation repeat."
+  - "Green gates do not automatically guarantee good architecture."
+  - "Weak gates create a false sense of reliability at scale."
 whereToUse:
   best:
-    - "Agentic coding workflows that compile and test on every step."
+    - "Agentic coding workflows with explicit specs and hard quality gates."
     - "Teams debating why AI works well in one repo and fails in another."
-    - "Codebases where you can improve the test suite over time."
+    - "Codebases where acceptance criteria and tests can improve over time."
     - "Leadership conversations about why test investment matters in the AI era."
   avoid:
-    - "Fast prototypes where no automated feedback exists yet."
+    - "Fast prototypes where no automated feedback or spec baseline exists yet."
     - "Tasks that cannot be checked by compilers, tests, or other hard signals."
     - "Situations where token cost is the main constraint."
-codeExamples:
-  title: "Three-step loop (minimal code)"
-  subtitle: "Each step adds one hard feedback signal. Keep the loop short."
-  steps:
-    - title: "Step 1 — State one precise contract"
-      goal: "Tell the model what must stay true."
-      java: |-
-        interface TransferService {
-          Receipt transfer(Account from, Account to, Money amount);
-        }
-      agnostic: |-
-        contract Transfer:
-          input: from, to, amount
-          output: receipt
-          invariant: balances remain consistent
-      check: "The contract is specific and testable."
-    - title: "Step 2 — Add one failing test"
-      goal: "Create a clear signal before generation."
-      java: |-
-        @Test
-        void transferUpdatesBothAccounts() {
-          var receipt = service.transfer(alice, bob, euros(25));
-          assertThat(receipt.success()).isTrue();
-          assertThat(alice.balance()).isEqualTo(euros(75));
-          assertThat(bob.balance()).isEqualTo(euros(125));
-        }
-      agnostic: |-
-        test "transfer updates both balances":
-          run transfer(alice, bob, 25)
-          expect success == true
-          expect alice.balance == 75
-          expect bob.balance == 125
-      check: "The test fails first and names expected behavior."
-    - title: "Step 3 — Implement and rerun loop"
-      goal: "Generate a small implementation and verify."
-      java: |-
-        class DefaultTransferService implements TransferService {
-          public Receipt transfer(Account from, Account to, Money amount) {
-            from.debit(amount);
-            to.credit(amount);
-            return Receipt.ok();
-          }
-        }
-      agnostic: |-
-        function transfer(from, to, amount):
-          from.debit(amount)
-          to.credit(amount)
-          return success_receipt()
-      check: "Compile passes and the test turns green."
 sources:
   - label: "Ralf D. Muller — Eichhorst's Principle"
     href: "https://rdmueller.github.io/pages/blog/eichhorsts-principle.html"
@@ -105,23 +56,53 @@ draft: false
 
 ## What it is
 
-The Eichhorst Principle applies Claude Shannon's noisy-channel idea to AI coding. The large
-language model is the noisy channel. It can guess right, drift, or fail. The feedback loop is what
-makes the result reliable.
+The Eichhorst Principle applies Claude Shannon's noisy-channel idea to AI coding and extends it
+into Software Factory thinking. The large language model is the noisy channel. It can guess right,
+drift, or fail. Reliability comes from the factory around that channel: explicit intent, clear
+constraints, and hard quality gates.
 
-In practice, the loop is simple: generate code, compile it, run the tests, read the failures, and
-try again. Each check catches a different error class. The compiler catches syntax and wiring
-errors. Tests catch logic and behavior errors.
+In practice, the loop is not just generate, compile, and test. It starts one step earlier:
+specify what success means. Then generate code, run compile and test checks, evaluate failures,
+and iterate. Each gate catches a different error class. The compiler catches syntax and wiring
+errors. Tests and acceptance checks catch logic and behavior errors.
 
 ## Why it matters
 
-The key rule is blunt: the loop can only fix what it can detect. That means better tests usually
-matter more than better prompts. A strong test suite turns an unreliable generator into a much more
-reliable coding partner.
+The key rule is blunt: the loop can only fix what it can detect. That means better specifications,
+acceptance criteria, and tests usually matter more than better prompts. A strong quality-gate stack
+turns an unreliable generator into a much more reliable coding partner.
 
 This makes the Eichhorst Principle a useful lens for agentic development. If the agent keeps
 breaking the same kind of behavior, the first question is not "how do I rewrite the prompt?" It is
-"what check is missing from the loop?"
+"what specification or check is missing from the factory?"
+
+## Software Factory integration
+
+The principle is best understood as a delivery-system concept, not just a debugging loop.
+
+In Shannon terms, you improve reliability at three places:
+
+- Source: clarify feature intent and contracts.
+- Channel: reduce ambiguity in prompts and context.
+- Receiver: enforce compile, test, and policy gates.
+
+That is exactly what a Software Factory does. It encodes quality in the system so weak output gets
+rejected automatically and only trustworthy changes survive.
+
+If you want to see this applied in a real live session, see the blog recap:
+[Stop Prompting. Start Building Software Factories for Java](/en/blog/stop-prompting-start-building-software-factories-for-java/).
+
+## Visual model
+
+<MermaidDiagram description="Shannon + Software Factory view of the Eichhorst Principle.">
+flowchart LR;
+S["Source\nIntent + acceptance criteria"] --> C["Channel\nLLM generation"];
+C --> R["Receiver\nCompile, test, lint, policy gates"];
+N["Noise\nAmbiguity, drift, missing context"] -.-> C;
+R -->|fail| F["Feedback loop\nRefine spec + context"];
+F --> C;
+R -->|pass| D["Delivery\nTrusted change"];
+</MermaidDiagram>
 
 ## Source note
 
