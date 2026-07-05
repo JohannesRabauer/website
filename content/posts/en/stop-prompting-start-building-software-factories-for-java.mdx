@@ -1,0 +1,186 @@
+---
+title: "Stop Prompting. Start Building Software Factories for Java"
+date: "2026-07-02"
+summary: "Ingo Eichhorst joined me to show a practical Software Factory workflow for Java: define quality first, add hard guardrails, and let AI implement inside those boundaries."
+tags: ["software-factories", "java", "ai-assisted-development", "quality-gates", "testing", "live-coding", "eichhorst-principle"]
+youtubeId: "5vm4eckX6f8"
+mainRepository: "https://github.com/JohannesRabauer/quanta"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Welcome and Introduction"
+  - time: "00:52"
+    label: "Topic Overview: Software Factories"
+  - time: "01:01"
+    label: "Guest Introduction: Ingo Eichhorst"
+  - time: "02:04"
+    label: "Ingo's Background and Journey"
+  - time: "05:25"
+    label: "Ingo's Pivot to AI and Generative Models"
+  - time: "06:00"
+    label: "Early AI Coding Experiments and Tools"
+  - time: "11:04"
+    label: "Defining Software Factories"
+  - time: "13:41"
+    label: "The Concept of Non-Deterministic Idempotency"
+  - time: "14:09"
+    label: "Software Factory Automation Approach"
+  - time: "15:44"
+    label: "Vision of the Dark Factory"
+  - time: "21:57"
+    label: "Basic Principles of Software Factories"
+  - time: "23:44"
+    label: "Defining Quality in Software Factories"
+  - time: "27:22"
+    label: "Introduction to the Eichhorst Principle"
+  - time: "31:11"
+    label: "Applying Shannon's Theory to LLM Communication"
+  - time: "40:36"
+    label: "Overview of the Ehrlicht Project"
+  - time: "46:15"
+    label: "Starting the Coding Session: Quanta Project"
+  - time: "49:42"
+    label: "Reviewing Tests and Feedback Mechanisms"
+  - time: "55:22"
+    label: "Specifying Requirements for New Endpoint"
+  - time: "58:06"
+    label: "Using LLM for Clarifying Questions"
+  - time: "01:00:46"
+    label: "Discussion on Chat Interface Features"
+  - time: "01:06:07"
+    label: "Summarizing Requirements in a PRD"
+  - time: "01:09:28"
+    label: "Creating and Adding Acceptance Criteria"
+  - time: "01:14:28"
+    label: "Building the Feature and Git Good Practices"
+  - time: "01:25:23"
+    label: "Thoughts on Test-Driven Development with LLMs"
+  - time: "01:29:02"
+    label: "Using Regression Tests in AI Development"
+  - time: "01:34:09"
+    label: "Testing Costs and Strategy"
+  - time: "01:35:58"
+    label: "Running Docker and Project Setup"
+  - time: "01:42:44"
+    label: "Glossary: Loop Engineering and Related Terms"
+  - time: "01:51:11"
+    label: "Review of Integration Tests and Codebase"
+  - time: "01:55:23"
+    label: "Using Git Worktrees for Multiple Agents"
+  - time: "02:00:03"
+    label: "Testing Strategy: Shift Left Approach"
+  - time: "02:03:33"
+    label: "Automated Release Testing"
+  - time: "02:06:31"
+    label: "Concluding Thoughts on Software Factories and AI"
+  - time: "02:09:53"
+    label: "Closing Remarks and Thanks"
+---
+
+AI can write code quickly. Most of us have seen that by now.
+
+*The harder question is this:* how do we get **good results repeatedly**, not just once in a lucky run?
+
+That was the center of this session with Ingo Eichhorst. We explored Software Factories for Java in a practical way: **define quality first**, build tight feedback loops, and let AI implement inside those boundaries.
+
+It was also my first stream organized with [JUG Oberpfalz](https://www.meetup.com/jug-oberpfalz/), which made the session even more meaningful for me.
+
+<CoSpeakerCard
+  name="Ingo Eichhorst"
+  role="AI Architect | Engineering Trainer"
+  company="IONOS"
+  bio="Ingo is an AI architect and engineering trainer at IONOS and the maintainer of irrlicht.io. He brought a clear systems thinking perspective to AI-assisted software delivery and introduced the Eichhorst Principle during the session."
+  imageSrc="https://avatars.githubusercontent.com/ingo-eichhorst"
+  github="https://github.com/ingo-eichhorst"
+  linkedin="https://linkedin.com/in/ingo-eichhorst"
+  website="https://www.ingo-eichhorst.de/"
+/>
+
+## From Prompting To Factory Thinking
+
+The most useful idea from the evening was not a new tool, model, or coding trick. It was a **shift in what to optimize for**.
+
+A Software Factory is not mainly about asking AI better questions. It is about building a **delivery system** that can produce the desired result repeatedly. That means the center of gravity moves away from prompting and toward engineering discipline: clear specifications, measurable acceptance criteria, layered tests, and automated checks.
+
+That distinction matters because it changes how you judge AI output. The question is no longer whether the answer looks plausible. The question is whether the change **survives the system around it**.
+
+## Quality Gates Are The Real Product
+
+The session kept returning to one practical point: if you want reliable AI-assisted development, the **most important work** often happens before and after generation.
+
+Before generation, you need to define the shape of a good result. After generation, you need a receiver that can **reject weak output automatically**. In practice, that receiver is a stack of quality gates: acceptance tests, unit tests, integration tests, linting, and CI/CD.
+
+That is also why this session felt more useful than a generic live coding demo. It framed AI less as an autonomous author and more as a component inside a controlled system.
+
+## The Eichhorst Principle Makes The Failure Modes Visible
+
+The strongest conceptual contribution came from Ingo's use of Claude Shannon's communication model. The Eichhorst Principle applies that model to AI-assisted software delivery and gives you a **concrete way to reason about what went wrong**.
+
+If an AI-generated change is poor, there are only a few likely explanations. The input was underspecified. The channel introduced too much noise. Or the receiving side was not strict enough to detect and correct the output. That sounds obvious when stated plainly, but it is a **very helpful frame** when working with models day to day.
+
+<MermaidDiagram
+  description="Two horizontal slices: Shannon communication model on top, Eichhorst Principle process model below."
+>
+flowchart TB;
+subgraph A["Slice 1: Shannon Communication"];
+direction LR;
+A1["Information Source\\nIntent and message"] -- "message" --> A2["Transmitter\\nEncoded prompt or specification"];
+A2 -- "signal" --> AJ[" "];
+A3["Noise Source\\nAmbiguity and model variance"] -- "noise" --> AJ;
+AJ -- "received signal" --> A4["Receiver\\nDecoded output"];
+A4 -- "message" --> A5["Destination\\nHuman or system consuming the result"];
+end;
+A --> B;
+subgraph B["Slice 2: Eichhorst Principle"];
+direction LR;
+B1["Information Source\\nFeature intent and requirements"] -- "message" --> B2["Transmitter\\nAcceptance criteria, specs, constraints"];
+B2 -- "signal" --> BJ[" "];
+B3["Noise Source\\nNon-determinism, drift, missing context"] -- "noise" --> BJ;
+BJ -- "received signal" --> B4["Receiver\\nQuality gates evaluate the output"];
+B4 -- "message" --> B5["Destination\\nAccepted change or repeatable quality"];
+end;
+</MermaidDiagram>
+
+What I like about this framing is that it **avoids magical thinking**. It turns AI delivery into an engineering problem again. You improve the source, reduce ambiguity in the transmitter, and strengthen the receiver.
+
+If you want a deeper breakdown, I documented the approach in the [Eichhorst Principle method page](/methods/eichhorst-principle).
+
+## The Quanta Session Showed Why This Matters
+
+The practical half of the session used [Quanta](https://github.com/JohannesRabauer/quanta), a lightweight local file search tool with a Next.js frontend and a Quarkus backend that uses an LLM to search over locally indexed files.
+
+That gave the discussion a concrete target. We were not talking about process in the abstract. We were asking how to add a real feature in a way that would still be trustworthy when AI did most of the implementation work.
+
+The most interesting outcome was that the requested change worked on the first try. That probably says less about AI brilliance than about the **quality of the setup around it**. The requirements were narrowed, acceptance criteria were made explicit, and the tests acted as a real receiver instead of a ceremonial one.
+
+That is the finding I would keep: when AI appears to work "surprisingly well," the explanation is often not the prompt. It is the **feedback architecture around the prompt**.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/software_factory_quanta.png"
+    alt="New Quanta feature implemented during the live coding session"
+    width={900}
+  />
+  <p className="text-sm text-center text-blog-muted mt-1">Screenshot of the new Quanta feature built during the stream.</p>
+</div>
+
+## What Was Harder Than Expected
+
+There was no major collapse in the session, but one thing remained predictably hard: **precision before coding**.
+
+With AI, implementation can be fast. Specification is slower. That is not a weakness of the process; it is the process. If you skip that work, the ambiguity simply moves downstream and becomes rework.
+
+The same applies to testing strategy. Ingo made a strong case for layered tests and for shift-left feedback. The earlier the agent gets a **trustworthy signal**, the cheaper correction becomes.
+
+## Takeaway
+
+**Stop treating AI coding as a prompting competition.**
+
+Treat it as **system design**. Define success clearly. Encode that definition in tests and gates. Let the system reject weak output automatically. Keep human ownership of direction and judgment.
+
+That is how occasional wins become reliable delivery.
+
+## Relevant Links
+
+- [JUG Oberpfalz Meetup](https://www.meetup.com/jug-oberpfalz/)
+- [Eichhorst Principle (Methods)](/methods/eichhorst-principle)

@@ -1,0 +1,184 @@
+﻿---
+title: "Nicht mehr nur prompten: Software Factories für Java bauen"
+date: "2026-07-02"
+summary: "Ingo Eichhorst war zu Gast und wir haben einen praktischen Software-Factory-Ansatz für Java gezeigt: erst Qualität definieren, dann klare Leitplanken setzen und KI innerhalb dieser Grenzen implementieren lassen."
+tags: ["software-factories", "java", "ai-assisted-development", "quality-gates", "testing", "live-coding", "eichhorst-principle"]
+youtubeId: "5vm4eckX6f8"
+mainRepository: "https://github.com/JohannesRabauer/quanta"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Begrüßung und Einführung"
+  - time: "00:52"
+    label: "Themenüberblick: Software Factories"
+  - time: "01:01"
+    label: "Gastvorstellung: Ingo Eichhorst"
+  - time: "02:04"
+    label: "Ingos Hintergrund und Werdegang"
+  - time: "05:25"
+    label: "Ingos Wechsel zu KI und generativen Modellen"
+  - time: "06:00"
+    label: "Frühe KI-Coding-Experimente und Tools"
+  - time: "11:04"
+    label: "Was sind Software Factories?"
+  - time: "13:41"
+    label: "Nicht-deterministische Idempotenz"
+  - time: "14:09"
+    label: "Automatisierungsansatz in der Software Factory"
+  - time: "15:44"
+    label: "Vision der Dark Factory"
+  - time: "21:57"
+    label: "Grundprinzipien von Software Factories"
+  - time: "23:44"
+    label: "Qualität in Software Factories definieren"
+  - time: "27:22"
+    label: "Einführung in das Eichhorst-Prinzip"
+  - time: "31:11"
+    label: "Shannons Theorie auf LLM-Kommunikation anwenden"
+  - time: "40:36"
+    label: "Überblick über das Ehrlicht-Projekt"
+  - time: "46:15"
+    label: "Start der Coding-Session: Quanta-Projekt"
+  - time: "49:42"
+    label: "Tests und Feedback-Mechanismen"
+  - time: "55:22"
+    label: "Anforderungen für neuen Endpoint spezifizieren"
+  - time: "58:06"
+    label: "Rückfragen mit dem LLM"
+  - time: "01:00:46"
+    label: "Diskussion zur Chat-Interface-Funktion"
+  - time: "01:06:07"
+    label: "Anforderungen in einem PRD zusammenfassen"
+  - time: "01:09:28"
+    label: "Akzeptanzkriterien erstellen und ergänzen"
+  - time: "01:14:28"
+    label: "Feature bauen und gute Git-Praktiken"
+  - time: "01:25:23"
+    label: "Gedanken zu Test-Driven Development mit LLMs"
+  - time: "01:29:02"
+    label: "Regressionstests in der KI-Entwicklung"
+  - time: "01:34:09"
+    label: "Testkosten und Strategie"
+  - time: "01:35:58"
+    label: "Docker und Projektsetup"
+  - time: "01:42:44"
+    label: "Glossar: Loop Engineering und verwandte Begriffe"
+  - time: "01:51:11"
+    label: "Integrationstests und Codebasis im Review"
+  - time: "01:55:23"
+    label: "Git Worktrees für mehrere Agenten"
+  - time: "02:00:03"
+    label: "Teststrategie: Shift Left"
+  - time: "02:03:33"
+    label: "Automatisierte Release-Tests"
+  - time: "02:06:31"
+    label: "Abschließende Gedanken zu Software Factories und KI"
+  - time: "02:09:53"
+    label: "Abschluss und Dank"
+---
+
+KI kann schnell Code erzeugen. *Die wichtigere Frage ist aber:* Wie erreichen wir **verlässlich gute Ergebnisse**, nicht nur einen Zufallstreffer?
+
+Genau darum ging es in dieser Session mit Ingo Eichhorst. Wir haben den Software-Factory-Ansatz für Java nicht abstrakt diskutiert, sondern praktisch angewendet: **Qualität zuerst definieren**, harte Leitplanken setzen und KI innerhalb dieser Grenzen arbeiten lassen.
+
+Außerdem war es meine erste Session in Zusammenarbeit mit [JUG Oberpfalz](https://www.meetup.com/jug-oberpfalz/), was den Abend für mich besonders gemacht hat.
+
+<CoSpeakerCard
+  name="Ingo Eichhorst"
+  role="AI Architect | Engineering Trainer"
+  company="IONOS"
+  bio="Ingo ist AI Architect und Engineering Trainer bei IONOS und Maintainer von irrlicht.io. In der Session hat er das Eichhorst-Prinzip vorgestellt und gezeigt, wie man KI-gestützte Softwareentwicklung als belastbares System aufbaut."
+  imageSrc="https://avatars.githubusercontent.com/ingo-eichhorst"
+  github="https://github.com/ingo-eichhorst"
+  linkedin="https://linkedin.com/in/ingo-eichhorst"
+  website="https://www.ingo-eichhorst.de/"
+/>
+
+## Von Prompting zu Factory-Denken
+
+Der nützlichste Gedanke des Abends war nicht ein neues Tool, kein neues Modell und auch kein einzelner Prompt-Trick. Entscheidend war eine **andere Frage**: Worauf optimieren wir eigentlich?
+
+Eine Software Factory will möglichst viel in der Softwareentwicklung automatisieren und trotzdem das gewünschte Ergebnis wiederholt liefern. Für KI-gestütztes Coding heißt das: weniger Hoffnung auf heroische Prompts und mehr **technische Disziplin** mit klaren Spezifikationen, messbaren Akzeptanzkriterien, gestuften Tests und automatisierten CI/CD-Prüfungen.
+
+Diese Verschiebung ist wichtig, weil sie den Bewertungsmaßstab ändert. Die Frage ist nicht mehr, ob eine Antwort plausibel klingt. Die Frage ist, ob die Änderung **das System um sich herum übersteht**.
+
+## Quality Gates sind das eigentliche Produkt
+
+Die Session kam immer wieder auf einen praktischen Punkt zurück: Wenn KI-gestützte Entwicklung zuverlässig werden soll, passiert die **wichtigste Arbeit** oft vor und nach der Generierung.
+
+Vor der Generierung muss klar sein, wie ein gutes Ergebnis aussieht. Nach der Generierung braucht es einen Empfänger, der **schwache Ausgaben automatisch zurückweist**. In der Praxis ist dieser Empfänger ein Stapel aus Quality Gates: Akzeptanztests, Unit-Tests, Integrationstests, Linting und CI/CD.
+
+Genau deshalb war diese Session nützlicher als eine beliebige Live-Coding-Demo. Sie zeigte KI nicht als autonomen Autor, sondern als Komponente in einem kontrollierten System.
+
+## Das Eichhorst-Prinzip
+
+Der stärkste konzeptionelle Beitrag kam von Ingos Übertragung von Claude Shannons Kommunikationsmodell auf KI-gestützte Softwareentwicklung. Das Eichhorst-Prinzip gibt damit einen **klaren Rahmen**, um Fehlerquellen zu benennen.
+
+Wenn eine KI-generierte Änderung schlecht ist, gibt es nur wenige wahrscheinliche Erklärungen: Die Eingabe war zu unklar. Der Kanal hat zu viel Rauschen eingebracht. Oder die Empfängerseite war nicht streng genug, um die Ausgabe zu prüfen und zu korrigieren. Genau diese Nüchternheit macht das Modell **so brauchbar**.
+
+<MermaidDiagram
+  description="Zwei horizontale Ebenen: oben das Kommunikationsmodell nach Shannon, unten die operative Umsetzung durch das Eichhorst-Prinzip."
+>
+flowchart TB;
+subgraph A["Ebene 1: Shannon Kommunikation"];
+direction LR;
+A1["Informationsquelle\\nAbsicht und Nachricht"] -- "Nachricht" --> A2["Sender\\nKodierter Prompt oder Spezifikation"];
+A2 -- "Signal" --> AJ[" "];
+A3["Rauschquelle\\nUnklarheit und Modellvarianz"] -- "Rauschen" --> AJ;
+AJ -- "Empfangenes Signal" --> A4["Empfänger\\nDekodierte Ausgabe"];
+A4 -- "Nachricht" --> A5["Ziel\\nMensch oder System nutzt das Ergebnis"];
+end;
+A --> B;
+subgraph B["Ebene 2: Eichhorst-Prinzip"];
+direction LR;
+B1["Informationsquelle\\nFeature-Ziel und Anforderungen"] -- "Nachricht" --> B2["Sender\\nAkzeptanzkriterien, Spezifikation, Leitplanken"];
+B2 -- "Signal" --> BJ[" "];
+B3["Rauschquelle\\nNicht-Determinismus, Drift, fehlender Kontext"] -- "Rauschen" --> BJ;
+BJ -- "Empfangenes Signal" --> B4["Empfänger\\nQuality Gates bewerten die Ausgabe"];
+B4 -- "Nachricht" --> B5["Ziel\\nAkzeptierte Änderung oder reproduzierbare Qualität"];
+end;
+</MermaidDiagram>
+
+Ich mag an diesem Modell, dass es **jede Magie aus der Diskussion nimmt**. KI-Lieferfähigkeit wird wieder zu einem Ingenieurproblem: Quelle verbessern, Sender präzisieren, Empfänger härten.
+
+Eine ausführliche Beschreibung findest du in meiner [Methodenseite zum Eichhorst-Prinzip](/methods/eichhorst-principle).
+
+## Ergebnis im Quanta-Live-Coding
+
+Die zweite Hälfte der Session nutzte [Quanta](https://github.com/JohannesRabauer/quanta) als echten Projektkontext. Quanta ist ein schlankes lokales Dateisuchwerkzeug mit einem Next.js-Frontend und einem Quarkus-Backend, das ein LLM nutzt, um über lokal indexierte Dateien zu suchen.
+
+Dadurch blieb die Diskussion nicht abstrakt. Es ging nicht nur um Prinzipien, sondern darum, wie man in einem realen System ein neues Feature so baut, dass es auch dann vertrauenswürdig bleibt, wenn die KI den Großteil der Implementierung übernimmt.
+
+Das interessanteste Ergebnis war, dass die gewünschte Änderung direkt im ersten Lauf funktionierte. Das spricht wahrscheinlich weniger für KI-Magie als für die **Qualität des Setups darum herum**. Der Umfang war eingegrenzt, die Akzeptanzkriterien waren explizit, und die Tests waren ein echter Empfänger statt bloßer Ritualhandlung.
+
+Genau das ist das wichtigste Learning: Wenn KI "überraschend gut" funktioniert, liegt das oft nicht am Prompt, sondern an der **Feedback-Architektur um den Prompt herum**.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/software_factory_quanta.png"
+    alt="Neues Quanta-Feature aus der Live-Coding-Session"
+    width={900}
+  />
+  <p className="text-sm text-center text-blog-muted mt-1">Screenshot des neuen Quanta-Features aus dem Stream.</p>
+</div>
+
+## Was schwieriger war als erwartet
+
+Es gab keinen großen Zusammenbruch in der Session, aber eines blieb erwartbar schwierig: **Präzision vor dem Coding**.
+
+Mit KI geht Implementierung oft schnell. Spezifikation geht langsamer. Das ist keine Schwäche des Prozesses, sondern der Prozess selbst. Wer diese Arbeit auslässt, verschiebt die Unklarheit nur nach hinten und bezahlt sie später als Rework.
+
+Das Gleiche gilt für die Teststrategie. Ingo hat überzeugend für gestufte Tests und für Shift-Left-Feedback argumentiert. Je früher ein Agent ein **verlässliches Signal** bekommt, desto billiger wird Korrektur.
+
+## Fazit
+
+**Behandle KI-Coding nicht als Prompt-Wettbewerb.**
+
+Behandle es als **Systementwurf**: Zielbild definieren, Qualität codieren, schwache Ergebnisse automatisch abweisen und die menschliche Verantwortung für Richtung behalten.
+
+So werden einzelne Erfolge zu verlässlicher Lieferung.
+
+## Nützliche Links
+
+- [JUG Oberpfalz Meetup](https://www.meetup.com/jug-oberpfalz/)
+- [Eichhorst-Prinzip (Methoden)](/methods/eichhorst-principle)
