@@ -25,7 +25,7 @@ const YouTubePlaylist: React.FC<YouTubePlaylistProps> = ({
       >
         <div className="relative aspect-video overflow-hidden bg-black/40">
           <Image
-            src={`https://img.youtube.com/vi/${thumbnailVideoId}/maxresdefault.jpg`}
+            src={`https://img.youtube.com/vi/${thumbnailVideoId}/hqdefault.jpg`}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 25vw"
