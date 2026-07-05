@@ -19,10 +19,12 @@ export const metadata: Metadata = {
     url: `${METHODS_SITE_URL}${getMethodsListingPath()}`,
     title: `${METHODS_COPY.section.title} — ${METHODS_COPY.section.subtitle}`,
     description: METHODS_COPY.section.description,
+    images: [`${METHODS_SITE_URL}/banner_methods.jpg`],
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@JohannesRabauer',
+    images: [`${METHODS_SITE_URL}/banner_methods.jpg`],
   },
 };
 
