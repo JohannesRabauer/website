@@ -1,0 +1,137 @@
+---
+title: "Vom Prompt zur Produktion: Ein Workflow für KI-gestützte Entwicklung"
+date: "2026-07-11"
+summary: "Eine Solo-Session über den Workflow, der mehr bringt als das Jagen nach dem neuesten Modell: vier Phasen, Entscheiden, Einrichten, Bauen, Ausliefern & Automatisieren, plus eine Live-Demo vom leeren Repo bis zu Spec, Projektregeln und automatischen PR-Reviews."
+tags: ["ai-assisted-development", "ai-workflow", "context-engineering", "mcp", "spring-boot", "github-copilot", "live-coding", "agents-md"]
+youtubeId: "pMAdjgYzO58"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Intro und Agenda der Session"
+  - time: "01:33"
+    label: "Überblick über den KI-Entwickler-Workflow"
+  - time: "03:11"
+    label: "Zuerst die Risiken: Copyright, Ethik, Datensicherheit"
+  - time: "06:57"
+    label: "Full-AI-Coding vs. KI-gestütztes Coding"
+  - time: "09:57"
+    label: "Einen kosteneffizienten KI-Anbieter wählen"
+  - time: "12:03"
+    label: "Die KI-Umgebung wählen: lokal vs. Cloud"
+  - time: "17:56"
+    label: "Docker Sandbox und sichererer YOLO-Modus"
+  - time: "22:19"
+    label: "Das richtige Modell wählen (Qualität, Tempo, Kosten)"
+  - time: "29:53"
+    label: "Context Engineering: Agents.md, Skills und Regeln"
+  - time: "39:26"
+    label: "MCP-Server erklärt (IntelliJ, JavaDocs, Context7)"
+  - time: "44:02"
+    label: "Sprache und Framework pragmatisch wählen"
+  - time: "46:50"
+    label: "Build-Phase: erst planen, dann prompten"
+  - time: "52:44"
+    label: "Reviews in KI-Workflows (und Risiko-Denken)"
+  - time: "57:02"
+    label: "Tests und automatische Checks als Leitplanken"
+  - time: "01:01:03"
+    label: "Git-Strategie fürs KI-Coding (kleine Commits, Branches, PRs)"
+  - time: "01:02:59"
+    label: "Ausliefern und Automatisierung (CI/CD früh)"
+  - time: "01:04:23"
+    label: "Loop Engineering und Kosten-Abwägungen"
+  - time: "01:07:29"
+    label: "Workflow-Zusammenfassung und Kernaussagen"
+  - time: "01:10:32"
+    label: "Live-Coding startet: leeres Repo einrichten"
+  - time: "01:11:46"
+    label: "IntelliJ MCP in Copilot CLI hinzufügen und testen"
+  - time: "01:14:11"
+    label: "Grilling-Skill installieren und nutzen"
+  - time: "01:17:32"
+    label: "Die Spring-Boot-Projektidee definieren"
+  - time: "01:20:04"
+    label: "Requirement-Grilling und Scoping-Entscheidungen"
+  - time: "01:25:59"
+    label: "Spec und Projektregeln generieren (Agents.md)"
+  - time: "01:29:01"
+    label: "GitHub-Issues aus der Spec erstellen"
+  - time: "01:30:42"
+    label: "Automatische Copilot-PR-Reviews aktivieren"
+---
+
+Jeden Monat erscheinen neue Modelle, und jedes soll angeblich alles verändern. Nach viel Zeit mit KI-gestützter Entwicklung bleibt für mich eine deutlich nüchternere Einsicht: **Der Workflow zählt mehr als das Modell.**
+
+Diese Session war diesmal ohne Gast, und ich habe sie in zwei klare Hälften geteilt: In der ersten Hälfte habe ich den Workflow erklärt, der sich in meinen Projekten am besten bewährt hat, und in der zweiten Hälfte habe ich ihn live demonstriert. Die Demo ging vom leeren Repository bis zu einer Spec, Projektregeln, GitHub-Issues und automatischen Pull-Request-Reviews. Der ganze Ablauf lässt sich in vier Phasen gliedern: **Entscheiden, Einrichten, Bauen, Ausliefern & Automatisieren**.
+
+## Bevor du anfängst: Darfst du KI überhaupt einsetzen?
+
+Vor dem ersten Prompt lohnt es sich, bei vier Punkten ehrlich zu sein ([03:11](https://www.youtube.com/watch?v=pMAdjgYzO58&t=191)). Das ist keine Skepsis um der Skepsis willen. Es geht darum, die Konsequenzen zu verstehen.
+
+- **Copyright und fremde Arbeit.** Modelle können gelegentlich lizenzierten Code wortwörtlich reproduzieren, und Trainingsdaten enthalten die Arbeit anderer Menschen. Wisse, was du rechtlich ausliefern darfst, und behandle generierten Code als etwas, das man prüft und versteht, nicht als etwas, das man als eigenes ausgibt.
+- **Datensicherheit.** Deine Prompts und dein Code verlassen möglicherweise deinen Rechner. Wisse, was du sendest und an wen, bevor proprietärer Code oder Kundendaten in einen Cloud-Dienst wandern.
+- **Umweltkosten.** Intensive Nutzung hat einen realen Energie-Fußabdruck. Es ist legitim zu fragen, ob eine Aufgabe das rechtfertigt.
+
+Nichts davon verbietet den Einsatz von KI. Es schafft nur Klarheit darüber, unter welchen Bedingungen du sie einsetzt.
+
+## Phase 1: Entscheiden
+
+Die meiste Energie fließt oft in Modellvergleiche. In der Praxis haben aber ein paar frühere Entscheidungen meist deutlich mehr Einfluss auf das Ergebnis.
+
+**Full AI oder KI-gestützt?** ([06:57](https://www.youtube.com/watch?v=pMAdjgYzO58&t=417)) Fährt die KI, oder unterstützt sie nur? Für Prototypen und Exploration kann es sinnvoll sein, ihr mehr Spielraum zu geben. Bei Produktionssystemen oder sicherheitskritischem Code ist es meist besser, wenn die Entwicklerin die Kontrolle klar behält. Beides kann funktionieren. Entscheidend ist, dass die Wahl bewusst getroffen wird.
+
+**Einen kosteneffizienten Anbieter finden.** ([09:57](https://www.youtube.com/watch?v=pMAdjgYzO58&t=597)) Die Preisunterschiede sind oft größer als die Qualitätsunterschiede. Ein kurzer Vergleich am Anfang spart auf Dauer spürbar Geld. Ein guter Startpunkt ist [Price per Token für Coding Assistants](https://pricepertoken.com/coding-assistants), auch wenn solche Preisübersichten schnell veralten können.
+
+**Eine Umgebung wählen.** ([12:03](https://www.youtube.com/watch?v=pMAdjgYzO58&t=723)) Das ist das Werkzeug, in dem du den ganzen Tag arbeitest. CLI oder Desktop, Cloud oder lokal: lokal bleibt alles auf deinem Rechner und in deinen Tools, in der Cloud stößt du einen Job an und lässt ihn laufen. Wenn Agenten weitreichenden Zugriff bekommen, macht eine [Docker Sandbox](https://docs.docker.com/ai/sandboxes/) den YOLO-Modus deutlich sicherer ([17:56](https://www.youtube.com/watch?v=pMAdjgYzO58&t=1076)).
+
+**Das Modell je Aufgabe wählen.** ([22:19](https://www.youtube.com/watch?v=pMAdjgYzO58&t=1339)) Ein einzelnes "bestes" Modell gibt es nicht. Für kleine Änderungen reicht oft etwas Schnelles und Günstiges. Erst bei schwierigen Aufgaben oder wenn du festhängst, lohnt sich ein größeres und teureres Modell. Qualität, Tempo und Kosten bekommst du selten gleichzeitig.
+
+## Phase 2: Einrichten
+
+**Erzähl der KI einmal von deinem Projekt.** ([29:53](https://www.youtube.com/watch?v=pMAdjgYzO58&t=1793)) Eine Datei im Repo, etwa `Agents.md`, `CLAUDE.md` oder der Name, den dein Tool erwartet, kann Projektfakten, Konventionen und Regeln in jeden Prompt mitgeben. So musst du nicht ständig dasselbe neu erklären. Guter Kontext ist kurz, aktuell und konkret auf das Projekt bezogen.
+
+**MCP-Server hinzufügen.** ([39:26](https://www.youtube.com/watch?v=pMAdjgYzO58&t=2366)) Das [Model Context Protocol](https://modelcontextprotocol.io/) gibt der KI direkten Zugriff auf Werkzeuge wie Dateien, Datenbanken oder APIs, statt dass alles per Copy-Paste laufen muss. In der Session habe ich den [IntelliJ-MCP](https://www.jetbrains.com/help/idea/mcp-server.html), den [JavaDocs.dev-MCP-Server](https://www.javadocs.dev/) und [Context7](https://context7.com/) für aktuelle Bibliotheksdokumentation verwendet. Im Alltag bringt diese Tool-Anbindung meist mehr als die nächste Modelldebatte.
+
+**Sprache und Framework wählen.** ([44:02](https://www.youtube.com/watch?v=pMAdjgYzO58&t=2642)) Nimm, was du kennst, oder was gut zur Aufgabe passt. Diese Entscheidung ist nicht egal, aber sie ist heute oft weniger ausschlaggebend als früher.
+
+## Phase 3: Bauen
+
+Das ist die tägliche Schleife, und am Ende geht es vor allem um ein paar saubere Gewohnheiten.
+
+**Erst planen, dann prompten.** ([46:50](https://www.youtube.com/watch?v=pMAdjgYzO58&t=2810)) Fünf Minuten Nachdenken sind oft mehr wert als fünfzig Zeilen Code in die falsche Richtung. Sag zuerst, woran du "fertig" erkennst. Dauerhafte Pläne gehören ins Repo, kurzfristige müssen nicht künstlich aufgehoben werden.
+
+**In kleinen Iterationen bauen.** Kleine Anfragen erzeugen meist kleine Diffs. Die lassen sich leichter prüfen und bei Bedarf leichter zurücknehmen. Außerdem bleibt die KI so eher bei einem Problem, statt in alle Richtungen auszubrechen.
+
+**Mit Urteilsvermögen reviewen.** ([52:44](https://www.youtube.com/watch?v=pMAdjgYzO58&t=3164)) Du musst nicht jede Zeile gleich intensiv lesen. Du musst aber entscheiden, wo das Risiko sitzt und wo ein genauer Blick nötig ist.
+
+**Deterministische Tools prüfen lassen.** ([57:02](https://www.youtube.com/watch?v=pMAdjgYzO58&t=3422)) Die KI sollte ihre eigene Arbeit nicht selbst abnehmen. Besser sind Unit-Tests, Linter, Formatter, statische Analyse und Security-Scans. Ein klares Bestanden oder Durchgefallen ist belastbarer als ein bloßes "sieht gut aus". Wenn das Tool einen Befehl ausführen und die Ausgabe lesen kann, kann es viele Fehler selbst nachbessern.
+
+**Git aggressiv nutzen.** ([01:01:03](https://www.youtube.com/watch?v=pMAdjgYzO58&t=3663)) Committe oft. Jeder stabile Zustand ist ein Punkt, zu dem du sicher zurückkehren kannst. Und ich versuche, generierten Code nur dann von Hand zu bearbeiten, wenn es wirklich nötig ist, weil größere manuelle Änderungen spätere Prompts unzuverlässiger machen können.
+
+## Phase 4: Ausliefern & Automatisieren
+
+Spannend wird es in der letzten Phase ([01:02:59](https://www.youtube.com/watch?v=pMAdjgYzO58&t=3779)). Sobald ein Projekt verlässliche Tests, Continuous Integration, Deployment-Automatisierung und klare Erfolgskriterien hat, kann ein KI-Agent deutlich größere Aufgaben mit wenig Aufsicht übernehmen.
+
+Hier kommt **Loop Engineering** ins Spiel ([01:04:23](https://www.youtube.com/watch?v=pMAdjgYzO58&t=3863)). Statt jeden Schritt vorzugeben, definierst du Ziel, Rahmenbedingungen, Erfolgskriterien, Budget und Abbruchbedingungen. Danach lässt du den Agenten iterieren, bis die Aufgabe erledigt ist oder das Budget endet. Solche Schleifen verbrauchen schnell Tokens, deshalb sollte das Budget vorher feststehen. Das Vertrauen verschiebt sich dabei vom Modell allein hin zum gesamten Tooling.
+
+## Live: vom leeren Repo zu automatischen PR-Reviews
+
+Nach der Zusammenfassung ([01:07:29](https://www.youtube.com/watch?v=pMAdjgYzO58&t=4049)) ging es in die Live-Demo. Ausgehend von einem leeren Repo ([01:10:32](https://www.youtube.com/watch?v=pMAdjgYzO58&t=4232)) habe ich den IntelliJ-MCP in der Copilot CLI eingebunden ([01:11:46](https://www.youtube.com/watch?v=pMAdjgYzO58&t=4306)) und einen "Grilling"-Skill installiert ([01:14:11](https://www.youtube.com/watch?v=pMAdjgYzO58&t=4451)), der Anforderungen abfragt, bevor überhaupt Code existiert.
+
+Von dort aus lief der Ablauf geradlinig weiter: eine Spring-Boot-Projektidee festlegen ([01:17:32](https://www.youtube.com/watch?v=pMAdjgYzO58&t=4652)), den Skill die Anforderungen abklopfen und echte Scoping-Entscheidungen erzwingen lassen ([01:20:04](https://www.youtube.com/watch?v=pMAdjgYzO58&t=4804)), dann eine Spec und die Projektregeln in `Agents.md` erzeugen ([01:25:59](https://www.youtube.com/watch?v=pMAdjgYzO58&t=5159)). Aus der Spec wurden GitHub-Issues ([01:29:01](https://www.youtube.com/watch?v=pMAdjgYzO58&t=5341)), und automatische Copilot-PR-Reviews ([01:30:42](https://www.youtube.com/watch?v=pMAdjgYzO58&t=5442)) machten daraus eine wiederholbare Pipeline statt eines einzelnen Prompts.
+
+## Kernaussagen
+
+Wenn ich die Session auf einen Satz verkürzen müsste, dann diesen: KI-gestützte Entwicklung ist kein Prompt-Trick, sondern ein Workflow-Thema. Das Modell spielt eine Rolle, aber die größeren Gewinne entstehen durch klare Kontrolle, guten Kontext, kleine Schritte und verlässliche Prüfungen.
+
+Der eigentliche Hebel ist nicht schnelleres Tippen. Er liegt in einer Delivery-Pipeline, in der KI sinnvoll mitarbeiten kann, ohne dass die Qualitätsmaßstäbe sinken. Dort entsteht der praktische Nutzen.
+
+## Nützliche Links
+
+- [PDF zum AI Coding Guide herunterladen](/blog/AI%20Coding%20Guide.pdf)
+- [Model-Context-Protocol-Spezifikation](https://modelcontextprotocol.io/)
+- [IntelliJ-MCP-Server-Doku](https://www.jetbrains.com/help/idea/mcp-server.html)
+- [JavaDocs.dev-MCP-Server](https://www.javadocs.dev/)
+- [Context7: aktuelle Bibliotheks-Docs für KI](https://context7.com/)
+- [Grilling-Skill](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling)
+- [Docker Sandbox für den sicheren Betrieb von Agenten](https://docs.docker.com/ai/sandboxes/)

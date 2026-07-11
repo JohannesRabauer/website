@@ -28,11 +28,16 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (15)
+## English posts (16)
 
 ## English blog posts
+### From Prompt to Production: A Workflow for AI-Assisted Development
+- URL: https://rabauer.dev/en/blog/ai-developer-workflow/
+- Date: 2026-07-11
+- Summary: A solo session on the workflow that beats chasing the newest model: four phases, Decide, Set Up, Build, Ship & Automate, plus a live demo from an empty repo to a spec, project rules, and automatic PR reviews.
+
 ### Stop Prompting. Start Building Software Factories for Java
-- URL: https://rabauer.dev/en/blog/stop-prompting-start-building-software-factories-for-java/
+- URL: https://rabauer.dev/en/blog/software-factories/
 - Date: 2026-07-02
 - Summary: Ingo Eichhorst joined me to show a practical Software Factory workflow for Java: define quality first, add hard guardrails, and let AI implement inside those boundaries.
 
@@ -107,11 +112,16 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (15)
+## German posts (16)
 
 ## German blog posts
+### Vom Prompt zur Produktion: Ein Workflow für KI-gestützte Entwicklung
+- URL: https://rabauer.dev/de/blog/ai-developer-workflow/
+- Date: 2026-07-11
+- Summary: Eine Solo-Session über den Workflow, der mehr bringt als das Jagen nach dem neuesten Modell: vier Phasen, Entscheiden, Einrichten, Bauen, Ausliefern & Automatisieren, plus eine Live-Demo vom leeren Repo bis zu Spec, Projektregeln und automatischen PR-Reviews.
+
 ### Nicht mehr nur prompten: Software Factories für Java bauen
-- URL: https://rabauer.dev/de/blog/stop-prompting-start-building-software-factories-for-java/
+- URL: https://rabauer.dev/de/blog/software-factories/
 - Date: 2026-07-02
 - Summary: Ingo Eichhorst war zu Gast und wir haben einen praktischen Software-Factory-Ansatz für Java gezeigt: erst Qualität definieren, dann klare Leitplanken setzen und KI innerhalb dieser Grenzen implementieren lassen.
 
