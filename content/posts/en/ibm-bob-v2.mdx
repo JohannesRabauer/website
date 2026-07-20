@@ -68,9 +68,10 @@ Bob v2 looks close to v1: same modes concept, same VS Code base. Under the hood,
 Bob still auto-selects the model for you ("intelligent model routing"), and you cannot see which model is doing the work. Max claims the team has declined to ship some new model releases after evaluations showed them performing worse than the version already in production, a more candid admission than most vendors make. Bob Shell, the CLI, still runs on the older v1 loop for now. A v2 shell is coming, and it will eventually share the same agentic loop as the IDE.
 
 <div className="mdx-image-compact">
-  <img
+  <ZoomableImage
     src="/blog/bob_v2-screenshot.png"
     alt="Bob Shell CLI welcome banner in IBM's eight-bar logo style"
+    caption="The Bob Shell welcome banner, still running the v1 loop for now."
   />
 </div>
 
@@ -94,7 +95,11 @@ On request, Bob also produced an HTML version of the same plan, handy for sharin
 
 By the end of the session, the tracker had a working habit list with color-coded entries, emoji, and streak counts:
 
-![Bob's Habit Tracker running, showing the habit list with streaks](/blog/ibm-bob-v2-habits-list.png)
+<ZoomableImage
+  src="/blog/ibm-bob-v2-habits-list.png"
+  alt="Bob's Habit Tracker running, showing the habit list with streaks"
+  caption="The finished habit tracker: color-coded habits, emoji, and streak counts."
+/>
 
 ## Skills: Grill Me, a Custom Skill, and a Reality Check
 

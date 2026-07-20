@@ -3,9 +3,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 
-type Props = React.ComponentPropsWithoutRef<'img'>;
+type Props = React.ComponentPropsWithoutRef<'img'> & { caption?: React.ReactNode };
 
-export default function ZoomableImage({ src, alt, width, height, className, ...rest }: Props) {
+export default function ZoomableImage({ src, alt, width, height, className, caption, ...rest }: Props) {
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -56,6 +56,8 @@ export default function ZoomableImage({ src, alt, width, height, className, ...r
         onClick={openLightbox}
         {...rest}
       />
+
+      {caption && <span className="mdx-image-caption">{caption}</span>}
 
       <dialog
         ref={dialogRef}
