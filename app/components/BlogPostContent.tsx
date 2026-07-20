@@ -12,6 +12,7 @@ import TableOfContents from '@/app/components/TableOfContents';
 import FloatingTableOfContents from '@/app/components/FloatingTableOfContents';
 import TimestampList from '@/app/components/TimestampList';
 import CoSpeakerCard from '@/app/components/CoSpeakerCard';
+import Quote from '@/app/components/Quote';
 import MermaidDiagram from '@/app/components/MermaidDiagram';
 import GraphRagDiagram from '@/app/components/GraphRagDiagram';
 import MainRepositoryLink from '@/app/components/MainRepositoryLink';
@@ -84,6 +85,7 @@ export default function BlogPostContent({ locale, slug }: Props) {
     CoSpeakerCard: (props: React.ComponentProps<typeof CoSpeakerCard>) => (
       <CoSpeakerCard {...props} locale={locale} />
     ),
+    Quote,
     MermaidDiagram,
     GraphRagDiagram,
     MainRepositoryLink: (props: React.ComponentProps<typeof MainRepositoryLink>) => (
