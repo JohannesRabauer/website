@@ -1,0 +1,148 @@
+---
+title: "KI-Coding mit IBM Bob v2: Live einen Habit-Tracker bauen"
+date: "2026-07-16"
+summary: "Wir haben ein paar Monate nach v1 noch einmal bei IBM Bob reingeschaut, diesmal mit Senior Outbound Product Manager Max Jesch. Bob v2 hat einen komplett neu geschriebenen Harness, Diagramme direkt im Chat und eine deutlich kleinere Coin-Rechnung bekommen, auch wenn Sandboxing noch fehlt und wir echte Java-Modernisierung immer noch nicht angefasst haben."
+tags: ["ai-coding", "java", "ibm-bob", "ai-ide", "live-coding", "spring-boot", "skills"]
+youtubeId: "_7rzl1_td5Y"
+mainRepository: "https://github.com/JohannesRabauer/bobs-habit-tracker"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "00:12"
+    label: "Begrüßung & Gastvorstellung"
+  - time: "03:18"
+    label: "Was ist IBM Bob v2?"
+  - time: "06:40"
+    label: "Die Entwicklung von KI-Coding-Agenten"
+  - time: "10:08"
+    label: "Prompt Engineering vs. Agentic Development"
+  - time: "14:00"
+    label: "IBM Bob v2 UI-Tour"
+  - time: "18:05"
+    label: "KI-gestützter Java-Entwicklungsworkflow"
+  - time: "26:02"
+    label: "Live-Coding-Demo beginnt"
+  - time: "36:20"
+    label: "UI mit KI generieren"
+  - time: "48:04"
+    label: "KI-Code-Reviews und Entwicklungsgewohnheiten"
+  - time: "59:02"
+    label: "MCP-Server und Tool-Integration"
+  - time: "01:02:43"
+    label: "Vision-Modelle und Browser-Verständnis"
+  - time: "01:13:02"
+    label: "Task-basierte KI-Entwicklung"
+  - time: "01:26:04"
+    label: "Kontextfenster und das Referenzproblem"
+  - time: "01:39:03"
+    label: "Die Developer Experience verbessern"
+  - time: "01:54:06"
+    label: "Editieren, Refactoring & aktuelle Grenzen"
+  - time: "02:03:40"
+    label: "Abschließende Gedanken & Q&A"
+  - time: "02:06:59"
+    label: "Abschluss"
+---
+
+Vor drei Monaten haben Ryan Jarvinen und ich mit IBM Bob v1 ein 40-Bobcoin-Trial-Budget verbraucht, um ein JavaFX-Schachspiel zu bauen, und uns gingen die Tokens aus, bevor wir die Tests überhaupt wieder aktivieren konnten ([hier die Zusammenfassung](/de/blog/ibm-bob)). Diesmal war Maximilian Jesch dabei, IBMs Senior Outbound Product Manager für Bob, um zu sehen, wie sehr das Tool seitdem gewachsen ist. Kurze Antwort: eine ganze Menge. Wir haben live einen Habit-Tracker mit Spring Boot und Thymeleaf von Grund auf gebaut, und das hat 8 von den 40 kostenlosen Bobcoins gekostet.
+
+<CoSpeakerCard
+  name="Maximilian Jesch"
+  role="Senior Outbound Product Manager"
+  company="IBM"
+  bio="Max arbeitet an IBM Bob und war dabei, um v2 zu zeigen, drei Monate nachdem IBM Bob v1 sich durch ein Schachspiel-Budget an Trial-Coins gefressen hat."
+  imageSrc="https://avatars.githubusercontent.com/Max-Jesch"
+  github="https://github.com/Max-Jesch"
+  linkedin="https://www.linkedin.com/in/maximilian-jesch/"
+/>
+
+## Ein neu geschriebener Harness unter einer vertrauten Oberfläche
+
+Bob v2 sieht v1 noch recht ähnlich: gleiches Modi-Konzept, gleiche VS-Code-Basis. Unter der Haube ist es laut Max eine komplette Neuentwicklung, "keine einzige Zeile Code" sei von der Version übrig, die wir mit Ryan getestet haben. Die Idee dahinter ist dieselbe, auf die Max den ganzen Abend über zurückkam:
+
+<Quote author="Max Jesch">
+  Das Einzige, womit wir hier eigentlich arbeiten, ist eine magische Maschine, die Tokens reinnimmt und Tokens ausspuckt, und alles andere ist wie die Verkabelung und die Rohre drumherum.
+</Quote>
+
+Bob wählt das Modell weiterhin automatisch aus ("Intelligent Model Routing"), und man sieht nicht, welches Modell im Hintergrund arbeitet. Max behauptet, das Team habe manche neuen Modellversionen bewusst nicht ausgeliefert, weil Auswertungen zeigten, dass sie schlechter abschnitten als die bereits produktive Version, ein offeneres Eingeständnis, als man es von den meisten Anbietern hört. Bob Shell, das CLI, läuft vorerst noch auf der alten v1-Loop. Eine v2-Shell kommt, und sie wird irgendwann dieselbe agentische Loop wie die IDE nutzen.
+
+<div className="mdx-image-compact">
+  <img
+    src="/blog/bob_v2-screenshot.png"
+    alt="Willkommensbanner der Bob Shell CLI im Acht-Balken-Stil von IBM"
+  />
+</div>
+
+## Der eigentliche Business Case wartet aufs nächste Mal
+
+Der Grund, warum es überhaupt ein ["Premium Package for Java"](https://www.ibm.com/products/ai-coding-agent/java-modernization) gibt, ist die Modernisierung großer alter Java-Bestände, was zufällig genau mein Kerngeschäft ist. Die Idee: Ein normaler Coding-Agent findet für jeden von zwanzig ähnlichen Legacy-Services eine andere kreative Lösung, und genau das ist die falsche Eigenschaft, wenn man Konsistenz über einen ganzen Bestand braucht. Bobs Premium-Workflows kombinieren deterministische OpenRewrite-Recipes (darüber habe ich [schon einmal geschrieben](/de/blog/ai-openrewrite-recipes)) für den Großteil der Migration mit agentischer KI für die mühsamen Randfälle, etwa Codebasen ohne Testabdeckung.
+
+Zu diesem Workflow sind wir nie gekommen. Eine realistische Legacy-Java-App für eine Demo vorzutäuschen, ist offenbar ein eigenes Projekt für sich, also haben wir stattdessen einen Habit-Tracker auf der grünen Wiese gebaut, das Gegenteil des Brownfield-Problems, für das Bob eigentlich gebaut ist. Das ist die ehrliche Lücke in diesem Beitrag: keine Modernisierung hier. Die machen wir beim nächsten Mal.
+
+## Bobs Habit-Tracker bauen
+
+Wir haben in Bobs Agent-Modus angefangen, in den Plan-Modus gewechselt und ihn ohne viel Prompting einen Plan entwerfen lassen. Bob hat uns unterwegs ein paar Rückfragen gestellt, und wir haben uns für Java (die jeweils vorgeschlagene Version), [Maven](https://maven.apache.org/), eine [H2](https://h2database.com/)-Datenbank im File-Modus, [Bootstrap 5](https://getbootstrap.com/) und [Thymeleaf](https://www.thymeleaf.org/) für die Oberfläche entschieden.
+
+Der Plan kam als Markdown zurück, mit [Mermaid](https://mermaid.js.org/)-Diagrammen, die direkt im Chat gerendert wurden und sich als Bild herunterladen ließen. Das war eines der klarsten Upgrades gegenüber v1: den Design-Überblick und das Domänenmodell als Diagramm zu sehen, ohne die Konversation zu verlassen, macht es viel leichter, einen Plan wirklich zu prüfen statt nur zu überfliegen. Max' Rat, was man mit so einem Plan machen sollte, deckt sich mit meiner eigenen Arbeitsweise:
+
+<Quote author="Max Jesch">
+  Speichert eure Pläne als Datei ab... verlasst euch niemals auf das, was in eurer Konversation steht... schreibt es in eine Datei und iteriert dann ohne Ende darauf.
+</Quote>
+
+Auf Nachfrage hat Bob auch eine HTML-Version desselben Plans erzeugt, praktisch, wenn man ihn mit Leuten teilen will, die lieber kein Markdown lesen.
+
+Am Ende der Session hatte der Tracker eine funktionierende Habit-Liste mit farbcodierten Einträgen, Emojis und Streak-Zählern:
+
+![Bob's Habit Tracker in Betrieb, mit der Habit-Liste inklusive Streaks](/blog/ibm-bob-v2-habits-list.png)
+
+## Skills: Grill Me, ein eigener Skill und ein Realitätscheck
+
+Wir haben den Skill ["grill me"](https://www.aihero.dev/skills-grill-me) von [skills.sh](https://www.skills.sh/) installiert, der einen vor der Planung Frage für Frage befragt. Meine Beschwerde aus einer früheren Session, dass er die Fragen einzeln statt gebündelt stellt, ist offenbar längst gelöst: Sein Schöpfer Matt Pocock hat eine [Batch-Variante](https://x.com/mattpocockuk/status/2077715572788224003) gebaut, die alle Fragen auf einmal stellt. Wir haben trotzdem Bobs eingebauten Skill-Creator-Skill genutzt, um live in ein paar Minuten unsere eigene Batch-Version zu bauen, was gleichzeitig zeigte, wie niedrig die Hürde ist, sich einen eigenen Skill zu schreiben, statt einen fremden zu installieren.
+
+Max wurde bei der Einschätzung dieses Ökosystems ungewohnt deutlich:
+
+<Quote author="Max Jesch">
+  Es gibt praktisch keinen Mechanismus, um Skills wirklich zu bewerten... vieles davon ist einfach nur Unsinn... man könnte die meisten auf ein Viertel der Länge kürzen, oder noch weniger.
+</Quote>
+
+Seine Praxis: eigene Skills schreiben, die Menge an Skills, denen man vertraut, bewusst klein halten, und Community-Skills eher als Inspiration denn als Abhängigkeit behandeln. Er hat außerdem eine echte Lücke benannt: Bob plant für Q4 einen besser bewerteten, rankbaren Skills-Marktplatz, und bis dahin ist es "ein Wildwuchs", und jeder installierte Skill läuft mit vollen Agent-Rechten.
+
+## Wie sehr Bob seit v1 gewachsen ist
+
+### Coin-Effizienz
+
+Ryan und ich haben für das Schachspiel 40 Bobcoins in etwa einer Stunde Arbeit verbraucht. Diese Session hat für rund zwei Stunden, Umwege inklusive, 8 Bobcoins gebraucht. Wer wegen des dünn wirkenden Gratis-Kontingents bei IBM Bob gezögert hat: Diese Rechnung hat sich geändert. 40 kostenlose Coins reichen inzwischen ziemlich weit.
+
+### Diagramme im Chat
+
+Mermaid-Diagramme, die direkt in der Konversation gerendert werden und nicht nur als separat zu öffnende Datei, helfen wirklich dabei, einen Plan auf einen Blick zu erfassen.
+
+### Rechte sind weiterhin sehr explizit
+
+Man kann einzelne Tool-Aufrufe erlauben oder ablehnen und Regeln per Regex definieren. Diese Feinkörnigkeit stammt schon aus v1 und ist weiterhin eine von Bobs Stärken.
+
+### Immer noch kein Sandboxing
+
+Es gibt noch keine eingebaute Möglichkeit, Bob in einer isolierten Sandbox laufen zu lassen, anders als bei manchen Wettbewerbern. Max sagte, das könne sich ändern, aber im Moment muss man es sich selbst zusammenbauen.
+
+## Der unkaputtbare Java-Prozess
+
+Nicht alles lief glatt. Mittendrin hat ein hängender Terminal-Status Bob durcheinandergebracht, welcher Skill gerade laufen sollte, und die Lösung war schlicht, den Chat auf eine frühere Nachricht zurückzusetzen, ein kleines, aber wirklich nützliches Recovery-Feature. Gegen Ende ließ sich ein übrig gebliebener Java-Prozess nicht abschießen, der den Port der App blockierte, und es brauchte mehrere Anläufe, um den richtigen Prozess zu finden und zu beenden. Ein passender, leicht absurder Schlusspunkt für eine Java-Session.
+
+## Fazit
+
+Bob v2 ist inzwischen eine vollständig ausgereifte KI-IDE, mit den Modi, Diagrammen, Rechten und dem Model Routing, die man von jedem ernstzunehmenden Konkurrenten erwarten würde, dazu echte Kollaborationsfeatures wie teambezogene Nutzungsauswertungen für Organisationen, die das an mehr als einen Entwickler ausrollen. Wer Java schreibt, besonders in einer Brownfield-Enterprise-Codebasis, für den reichen die 40 kostenlosen Bobcoins, um es wirklich auszuprobieren. Also, baut etwas. Wir schauen in ein paar Monaten wieder vorbei, ob es endlich das kann, wofür es eigentlich gebaut ist: eine echte Legacy-Java-Anwendung modernisieren, nicht noch einen Habit-Tracker auf der grünen Wiese.
+
+## Links
+
+- [IBM Bob](https://bob.com)
+- [IBM Bob Premium Package for Java](https://www.ibm.com/products/ai-coding-agent/java-modernization)
+- [Vorherige IBM-Bob-v1-Session: ein JavaFX-Schachspiel bauen](/de/blog/ibm-bob)
+- [OpenRewrite-Recipes mit KI](/de/blog/ai-openrewrite-recipes)
+- [skills.sh](https://www.skills.sh/)
+- ["grill me"-Skill von Matt Pocock](https://www.aihero.dev/skills-grill-me)
+- [batch-grill-me](https://x.com/mattpocockuk/status/2077715572788224003)
+- [Bob's Habit Tracker Repository](https://github.com/JohannesRabauer/bobs-habit-tracker)
+- [Maximilian Jesch auf GitHub](https://github.com/Max-Jesch)
+- [Maximilian Jesch auf LinkedIn](https://www.linkedin.com/in/maximilian-jesch/)

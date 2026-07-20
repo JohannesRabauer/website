@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (16)
+## English posts (17)
 
 ## English blog posts
+### AI Coding with IBM Bob v2: Building a Habit Tracker Live
+- URL: https://rabauer.dev/en/blog/ibm-bob-v2/
+- Date: 2026-07-16
+- Summary: We checked back in on IBM Bob a few months after v1, this time with Senior Outbound Product Manager Max Jesch. Bob v2 got a full harness rewrite, in-chat diagrams, and a much smaller coin bill, though sandboxing still isn't built in and we still haven't touched real Java modernization.
+
 ### From Prompt to Production: A Workflow for AI-Assisted Development
 - URL: https://rabauer.dev/en/blog/ai-developer-workflow/
 - Date: 2026-07-11
@@ -112,9 +117,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (16)
+## German posts (17)
 
 ## German blog posts
+### KI-Coding mit IBM Bob v2: Live einen Habit-Tracker bauen
+- URL: https://rabauer.dev/de/blog/ibm-bob-v2/
+- Date: 2026-07-16
+- Summary: Wir haben ein paar Monate nach v1 noch einmal bei IBM Bob reingeschaut, diesmal mit Senior Outbound Product Manager Max Jesch. Bob v2 hat einen komplett neu geschriebenen Harness, Diagramme direkt im Chat und eine deutlich kleinere Coin-Rechnung bekommen, auch wenn Sandboxing noch fehlt und wir echte Java-Modernisierung immer noch nicht angefasst haben.
+
 ### Vom Prompt zur Produktion: Ein Workflow für KI-gestützte Entwicklung
 - URL: https://rabauer.dev/de/blog/ai-developer-workflow/
 - Date: 2026-07-11
