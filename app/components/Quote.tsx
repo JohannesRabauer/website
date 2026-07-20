@@ -13,7 +13,7 @@ export default function Quote({ children, author, role }: Props) {
         className="absolute left-5 top-6 h-6 w-6 text-blog-purple/25"
         aria-hidden="true"
       />
-      <p className="text-lg italic leading-relaxed text-blog-text">{children}</p>
+      <div className="text-lg italic leading-relaxed text-blog-text [&>p]:m-0">{children}</div>
       {author && (
         <footer className="mt-4 text-sm font-medium not-italic text-blog-purple">
           {'— '}
