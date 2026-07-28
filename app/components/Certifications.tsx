@@ -17,6 +17,7 @@ const certifications: Certification[] = [
     { title: 'Docker Community Leader', badgeUrl: '/badges/docker_badge.png', link: 'https://www.docker.com/contributors/johannes-rabauer/' },
     { title: 'IBM Certified Advocate - Cloud v2', badgeUrl: '/badges/IBM_Cloud.png', link: 'https://www.credly.com/badges/a5bbae9c-8f0b-43b8-ab57-d84cf0125afb' },
     { title: 'AWS Certified Cloud Practitioner', badgeUrl: '/badges/AWS_CCP.png', link: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/PDBZJLW1TNQ41ZSH' },
+    { title: 'GitHub Agentic AI Developer', badgeUrl: '/badges/github-agentic-ai-developer.svg', link: 'https://learn.microsoft.com/api/credentials/share/en-us/johannes-rabauer/3A56349D5E03FC0B?sharingId=MVP_510189' },
 ];
 
 const Certifications: React.FC = () => {
