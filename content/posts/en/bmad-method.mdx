@@ -1,0 +1,148 @@
+---
+title: "The BMad Method for Java Developers"
+date: "2026-07-24"
+summary: "Brian Madison walked me through the BMad Method: an open-source AI workflow ecosystem built on a help-first philosophy, progressive disclosure, and the idea that documentation is the new software. We built a Quarkus finance tracker from a product brief, ran it through Party Mode, and never opened an IDE."
+tags: ["ai-agents", "ai-assisted-development", "java", "prompt-engineering", "skills", "live-coding"]
+youtubeId: "Gki9fAlefyw"
+mainRepository: "https://github.com/JohannesRabauer/bmad-personal-finance-tracker"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Intro and welcome"
+  - time: "00:36"
+    label: "Guest introduction: Brian Madison (BMAD)"
+  - time: "01:37"
+    label: "Brian's background: military, early career, Java/simulation work"
+  - time: "05:04"
+    label: "Rise of AI coding assistants"
+  - time: "07:53"
+    label: "Cursor and Sonnet 3.5: agent mode breakthrough"
+  - time: "10:07"
+    label: "Early \"vibe coding\" experiments and failures"
+  - time: "12:54"
+    label: "Origins of the BMad method"
+  - time: "16:04"
+    label: "Key insight: AI as facilitator vs. \"better Google\""
+  - time: "18:05"
+    label: "Evolution of context windows"
+  - time: "20:05"
+    label: "How Claude Skills changed the game (progressive disclosure)"
+  - time: "23:13"
+    label: "Writing leaner, goal-driven skills"
+  - time: "27:38"
+    label: "Why LLMs are bad at writing their own skills"
+  - time: "29:39"
+    label: "The BMad Builder and email-driven design"
+  - time: "37:00"
+    label: "Demo begins: installing BMad"
+  - time: "41:24"
+    label: "Overview of BMad modules"
+  - time: "44:57"
+    label: "Using the /bmad help system"
+  - time: "52:11"
+    label: "Creating a product brief"
+  - time: "01:04:38"
+    label: "Party Mode demo"
+  - time: "01:19:33"
+    label: "Editorial polish pass on the brief"
+  - time: "01:24:29"
+    label: "Explaining the BMad Spec skill"
+  - time: "01:29:56"
+    label: "Switching to QuickDev"
+  - time: "01:36:06"
+    label: "Brownfield vs. greenfield project workflows"
+  - time: "01:43:32"
+    label: "Prototyping-first workflow advice"
+  - time: "01:46:25"
+    label: "BMad Brainstorming and PR FAQ"
+  - time: "01:52:18"
+    label: "Wrap-up thoughts on the framework"
+  - time: "01:53:39"
+    label: "Closing remarks"
+---
+
+Brian Madison joined me for a session about the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD): a nickname that grew into an open-source AI workflow ecosystem used by thousands of teams. We built a personal finance tracker with **Quarkus** from scratch, but the method behind it was the real story.
+
+The BMad Method is easy to misread from the outside. It behaves more like a **well-organized workshop** than a prompt library or a coding framework. `/bmad help` is the *tool board* on the wall. Skills are *labeled drawers* you open only when you need them. The same *workbench* handles brainstorming, planning, architecture, or code.
+
+<CoSpeakerCard
+  name="Brian Madison"
+  role="Creator of the BMad Method"
+  bio="Brian Madison created the BMad Method, an open-source AI workflow framework with over 51,000 GitHub stars. With 25+ years in software from NASA simulations and military systems at Northrop Grumman to leading AI transformation at Extend, he brings a systems-level view of how structured AI collaboration should work."
+  imageSrc="https://avatars.githubusercontent.com/bmadcode"
+  github="https://github.com/bmadcode"
+  youtube="https://www.youtube.com/@BMadCode"
+/>
+
+## Help as the Centerpiece
+
+Start with the help system. No memorizing skill names, module paths, or a fixed first step. Type `/bmad help`, describe what you want, and it looks at your installed modules, existing artifacts, and current context to suggest the next move.
+
+At **34 workflows across multiple modules**, the barrier isn't skill quality. It's knowing which one to use, and when. The help system fixes that: a universal starting point, a tool board that shows only what the job in front of you needs.
+
+In the demo I described a personal finance tracker: a self-hosted hobby project for my family, built with Quarkus and Qute templates. The help system read the context, noticed no artifacts existed yet, and offered a few starting points: product brief, PRD, PRFAQ, or straight into a prototype. Every path is valid.
+
+## Smaller Context, Better Results
+
+Brian spent much of the session on **progressive disclosure**: keep skill descriptions minimal, load the full instructions only when the AI actually needs them.
+
+He shared an example from his own work: an early skill ran *2,000 lines* of step-by-step instructions. Progressive disclosure had already split it into subfiles, but it stayed overly regimented.
+
+<Quote author="Brian Madison">
+  I threw all of that out and replaced it with a paragraph, three sentences. I got about 99% of the same experience.
+</Quote>
+
+The shift: stop telling the AI *how* to do the job, start telling it *what outcome* you want. Brian compared it to assigning a **key result** and letting the model find its own path, more like managing an experienced colleague than training a junior.
+
+This works because the models themselves got better. Long, procedural prompts used to compensate for weaker reasoning. Now the bottleneck is goal clarity, not instruction detail. Leaner skills mean smaller context: lower token costs, fewer hallucinations.
+
+## A Modular Ecosystem, Not a Framework
+
+BMad offers several paths to the same result: brainstorming, a product brief, a full PRD, a UX spec, a prototype, or an architecture document. You choose the entry point, and the modules go beyond code too, covering game design, creative brainstorming, and enterprise testing. In the demo we went from product brief to **BMad Spec** to **QuickDev**, letting four sub-agents check the code from different angles.
+
+## Party Mode
+
+One of the more unusual features is **Party Mode**: a multi-persona session where several AI agents, each with a different role, discuss the same artifact.
+
+<PartyModeDiagram />
+
+In the demo, a *product manager*, an *architect*, an *analyst*, and a *scrum master* each reviewed the product brief from their own angle. The PM pushed for clearer scope. The architect flagged missing non-functional requirements. The analyst asked about edge cases. Together they caught what a single agent would have missed.
+
+Brian's framing: an LLM sits on a **bell curve**, defaulting to average, middle-of-the-road answers. Party Mode forces it past that average by holding multiple viewpoints in the same session. It works for code, but also for trip planning or team process decisions.
+
+## Documentation as the New Software
+
+Brian argues for treating markdown as a **first-class development artifact**. Product briefs, specs, architecture docs, and skills aren't static records; they actively guide the AI through development.
+
+<Quote author="Brian Madison">
+  Most of the code that is being written right now is markdown.
+</Quote>
+
+Documentation becomes *executable knowledge*. Update the spec when requirements change, and the AI propagates that change into the code. The document is the source of truth, not a summary written after the fact.
+
+This fits Java teams well: specs match the structured, reviewable work they already do. Whether you're on Quarkus, Spring Boot, or a legacy Jakarta EE codebase, the pattern holds: write the spec, let the AI implement it, keep the spec current as the system evolves.
+
+## Getting Started
+
+BMad Method is open source under the [MIT license](https://opensource.org/license/mit) and installs with a single command:
+
+<CodeSnippet code="npx bmad-method install" language="bash" />
+
+The installer walks you through module selection, IDE support ([Copilot](https://github.com/features/copilot), [Claude Code](https://www.anthropic.com/claude-code), [Cursor](https://cursor.com), and others), and project preferences. It writes the configuration files and skill directories into your project, or a parent workspace folder.
+
+For this session we used Copilot with **Claude 4.8 Sonnet** on a Quarkus project, though BMad works across IDEs and LLM backends. The [finance tracker demo repository](https://github.com/JohannesRabauer/bmad-personal-finance-tracker) is available for reference.
+
+## Final Thought
+
+BMad Method matters because it builds a system where structured knowledge, modular workflows, and the right amount of AI autonomy reinforce each other. The help system lowers the entry barrier. Progressive disclosure keeps context lean. Treating documentation as software keeps results maintainable.
+
+For Java developers still using AI tools as *autocomplete on steroids*, this is a different starting point: describe what you want to build, and let the workshop guide you.
+
+## Useful Links
+
+- [BMad Method GitHub](https://github.com/bmad-code-org/BMAD-METHOD): main repository with documentation and community
+- [BMad docs](https://docs.bmad-method.org): tutorials, guides, and concept reference
+- [BMad website](https://bmadcode.com): web bundles and overview
+- [BMad Discord](https://discord.gg/gk8jAdXWmj): community discussions
+- [Finance tracker demo repository](https://github.com/JohannesRabauer/bmad-personal-finance-tracker): the project built live during the session
+- [Quarkus](https://quarkus.io): Java framework used in the demo

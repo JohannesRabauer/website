@@ -20,6 +20,8 @@ import ShareButton from '@/app/components/ShareButton';
 import BlogLanguageSwitcher from '@/app/components/BlogLanguageSwitcher';
 import ZoomableImage from '@/app/components/ZoomableImage';
 import ImageGallery, { GalleryImage } from '@/app/components/ImageGallery';
+import CodeSnippet from '@/app/components/CodeSnippet';
+import PartyModeDiagram from '@/app/components/PartyModeDiagram';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -96,6 +98,10 @@ export default function BlogPostContent({ locale, slug }: Props) {
     ZoomableImage: (props: React.ComponentPropsWithoutRef<'img'>) => <ZoomableImage {...props} />,
     ImageGallery: (props: React.ComponentProps<typeof ImageGallery>) => <ImageGallery {...props} />,
     GalleryImage: (props: React.ComponentProps<typeof GalleryImage>) => <GalleryImage {...props} />,
+    CodeSnippet: (props: React.ComponentProps<typeof CodeSnippet>) => (
+      <CodeSnippet {...props} locale={locale} />
+    ),
+    PartyModeDiagram,
   };
 
   return (

@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (17)
+## English posts (18)
 
 ## English blog posts
+### The BMad Method for Java Developers
+- URL: https://rabauer.dev/en/blog/bmad-method/
+- Date: 2026-07-24
+- Summary: Brian Madison walked me through the BMad Method: an open-source AI workflow ecosystem built on a help-first philosophy, progressive disclosure, and the idea that documentation is the new software. We built a Quarkus finance tracker from a product brief, ran it through Party Mode, and never opened an IDE.
+
 ### AI Coding with IBM Bob v2: Building a Habit Tracker Live
 - URL: https://rabauer.dev/en/blog/ibm-bob-v2/
 - Date: 2026-07-16
@@ -117,9 +122,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (17)
+## German posts (18)
 
 ## German blog posts
+### Die BMad-Methode für Java-Entwickler
+- URL: https://rabauer.dev/de/blog/bmad-method/
+- Date: 2026-07-24
+- Summary: Brian Madison hat mir die BMad-Methode vorgestellt: ein Open-Source-KI-Workflow-Ökosystem mit einer Help-First-Philosophie, Progressive Disclosure und der Idee, dass Dokumentation die neue Software ist. Wir haben einen Quarkus-Finanz-Tracker von einem Product Brief bis zum Code gebaut, inklusive Party Mode, ohne die IDE zu öffnen.
+
 ### KI-Coding mit IBM Bob v2: Live einen Habit-Tracker bauen
 - URL: https://rabauer.dev/de/blog/ibm-bob-v2/
 - Date: 2026-07-16

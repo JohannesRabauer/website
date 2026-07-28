@@ -1,0 +1,152 @@
+---
+title: "Die BMad-Methode für Java-Entwickler"
+date: "2026-07-24"
+summary: "Brian Madison hat mir die BMad-Methode vorgestellt: ein Open-Source-KI-Workflow-Ökosystem mit einer Help-First-Philosophie, Progressive Disclosure und der Idee, dass Dokumentation die neue Software ist. Wir haben einen Quarkus-Finanz-Tracker von einem Product Brief bis zum Code gebaut, inklusive Party Mode, ohne die IDE zu öffnen."
+tags: ["ai-agents", "ai-assisted-development", "java", "prompt-engineering", "skills", "live-coding"]
+youtubeId: "Gki9fAlefyw"
+mainRepository: "https://github.com/JohannesRabauer/bmad-personal-finance-tracker"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Intro und Begrüßung"
+  - time: "00:36"
+    label: "Gastvorstellung: Brian Madison (BMAD)"
+  - time: "01:37"
+    label: "Brians Hintergrund: Militär, frühe Karriere, Java/Simulation"
+  - time: "05:04"
+    label: "Aufstieg der KI-Coding-Assistenten"
+  - time: "07:53"
+    label: "Cursor und Sonnet 3.5: Agent-Mode-Durchbruch"
+  - time: "10:07"
+    label: "Frühe Vibe-Coding-Experimente"
+  - time: "12:54"
+    label: "Ursprünge der BMad-Methode"
+  - time: "16:04"
+    label: "Schlüsselerkenntnis: KI als Facilitator"
+  - time: "18:05"
+    label: "Entwicklung der Kontextfenster"
+  - time: "20:05"
+    label: "Wie Claude Skills das Spiel verändert hat"
+  - time: "23:13"
+    label: "Schlankere, zielorientierte Skills schreiben"
+  - time: "27:38"
+    label: "Warum LLMs schlecht darin sind, eigene Skills zu schreiben"
+  - time: "29:39"
+    label: "Der BMad Builder und E-Mail-Driven Design"
+  - time: "37:00"
+    label: "Demo: BMad installieren"
+  - time: "41:24"
+    label: "Übersicht über BMad-Module"
+  - time: "44:57"
+    label: "Das /bmad help System nutzen"
+  - time: "52:11"
+    label: "Product Brief erstellen"
+  - time: "01:04:38"
+    label: "Party Mode Demo"
+  - time: "01:19:33"
+    label: "Editorial Polish des Briefs"
+  - time: "01:24:29"
+    label: "Der BMad Spec Skill"
+  - time: "01:29:56"
+    label: "QuickDev"
+  - time: "01:36:06"
+    label: "Brownfield vs. Greenfield Workflows"
+  - time: "01:43:32"
+    label: "Prototyping-First Arbeitsweise"
+  - time: "01:46:25"
+    label: "BMad Brainstorming und PR FAQ"
+  - time: "01:52:18"
+    label: "Zusammenfassung"
+  - time: "01:53:39"
+    label: "Abschluss"
+---
+
+Brian Madison war zu Gast, um die [BMad-Methode](https://github.com/bmad-code-org/BMAD-METHOD) vorzustellen: ein Name, der als Spitzname begann und zu einem Open-Source-KI-Workflow-Ökosystem mit über 51.000 GitHub-Sternen geworden ist. Wir haben einen persönlichen Finanz-Tracker mit **Quarkus** gebaut, aber die eigentliche Geschichte war die Methode dahinter.
+
+Die BMad-Methode ist von außen leicht misszuverstehen. Sie verhält sich eher wie eine **gut organisierte Werkstatt** als wie eine Prompt-Sammlung oder ein Coding-Framework. `/bmad help` ist das *Werkzeugbrett* an der Wand. Die Skills sind beschriftete *Schubladen*, die man nur öffnet, wenn man sie braucht. Dieselbe *Werkbank* dient für Brainstorming, Planung, Architektur oder Code.
+
+<CoSpeakerCard
+  name="Brian Madison"
+  role="Erfinder der BMad-Methode"
+  bio="Brian Madison hat die BMad-Methode entwickelt, ein Open-Source-KI-Workflow-Framework mit über 51.000 GitHub-Sternen. Mit über 25 Jahren Erfahrung von NASA-Simulationen und Militärsystemen bei Northrop Grumman bis zur Leitung der KI-Transformation bei Extend bringt er eine systemische Perspektive auf strukturierte KI-Zusammenarbeit mit."
+  imageSrc="https://avatars.githubusercontent.com/bmadcode"
+  github="https://github.com/bmadcode"
+  youtube="https://www.youtube.com/@BMadCode"
+/>
+
+## Hilfe als Herzstück
+
+Der Einstieg ist das Hilfesystem. Kein Auswendiglernen von Skill-Namen, Modulpfaden oder einem festen ersten Schritt. Man tippt `/bmad help`, beschreibt das Ziel, und das System schaut sich installierte Module, vorhandene Artefakte und den aktuellen Kontext an, um den nächsten Schritt vorzuschlagen.
+
+Bei **34 Workflows in mehreren Modulen** liegt das Problem nicht in der Qualität der einzelnen Skills. Das Problem ist: Welchen nimmt man, und wann? Das Hilfesystem löst genau das: ein universeller Startpunkt, ein Werkzeugbrett, das nur zeigt, was die aktuelle Aufgabe braucht.
+
+In der Demo habe ich einen persönlichen Finanz-Tracker beschrieben: ein selbst gehostetes Hobbyprojekt für meine Familie, mit Quarkus und Qute Templates. Das Hilfesystem las den Kontext, stellte fest, dass noch keine Artefakte existierten, und schlug ein paar Startpunkte vor: Product Brief, PRD, PRFAQ oder direkt ein Prototyp. Jeder Pfad ist gültig.
+
+## Weniger Kontext, bessere Ergebnisse
+
+Brian hat viel Zeit auf **Progressive Disclosure** verwendet: Skill-Beschreibungen minimal halten, die vollständigen Anweisungen erst laden, wenn die KI sie wirklich braucht.
+
+Er zeigte ein Beispiel aus seiner eigenen Arbeit: Ein früher Skill hatte *2.000 Zeilen* Schritt-für-Schritt-Anweisungen. Progressive Disclosure hatte ihn bereits in Unterdateien aufgeteilt, aber er blieb zu stark reglementiert.
+
+<Quote author="Brian Madison">
+  Ich habe das alles weggeworfen und durch einen Absatz mit drei Sätzen ersetzt. Ich habe etwa 99 % der gleichen Ergebnisse bekommen.
+</Quote>
+
+Der Wechsel: der KI nicht mehr sagen, *wie* sie arbeiten soll, sondern *welches Ergebnis* sie liefern soll. Brian verglich es mit dem Setzen eines **Key Results**, während das Modell selbst den Weg findet, eher wie die Zusammenarbeit mit einem erfahrenen Kollegen als das Einarbeiten eines Praktikanten.
+
+Das funktioniert, weil die Modelle selbst besser geworden sind. Lange, prozedurale Prompts kompensierten früher schwächeres Reasoning. Jetzt liegt der Engpass bei der Zielklarheit, nicht bei der Detailtiefe. Schlankere Skills bedeuten kleineren Kontext: niedrigere Token-Kosten, weniger Halluzinationen.
+
+## Ein modulares Ökosystem, kein Framework
+
+Die BMad-Methode bietet mehrere Wege zum gleichen Ziel: Brainstorming, ein Product Brief, ein vollständiges PRD, eine UX-Spezifikation, ein Prototyp oder ein Architekturdokument. Man wählt den Einstiegspunkt, und die Module gehen auch über Code hinaus, etwa Game Design, kreatives Brainstorming und Enterprise-Testing. In der Demo sind wir vom Product Brief zu **BMad Spec** und dann zu **QuickDev** gewechselt, wo vier Sub-Agents den Code aus verschiedenen Blickwinkeln prüfen.
+
+## Party Mode
+
+Eine der ungewöhnlicheren Funktionen ist der **Party Mode**: eine Multi-Persona-Sitzung, in der mehrere KI-Agenten mit unterschiedlichen Rollen dasselbe Artefakt diskutieren.
+
+<PartyModeDiagram
+  personaLabels={["Product Manager", "Architekt", "Analyst", "Scrum Master"]}
+  caption="gleicher Brief, vier Perspektiven"
+  ariaLabel="Diagramm des Party Mode: vier KI-Personas, Product Manager, Architekt, Analyst und Scrum Master, die gemeinsam ein zentrales, geteiltes Dokument betrachten"
+/>
+
+In der Demo haben ein *Product Manager*, ein *Architekt*, ein *Analyst* und ein *Scrum Master* den Product Brief jeweils aus ihrer eigenen Perspektive bewertet. Der PM drängte auf klareren Scope. Der Architekt vermisste nicht-funktionale Anforderungen. Der Analyst fragte nach Edge Cases. Zusammen fanden sie, was ein einzelner Agent übersehen hätte.
+
+Brians Bild: Ein LLM bewegt sich auf einer **Glockenkurve** und liefert im Standardfall durchschnittliche Antworten. Party Mode zwingt es über diesen Durchschnitt hinaus, weil mehrere Blickwinkel in derselben Sitzung zusammenkommen. Das funktioniert für Code, aber auch für Reiseplanung oder Team-Prozessentscheidungen.
+
+## Dokumentation als neue Software
+
+Brian plädiert dafür, Markdown als **erstklassiges Entwicklungsartefakt** zu behandeln. Product Briefs, Spezifikationen, Architekturdokumente und Skills sind keine statischen Aufzeichnungen; sie führen die KI aktiv durch die Entwicklung.
+
+<Quote author="Brian Madison">
+  Der meiste Code, der gerade geschrieben wird, ist Markdown.
+</Quote>
+
+Dokumentation wird zu *ausführbarem Wissen*. Man aktualisiert die Spezifikation, wenn sich Anforderungen ändern, und die KI überträgt die Änderung in den Code. Das Dokument ist die Source of Truth, keine nachträglich geschriebene Zusammenfassung.
+
+Das passt gut zu Java-Teams: Spezifikationen ergänzen die strukturierte, reviewbare Arbeitsweise, die sie bereits praktizieren. Ob man Quarkus, Spring Boot oder eine bestehende Jakarta-EE-Codebasis verwendet, das Muster bleibt gleich: Spezifikation schreiben, die KI daraus implementieren lassen, die Spezifikation aktuell halten, während das System wächst.
+
+## Erste Schritte
+
+Die BMad-Methode ist Open Source unter der [MIT-Lizenz](https://opensource.org/license/mit) und wird mit einem Befehl installiert:
+
+<CodeSnippet code="npx bmad-method install" language="bash" />
+
+Der Installer führt durch die Modulauswahl, die IDE-Unterstützung ([Copilot](https://github.com/features/copilot), [Claude Code](https://www.anthropic.com/claude-code), [Cursor](https://cursor.com) und andere) und die Projekteinstellungen. Er schreibt die nötigen Konfigurationsdateien und Skill-Verzeichnisse in das Projekt oder einen übergeordneten Workspace-Ordner.
+
+In dieser Session haben wir Copilot mit **Claude 4.8 Sonnet** auf einem Quarkus-Projekt verwendet, BMad funktioniert aber über verschiedene IDEs und LLM-Backends hinweg. Das [Demo-Repository des Finanz-Trackers](https://github.com/JohannesRabauer/bmad-personal-finance-tracker) steht als Referenz zur Verfügung.
+
+## Abschlussgedanke
+
+Die BMad-Methode zählt, weil sie ein System aufbaut, in dem strukturiertes Wissen, modulare Workflows und das richtige Maß an KI-Autonomie zusammenwirken. Das Hilfesystem senkt die Einstiegshürde. Progressive Disclosure hält den Kontext schlank. Dokumentation als Software zu betrachten macht die Ergebnisse wartbar.
+
+Für Java-Entwickler, die KI-Tools bisher nur als *Autocomplete mit Extra-Funktionen* genutzt haben, bietet die Methode einen anderen Einstieg: beschreiben, was man bauen will, und die Werkstatt findet den Weg.
+
+## Nützliche Links
+
+- [BMad Method GitHub](https://github.com/bmad-code-org/BMAD-METHOD): Haupt-Repository mit Dokumentation und Community
+- [BMad Doku](https://docs.bmad-method.org): Tutorials, Anleitungen und Konzepte
+- [BMad Website](https://bmadcode.com): Web Bundles und Übersicht
+- [BMad Discord](https://discord.gg/gk8jAdXWmj): Community-Diskussionen
+- [Finanz-Tracker Demo-Repository](https://github.com/JohannesRabauer/bmad-personal-finance-tracker): das live in der Session gebaute Projekt
+- [Quarkus](https://quarkus.io): das im Demo verwendete Java-Framework

@@ -54,6 +54,8 @@ type BlogCopy = {
     share: string;
     linkCopied: string;
     sharePostLink: string;
+    copyCode: string;
+    codeCopied: string;
     onThisPage: string;
     tableOfContentsAriaLabel: string;
     projectSource: string;
@@ -128,6 +130,8 @@ const BLOG_COPY: Record<BlogLocale, BlogCopy> = {
       share: 'Share',
       linkCopied: 'Link copied!',
       sharePostLink: 'Share post link',
+      copyCode: 'Copy',
+      codeCopied: 'Copied!',
       onThisPage: 'On this page',
       tableOfContentsAriaLabel: 'Table of contents',
       projectSource: 'Project Source',
@@ -202,6 +206,8 @@ const BLOG_COPY: Record<BlogLocale, BlogCopy> = {
       share: 'Teilen',
       linkCopied: 'Link kopiert!',
       sharePostLink: 'Beitragslink teilen',
+      copyCode: 'Kopieren',
+      codeCopied: 'Kopiert!',
       onThisPage: 'Auf dieser Seite',
       tableOfContentsAriaLabel: 'Inhaltsverzeichnis',
       projectSource: 'Projektquelle',
