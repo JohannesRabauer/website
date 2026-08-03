@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (18)
+## English posts (19)
 
 ## English blog posts
+### Is Your AI Agent Temporalizable? Durable Workflows with Quarkus and LangChain4j
+- URL: https://rabauer.dev/en/blog/temporalizable/
+- Date: 2026-07-30
+- Summary: Les Jackson from Temporal joined a live build of a Quarkus vacation-approval agent. We killed the LLM and the app itself mid-workflow to see whether Temporal's durable execution could bring it back without hand-written recovery code. It did, and coined a word along the way.
+
 ### The BMad Method for Java Developers
 - URL: https://rabauer.dev/en/blog/bmad-method/
 - Date: 2026-07-24
@@ -122,9 +127,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (18)
+## German posts (19)
 
 ## German blog posts
+### Ist dein KI-Agent „temporalisierbar“? Robuste Workflows mit Quarkus und LangChain4j
+- URL: https://rabauer.dev/de/blog/temporalizable/
+- Date: 2026-07-30
+- Summary: Les Jackson von Temporal war live dabei, als wir einen Urlaubsgenehmigungs-Agenten in Quarkus bauten. Wir haben das LLM und die App selbst mitten im Workflow abgeschossen, um zu sehen, ob Temporals Durable Execution ihn ohne handgeschriebenen Recovery-Code zurückholt. Hat sie, und dabei ist ein neues Wort entstanden.
+
 ### Die BMad-Methode für Java-Entwickler
 - URL: https://rabauer.dev/de/blog/bmad-method/
 - Date: 2026-07-24

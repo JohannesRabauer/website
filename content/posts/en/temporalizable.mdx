@@ -1,0 +1,145 @@
+---
+title: "Is Your AI Agent Temporalizable? Durable Workflows with Quarkus and LangChain4j"
+date: "2026-07-30"
+summary: "Les Jackson from Temporal joined a live build of a Quarkus vacation-approval agent. We killed the LLM and the app itself mid-workflow to see whether Temporal's durable execution could bring it back without hand-written recovery code. It did, and coined a word along the way."
+tags: ["temporal", "durable-execution", "quarkus", "langchain4j", "java", "ai-agents", "live-coding", "github-copilot"]
+youtubeId: "saM_XnON5cA"
+mainRepository: "https://github.com/JohannesRabauer/temporal-langchain4j-workflow-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:11"
+    label: "Welcoming Les Jackson"
+  - time: "04:02"
+    label: "What durable execution means"
+  - time: "06:50"
+    label: "When Temporal is overkill"
+  - time: "08:46"
+    label: "Temporal vs. cron jobs and job queues"
+  - time: "11:02"
+    label: "The determinism misconception"
+  - time: "13:22"
+    label: "The most common mistake with Temporal"
+  - time: "14:51"
+    label: "Moving to the live demo"
+  - time: "17:00"
+    label: "The architecture: Quarkus, Temporal server, Postgres, Ollama"
+  - time: "20:22"
+    label: "Submitting a vacation request, no Temporal yet"
+  - time: "23:03"
+    label: "Inside the vacation-request code"
+  - time: "24:12"
+    label: "What actually counts as non-deterministic"
+  - time: "29:22"
+    label: "The LangChain4j LLM call"
+  - time: "36:17"
+    label: "The human decision step"
+  - time: "39:23"
+    label: "Crashing Ollama with no safety net"
+  - time: "44:58"
+    label: "Asking GitHub Copilot to temporalize the app"
+  - time: "48:19"
+    label: "Reviewing the generated workflow and activities"
+  - time: "01:01:53"
+    label: "First run with Temporal, and a crash"
+  - time: "01:03:51"
+    label: "Diagnosing the ActivateRequestContext bug"
+  - time: "01:09:57"
+    label: "Trying again after the fix"
+  - time: "01:11:24"
+    label: "Waiting on a human-in-the-loop signal"
+  - time: "01:12:27"
+    label: "Killing and restarting the worker mid-workflow"
+  - time: "01:17:28"
+    label: "Testing retries by killing Ollama again"
+  - time: "01:19:41"
+    label: "Retry policies and what the Temporal UI shows"
+  - time: "01:25:20"
+    label: "Don't double up on retries"
+---
+
+Les Jackson, staff developer advocate at Temporal, joined me straight off a business trip to build a vacation-approval system in Quarkus and LangChain4j, then retrofit it onto Temporal's durable execution platform. The question we kept coming back to: *if an AI agent's LLM call fails, or the whole app crashes mid-request, what actually survives?*
+
+<CoSpeakerCard
+  name="Les Jackson"
+  role="Staff Developer Advocate"
+  company="Temporal"
+  bio="Les joined the session to help retrofit a Quarkus and LangChain4j agent onto Temporal, walking through workflows, activities, durable retries, and human-in-the-loop signals along the way."
+  imageSrc="https://avatars.githubusercontent.com/binarythistle"
+  github="https://github.com/binarythistle"
+  linkedin="https://www.linkedin.com/in/binarythistle/"
+  youtube="https://www.youtube.com/@binarythistle"
+/>
+
+## What is Temporal?
+
+Temporal calls itself a durable execution platform. Les summed up the pitch and immediately punctured it:
+
+<Quote author="Les Jackson" role="Staff Developer Advocate, Temporal">
+  Code will always fail. What Temporal does is help your code recover really well and really elegantly, without you as the developer having to do too much.
+</Quote>
+
+Under the hood, Temporal is an **event-sourcing system**. It stores every event a workflow emits. When a service crashes, those events replay to reconstruct exactly where things left off. *Your code never has to know how to resume itself.*
+
+Two building blocks make that possible. A **workflow** is your business logic: the loop that decides what happens next, and it has to be deterministic so Temporal can safely replay it. An **activity** is a call to something else, an LLM, a REST API, a database, and it can be as non-deterministic as it likes.
+
+*A common misconception creeps in right here.* Hearing "the workflow must be deterministic" and assuming that rules out AI agent loops entirely. It doesn't. The loop only orchestrates. The unpredictable parts, the ones that time out or answer differently every time, live in the activities it calls.
+
+<MermaidDiagram
+  chart="graph TD; W[Workflow] --> A1[Activity: check conflicts]; W --> A2[Activity: ask the LLM to review]; W --> A3[Activity: draft the notification]; A1 --> H[(Event History)]; A2 --> H; A3 --> H; H -.->|replay after a crash| W;"
+  description="Diagram showing a Temporal workflow calling three activities, check conflicts, ask the LLM to review, and draft the notification. Each activity's result is stored in the event history, which replays back into the workflow after a crash."
+/>
+
+Temporal is **overkill** for a small app with no external calls that returns fast. It earns its keep once you're calling other services, running anything long-lived, or protecting something that genuinely cannot fail, Les's example was banking workloads. *It doesn't replace cron or job queues one for one, but it sits above them:* anything you'd schedule with cron, Temporal can also orchestrate, plus the crash recovery cron never gave you for free.
+
+## How the session went
+
+**The baseline had no safety net.** The demo: a vacation-request app in Quarkus, LangChain4j, and a local Llama 3.2 model in Ollama. An employee submits a request, the app checks it against everyone else's vacation dates, LangChain4j asks the LLM to review it, and a manager's decision triggers a LangChain4j-drafted notification email. All state lived in a `ConcurrentHashMap`, in memory only, shown running at [20:22](https://www.youtube.com/watch?v=saM_XnON5cA&t=1222).
+
+*Killing Ollama mid-call proved the point.* At [39:23](https://www.youtube.com/watch?v=saM_XnON5cA&t=2363), the app returned a plain internal server error. The request was simply gone: no retry, no memory it had ever existed.
+
+**Copilot did the retrofit in a single prompt.** After installing the official `skill-temporal-developer` skill, so Copilot worked from Temporal's real conventions instead of guessing, one prompt at [44:58](https://www.youtube.com/watch?v=saM_XnON5cA&t=2698) generated a workflow, wrapped both LangChain4j calls as activities, and wired `application.properties` with the Temporal target, namespace, and task queue.
+
+*It failed on the first try, and that failure is the useful part.* At [1:03:51](https://www.youtube.com/watch?v=saM_XnON5cA&t=3831), the Temporal UI's event history named the exact problem: a `ContextNotActiveException`, because the LangChain4j calls now ran on an activity thread outside any HTTP request, where Quarkus's CDI request scope doesn't exist. The fix was one annotation, `@ActivateRequestContext`. Les's bigger point: don't ask an agent to "temporalize" an app in a single big-bang prompt. Ask for a migration plan first, then apply it in steps.
+
+**The real test was survival, not success.** With the fix in, the Temporal UI showed a workflow parked in a running state at [1:11:24](https://www.youtube.com/watch?v=saM_XnON5cA&t=4284), waiting on a signal for the manager's decision. Killing the whole worker process at [1:12:27](https://www.youtube.com/watch?v=saM_XnON5cA&t=4347) and restarting it changed nothing: approving through the UI afterward picked the workflow up exactly where it left off, calling LangChain4j only for the notification, not the review already finished.
+
+*Retries have limits, and the demo hit them honestly.* Killing Ollama again while a notification activity retried, at [1:17:28](https://www.youtube.com/watch?v=saM_XnON5cA&t=4648), showed the retries running live in the Temporal UI. Once the default policy's attempts ran out, the workflow failed and the request vanished, because the app itself never handled that failure state. **Temporal retries a call for you. It doesn't fix your UI's assumptions about what always succeeds.**
+
+## Three things that made this click
+
+### 1. Retries remember where they were
+
+Temporal's retries are **durable, not in-process**. Les's comparison: an in-process .NET retry library that crashes mid-retry restarts at attempt one once the service comes back. *Temporal doesn't.* A call on retry five of ten when the process died resumes at retry five.
+
+That detail has a real cost: **restarting a retry from scratch wastes an LLM call, not just time.**
+
+One live viewer added a detail worth keeping: leave LangChain4j's own chat-model retries on alongside Temporal's, and the two stack. Set the chat model's retries to zero. Let Temporal own retries alone.
+
+### 2. Waiting is free
+
+A workflow parked on a signal, waiting for a human, **costs nothing while it waits** and needs nobody watching it. That's what made the vacation-approval scenario more than a toy example: real approvals wait on real people, sometimes for days, and the workflow has to survive that gap the same way it survives a crash.
+
+### 3. A real skill got Copilot further than expected
+
+Loading the official Temporal skill before touching the code mattered. It found the right annotations, the retry-option shape, and the workflow and activity interfaces, without either of us pointing it at documentation.
+
+It also introduced one real bug, the CDI context issue above. **A skill makes the agent competent at a framework's conventions. It doesn't make the agent's output correct by default.**
+
+## Final thought
+
+Temporal didn't make the LLM smarter or the approval logic more sophisticated. It isn't free either: you still run a server and a database, and think in workflows and activities instead of plain functions.
+
+What it bought us, for a genuinely small amount of code, was *an agent that came back from a crash without either of us writing a line of recovery logic.* If a piece of your own code calls something unreliable, and losing its state matters, ask the question we kept asking that night: **is it temporalizable?**
+
+## Useful links
+
+- [Temporal CLI setup](https://temporal.io/setup/install-temporal-cli)
+- [`temporalio/skill-temporal-developer`](https://github.com/temporalio/skill-temporal-developer), the Copilot skill used live
+- [Introducing the Temporal Developer Skill](https://temporal.io/blog/introducing-temporal-developer-skill)
+- [LangChain4j](https://github.com/langchain4j/langchain4j)
+- [Quarkus](https://quarkus.io/)
+- [Quarkus CDI reference](https://quarkus.io/guides/cdi-reference), covering `@ActivateRequestContext`
+- [Ollama](https://ollama.com/)
+- [Temporal Community on GitHub](https://github.com/temporal-community), including the [`temporal-ai-agent`](https://github.com/temporal-community/temporal-ai-agent) sample

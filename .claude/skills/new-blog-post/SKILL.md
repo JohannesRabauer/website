@@ -120,22 +120,39 @@ Named things deserve a real, verified link, not plain text and never a guessed U
 4. Prefer authoritative sources: the vendor's own docs or product page, the project's own repo, the creator's own site or post, over a third-party summary or listicle.
 5. If the only verifiable source for a specific claim is informal (a creator's own social post, an announcement), that is fine to cite as long as it is real and directly on point — just don't dress it up as something more official than it is.
 6. Place the link at first mention inline, and add the most load-bearing ones to the closing Links section. Skip linking commodity technology named only in passing (e.g. a database or CSS framework picked semi-randomly by a stack wizard) unless it is genuinely central to the story — the goal is links a reader would actually want, not a link on every proper noun.
+7. **Never repeat the guest's links or the main/demo repository link in the Useful Links section.** Both already have a fixed, dedicated spot elsewhere in the post: the guest's social links live in `CoSpeakerCard`, and the repository link lives in the `mainRepository` frontmatter field (rendered as its own "Working Repository" card). Restating either in the closing list is a duplicate, not a convenience.
 
-## Step 10 — Draft and save
+## Step 10 — Add diagrams where they earn their place
+
+Look for at least one place where a diagram would make the mental model click faster than prose: an architecture, a data flow, a before/after contrast, a state machine. Don't force one into every section — skip this step entirely if nothing in the session is genuinely visual, and don't add a second or third diagram just to decorate the post.
+
+1. Use the `MermaidDiagram` component ([`app/components/MermaidDiagram.tsx`](../../../app/components/MermaidDiagram.tsx)) directly in the MDX — it's globally available with no import needed: `<MermaidDiagram chart="..." description="..." />`.
+2. **Pass `chart` as a plain quoted string, not a `{`...`}` JS expression.** A JS expression container for this prop did not evaluate in this project's MDX pipeline in practice (the diagram silently failed with a "missing diagram definition" error); a plain double-quoted attribute renders reliably.
+3. Because it's one plain string, write the whole diagram as a single line with `;` separating Mermaid statements (Mermaid accepts `;` in place of newlines), not a multi-line block.
+4. Avoid characters that need escaping: keep node labels free of double quotes and literal parentheses. Mermaid's own shape syntax, e.g. `[(...)]` for a database/cylinder, is fine since it isn't a quote character. For a line break inside a label, put `<br/>` directly in the label text; it passes through as plain characters in the attribute string.
+5. Keep it minimalist and legible: a handful of nodes, one clear direction, one relationship being illustrated. The component already renders with the site's neutral theme, so don't try to reskin colors per diagram.
+6. Give every diagram a real `description` prop (used as its accessible label) stating in one sentence what it shows.
+7. Write the diagram in the article's own language. For the German version, translate the node labels and description too; don't reuse the English chart verbatim.
+
+## Step 11 — Draft and save
 
 Apply the ground rules above (constraints, style, bilingual conventions) throughout. In particular:
 - No invented facts, quotes, or links.
 - Keep both languages factually identical; only phrasing should differ.
 - Same slug in both locales.
 - Keep it to roughly a 5-minute read; cut filler.
-- Close with a links section and a takeaway/conclusion.
+- End with a takeaway/conclusion (e.g. "Final Thought"), then put the Useful Links section **after** it, as the last thing in the post, not before. Per Step 9, that list excludes the guest's links and the main/demo repository link — both already live at their own fixed spot.
 - If a co-author is present, include a co-speaker panel with social badges: keep directly provided links as highest priority, only fill missing badges from GitHub-derived metadata, never invent a username or URL (an empty badge beats a wrong one), and ask before finalizing an inferred link you're unsure about.
 
-**Use the quotes.** Pull 1–3 of the strongest candidates from the Step 4 shortlist into the post as short blockquotes or inline attributed lines, placed where they land the point rather than bunched together. A quote earns its place if it says something sharper or more specific than you'd write in your own words — skip any that are just restating the surrounding paragraph. Translate quotes for the German version like the rest of the text (keep meaning exact; note in your own words if a quote's punch depends on English phrasing that doesn't survive translation).
+**Write around a point, not a timeline.** Avoid "then we did X, then Y, and after that Z" blow-by-blow retelling of the session. Every paragraph exists to deliver one clear takeaway, stated as directly and as briefly as possible — if a beat doesn't have one, cut it or fold it into a paragraph that does. Chronology can shape the overall order of sections, but individual paragraphs should read like the point of the moment, not a transcript of it.
+
+**Use bold and italics as visual anchors, and keep paragraphs short** (2-4 sentences; one is fine). This project's house style wants deliberate emphasis on the specific claim or takeaway a paragraph delivers, not mechanical bolding of random nouns — see the note in Step 12 on how this differs from the general anti-AI-tell guidance on bolding.
+
+**Use the quotes, via the `Quote` component.** Pull 1–3 of the strongest candidates from the Step 4 shortlist into the post using `<Quote author="..." role="...">...</Quote>` ([`app/components/Quote.tsx`](../../../app/components/Quote.tsx), globally available in MDX with no import needed) — not a markdown blockquote (`>`). Place each where it lands the point rather than bunching them together. A quote earns its place if it says something sharper or more specific than you'd write in your own words — skip any that are just restating the surrounding paragraph. **Never wrap the quoted text in literal quotation marks.** The component already renders it as a visually distinct quote (a quote-mark icon plus styled block), so adding `"..."` around the text produces a double-quote look. Write the quoted line plain, exactly as said, with no surrounding quote characters. Translate quotes for the German version like the rest of the text (keep meaning exact; note in your own words if a quote's punch depends on English phrasing that doesn't survive translation).
 
 Save the pair to `content/posts/en/<slug>.mdx` and `content/posts/de/<slug>.mdx`, matching the `PostFrontmatter` shape exactly: `title`, `date`, `summary`, `tags`, `youtubeId`, `mainRepository` (optional), `draft` (default `false` unless the user wants it staged first), `timestamps`.
 
-## Step 11 — Self-edit against AI writing tells
+## Step 12 — Self-edit against AI writing tells
 
 Before saving, reread the draft specifically hunting for these patterns. They're the most common tells that a text was machine-written rather than by someone who was actually there, compiled from Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) essay. The goal isn't to hit a checklist — it's that a session recap should read like the user telling a colleague what happened, not like a press release about it.
 
@@ -157,12 +174,14 @@ Before saving, reread the draft specifically hunting for these patterns. They're
 
 **Formulaic essay conclusion.** "Despite its challenges, X shows great promise for the future." The takeaway section should say the specific thing the user told you in Step 5, not wrap up with a generic good-news/bad-news bow.
 
-**Formatting tells:** Title Case Section Headers (use sentence case), mechanical bolding of "key terms" throughout body text, bullet lists built entirely from `**Bold label:** description` where prose would read better, emoji used as visual structure, em dashes standing in for periods or commas in most sentences (the ground rules above already ban `—`/`-` mid-sentence), horizontal rules inserted before headings, tables used for content that's really just a paragraph.
+**Formatting tells:** Title Case Section Headers (use sentence case), bullet lists built entirely from `**Bold label:** description` where prose would read better, emoji used as visual structure, em dashes standing in for periods or commas in most sentences (the ground rules above already ban `—`/`-` mid-sentence), horizontal rules inserted before headings, tables used for content that's really just a paragraph.
+
+**Exception — bold/italic on this project.** The generic tell to watch for is *mechanical* bolding: bolding nouns or phrases at random, with no particular claim behind them, just to look scannable. This project's house style (Step 11) deliberately wants the opposite kind of emphasis: one bolded or italicized takeaway per short paragraph, placed on the actual claim being made. That's wanted here, not a tell — the difference is whether the emphasis marks a real point or just decorates a term.
 
 **Elegant variation.** Swapping in a synonym every time a word repeats, even when the repeated word is clearer. If the session was about "agents," it's fine to say "agents" five times in a row instead of cycling through "assistants," "systems," and "tools" to avoid repetition.
 
 **Overworked metaphor.** If Step 6 produced a chosen metaphor, check it was used once or twice with purpose, not stretched to cover every section — a metaphor forced into every paragraph reads as artificial as the vocabulary tells above.
 
-## Step 12 — Tell the user what's next
+## Step 13 — Tell the user what's next
 
 Point out that `npm run dev` will let them preview the post locally, and that RSS/llms.txt regenerate automatically on build (`predev`/`prebuild` scripts) — no manual step needed there. Don't run the dev server or commit anything yourself unless asked.
