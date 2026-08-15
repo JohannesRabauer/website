@@ -54,8 +54,8 @@ I went into this session **not knowing what Entire actually did**. I'd looked at
   role="Developer Advocate"
   company="Entire"
   bio="Lizzie works in developer relations at Entire, building demos and relaying feedback, including a small Windows onboarding note from this session, back to the product team."
-  imageSrc="https://avatars.githubusercontent.com/elizabethsiegl"
-  github="https://github.com/elizabethsiegl"
+  imageSrc="https://avatars.githubusercontent.com/elizabethsiegle"
+  github="https://github.com/elizabethsiegle"
   linkedin="https://www.linkedin.com/in/elsiegle/"
 />
 
@@ -87,6 +87,13 @@ That's a preference, not a flaw in either tool: both exist to *slow an agent dow
 
 Once the commit landed, Entire's analytics view reported the damage: **about 112,000 tokens** for that single prompt, [shown at 39:20](https://www.youtube.com/live/Z-8V8xg4K-k?t=2360s). Claude Code reports usage in tokens; GitHub Copilot bills in something it calls AI coins. If Entire is the layer both funnel through, that's the first shared currency I've found for comparing agent cost across tools.
 
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/entire1.png"
+    alt="Entire's session view for the entire-live-coding repo, showing the checkpoint metadata for the card game prompt: Claude Code, Sonnet 5, 23 minutes, 1 checkpoint, 40 file changes, and 112K tokens, alongside the full prompt and tool-call transcript"
+  />
+</div>
+
 The dashboard also breaks token usage down per contributor, input against output. Lizzie's read: high input with low output usually means someone pasted in documentation; low input means terse prompting. *A genuinely useful signal* for how a teammate actually works with an agent.
 
 It's also, without much extra effort, **a surveillance tool**. The dashboard doesn't just show that someone burned a lot of tokens, it can show what they actually typed, timestamped, attributed by name. Useful for understanding a colleague's reasoning after the fact. *Uncomfortable* the moment you picture a manager reading it that way instead.
@@ -101,7 +108,14 @@ Lizzie showed two features that aren't public yet: **Trails and Gates**, [shown 
 
 A gate is a merge check that can demand human sign-off, based on a confidence score *Entire's own model* calculates. A coherent idea, clearly not finished.
 
-The question I actually wanted answered didn't get one: does storing hundreds of sessions per repo *stay* fast once a project has real history? Lizzie pulled up Entire's own CLI repo for contributor analytics, but it's a young, small repo, not the years-old codebase I was asking about.
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/entire2.png"
+    alt="A real trail in Entire's own CLI repository, showing confidence, risk, drift, and security scores, and a merge blocked by an unapproved peer review and missing agent code review"
+  />
+</div>
+
+One question I kept circling back to: does storing hundreds of sessions per repo *stay* fast and useful once a project has real history, years of commits, not a fresh demo? Lizzie pulled up Entire's own CLI repo for contributor analytics, which was a good look at real usage, but it's still a young, comparatively small repo. **We never got around to testing it on something genuinely old**, and that's on my list, not a verdict against Entire. Worth revisiting once there's a repo old enough to actually stress it.
 
 We also never tried Entire's three [separately installable skills](https://docs.entire.io/learn/skills): [Search](https://github.com/entireio/skills/tree/main/skills/search) digs up prior sessions by topic or file, [Explain](https://github.com/entireio/skills/tree/main/skills/explain) looks up the session behind a specific function or line, and [Handoff](https://github.com/entireio/skills/tree/main/skills/session-handoff) lets another agent pick up a task's state instead of you reconstructing it by hand. Arguably the better version of what the dashboard does: stored history a developer can **query**, not one a manager watches.
 

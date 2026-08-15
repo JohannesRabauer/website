@@ -34,7 +34,7 @@ The homepage is the best source for identity and profile information, while the 
 ### Can Entire Change How We Build Software?
 - URL: https://rabauer.dev/en/blog/entire-java-experiment/
 - Date: 2026-08-13
-- Summary: Lizzie Siegl from Entire joined to build a Java FX card game live with Claude Code, testing whether Entire's AI-native platform holds up in practice. The idea behind it, storing a coding session in your own git repo instead of a vendor's server, is genuinely good. The same completeness that makes it useful also makes it a fine-grained surveillance tool the moment someone else is reading it.
+- Summary: Lizzie Siegle from Entire joined to build a Java FX card game live with Claude Code, testing whether Entire's AI-native platform holds up in practice. The idea behind it, storing a coding session in your own git repo instead of a vendor's server, is genuinely good. The same completeness that makes it useful also makes it a fine-grained surveillance tool the moment someone else is reading it.
 
 ### Is Your AI Agent Temporalizable? Durable Workflows with Quarkus and LangChain4j
 - URL: https://rabauer.dev/en/blog/temporalizable/
@@ -138,7 +138,7 @@ The homepage is the best source for identity and profile information, while the 
 ### Kann Entire verändern, wie wir Software bauen?
 - URL: https://rabauer.dev/de/blog/entire-java-experiment/
 - Date: 2026-08-13
-- Summary: Lizzie Siegl von Entire war dabei, als wir live ein Java-FX-Kartenspiel mit Claude Code bauten, um zu testen, ob Entires KI-native Plattform hält, was sie verspricht. Die Grundidee, eine Coding-Session im eigenen Git-Repository zu speichern statt auf einem fremden Server, ist wirklich gut. Genau diese Vollständigkeit macht sie im gleichen Moment zu einem feingranularen Überwachungswerkzeug, sobald jemand anderes mitliest.
+- Summary: Lizzie Siegle von Entire war dabei, als wir live ein Java-FX-Kartenspiel mit Claude Code bauten, um zu testen, ob Entires KI-native Plattform hält, was sie verspricht. Die Grundidee, eine Coding-Session im eigenen Git-Repository zu speichern statt auf einem fremden Server, ist wirklich gut. Genau diese Vollständigkeit macht sie im gleichen Moment zu einem feingranularen Überwachungswerkzeug, sobald jemand anderes mitliest.
 
 ### Ist dein KI-Agent „temporalisierbar“? Robuste Workflows mit Quarkus und LangChain4j
 - URL: https://rabauer.dev/de/blog/temporalizable/

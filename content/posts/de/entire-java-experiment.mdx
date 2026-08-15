@@ -54,8 +54,8 @@ Ich bin **ohne Ahnung** in diese Session gestartet, was Entire eigentlich macht.
   role="Developer Advocate"
   company="Entire"
   bio="Lizzie arbeitet im Developer-Relations-Team von Entire, baut Demos und trägt Feedback, darunter eine kleine Windows-Onboarding-Anmerkung aus dieser Session, zurück ins Produktteam."
-  imageSrc="https://avatars.githubusercontent.com/elizabethsiegl"
-  github="https://github.com/elizabethsiegl"
+  imageSrc="https://avatars.githubusercontent.com/elizabethsiegle"
+  github="https://github.com/elizabethsiegle"
   linkedin="https://www.linkedin.com/in/elsiegle/"
   locale="de"
 />
@@ -88,6 +88,13 @@ Das ist eine Vorliebe, kein Mangel bei einem der beiden Werkzeuge: Beide sollen 
 
 Nach dem Commit meldete Entires Analytics-Ansicht den Schaden: **rund 112.000 Tokens** für diesen einen Prompt, [zu sehen bei 39:20](https://www.youtube.com/live/Z-8V8xg4K-k?t=2360s). Claude Code meldet Verbrauch in Tokens, GitHub Copilot rechnet in AI Coins. Wenn Entire die Schicht ist, durch die beides läuft, ist das die erste gemeinsame Währung, mit der ich Agentenkosten über Tools hinweg vergleichen kann.
 
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/entire1.png"
+    alt="Entires Session-Ansicht für das Repository entire-live-coding, mit den Checkpoint-Metadaten des Kartenspiel-Prompts: Claude Code, Sonnet 5, 23 Minuten, 1 Checkpoint, 40 geänderte Dateien und 112K Tokens, daneben das vollständige Prompt- und Tool-Aufruf-Transkript"
+  />
+</div>
+
 Dasselbe Dashboard schlüsselt den Token-Verbrauch pro Mitwirkendem auf, Input gegen Output. Lizzies Einschätzung: Hoher Input bei niedrigem Output bedeutet meist eingefügte Dokumentation; niedriger Input spricht für knappe Prompts. *Ein wirklich nützliches Signal*, wie ein Teammitglied tatsächlich mit einem Agenten arbeitet.
 
 Es ist aber auch, ohne großen Zusatzaufwand, **ein Überwachungswerkzeug**. Das Dashboard zeigt nicht nur, dass jemand viele Tokens verbraucht hat, sondern auch, was diese Person dafür tatsächlich getippt hat, mit Zeitstempel und Namen. *Unangenehm* in dem Moment, in dem man sich vorstellt, wie eine Führungskraft genau so mitliest.
@@ -102,7 +109,14 @@ Lizzie zeigte zwei Features, die noch nicht öffentlich sind: **Trails und Gates
 
 Ein Gate ist eine Merge-Prüfung, die eine menschliche Freigabe verlangen kann, basierend auf einem Confidence-Score, den *Entires eigenes Modell* berechnet. Eine schlüssige Idee, klar noch nicht fertig.
 
-Die Frage, auf die ich eigentlich eine Antwort wollte, blieb offen: Bleibt das Speichern hunderter Sessions pro Repository *schnell*, sobald ein Projekt echte Historie hat? Lizzie öffnete Entires eigenes CLI-Repository für Analysen pro Mitwirkendem, aber das ist ein junges, kleines Repository, nicht die jahrealte Codebasis, nach der ich eigentlich gefragt hatte.
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/entire2.png"
+    alt="Ein echter Trail in Entires eigenem CLI-Repository, mit Confidence-, Risk-, Drift- und Security-Werten und einem Merge, der durch ein fehlendes Peer-Review und ein fehlendes Agent-Code-Review blockiert ist"
+  />
+</div>
+
+Eine Frage, zu der ich immer wieder zurückkam: Bleibt das Speichern hunderter Sessions pro Repository *schnell und nützlich*, sobald ein Projekt echte Historie hat, Jahre an Commits, nicht nur eine frische Demo? Lizzie öffnete Entires eigenes CLI-Repository für Analysen pro Mitwirkendem, ein guter Blick auf echte Nutzung, aber das ist immer noch ein junges, vergleichsweise kleines Repository. **Wir sind nie dazu gekommen, das an etwas wirklich Altem zu testen**, das steht auf meiner Liste, nicht als Urteil gegen Entire. Einen erneuten Blick wert, sobald es ein Repository gibt, das alt genug ist, um das wirklich zu belasten.
 
 Wir haben außerdem Entires drei [separat installierbare Skills](https://docs.entire.io/learn/skills) nie ausprobiert: [Search](https://github.com/entireio/skills/tree/main/skills/search) durchsucht vergangene Sessions nach Thema oder Datei, [Explain](https://github.com/entireio/skills/tree/main/skills/explain) sucht die Session hinter einer bestimmten Funktion oder Zeile, und [Handoff](https://github.com/entireio/skills/tree/main/skills/session-handoff) lässt einen anderen Agenten den Stand einer Aufgabe übernehmen, statt dass man ihn von Hand rekonstruiert. Vermutlich die bessere Version dessen, was das Dashboard tut: gespeicherte Historie, die ein Entwickler **abfragen** kann, statt die eine Führungskraft beobachtet.
 
