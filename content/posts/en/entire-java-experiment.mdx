@@ -1,0 +1,122 @@
+---
+title: "Can Entire Change How We Build Software?"
+date: "2026-08-13"
+summary: "Lizzie Siegle from Entire joined to build a Java FX card game live with Claude Code, testing whether Entire's AI-native platform holds up in practice. The idea behind it, storing a coding session in your own git repo instead of a vendor's server, is genuinely good. The same completeness that makes it useful also makes it a fine-grained surveillance tool the moment someone else is reading it."
+tags: ["entire", "claude-code", "java", "javafx", "ai-agents", "context-engineering", "live-coding"]
+youtubeId: "Z-8V8xg4K-k"
+mainRepository: "https://github.com/JohannesRabauer/entire-live-coding"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:40"
+    label: "Meet Lizzie: From Hackathons To Entire"
+  - time: "04:04"
+    label: "What Is Entire.io?"
+  - time: "09:05"
+    label: "Entire Swag Giveaway"
+  - time: "10:19"
+    label: "Kicking Off The Live Coding Session"
+  - time: "12:05"
+    label: "Enabling Entire On A New Repo"
+  - time: "13:48"
+    label: "Prompting Claude Code To Build A Java Fantasy Card Game"
+  - time: "16:06"
+    label: "BMAD Skills vs. Superpowers"
+  - time: "26:12"
+    label: "Tests Pass, Building The Java FX UI"
+  - time: "32:54"
+    label: "Committing And Pushing The First Version"
+  - time: "34:17"
+    label: "Feedback For Entire: Windows Onboarding"
+  - time: "38:21"
+    label: "Mirroring And The Distributed Git Network"
+  - time: "39:20"
+    label: "Entire Analytics: Token Usage And Throughput"
+  - time: "49:53"
+    label: "Exploring A Bigger Open Source Repo"
+  - time: "55:48"
+    label: "Trails And Gates: The Agentic PR Workflow"
+  - time: "59:23"
+    label: "Open Source, Pricing, And Vendor Lock-In"
+  - time: "01:03:14"
+    label: "Entire CLI: Session Resume And Skills"
+  - time: "01:07:59"
+    label: "Final Game Demo And Wrap-Up"
+  - time: "01:15:13"
+    label: "Closing: Entire.io, Discord, And Team Size"
+---
+
+I went into this session **not knowing what Entire actually did**. I'd looked at the site beforehand and told Lizzie Siegle, Entire's developer advocate, exactly that, on stream. So we skipped the scripted walkthrough. We built something real instead: a fantasy card game in Java FX, Claude Code writing the code, Entire recording everything that happened around it.
+
+<CoSpeakerCard
+  name="Lizzie Siegle"
+  role="Developer Advocate"
+  company="Entire"
+  bio="Lizzie works in developer relations at Entire, building demos and relaying feedback, including the Windows onboarding friction from this session, back to the product team."
+  imageSrc="https://avatars.githubusercontent.com/elizabethsiegl"
+  github="https://github.com/elizabethsiegl"
+  linkedin="https://www.linkedin.com/in/elsiegle/"
+/>
+
+## What Entire actually stores
+
+Entire's pitch starts from a real problem, in Lizzie's words. **Agents now generate more code than any human reviews line by line.** And a pull request only shows the diff. Never *why* an agent tried three approaches before the fourth one worked, or where it got stuck along the way.
+
+<Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
+A pull request only shows you the diff. It never shows you the why.
+</Quote>
+
+Entire's answer: attach the whole session to your commit. Prompts, reasoning, every tool call, every dead end. Not as a comment thread somewhere else, but as a **checkpoint**, a hidden git ref written into your own repository on every commit or push. *Think of it as a flight recorder bolted to your code.* It captures everything that happened in the cockpit, and it survives even if the flight itself goes wrong. Unlike an actual black box, though, this one lives in a plane **you already own**: your git repository, not a server Entire controls.
+
+<EntireCheckpointDiagram />
+
+## One prompt built a working card game in eleven minutes
+
+The build itself had nothing to do with Entire. Worth saying plainly. I typed one sentence into Claude Code, *create a fantasy card game in Java FX*, and let go. No spec. No clarifying questions on either side, [shown at 13:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=828s). **Eleven minutes later**, a working Maven project existed: a card engine, keyword effects, twelve passing tests. Then Claude Code moved on to the Java FX interface on its own, [shown at 26:12](https://www.youtube.com/live/Z-8V8xg4K-k?t=1572s).
+
+A prompt that loose only works if you're fine skipping the interrogation step some AI workflows insist on. Lizzie uses a skill pack called [Superpowers](https://github.com/obra/superpowers) for test-driven development, code review, and dispatching parallel agents. I use [BMad](/en/blog/bmad-method/) for the same kind of project planning, [as we discussed at 16:06](https://www.youtube.com/live/Z-8V8xg4K-k?t=966s). **Neither of us wanted that here.**
+
+<Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
+I had to tell my CLAUDE.md file, don't use Superpowers for everything. Only use it if I tell you to, because I'd ask it something basic and it would ask me a question back.
+</Quote>
+
+That's a preference, not a flaw in either tool. Superpowers and BMad both exist to *slow an agent down*, to make it ask better questions before it builds. For a short demo, slowing down is exactly what you don't want.
+
+## The dashboard sees everything, and that's the uncomfortable part
+
+Once the commit landed, Entire's analytics view reported the damage: **about 112,000 tokens** for that single prompt, [shown at 39:20](https://www.youtube.com/live/Z-8V8xg4K-k?t=2360s). The number matters less on its own than as a unit. Claude Code reports usage in tokens. GitHub Copilot bills in something it calls AI coins. If Entire is the layer both funnel through, that's the first shared currency I've found for comparing agent cost across tools, instead of squinting at two different ones.
+
+The same dashboard breaks token usage down per contributor. Input against output, for every person on the repo. Lizzie's read: high input with low output usually means someone pasted in documentation or long context; low input means short, terse prompting. *A genuinely useful signal* for understanding how a teammate actually works with an agent.
+
+It's also, without much extra effort, **a surveillance tool**. The dashboard doesn't just show that someone burned a lot of tokens. It can show what they actually typed to get there, timestamped, attributed by name. Useful for understanding a colleague's reasoning after the fact. *Uncomfortable* the moment you picture a manager reading it that way instead.
+
+## Windows onboarding, and what that says about the docs
+
+Setting Entire up on Windows was **the roughest part of the session**, and not because the platform itself is broken, [as I said around 34:17](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). The CLI's install commands assume bash. So I installed through [Scoop](https://scoop.sh/), Windows's own command-line installer, instead. Once that was done, `entire enable -y` hooked into the repo without a fight.
+
+The workaround wasn't the real problem. **Not knowing what `entire enable` had actually done to my repo, until Lizzie explained it live, was.** Checkpoints, hidden refs, mirroring, none of it was obvious from the UI on its own. Lizzie said Windows friction is feedback she's heard before, and takes it back to the team. *Known problem, not a surprise one.*
+
+## What we didn't get a clear answer on
+
+Lizzie showed two features that aren't public yet, though Entire has demoed them at conferences: **Trails and Gates**, [shown at 55:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=3348s). A trail bundles an issue and a pull request into one object an agent or teammate can pick up from the command line and move through stages. A gate is a merge check that can demand human sign-off, based on a confidence score *Entire's own model* calculates, not the coding agent doing the work. A coherent idea. Clearly not finished.
+
+The question I actually wanted answered didn't get one either: does storing hundreds of sessions per repo *stay* fast and useful once a project has real history behind it? Lizzie pulled up Entire's own CLI repo to show contributor analytics, which helped, but it's still a young, small repo. Not the years-old codebase I was actually asking about.
+
+We also never tried Entire's separately installable skills, including one that searches past sessions to explain *why* a file or module exists. That one sounds like the better version of what the dashboard does: turning the same stored history into something a developer can **query**, instead of something a manager watches.
+
+## Final thought
+
+The one part of this I came away convinced by **has nothing to do with the dashboard**. Everything Entire stores lives in a git branch inside your own repository. Stop using it tomorrow, and your code and your checkpoint history don't vanish into someone else's database. *They're still sitting in the repo you already had.*
+
+<Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
+Developers don't want to be locked in. We like choice, whether it's a different agent or a different harness. We're living in a multi-model world.
+</Quote>
+
+That's the real argument for trying Entire. **The downside of being wrong about it is close to zero**, because leaving costs you nothing you didn't already own. The tradeoff: the same recorder that preserves a teammate's reasoning for you also preserves it for whoever else has repo access. Worth knowing *before* you evaluate this for a team, not after. And none of it matters if your team isn't already working with AI coding agents. Without those, Entire has nothing to attach a session to.
+
+## Useful links
+
+- [Entire](https://entire.io)
+- [Scoop](https://scoop.sh/), the Windows command-line installer used to work around the bash-only install script
+- [Superpowers](https://github.com/obra/superpowers), the skill pack Lizzie compared to BMad

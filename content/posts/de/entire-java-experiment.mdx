@@ -1,0 +1,123 @@
+---
+title: "Kann Entire verändern, wie wir Software bauen?"
+date: "2026-08-13"
+summary: "Lizzie Siegle von Entire war dabei, als wir live ein Java-FX-Kartenspiel mit Claude Code bauten, um zu testen, ob Entires KI-native Plattform hält, was sie verspricht. Die Grundidee, eine Coding-Session im eigenen Git-Repository zu speichern statt auf einem fremden Server, ist wirklich gut. Genau diese Vollständigkeit macht sie im gleichen Moment zu einem feingranularen Überwachungswerkzeug, sobald jemand anderes mitliest."
+tags: ["entire", "claude-code", "java", "javafx", "ai-agents", "context-engineering", "live-coding"]
+youtubeId: "Z-8V8xg4K-k"
+mainRepository: "https://github.com/JohannesRabauer/entire-live-coding"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "01:40"
+    label: "Lizzie kennenlernen: Von Hackathons zu Entire"
+  - time: "04:04"
+    label: "Was ist Entire.io?"
+  - time: "09:05"
+    label: "Entire-Merch-Verlosung"
+  - time: "10:19"
+    label: "Start der Live-Coding-Session"
+  - time: "12:05"
+    label: "Entire in einem neuen Repository aktivieren"
+  - time: "13:48"
+    label: "Claude Code bittet, ein Java-Fantasy-Kartenspiel zu bauen"
+  - time: "16:06"
+    label: "BMAD-Skills gegen Superpowers"
+  - time: "26:12"
+    label: "Tests laufen durch, die Java-FX-UI entsteht"
+  - time: "32:54"
+    label: "Erste Version committen und pushen"
+  - time: "34:17"
+    label: "Feedback für Entire: Windows-Onboarding"
+  - time: "38:21"
+    label: "Mirroring und das verteilte Git-Netzwerk"
+  - time: "39:20"
+    label: "Entire-Analytics: Token-Nutzung und Durchsatz"
+  - time: "49:53"
+    label: "Ein größeres Open-Source-Repository erkunden"
+  - time: "55:48"
+    label: "Trails und Gates: Der agentische PR-Workflow"
+  - time: "59:23"
+    label: "Open Source, Preise und Vendor-Lock-in"
+  - time: "01:03:14"
+    label: "Entire-CLI: Session fortsetzen und Skills"
+  - time: "01:07:59"
+    label: "Letzte Spiel-Demo und Abschluss"
+  - time: "01:15:13"
+    label: "Schluss: Entire.io, Discord und Teamgröße"
+---
+
+Ich bin **ohne Ahnung** in diese Session gestartet, was Entire eigentlich macht. Ich hatte mir die Seite vorher angeschaut und genau das Lizzie Siegle, Entires Developer Advocate, live gesagt. Also haben wir den geskripteten Rundgang gestrichen. Stattdessen etwas Echtes gebaut: ein Fantasy-Kartenspiel in Java FX, Claude Code schrieb den Code, Entire zeichnete alles drumherum auf.
+
+<CoSpeakerCard
+  name="Lizzie Siegle"
+  role="Developer Advocate"
+  company="Entire"
+  bio="Lizzie arbeitet im Developer-Relations-Team von Entire, baut Demos und trägt Feedback, darunter die Windows-Onboarding-Probleme aus dieser Session, zurück ins Produktteam."
+  imageSrc="https://avatars.githubusercontent.com/elizabethsiegl"
+  github="https://github.com/elizabethsiegl"
+  linkedin="https://www.linkedin.com/in/elsiegle/"
+  locale="de"
+/>
+
+## Was Entire wirklich speichert
+
+Entires Pitch beginnt, in Lizzies Worten, bei einem echten Problem. **Agenten erzeugen inzwischen mehr Code, als ein Mensch Zeile für Zeile prüfen kann.** Und ein Pull Request zeigt nur den Diff. Nie *warum* ein Agent drei Ansätze ausprobiert hat, bevor der vierte funktionierte, oder wo er unterwegs stecken blieb.
+
+<Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
+Ein Pull Request zeigt dir nur den Diff. Das Warum zeigt er nie.
+</Quote>
+
+Entires Antwort: die ganze Session an den Commit hängen. Prompts, Überlegungen, jeder Tool-Aufruf, jede Sackgasse. Nicht als Kommentar irgendwo anders, sondern als **Checkpoint**, ein versteckter Git-Ref, der bei jedem Commit oder Push ins eigene Repository geschrieben wird. *Man kann sich das wie einen Flugschreiber vorstellen, der am eigenen Code festgeschraubt ist.* Er zeichnet alles auf, was im Cockpit passiert, und übersteht es sogar, wenn der Flug selbst schiefgeht. Anders als eine echte Blackbox liegt dieser Flugschreiber allerdings in einem Flugzeug, das einem **bereits gehört**: im eigenen Git-Repository, nicht auf einem Server von Entire.
+
+<EntireCheckpointDiagram />
+
+## Ein Prompt baute in elf Minuten ein spielbares Kartenspiel
+
+Der Bau selbst hatte mit Entire nichts zu tun. Das sei klar gesagt. Ich habe einen Satz in Claude Code getippt, *erstelle ein Fantasy-Kartenspiel in Java FX*, und losgelassen. Kein Lastenheft. Keine Rückfragen auf beiden Seiten, [zu sehen bei 13:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=828s). **Elf Minuten später** stand ein funktionierendes Maven-Projekt: eine Spiel-Engine, Keyword-Effekte, zwölf bestandene Tests. Dann machte Claude Code von sich aus mit der Java-FX-Oberfläche weiter, [zu sehen bei 26:12](https://www.youtube.com/live/Z-8V8xg4K-k?t=1572s).
+
+So ein loser Prompt funktioniert nur, wenn man bereit ist, auf den Fragenkatalog zu verzichten, den manche KI-Workflows einfordern. Lizzie nutzt dafür ein Skill-Paket namens [Superpowers](https://github.com/obra/superpowers), für testgetriebene Entwicklung, Code-Reviews und das Verteilen paralleler Agenten. Ich nutze für dieselbe Art von Projektplanung [BMad](/de/blog/bmad-method/), [worüber wir bei 16:06 sprachen](https://www.youtube.com/live/Z-8V8xg4K-k?t=966s). **Keiner von uns wollte das hier.**
+
+<Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
+Ich musste meiner CLAUDE.md-Datei sagen: Nutz Superpowers nicht für alles. Nur wenn ich es dir sage, denn ich hab es was Einfaches gefragt, und es hat zurückgefragt.
+</Quote>
+
+Das ist eine Vorliebe, kein Mangel bei einem der beiden Werkzeuge. Superpowers und BMad sollen einen Agenten *bremsen*, ihn dazu bringen, vor dem Bauen bessere Fragen zu stellen. Für eine kurze Demo ist genau das nicht gefragt.
+
+## Das Dashboard sieht alles, und genau das ist unangenehm
+
+Nach dem Commit meldete Entires Analytics-Ansicht den Schaden: **rund 112.000 Tokens** für diesen einen Prompt, [zu sehen bei 39:20](https://www.youtube.com/live/Z-8V8xg4K-k?t=2360s). Die Zahl für sich zählt weniger als die Tatsache, dass es eine gemeinsame Einheit ist. Claude Code meldet Verbrauch in Tokens. GitHub Copilot rechnet in etwas, das es AI Coins nennt. Wenn Entire die Schicht ist, durch die beides läuft, ist das die erste gemeinsame Währung, mit der ich Agentenkosten über Tools hinweg vergleichen kann, statt zwei verschiedene nebeneinanderzuhalten.
+
+Dasselbe Dashboard schlüsselt den Token-Verbrauch pro Mitwirkendem auf. Input gegen Output, für jede Person im Repository. Lizzies Einschätzung: Hoher Input bei niedrigem Output bedeutet meist, dass jemand Dokumentation oder langen Kontext eingefügt hat; niedriger Input spricht für kurze, knappe Prompts. *Ein wirklich nützliches Signal*, um zu verstehen, wie ein Teammitglied tatsächlich mit einem Agenten arbeitet.
+
+Es ist aber auch, ohne großen Zusatzaufwand, **ein Überwachungswerkzeug**. Das Dashboard zeigt nicht nur, dass jemand viele Tokens verbraucht hat. Es kann zeigen, was diese Person dafür tatsächlich getippt hat, mit Zeitstempel und Namen. Nützlich, um die Überlegungen einer Kollegin im Nachhinein nachzuvollziehen. *Unangenehm* in dem Moment, in dem man sich vorstellt, wie eine Führungskraft genau so mitliest.
+
+## Windows-Onboarding, und was das über die Doku aussagt
+
+Entire unter Windows einzurichten war **der holprigste Teil der Session**, und das lag nicht daran, dass die Plattform selbst kaputt ist, [wie ich um 34:17 sagte](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Die Installationsbefehle der CLI setzen Bash voraus. Also habe ich stattdessen über [Scoop](https://scoop.sh/), Windows' eigenen Kommandozeilen-Installer, installiert. Danach hängte sich `entire enable -y` ohne Widerstand ins Repository ein.
+
+Der Umweg war nicht das eigentliche Problem. **Dass ich erst nach Lizzies Live-Erklärung verstand, was `entire enable` mit meinem Repository gemacht hatte, war es.** Checkpoints, versteckte Refs, Mirroring, nichts davon war aus der Oberfläche allein ersichtlich. Lizzie sagte, Windows-Reibung sei Feedback, das sie schon öfter gehört habe und ins Team zurücktrage. *Bekanntes Problem, keine Überraschung.*
+
+## Worauf wir keine klare Antwort bekommen haben
+
+Lizzie zeigte zwei Features, die noch nicht öffentlich sind, auch wenn Entire sie schon auf Konferenzen demonstriert hat: **Trails und Gates**, [zu sehen bei 55:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=3348s). Ein Trail bündelt ein Issue und einen Pull Request in einem Objekt, das ein Agent oder ein Teammitglied von der Kommandozeile aus übernehmen und durch verschiedene Phasen bewegen kann. Ein Gate ist eine Merge-Prüfung, die eine menschliche Freigabe verlangen kann, basierend auf einem Confidence-Score, den *Entires eigenes Modell* berechnet, nicht der Coding-Agent selbst. Eine schlüssige Idee. Klar noch nicht fertig.
+
+Die Frage, auf die ich eigentlich eine Antwort wollte, blieb offen: Bleibt das Speichern hunderter Sessions pro Repository *schnell und nützlich*, sobald ein Projekt echte Historie hat? Lizzie öffnete Entires eigenes CLI-Repository, um Analysen pro Mitwirkendem zu zeigen, was half, aber es ist immer noch ein junges, kleines Repository. Nicht die jahrealte Codebasis, nach der ich eigentlich gefragt hatte.
+
+Wir haben außerdem Entires separat installierbare Skills nie ausprobiert, darunter eines, das vergangene Sessions durchsucht, um zu erklären, *warum* eine Datei oder ein Modul existiert. Das klingt nach der besseren Version dessen, was das Dashboard tut: dieselbe gespeicherte Historie in etwas verwandeln, das ein Entwickler **abfragen** kann, statt in etwas, das eine Führungskraft beobachtet.
+
+## Abschließender Gedanke
+
+Der Teil, der mich am Ende wirklich überzeugt hat, **hat mit dem Dashboard nichts zu tun**. Alles, was Entire speichert, liegt in einem Git-Branch im eigenen Repository. Hört man morgen auf, Entire zu nutzen, verschwinden weder der Code noch die Checkpoint-Historie in der Datenbank eines anderen. *Sie liegen weiter in dem Repository, das man ohnehin schon hatte.*
+
+<Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
+Entwicklerinnen und Entwickler wollen sich nicht binden lassen. Wir mögen Wahlfreiheit, egal ob bei einem anderen Agenten oder einem anderen Harness. Wir leben in einer Welt mit vielen Modellen nebeneinander.
+</Quote>
+
+Das ist das eigentliche Argument dafür, Entire auszuprobieren. **Das Risiko, sich zu irren, ist nahezu null**, weil das Verlassen der Plattform nichts kostet, was man nicht schon besaß. Der Preis: Derselbe Rekorder, der die Überlegungen eines Teammitglieds für einen selbst festhält, bewahrt sie auch für jeden anderen mit Repository-Zugriff auf. Gut zu wissen, *bevor* man das für ein Team bewertet, nicht danach. Und all das spielt keine Rolle, wenn das eigene Team noch gar nicht mit KI-Coding-Agenten arbeitet. Ohne die hat Entire nichts, woran es eine Session anhängen könnte.
+
+## Nützliche Links
+
+- [Entire](https://entire.io)
+- [Scoop](https://scoop.sh/), der Windows-Kommandozeilen-Installer als Umweg um das reine Bash-Installationsskript
+- [Superpowers](https://github.com/obra/superpowers), das Skill-Paket, das Lizzie mit BMad verglich

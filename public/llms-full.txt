@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (19)
+## English posts (20)
 
 ## English blog posts
+### Can Entire Change How We Build Software?
+- URL: https://rabauer.dev/en/blog/entire-java-experiment/
+- Date: 2026-08-13
+- Summary: Lizzie Siegl from Entire joined to build a Java FX card game live with Claude Code, testing whether Entire's AI-native platform holds up in practice. The idea behind it, storing a coding session in your own git repo instead of a vendor's server, is genuinely good. The same completeness that makes it useful also makes it a fine-grained surveillance tool the moment someone else is reading it.
+
 ### Is Your AI Agent Temporalizable? Durable Workflows with Quarkus and LangChain4j
 - URL: https://rabauer.dev/en/blog/temporalizable/
 - Date: 2026-07-30
@@ -127,9 +132,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (19)
+## German posts (20)
 
 ## German blog posts
+### Kann Entire verändern, wie wir Software bauen?
+- URL: https://rabauer.dev/de/blog/entire-java-experiment/
+- Date: 2026-08-13
+- Summary: Lizzie Siegl von Entire war dabei, als wir live ein Java-FX-Kartenspiel mit Claude Code bauten, um zu testen, ob Entires KI-native Plattform hält, was sie verspricht. Die Grundidee, eine Coding-Session im eigenen Git-Repository zu speichern statt auf einem fremden Server, ist wirklich gut. Genau diese Vollständigkeit macht sie im gleichen Moment zu einem feingranularen Überwachungswerkzeug, sobald jemand anderes mitliest.
+
 ### Ist dein KI-Agent „temporalisierbar“? Robuste Workflows mit Quarkus und LangChain4j
 - URL: https://rabauer.dev/de/blog/temporalizable/
 - Date: 2026-07-30

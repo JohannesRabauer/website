@@ -22,6 +22,7 @@ import ZoomableImage from '@/app/components/ZoomableImage';
 import ImageGallery, { GalleryImage } from '@/app/components/ImageGallery';
 import CodeSnippet from '@/app/components/CodeSnippet';
 import PartyModeDiagram from '@/app/components/PartyModeDiagram';
+import EntireCheckpointDiagram from '@/app/components/EntireCheckpointDiagram';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -102,6 +103,9 @@ export default function BlogPostContent({ locale, slug }: Props) {
       <CodeSnippet {...props} locale={locale} />
     ),
     PartyModeDiagram,
+    EntireCheckpointDiagram: (props: React.ComponentProps<typeof EntireCheckpointDiagram>) => (
+      <EntireCheckpointDiagram {...props} locale={locale} />
+    ),
   };
 
   return (
