@@ -5,13 +5,10 @@ interface Copy {
   cliTitle: string;
   cliSubtitle: string;
   commitTitle: string;
-  commitSubtitle: string;
   hookTitle: string;
   hookSubtitle: string;
-  arrowWritesCode: string;
   arrowAgentHooks: string;
   arrowTranscript: string;
-  arrowOnCommit: string;
   arrowPush: string;
   repoTitle: string;
   repoSubtitle: string;
@@ -19,10 +16,7 @@ interface Copy {
   mainCaption: string;
   checkpointBranch: string;
   checkpointCaption: string;
-  repoFooterLine1: string;
-  repoFooterLine2: string;
-  note1: string;
-  note2: string;
+  repoFooter: string;
 }
 
 const COPY: Record<'en' | 'de', Copy> = {
@@ -34,13 +28,10 @@ const COPY: Record<'en' | 'de', Copy> = {
     cliTitle: 'Entire CLI',
     cliSubtitle: 'session start · prompt · turn end',
     commitTitle: 'git commit',
-    commitSubtitle: 'you, or the agent, commit code',
     hookTitle: "Entire's git hook fires",
     hookSubtitle: 'checkpoint created, trailer added',
-    arrowWritesCode: 'writes code',
     arrowAgentHooks: 'agent hooks',
     arrowTranscript: 'session transcript',
-    arrowOnCommit: 'on commit',
     arrowPush: 'git push',
     repoTitle: 'Your repository',
     repoSubtitle: 'the one you already have',
@@ -48,10 +39,7 @@ const COPY: Record<'en' | 'de', Copy> = {
     mainCaption: 'your code, untouched',
     checkpointBranch: 'entire/checkpoints/v1',
     checkpointCaption: 'prompts, reasoning, tool calls',
-    repoFooterLine1: 'different branch, same repository.',
-    repoFooterLine2: 'nothing leaves to a vendor server.',
-    note1: 'adds an Entire-Checkpoint trailer to your commit',
-    note2: 'bundles the session as a checkpoint',
+    repoFooter: 'different branch, same repository',
   },
   de: {
     ariaLabel:
@@ -61,13 +49,10 @@ const COPY: Record<'en' | 'de', Copy> = {
     cliTitle: 'Entire CLI',
     cliSubtitle: 'Session-Start · Prompt · Turn-Ende',
     commitTitle: 'git commit',
-    commitSubtitle: 'du oder der Agent committen Code',
     hookTitle: 'Entires Git-Hook feuert',
     hookSubtitle: 'Checkpoint erstellt, Trailer ergänzt',
-    arrowWritesCode: 'schreibt Code',
     arrowAgentHooks: 'Agent Hooks',
     arrowTranscript: 'Session-Transkript',
-    arrowOnCommit: 'bei Commit',
     arrowPush: 'git push',
     repoTitle: 'Dein Repository',
     repoSubtitle: 'dasselbe, das du schon hast',
@@ -75,10 +60,7 @@ const COPY: Record<'en' | 'de', Copy> = {
     mainCaption: 'dein Code, unangetastet',
     checkpointBranch: 'entire/checkpoints/v1',
     checkpointCaption: 'Prompts, Überlegungen, Tool-Aufrufe',
-    repoFooterLine1: 'anderer Branch, gleiches Repository.',
-    repoFooterLine2: 'nichts landet auf einem fremden Server.',
-    note1: 'fügt dem Commit einen Entire-Checkpoint-Trailer hinzu',
-    note2: 'bündelt die Session als Checkpoint',
+    repoFooter: 'anderer Branch, gleiches Repository',
   },
 };
 
@@ -95,7 +77,7 @@ export default function EntireCheckpointDiagram({ locale = 'en' }: Props) {
       aria-label={t.ariaLabel}
       className="not-prose my-8 rounded-2xl border border-blog-border bg-gradient-to-b from-white to-blog-purple-light/40 p-4 sm:p-6"
     >
-      <svg viewBox="0 0 760 400" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 760 330" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="ecd-arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="#7C5CBF" />
@@ -124,8 +106,7 @@ export default function EntireCheckpointDiagram({ locale = 'en' }: Props) {
 
         {/* git commit box */}
         <rect x={30} y={230} width={180} height={60} rx={12} fill="#FFFFFF" stroke="#E5E1F0" strokeWidth={1.5} />
-        <text x={120} y={255} textAnchor="middle" fontSize="13" fontWeight={700} fill="#1A1A2E">{t.commitTitle}</text>
-        <text x={120} y={272} textAnchor="middle" fontSize="10" fill="#6B7280">{t.commitSubtitle}</text>
+        <text x={120} y={265} textAnchor="middle" fontSize="13" fontWeight={700} fill="#1A1A2E">{t.commitTitle}</text>
 
         {/* git hook box */}
         <rect x={270} y={230} width={180} height={60} rx={12} fill="#F0EDF8" stroke="#3D2B6B" strokeWidth={1.5} />
@@ -134,7 +115,6 @@ export default function EntireCheckpointDiagram({ locale = 'en' }: Props) {
 
         {/* harness -> commit (writes code) */}
         <line x1={120} y1={94} x2={120} y2={223} stroke="#9CA3AF" strokeWidth={1.5} markerEnd="url(#ecd-arrow-muted)" />
-        <text x={128} y={165} fontSize="10" fill="#6B7280">{t.arrowWritesCode}</text>
 
         {/* Entire CLI -> git hook (session transcript) */}
         <line x1={360} y1={94} x2={360} y2={223} stroke="#7C5CBF" strokeWidth={2} strokeDasharray="4 3" markerEnd="url(#ecd-arrow-purple)" />
@@ -142,11 +122,6 @@ export default function EntireCheckpointDiagram({ locale = 'en' }: Props) {
 
         {/* commit -> git hook (on commit) */}
         <line x1={210} y1={260} x2={263} y2={260} stroke="#3D2B6B" strokeWidth={2} markerEnd="url(#ecd-arrow-purple)" />
-        <text x={240} y={248} textAnchor="middle" fontSize="9" fill="#6B7280">{t.arrowOnCommit}</text>
-
-        {/* notes under the hook */}
-        <text x={30} y={318} fontSize="11" fill="#6B7280">• {t.note1}</text>
-        <text x={30} y={335} fontSize="11" fill="#6B7280">• {t.note2}</text>
 
         {/* git hook -> repository (git push) */}
         <line x1={450} y1={260} x2={504} y2={172} stroke="#2A5C45" strokeWidth={3} markerEnd="url(#ecd-arrow-green)" />
@@ -182,8 +157,7 @@ export default function EntireCheckpointDiagram({ locale = 'en' }: Props) {
         <text x={620} y={252} textAnchor="middle" fontSize="10" fill="#6B7280">{t.checkpointCaption}</text>
 
         <line x1={525} y1={268} x2={715} y2={268} stroke="#E5E1F0" strokeWidth={1} />
-        <text x={620} y={284} textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="#6B7280">{t.repoFooterLine1}</text>
-        <text x={620} y={298} textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="#6B7280">{t.repoFooterLine2}</text>
+        <text x={620} y={289} textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="#6B7280">{t.repoFooter}</text>
       </svg>
     </figure>
   );
