@@ -53,7 +53,7 @@ Ich bin **ohne Ahnung** in diese Session gestartet, was Entire eigentlich macht.
   name="Lizzie Siegle"
   role="Developer Advocate"
   company="Entire"
-  bio="Lizzie arbeitet im Developer-Relations-Team von Entire, baut Demos und trägt Feedback, darunter die in diesem Beitrag beschriebenen Windows-Onboarding-Probleme, zurück ins Produktteam."
+  bio="Lizzie arbeitet im Developer-Relations-Team von Entire, baut Demos und trägt Feedback, darunter eine kleine Windows-Onboarding-Anmerkung aus dieser Session, zurück ins Produktteam."
   imageSrc="https://avatars.githubusercontent.com/elizabethsiegl"
   github="https://github.com/elizabethsiegl"
   linkedin="https://www.linkedin.com/in/elsiegle/"
@@ -74,11 +74,9 @@ Entires Antwort: die ganze Session, Prompts, Überlegungen, jeden Tool-Aufruf, j
 
 ## Ein Prompt baute in elf Minuten ein spielbares Kartenspiel
 
-Der Bau selbst hatte mit Entire nichts zu tun, das sei klar gesagt. Ich habe einen Satz in Claude Code getippt, *erstelle ein Fantasy-Kartenspiel in Java FX*, und losgelassen. Kein Lastenheft, keine Rückfragen auf beiden Seiten, [zu sehen bei 13:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=828s).
+Der Bau selbst hatte mit Entire nichts zu tun, das sei klar gesagt. Ein Satz in Claude Code, *erstelle ein Fantasy-Kartenspiel in Java FX*, kein Lastenheft, keine Rückfragen, keine Skills im Einsatz, [zu sehen bei 13:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=828s). **Elf Minuten später** stand ein funktionierendes Maven-Projekt mit bestandenen Tests, und Claude Code machte von sich aus mit der Java-FX-Oberfläche weiter, [zu sehen bei 26:12](https://www.youtube.com/live/Z-8V8xg4K-k?t=1572s).
 
-**Elf Minuten später** stand ein funktionierendes Maven-Projekt: eine Spiel-Engine, Keyword-Effekte, zwölf bestandene Tests. Dann machte Claude Code von sich aus mit der Java-FX-Oberfläche weiter, [zu sehen bei 26:12](https://www.youtube.com/live/Z-8V8xg4K-k?t=1572s).
-
-So ein loser Prompt funktioniert nur, wenn man auf den Fragenkatalog verzichtet, den manche KI-Workflows einfordern. Lizzie nutzt dafür sonst ein Skill-Paket namens [Superpowers](https://github.com/obra/superpowers), für testgetriebene Entwicklung und Code-Reviews; ich nutze sonst [BMad](/de/blog/bmad-method/) für die Projektplanung, [worüber wir bei 16:06 sprachen](https://www.youtube.com/live/Z-8V8xg4K-k?t=966s). **Keiner von uns wollte das hier.**
+So eine Lockerheit funktioniert nur, wenn man auf den Fragenkatalog verzichtet, den manche KI-Workflows einfordern. Lizzie nutzt dafür sonst ein Skill-Paket namens [Superpowers](https://github.com/obra/superpowers), für testgetriebene Entwicklung und Code-Reviews; ich nutze sonst [BMad](/de/blog/bmad-method/) für die Projektplanung, [worüber wir bei 16:06 sprachen](https://www.youtube.com/live/Z-8V8xg4K-k?t=966s). **Keiner von uns wollte das hier.**
 
 <Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
 Ich musste meiner CLAUDE.md-Datei sagen: Nutz Superpowers nicht für alles. Nur wenn ich es dir sage, denn ich hab es was Einfaches gefragt, und es hat zurückgefragt.
@@ -94,15 +92,9 @@ Dasselbe Dashboard schlüsselt den Token-Verbrauch pro Mitwirkendem auf, Input g
 
 Es ist aber auch, ohne großen Zusatzaufwand, **ein Überwachungswerkzeug**. Das Dashboard zeigt nicht nur, dass jemand viele Tokens verbraucht hat, sondern auch, was diese Person dafür tatsächlich getippt hat, mit Zeitstempel und Namen. *Unangenehm* in dem Moment, in dem man sich vorstellt, wie eine Führungskraft genau so mitliest.
 
-## Windows-Onboarding, und was das über die Doku aussagt
+## Eine kleine Windows-Unannehmlichkeit
 
-Die Entire-CLI unter Windows zu installieren geschah vor dem Stream, nicht während der Session, [Feedback, das ich Lizzie bei 34:17 gab](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Die Installationsbefehle setzen Bash voraus.
-
-Unter Windows hieß das: erst [Scoop](https://scoop.sh/) installieren, nur um überhaupt einen Paketmanager zu haben, mit dem Entires eigenes Skript funktioniert, bevor Entire selbst installiert werden konnte. Eine runde Sache war das nicht.
-
-Sobald diese Vorarbeit stand, lief der Teil, den wir live zeigten, reibungslos: `entire enable -y` hängte sich ohne Widerstand ins Repository ein, [zu sehen bei 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s). Nicht klar war, selbst nach dem Aktivieren, was das eigentlich mit meinem Repository gemacht hatte – bis Lizzie es live erklärte.
-
-Checkpoints, versteckte Refs, Mirroring: nichts davon war aus der Oberfläche allein ersichtlich. Lizzie sagte, Windows-Reibung sei Feedback, das sie schon öfter gehört habe und ins Team zurücktrage.
+Die Entire-CLI unter Windows zu installieren geschah vor dem Stream, nicht während der Session: Das Installationsskript setzt Bash voraus, also brauchte ich zuerst [Scoop](https://scoop.sh/), [Feedback, das ich Lizzie bei 34:17 gab](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Nichts Dramatisches, nur eine kleine Hürde, bevor das Tool läuft. Live lief die Aktivierung im Repository dann reibungslos: `entire enable -y` hängte sich ohne Widerstand ein, [zu sehen bei 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s).
 
 ## Worauf wir keine klare Antwort bekommen haben
 

@@ -53,7 +53,7 @@ I went into this session **not knowing what Entire actually did**. I'd looked at
   name="Lizzie Siegle"
   role="Developer Advocate"
   company="Entire"
-  bio="Lizzie works in developer relations at Entire, building demos and relaying feedback, including the Windows onboarding friction covered in this post, back to the product team."
+  bio="Lizzie works in developer relations at Entire, building demos and relaying feedback, including a small Windows onboarding note from this session, back to the product team."
   imageSrc="https://avatars.githubusercontent.com/elizabethsiegl"
   github="https://github.com/elizabethsiegl"
   linkedin="https://www.linkedin.com/in/elsiegle/"
@@ -73,11 +73,9 @@ Entire's answer: attach the whole session, prompts, reasoning, every tool call, 
 
 ## One prompt built a working card game in eleven minutes
 
-The build itself had nothing to do with Entire, worth saying plainly. I typed one sentence into Claude Code, *create a fantasy card game in Java FX*, and let go. No spec, no clarifying questions on either side, [shown at 13:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=828s).
+The build itself had nothing to do with Entire, worth saying plainly. One sentence into Claude Code, *create a fantasy card game in Java FX*, no spec, no clarifying questions, no skills invoked, [shown at 13:48](https://www.youtube.com/live/Z-8V8xg4K-k?t=828s). **Eleven minutes later**, a working Maven project existed, tests passing, and Claude Code moved on to the Java FX interface on its own, [shown at 26:12](https://www.youtube.com/live/Z-8V8xg4K-k?t=1572s).
 
-**Eleven minutes later**, a working Maven project existed: a card engine, keyword effects, twelve passing tests. Claude Code then moved on to the Java FX interface on its own, [shown at 26:12](https://www.youtube.com/live/Z-8V8xg4K-k?t=1572s).
-
-A prompt that loose only works if you skip the interrogation step some AI workflows insist on. Lizzie normally uses a skill pack called [Superpowers](https://github.com/obra/superpowers) for test-driven development and code review; I normally use [BMad](/en/blog/bmad-method/) for project planning, [as we discussed at 16:06](https://www.youtube.com/live/Z-8V8xg4K-k?t=966s). **Neither of us wanted that here.**
+That looseness only works if you skip the interrogation step some AI workflows insist on. Lizzie normally uses a skill pack called [Superpowers](https://github.com/obra/superpowers) for test-driven development and code review; I normally use [BMad](/en/blog/bmad-method/) for project planning, [as we discussed at 16:06](https://www.youtube.com/live/Z-8V8xg4K-k?t=966s). **Neither of us wanted that here.**
 
 <Quote author="Lizzie Siegle" role="Developer Advocate, Entire">
 I had to tell my CLAUDE.md file, don't use Superpowers for everything. Only use it if I tell you to, because I'd ask it something basic and it would ask me a question back.
@@ -93,15 +91,9 @@ The dashboard also breaks token usage down per contributor, input against output
 
 It's also, without much extra effort, **a surveillance tool**. The dashboard doesn't just show that someone burned a lot of tokens, it can show what they actually typed, timestamped, attributed by name. Useful for understanding a colleague's reasoning after the fact. *Uncomfortable* the moment you picture a manager reading it that way instead.
 
-## Windows onboarding, and what that says about the docs
+## A minor Windows inconvenience
 
-Getting Entire's CLI installed on Windows happened before the stream, not during it, [feedback I gave Lizzie around 34:17](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). The install commands assume bash.
-
-On Windows, that meant installing [Scoop](https://scoop.sh/) first, just to get a package manager Entire's own script would work with, before I could install Entire itself. It wasn't a comfortable setup.
-
-Once that groundwork existed, the part we actually did live was smooth: `entire enable -y` hooked into the repo without a fight, [shown at 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s). What wasn't obvious, even after enabling, was what it had actually *done* to my repo, until Lizzie explained it live.
-
-Checkpoints, hidden refs, mirroring, none of that shows up in the UI on its own. Lizzie said Windows friction is feedback she's heard before, and takes it back to the team.
+Getting Entire's CLI installed on Windows happened before the stream, not during it: the install script assumes bash, so I needed [Scoop](https://scoop.sh/) first, [feedback I gave Lizzie around 34:17](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Nothing dramatic, just a small hurdle before the tool works. Live, enabling it on the repo was smooth: `entire enable -y` hooked in without a fight, [shown at 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s).
 
 ## What we didn't get a clear answer on
 
