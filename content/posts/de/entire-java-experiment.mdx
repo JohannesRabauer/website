@@ -94,7 +94,7 @@ Es ist aber auch, ohne großen Zusatzaufwand, **ein Überwachungswerkzeug**. Das
 
 ## Eine kleine Windows-Unannehmlichkeit
 
-Die Entire-CLI unter Windows zu installieren geschah vor dem Stream, nicht während der Session: Das Installationsskript setzt Bash voraus, also brauchte ich zuerst [Scoop](https://scoop.sh/), [Feedback, das ich Lizzie bei 34:17 gab](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Nichts Dramatisches, nur eine kleine Hürde, bevor das Tool läuft. Live lief die Aktivierung im Repository dann reibungslos: `entire enable -y` hängte sich ohne Widerstand ein, [zu sehen bei 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s).
+Die Entire-CLI unter Windows zu installieren geschah vor dem Stream, nicht während der Session: Das Installationsskript setzt Bash voraus, also brauchte ich zuerst [Scoop](https://scoop.sh/), laut [Entires eigener Installationsanleitung](https://docs.entire.io/cli/installation), [Feedback, das ich Lizzie bei 34:17 gab](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Nichts Dramatisches, nur eine kleine Hürde, bevor das Tool läuft. Live lief die Aktivierung im Repository dann reibungslos: `entire enable -y` hängte sich ohne Widerstand ein, [zu sehen bei 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s).
 
 ## Worauf wir keine klare Antwort bekommen haben
 
@@ -104,7 +104,7 @@ Ein Gate ist eine Merge-Prüfung, die eine menschliche Freigabe verlangen kann, 
 
 Die Frage, auf die ich eigentlich eine Antwort wollte, blieb offen: Bleibt das Speichern hunderter Sessions pro Repository *schnell*, sobald ein Projekt echte Historie hat? Lizzie öffnete Entires eigenes CLI-Repository für Analysen pro Mitwirkendem, aber das ist ein junges, kleines Repository, nicht die jahrealte Codebasis, nach der ich eigentlich gefragt hatte.
 
-Wir haben außerdem Entires separat installierbare Skills nie ausprobiert, darunter eines, das vergangene Sessions durchsucht, um zu erklären, *warum* eine Datei existiert. Vermutlich die bessere Version dessen, was das Dashboard tut: gespeicherte Historie, die ein Entwickler **abfragen** kann, statt die eine Führungskraft beobachtet.
+Wir haben außerdem Entires drei [separat installierbare Skills](https://docs.entire.io/learn/skills) nie ausprobiert: [Search](https://github.com/entireio/skills/tree/main/skills/search) durchsucht vergangene Sessions nach Thema oder Datei, [Explain](https://github.com/entireio/skills/tree/main/skills/explain) sucht die Session hinter einer bestimmten Funktion oder Zeile, und [Handoff](https://github.com/entireio/skills/tree/main/skills/session-handoff) lässt einen anderen Agenten den Stand einer Aufgabe übernehmen, statt dass man ihn von Hand rekonstruiert. Vermutlich die bessere Version dessen, was das Dashboard tut: gespeicherte Historie, die ein Entwickler **abfragen** kann, statt die eine Führungskraft beobachtet.
 
 ## Abschließender Gedanke
 
@@ -119,5 +119,7 @@ Das ist das eigentliche Argument dafür, Entire auszuprobieren: **Das Risiko, si
 ## Nützliche Links
 
 - [Entire](https://entire.io)
+- [Entires Installationsanleitung](https://docs.entire.io/cli/installation), inklusive des Scoop-Befehls für Windows
 - [Scoop](https://scoop.sh/), der Windows-Kommandozeilen-Installer als Umweg um das reine Bash-Installationsskript
+- [Entires Skills](https://docs.entire.io/learn/skills): [Search](https://github.com/entireio/skills/tree/main/skills/search), [Explain](https://github.com/entireio/skills/tree/main/skills/explain) und [Handoff](https://github.com/entireio/skills/tree/main/skills/session-handoff)
 - [Superpowers](https://github.com/obra/superpowers), das Skill-Paket, das Lizzie mit BMad verglich

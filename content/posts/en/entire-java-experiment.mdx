@@ -93,7 +93,7 @@ It's also, without much extra effort, **a surveillance tool**. The dashboard doe
 
 ## A minor Windows inconvenience
 
-Getting Entire's CLI installed on Windows happened before the stream, not during it: the install script assumes bash, so I needed [Scoop](https://scoop.sh/) first, [feedback I gave Lizzie around 34:17](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Nothing dramatic, just a small hurdle before the tool works. Live, enabling it on the repo was smooth: `entire enable -y` hooked in without a fight, [shown at 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s).
+Getting Entire's CLI installed on Windows happened before the stream, not during it: the install script assumes bash, so I needed [Scoop](https://scoop.sh/) first, per [Entire's own install guide](https://docs.entire.io/cli/installation), [feedback I gave Lizzie around 34:17](https://www.youtube.com/live/Z-8V8xg4K-k?t=2057s). Nothing dramatic, just a small hurdle before the tool works. Live, enabling it on the repo was smooth: `entire enable -y` hooked in without a fight, [shown at 12:05](https://www.youtube.com/live/Z-8V8xg4K-k?t=725s).
 
 ## What we didn't get a clear answer on
 
@@ -103,7 +103,7 @@ A gate is a merge check that can demand human sign-off, based on a confidence sc
 
 The question I actually wanted answered didn't get one: does storing hundreds of sessions per repo *stay* fast once a project has real history? Lizzie pulled up Entire's own CLI repo for contributor analytics, but it's a young, small repo, not the years-old codebase I was asking about.
 
-We also never tried Entire's separately installable skills, including one that searches past sessions to explain *why* a file exists. Arguably the better version of what the dashboard does: stored history a developer can **query**, not one a manager watches.
+We also never tried Entire's three [separately installable skills](https://docs.entire.io/learn/skills): [Search](https://github.com/entireio/skills/tree/main/skills/search) digs up prior sessions by topic or file, [Explain](https://github.com/entireio/skills/tree/main/skills/explain) looks up the session behind a specific function or line, and [Handoff](https://github.com/entireio/skills/tree/main/skills/session-handoff) lets another agent pick up a task's state instead of you reconstructing it by hand. Arguably the better version of what the dashboard does: stored history a developer can **query**, not one a manager watches.
 
 ## Final thought
 
@@ -118,5 +118,7 @@ That's the real argument for trying Entire: **the downside of being wrong about 
 ## Useful links
 
 - [Entire](https://entire.io)
+- [Entire's installation guide](https://docs.entire.io/cli/installation), including the Scoop command for Windows
 - [Scoop](https://scoop.sh/), the Windows command-line installer used to work around the bash-only install script
+- [Entire's Skills](https://docs.entire.io/learn/skills): [Search](https://github.com/entireio/skills/tree/main/skills/search), [Explain](https://github.com/entireio/skills/tree/main/skills/explain), and [Handoff](https://github.com/entireio/skills/tree/main/skills/session-handoff)
 - [Superpowers](https://github.com/obra/superpowers), the skill pack Lizzie compared to BMad
