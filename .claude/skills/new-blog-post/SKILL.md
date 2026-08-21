@@ -126,13 +126,34 @@ Named things deserve a real, verified link, not plain text and never a guessed U
 
 Look for at least one place where a diagram would make the mental model click faster than prose: an architecture, a data flow, a before/after contrast, a state machine. Don't force one into every section — skip this step entirely if nothing in the session is genuinely visual, and don't add a second or third diagram just to decorate the post.
 
-1. Use the `MermaidDiagram` component ([`app/components/MermaidDiagram.tsx`](../../../app/components/MermaidDiagram.tsx)) directly in the MDX — it's globally available with no import needed: `<MermaidDiagram chart="..." description="..." />`.
-2. **Pass `chart` as a plain quoted string, not a `{`...`}` JS expression.** A JS expression container for this prop did not evaluate in this project's MDX pipeline in practice (the diagram silently failed with a "missing diagram definition" error); a plain double-quoted attribute renders reliably.
-3. Because it's one plain string, write the whole diagram as a single line with `;` separating Mermaid statements (Mermaid accepts `;` in place of newlines), not a multi-line block.
-4. Avoid characters that need escaping: keep node labels free of double quotes and literal parentheses. Mermaid's own shape syntax, e.g. `[(...)]` for a database/cylinder, is fine since it isn't a quote character. For a line break inside a label, put `<br/>` directly in the label text; it passes through as plain characters in the attribute string.
-5. Keep it minimalist and legible: a handful of nodes, one clear direction, one relationship being illustrated. The component already renders with the site's neutral theme, so don't try to reskin colors per diagram.
-6. Give every diagram a real `description` prop (used as its accessible label) stating in one sentence what it shows.
-7. Write the diagram in the article's own language. For the German version, translate the node labels and description too; don't reuse the English chart verbatim.
+**Do not use the `MermaidDiagram` component for new diagrams.** It renders flat and neutral-toned, and doesn't match this site's actual visual identity. The house style is a bespoke, colorful inline-SVG React component, illustrated by [`app/components/LangGraph4jControlTowerDiagram.tsx`](../../../app/components/LangGraph4jControlTowerDiagram.tsx) (the current reference implementation, node/edge/palette conventions plus the zoomable wrapper below) and [`app/components/EntireCheckpointDiagram.tsx`](../../../app/components/EntireCheckpointDiagram.tsx) / [`app/components/PartyModeDiagram.tsx`](../../../app/components/PartyModeDiagram.tsx) (older diagrams, good for palette and node-drawing reference, but predate the zoomable wrapper, don't copy their root `<figure>` markup) — read `LangGraph4jControlTowerDiagram.tsx` in full before building a new one, it's the ground truth for the pattern below, not just a description of it.
+
+**Every diagram must be clickable and zoomable, no exceptions.** A reader on a phone, or anyone whose eyes aren't reading 9px SVG text on a laptop screen, needs a way to open it larger. This is provided by a shared wrapper, not something to reimplement per diagram.
+
+1. **Create a new component file** at `app/components/<PostTopic>Diagram.tsx` (PascalCase, named for what it depicts, not generically). One component per post; don't try to reuse another post's diagram component for a different post's content.
+2. **Make it bilingual internally, not two diagrams.** Define a `COPY` record keyed by `'en' | 'de'` holding every visible string in the SVG (titles, subtitles, captions, arrow labels) plus an `ariaLabel` per locale: a full prose sentence describing what the diagram shows, since the SVG itself carries no visible text for screen readers, only the wrapper's accessible name (see step 3). The component takes a `{ locale?: 'en' | 'de' }` prop (default `'en'`) and looks up `const t = COPY[locale]`.
+3. **Root markup: wrap the SVG in [`ZoomableDiagram`](../../../app/components/ZoomableDiagram.tsx), don't hand-roll a `<figure>`.** That component supplies the card chrome (border, gradient background, padding), the click-to-enlarge affordance, and the fullscreen zoomable lightbox, so a diagram component's own `return` is just:
+   ```
+   return (
+     <ZoomableDiagram ariaLabel={t.ariaLabel}>
+       <svg viewBox="0 0 W H" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+         {/* nodes and edges */}
+       </svg>
+     </ZoomableDiagram>
+   );
+   ```
+   Size the viewBox to fit the content, don't default to a fixed size copied from another diagram. `ZoomableDiagram` needs no import registration of its own in MDX, it's a plain component import inside your diagram file, not an MDX tag.
+4. **Reuse the site's established palette** rather than inventing new colors, so every diagram on the site feels like the same family: dark purple `#3D2B6B` / mid purple `#7C5CBF` (light fill `#EDE8F5`) as the primary accent, green `#2A5C45` (light fill `#E6F0EC`) as a secondary accent, rust `#B5351A` as a third accent when a diagram needs more than two categories, muted gray `#9CA3AF` for de-emphasized connectors and `#6B7280` for caption text, `#E5E1F0` for hairline borders, `#1A1A2E` for primary text, `#FFFFFF`/`#F8F7F4` for card fills. Assign color **by role** (one color per participant, branch, phase, or state) so the diagram reads at a glance, not decoratively.
+5. **Nodes and edges**: rounded `<rect rx="12">` (or `rx="16"` for an outer container) with a bold `<text>` title around 13px and an optional muted `<text>` subtitle around 9–10px, connected by `<line>`/`<path>` edges. Define one `<marker>` arrowhead per color used, id-prefixed to the component (e.g. `lgtd-arrow-purple` in `LangGraph4jControlTowerDiagram`) so ids never collide between diagrams on the same page. `ZoomableDiagram` renders your `<svg>` markup twice (once inline, once in the lightbox); reusing the same id prefix in both copies is harmless since both copies share identical `<defs>`, don't try to make ids unique across the two.
+6. **Keep it as minimal as a Mermaid version would have been**: a handful of nodes telling one clear story and one direction, not a dense schematic. If the diagram needs more than roughly 6–8 nodes to make its point, the point is probably too complex for a diagram and belongs in prose instead.
+7. **Register the component** in [`app/components/BlogPostContent.tsx`](../../../app/components/BlogPostContent.tsx): import it, then add it to the `components` map passed to `MDXRemote`, following the existing `LangGraph4jControlTowerDiagram` entry exactly so `locale` is injected automatically:
+   ```
+   YourDiagram: (props: React.ComponentProps<typeof YourDiagram>) => (
+     <YourDiagram {...props} locale={locale} />
+   ),
+   ```
+   Skipping this step means the MDX tag renders as literal text instead of the component.
+8. **Use it in both MDX files** as `<YourDiagram />` with no props — the wrapper registered in step 7 injects the right locale automatically, and the component's own `COPY` record supplies the matching language. Never pass English text into the German post's diagram or vice versa.
 
 ## Step 11 — Draft and save
 

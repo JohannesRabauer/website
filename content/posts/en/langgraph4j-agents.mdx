@@ -1,0 +1,113 @@
+---
+title: "LangGraph4j Gives Your Java AI Workflow the Control a Loop Can't"
+date: "2026-08-18"
+summary: "Bartolomeo Sorrentino, creator of LangGraph4j, joined to make the case for real control over an AI workflow: cost-aware model choice, checkpoints you can audit, and state that survives a crash. We spent the second hour proving it live, adding LangGraph4j to a train-delay app with GitHub Copilot doing the typing. If you're running AI in a real Java enterprise app, this is worth the learning curve."
+tags: ["langgraph4j", "langchain4j", "spring-ai", "java", "ai-agents", "live-coding"]
+youtubeId: "bLN1iiTlcLU"
+mainRepository: "https://github.com/JohannesRabauer/langgraph4j-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:18"
+    label: "Welcoming Bartolomeo Sorrentino and his background"
+  - time: "04:32"
+    label: "The origin story of LangGraph4j and its path to Alibaba adoption"
+  - time: "12:56"
+    label: "Staying framework-agnostic: from prompt engineering to graph engineering"
+  - time: "17:49"
+    label: "State, context, and checkpoints: how LangGraph4j differs from a plain method call"
+  - time: "23:52"
+    label: "Human-in-the-loop, interruptions, and parallel nodes"
+  - time: "28:36"
+    label: "Enterprise control, cost, and local models"
+  - time: "34:25"
+    label: "Screen share: the existing train-delay demo app and its workflow"
+  - time: "45:37"
+    label: "Guardrails, structured output, and checkpoint savers"
+  - time: "58:22"
+    label: "Where LangGraph4j fits versus coding agents"
+  - time: "01:02:53"
+    label: "Live coding: prompting Copilot to add LangGraph4j, Q&A, and asides"
+  - time: "01:26:53"
+    label: "Reviewing the generated state, nodes, and checkpoint savers"
+  - time: "01:32:04"
+    label: "Defining the StateGraph: nodes, edges, schemas, and serialization"
+  - time: "01:45:36"
+    label: "Visualizing and testing graphs: diagrams and LangGraph Studio"
+  - time: "01:57:15"
+    label: "The async workflow orchestration service: streams, results, and publishing to the UI"
+  - time: "02:32:04"
+    label: "Complexity trade-offs, the finished workflow, and closing"
+---
+
+If you're serious about running AI in a Java enterprise application, **LangGraph4j is worth a real look**. Not because a bare tool-calling loop can't call a tool and act on the result, LangChain4j's AI Services already do that fine. It's worth the look because of what a loop *doesn't* give you: control over which model handles which step, a record you can actually audit, and a workflow that survives a crash instead of just disappearing.
+
+<CoSpeakerCard
+  name="Bartolomeo Sorrentino"
+  role="Creator of LangGraph4j"
+  company="Softphone srl"
+  bio="Bartolomeo built LangGraph4j after LangChain4j's own maintainers turned down merging it in. He's CTO of Softphone srl, cofounder of SoulSoftware srl, and works on AI-driven CTI and MCP gateway integrations."
+  imageSrc="/blog/bartolomeo-sorrentino.jpg"
+  github="https://github.com/bsorrentino"
+  linkedin="https://www.linkedin.com/in/bartolomeosorrentino"
+  x="https://x.com/bsorrentinoJ"
+  youtube="https://www.youtube.com/@BartolomeoSorrentino"
+/>
+
+I had **Bartolomeo Sorrentino**, who built LangGraph4j, on for two hours to make that case, then prove it. First hour, concepts. Second hour, I opened a train-delay app I'd already built and asked GitHub Copilot to bolt LangGraph4j onto it, live, with Bartolomeo watching over my shoulder, [starting at 01:02:53](https://www.youtube.com/live/bLN1iiTlcLU?t=3773s).
+
+## A control tower, not an autopilot
+
+A plain tool-calling loop runs like **autopilot**. The model picks a tool, gets a result, decides what's next, and you find out what happened once it's done. A LangGraph4j graph runs more like a **control tower**, [as Bartolomeo explained from 17:49](https://www.youtube.com/live/bLN1iiTlcLU?t=1069s). Every run carries an immutable context object; a node can't mutate it, only contribute new information, merged in behind a schema you define. Before and after every node, LangGraph4j checkpoints what's next and what state has been reached, persisted through a pluggable saver (Postgres and DynamoDB came up as examples, though we didn't wire either up on stream). *That's* the piece that turns a crash into a resumable pause instead of a lost run.
+
+On top of that sits **human-in-the-loop**, implemented as a declared interruption, [covered at 23:52](https://www.youtube.com/live/bLN1iiTlcLU?t=1432s). Mark a node to stop before or after it runs, and the graph halts exactly there. A human acts later; resuming means calling the same graph instance again with the saved state plus whatever the human just added. Bartolomeo's real example was a purchase-order approval flow for a client: extract the financial data, summarize it, and stop until someone signs off, the same prompt an AI coding tool shows you before it changes a file, generalized to any workflow.
+
+Bartolomeo was blunt about why he keeps AI steps and plain code as separate nodes instead of folding them together.
+
+<Quote author="Bartolomeo Sorrentino" role="Creator of LangGraph4j">
+I don't want to join the actions, I want separated actions. Behind the scene, LangGraph traces, saves, and guarantees. If you split into more actions, you have more control, more traceability, more monitoring. It's better.
+</Quote>
+
+One design choice makes all of this portable rather than another vendor lock-in: **LangGraph4j deliberately doesn't tie itself to LangChain4j or Spring AI.** You pick either, or neither. For an enterprise team, that means adopting it doesn't mean re-betting the whole stack on one library's roadmap.
+
+That same discipline extends to cost. Clients don't want purchase-order data flowing through Anthropic or OpenAI, so LangGraph4j lets you mix small, cheap local models into individual nodes instead of routing everything through one big one, [discussed around 28:36](https://www.youtube.com/live/bLN1iiTlcLU?t=1716s). Bartolomeo sees it as a rerun of a lesson architects already learned once.
+
+<Quote author="Bartolomeo Sorrentino" role="Creator of LangGraph4j">
+When the cloud era arrived, architects started using every service inside the cloud, and customers said, too much cost. They arrived at cost-analysis engineering. Architects had to deal with cost analysis, and the same could happen in the future for AI.
+</Quote>
+
+## A rejected pull request, then Alibaba built on it anyway
+
+Bartolomeo's origin story is more personal than the framework's README lets on, and it's also the reason I'd trust this project to still exist in five years. He'd been building with LangChain in Python and called LangGraph *a revelation* for the control it gave him over enterprise processes. A client then asked for a complex AI workflow on a Java stack. He looked for a Java LangGraph, found [LangChain4j](https://github.com/langchain4j/langchain4j), and found no LangGraph port anywhere inside it. So he built one, [the full story is at 04:32](https://www.youtube.com/live/bLN1iiTlcLU?t=272s).
+
+He originally tried to merge his work into LangChain4j itself. **The maintainers turned him down.**
+
+<Quote author="Bartolomeo Sorrentino" role="Creator of LangGraph4j">
+Agentic workflow at that time is not our focus. It's an interesting project, but we don't want you to put your work inside our stream.
+</Quote>
+
+He kept building on his own. Years later, developers at Alibaba adopted LangGraph4j as the foundation of their own agentic framework, extracting it rather than contributing back upstream. LangGraph4j now sits at **1.9k GitHub stars**, which Bartolomeo called *not so much*. I'd call it a real, working open-source project that survived a rejection and got adopted anyway, which says more about its staying power than the star count does.
+
+## Proving it live: the part that took longest
+
+Before the session I'd already built a Spring AI app: search real train connections, simulate a delay, ask a local Llama 3.2 model, via Ollama, for an alternative route, [shown at 34:25](https://www.youtube.com/live/bLN1iiTlcLU?t=2065s). It pulls live departures from [api.transitous.org](https://transitous.org/), a public MOTIS-based routing service that aggregates Deutsche Bahn's own feed. It worked, orchestrated with a plain Java `ExecutorService`. The actual reason I wanted LangGraph4j: if anything failed mid-workflow, there was no way to resume it, or even reproduce what happened.
+
+[We asked GitHub Copilot to implement LangGraph4j in the orchestrator](https://www.youtube.com/live/bLN1iiTlcLU?t=3773s). No LangGraph4j-specific Copilot skill existed yet, Bartolomeo said he's working on one. Copilot's first pass created a `DelayWorkflowState`, a compiled `StateGraph`, a `MemorySaver`, and then kept the old `ExecutorService` around anyway. Bartolomeo caught it immediately: LangGraph4j's own `graph.stream().forEach()` is already asynchronous, built on a custom async iterator he wrote himself back when Java had no equivalent.
+
+<LangGraph4jControlTowerDiagram />
+
+Four nodes, one interrupt. Simple to draw. **Not simple to report back to the UI correctly**, and this is the part I'd point to if you want to know what "steep learning curve" actually means here. A LangGraph4j run can end interrupted, completed, cancelled, or errored, and the browser needs to know which. Getting that right, [around 01:57:15](https://www.youtube.com/live/bLN1iiTlcLU?t=7035s), meant two separate stream calls into the same graph instance, start then resume, and not confusing *got the state* with *got the status*. At one point we ended up staring at LangGraph4j's own `CompiledGraph` source, copied straight into the demo repo, just to see what the async result handling was actually doing underneath.
+
+I said out loud that this required knowing a lot of internal detail for what was, on screen, five nodes. Bartolomeo didn't push back, [around 02:32:04](https://www.youtube.com/live/bLN1iiTlcLU?t=9124s) he called it a fair critique of the current API's complexity and said he's open to community contributions that simplify it. We got it working. Llama 3.2 turned out to be, in my own words on stream, *really bad at this*, but the plumbing held regardless of which model sat behind it, which is exactly the point: the graph doesn't care how good your model is, it cares whether the process around it holds up.
+
+## Final thought
+
+**Yes, the learning curve is real.** Reporting a graph's status back to a UI correctly took more code and more internal knowledge than a five-node demo suggests it should. But that complexity buys something a tool-calling loop doesn't have: checkpoints you can inspect, a pause point a human actually controls, and a model choice you can make per node instead of per app. For a side project, that's overhead. **For an enterprise workflow where losing state on crash or not knowing which step failed is already a real cost, it's the whole point.** One viewer, Fernando, said in the chat that the session felt like pair programming. That's roughly how evaluating LangGraph4j should feel too: less like adopting a framework, more like sitting down with someone who already hit the same wall you're about to hit.
+
+## Useful links
+
+- [LangGraph4j on GitHub](https://github.com/langgraph4j/langgraph4j)
+- [LangGraph4j's interruption docs](https://langgraph4j.github.io/langgraph4j/main/core/core-library/?h=interrupt#breakpoints-aka-interruptions), covering `interruptBefore`/`interruptAfter`
+- [LangChain4j](https://github.com/langchain4j/langchain4j), the tool-calling framework LangGraph4j sits on top of
+- [api.transitous.org](https://transitous.org/), the public MOTIS-based transit API the demo pulls live departures from

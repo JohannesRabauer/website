@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (20)
+## English posts (21)
 
 ## English blog posts
+### LangGraph4j Gives Your Java AI Workflow the Control a Loop Can't
+- URL: https://rabauer.dev/en/blog/langgraph4j-agents/
+- Date: 2026-08-18
+- Summary: Bartolomeo Sorrentino, creator of LangGraph4j, joined to make the case for real control over an AI workflow: cost-aware model choice, checkpoints you can audit, and state that survives a crash. We spent the second hour proving it live, adding LangGraph4j to a train-delay app with GitHub Copilot doing the typing. If you're running AI in a real Java enterprise app, this is worth the learning curve.
+
 ### Can Entire Change How We Build Software?
 - URL: https://rabauer.dev/en/blog/entire-java-experiment/
 - Date: 2026-08-13
@@ -132,9 +137,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (20)
+## German posts (21)
 
 ## German blog posts
+### LangGraph4j gibt deinem Java-KI-Workflow die Kontrolle, die ein Loop nicht hat
+- URL: https://rabauer.dev/de/blog/langgraph4j-agents/
+- Date: 2026-08-18
+- Summary: Bartolomeo Sorrentino, der Erfinder von LangGraph4j, war dabei, um für echte Kontrolle über einen KI-Workflow zu argumentieren: kostenbewusste Modellwahl, prüfbare Checkpoints und ein Zustand, der einen Absturz übersteht. In der zweiten Stunde haben wir das live bewiesen, LangGraph4j in eine Zugverspätungs-App eingebaut, GitHub Copilot hat getippt. Wer KI in einer echten Java-Enterprise-Anwendung einsetzt, für den lohnt sich die Lernkurve.
+
 ### Kann Entire verändern, wie wir Software bauen?
 - URL: https://rabauer.dev/de/blog/entire-java-experiment/
 - Date: 2026-08-13

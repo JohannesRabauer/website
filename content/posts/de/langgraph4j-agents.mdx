@@ -1,0 +1,114 @@
+---
+title: "LangGraph4j gibt deinem Java-KI-Workflow die Kontrolle, die ein Loop nicht hat"
+date: "2026-08-18"
+summary: "Bartolomeo Sorrentino, der Erfinder von LangGraph4j, war dabei, um für echte Kontrolle über einen KI-Workflow zu argumentieren: kostenbewusste Modellwahl, prüfbare Checkpoints und ein Zustand, der einen Absturz übersteht. In der zweiten Stunde haben wir das live bewiesen, LangGraph4j in eine Zugverspätungs-App eingebaut, GitHub Copilot hat getippt. Wer KI in einer echten Java-Enterprise-Anwendung einsetzt, für den lohnt sich die Lernkurve."
+tags: ["langgraph4j", "langchain4j", "spring-ai", "java", "ai-agents", "live-coding"]
+youtubeId: "bLN1iiTlcLU"
+mainRepository: "https://github.com/JohannesRabauer/langgraph4j-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "01:18"
+    label: "Begrüßung von Bartolomeo Sorrentino und sein Werdegang"
+  - time: "04:32"
+    label: "Die Entstehungsgeschichte von LangGraph4j und der Weg zu Alibaba"
+  - time: "12:56"
+    label: "Framework-unabhängig bleiben: von Prompt Engineering zu Graph Engineering"
+  - time: "17:49"
+    label: "State, Context und Checkpoints: wie sich LangGraph4j von einem einfachen Methodenaufruf unterscheidet"
+  - time: "23:52"
+    label: "Human-in-the-Loop, Unterbrechungen und parallele Knoten"
+  - time: "28:36"
+    label: "Kontrolle, Kosten und lokale Modelle im Unternehmenseinsatz"
+  - time: "34:25"
+    label: "Bildschirmfreigabe: die bestehende Zugverspätungs-Demo-App und ihr Workflow"
+  - time: "45:37"
+    label: "Guardrails, strukturierte Ausgabe und Checkpoint-Saver"
+  - time: "58:22"
+    label: "Wo LangGraph4j im Vergleich zu Coding-Agenten steht"
+  - time: "01:02:53"
+    label: "Live-Coding: Copilot bittet, LangGraph4j einzubauen, Fragen und Randbemerkungen"
+  - time: "01:26:53"
+    label: "Der generierte State, die Knoten und die Checkpoint-Saver im Review"
+  - time: "01:32:04"
+    label: "Den StateGraph definieren: Knoten, Kanten, Schemas und Serialisierung"
+  - time: "01:45:36"
+    label: "Graphen visualisieren und testen: Diagramme und LangGraph Studio"
+  - time: "01:57:15"
+    label: "Der asynchrone Workflow-Orchestrierungsdienst: Streams, Ergebnisse und die Anbindung an die UI"
+  - time: "02:32:04"
+    label: "Komplexitäts-Abwägungen, der fertige Workflow und der Abschluss"
+---
+
+Wer KI ernsthaft in einer Java-Enterprise-Anwendung einsetzen will, sollte sich **LangGraph4j genauer ansehen**. Nicht weil ein reiner Tool-Calling-Loop kein Tool aufrufen und mit dem Ergebnis weiterarbeiten könnte, LangChain4js AI Services können das bereits gut. Der Blick lohnt sich wegen dem, was ein Loop *nicht* bietet: Kontrolle darüber, welches Modell welchen Schritt übernimmt, eine Spur, die man wirklich prüfen kann, und einen Workflow, der einen Absturz übersteht, statt einfach zu verschwinden.
+
+<CoSpeakerCard
+  name="Bartolomeo Sorrentino"
+  role="Erfinder von LangGraph4j"
+  company="Softphone srl"
+  bio="Bartolomeo hat LangGraph4j gebaut, nachdem die Maintainer von LangChain4j eine Integration abgelehnt hatten. Er ist CTO von Softphone srl, Mitgründer von SoulSoftware srl und arbeitet an KI-gestützten CTI- und MCP-Gateway-Integrationen."
+  imageSrc="/blog/bartolomeo-sorrentino.jpg"
+  github="https://github.com/bsorrentino"
+  linkedin="https://www.linkedin.com/in/bartolomeosorrentino"
+  x="https://x.com/bsorrentinoJ"
+  youtube="https://www.youtube.com/@BartolomeoSorrentino"
+  locale="de"
+/>
+
+**Bartolomeo Sorrentino**, der LangGraph4j gebaut hat, war zwei Stunden bei mir, um genau das zu begründen, und dann zu beweisen. Erste Stunde: Konzepte. Zweite Stunde: Ich habe eine bereits gebaute Zugverspätungs-App geöffnet und GitHub Copilot gebeten, LangGraph4j live einzubauen, mit Bartolomeo über meine Schulter schauend, [ab 01:02:53](https://www.youtube.com/live/bLN1iiTlcLU?t=3773s).
+
+## Ein Kontrollturm, kein Autopilot
+
+Ein reiner Tool-Calling-Loop läuft wie ein **Autopilot**. Das Modell wählt ein Tool, bekommt ein Ergebnis, entscheidet, was als Nächstes kommt, und du erfährst erst am Ende, was passiert ist. Ein LangGraph4j-Graph läuft eher wie ein **Kontrollturm**, [wie Bartolomeo ab 17:49 erklärte](https://www.youtube.com/live/bLN1iiTlcLU?t=1069s). Jeder Lauf trägt ein unveränderliches Context-Objekt mit sich; ein Knoten kann es nicht verändern, nur neue Informationen beisteuern, die hinter einem selbst definierten Schema zusammengeführt werden. Vor und nach jedem Knoten setzt LangGraph4j einen Checkpoint: welcher Knoten als Nächstes kommt und welcher Zustand erreicht wurde, gespeichert über einen austauschbaren Saver (Postgres und DynamoDB kamen als Beispiele zur Sprache, verkabelt haben wir im Stream keines von beiden). *Das* ist der Teil, der aus einem Absturz eine fortsetzbare Pause macht statt einen verlorenen Lauf.
+
+Über dem Kontrollturm sitzt **Human-in-the-Loop**, umgesetzt als deklarierte Unterbrechung, [behandelt bei 23:52](https://www.youtube.com/live/bLN1iiTlcLU?t=1432s). Man markiert einen Knoten, vor oder nach seiner Ausführung zu stoppen, und der Graph hält genau dort an. Ein Mensch handelt später; Fortsetzen bedeutet, dieselbe Graph-Instanz erneut aufzurufen, mit dem gespeicherten Zustand plus dem, was der Mensch gerade hinzugefügt hat. Bartolomeos echtes Beispiel war ein Freigabe-Workflow für Bestellungen bei einem Kunden: Finanzdaten extrahieren, zusammenfassen, und stoppen, bis jemand unterschreibt, derselbe Prompt, den ein KI-Coding-Tool zeigt, bevor es eine Datei ändert, nur verallgemeinert auf jeden Workflow.
+
+Bartolomeo war unmissverständlich darin, warum er KI-Schritte und normalen Code als getrennte Knoten hält, statt sie zusammenzulegen.
+
+<Quote author="Bartolomeo Sorrentino" role="Erfinder von LangGraph4j">
+Ich will die Aktionen nicht zusammenlegen, ich will getrennte Aktionen. Im Hintergrund verfolgt, speichert und garantiert LangGraph. Teilt man in mehr Aktionen auf, hat man mehr Kontrolle, mehr Nachvollziehbarkeit, mehr Monitoring. Das ist besser.
+</Quote>
+
+Eine Designentscheidung macht das Ganze portabel statt zu neuem Vendor-Lock-in: **LangGraph4j bindet sich bewusst nicht an LangChain4j oder Spring AI.** Man wählt eines von beiden, oder keines. Für ein Unternehmensteam heißt das: Die Einführung bedeutet nicht, den ganzen Stack auf die Roadmap einer einzigen Bibliothek zu verwetten.
+
+Dieselbe Disziplin gilt auch für Kosten. Kunden wollen ihre Bestelldaten nicht durch Anthropic oder OpenAI schicken, also lässt LangGraph4j kleine, günstige lokale Modelle in einzelnen Knoten mitlaufen, statt alles durch ein großes Modell zu leiten, [besprochen um 28:36](https://www.youtube.com/live/bLN1iiTlcLU?t=1716s). Bartolomeo sieht darin die Wiederholung einer Lektion, die Architekten schon einmal lernen mussten.
+
+<Quote author="Bartolomeo Sorrentino" role="Erfinder von LangGraph4j">
+Als das Cloud-Zeitalter kam, fingen Architekten an, jeden Dienst in der Cloud zu nutzen, und Kunden sagten: zu teuer. Sie kamen bei der Kostenanalyse-Disziplin an. Architekten mussten sich mit Kostenanalyse befassen, und dasselbe könnte in Zukunft für KI passieren.
+</Quote>
+
+## Ein abgelehnter Pull Request, und Alibaba baute trotzdem darauf
+
+Bartolomeos Entstehungsgeschichte ist persönlicher, als das README des Frameworks verrät, und sie ist auch der Grund, warum ich diesem Projekt zutraue, in fünf Jahren noch zu existieren. Er hatte mit LangChain in Python gearbeitet und LangGraph *eine Offenbarung* genannt, wegen der Kontrolle, die es ihm über Unternehmensprozesse gab. Dann bat ihn ein Kunde um einen komplexen KI-Workflow auf einem Java-Stack. Er suchte nach einem Java-LangGraph, fand [LangChain4j](https://github.com/langchain4j/langchain4j), und fand keinen LangGraph-Port darin. Also baute er selbst einen, [die ganze Geschichte gibt es bei 04:32](https://www.youtube.com/live/bLN1iiTlcLU?t=272s).
+
+Er wollte seine Arbeit ursprünglich in LangChain4j selbst einbringen. **Die Maintainer lehnten ab.**
+
+<Quote author="Bartolomeo Sorrentino" role="Erfinder von LangGraph4j">
+Agentische Workflows waren damals nicht unser Fokus. Es ist ein interessantes Projekt, aber wir wollen nicht, dass du deine Arbeit in unseren Strang einbringst.
+</Quote>
+
+Er baute allein weiter. Jahre später übernahmen Entwickler bei Alibaba LangGraph4j als Grundlage für ihr eigenes agentisches Framework, extrahierten es aber, statt etwas zurück in den Hauptzweig beizutragen. LangGraph4j steht heute bei **1.900 GitHub-Stars**, was Bartolomeo als *nicht so viel* bezeichnete. Ich würde es ein echtes, funktionierendes Open-Source-Projekt nennen, das eine Ablehnung überstanden hat und trotzdem übernommen wurde, was mehr über seine Beständigkeit aussagt als die Stern-Zahl.
+
+## Live bewiesen: der Teil, der am längsten dauerte
+
+Vor der Session hatte ich schon eine Spring-AI-App gebaut: echte Zugverbindungen suchen, eine Verspätung simulieren, ein lokales Llama-3.2-Modell über Ollama nach einer Alternative fragen, [gezeigt bei 34:25](https://www.youtube.com/live/bLN1iiTlcLU?t=2065s). Sie holt Live-Abfahrten von [api.transitous.org](https://transitous.org/), einem öffentlichen, MOTIS-basierten Routing-Dienst, der auch den Feed der Deutschen Bahn einbindet. Sie funktionierte, orchestriert mit einem einfachen Java-`ExecutorService`. Der eigentliche Grund, warum ich LangGraph4j wollte: Wenn mitten im Workflow etwas fehlschlug, gab es keine Möglichkeit, ihn fortzusetzen, oder auch nur nachzuvollziehen, was passiert war.
+
+[Wir haben GitHub Copilot gebeten, LangGraph4j in den Orchestrator einzubauen](https://www.youtube.com/live/bLN1iiTlcLU?t=3773s). Einen LangGraph4j-spezifischen Copilot-Skill gab es noch nicht, Bartolomeo sagte, er arbeite daran. Copilots erster Versuch erzeugte einen `DelayWorkflowState`, einen kompilierten `StateGraph`, einen `MemorySaver`, und behielt trotzdem den alten `ExecutorService` bei. Bartolomeo bemerkte das sofort: LangGraph4js eigenes `graph.stream().forEach()` ist bereits asynchron, aufgebaut auf einem eigenen Async-Iterator, den er selbst geschrieben hat, als es dafür in Java noch kein Äquivalent gab.
+
+<LangGraph4jControlTowerDiagram locale="de" />
+
+Vier Knoten, eine Unterbrechung. Einfach zu zeichnen. **Nicht einfach korrekt an die UI zu melden**, und genau das ist der Teil, auf den ich verweisen würde, wenn man wissen will, was steile Lernkurve hier konkret bedeutet. Ein LangGraph4j-Lauf kann unterbrochen, abgeschlossen, abgebrochen oder fehlerhaft enden, und der Browser muss wissen, welcher Fall vorliegt. Das richtig hinzubekommen, [um 01:57:15](https://www.youtube.com/live/bLN1iiTlcLU?t=7035s), brauchte zwei getrennte Stream-Aufrufe in dieselbe Graph-Instanz, erst Start, dann Fortsetzen, und man durfte *den Zustand bekommen* nicht mit *den Status bekommen* verwechseln. An einer Stelle sind wir bei LangGraph4js eigenem `CompiledGraph`-Quellcode gelandet, direkt ins Demo-Repository kopiert, nur um zu sehen, was die asynchrone Ergebnisverarbeitung darunter eigentlich tat.
+
+Ich sagte laut, dass das eine Menge internes Detailwissen brauchte, für das, was auf dem Bildschirm fünf Knoten waren. Bartolomeo widersprach nicht, [um 02:32:04](https://www.youtube.com/live/bLN1iiTlcLU?t=9124s) nannte er das eine faire Kritik an der Komplexität der aktuellen API und sagte, er sei offen für Community-Beiträge, die das vereinfachen. Wir bekamen es am Ende zum Laufen. Llama 3.2 erwies sich, in meinen eigenen Worten im Stream, als *wirklich schlecht darin*, aber die Verkabelung hielt, egal welches Modell dahintersteckte, und genau das ist der Punkt: Dem Graphen ist egal, wie gut das Modell ist, ihm ist wichtig, ob der Prozess drumherum hält.
+
+## Abschließender Gedanke
+
+**Ja, die Lernkurve ist real.** Den Status eines Graphen korrekt an eine UI zu melden, brauchte mehr Code und mehr internes Wissen, als eine Fünf-Knoten-Demo vermuten lässt. Aber diese Komplexität kauft etwas, das ein Tool-Calling-Loop nicht hat: Checkpoints, die man einsehen kann, einen Pausenpunkt, den ein Mensch wirklich kontrolliert, und eine Modellwahl pro Knoten statt pro App. Für ein Nebenprojekt ist das Overhead. **Für einen Unternehmens-Workflow, bei dem verlorener Zustand nach einem Absturz oder das Nicht-Wissen, welcher Schritt fehlgeschlagen ist, bereits ein echter Kostenfaktor ist, ist es genau der Punkt.** Ein Zuschauer, Fernando, sagte im Chat, die Session habe sich angefühlt wie Pair Programming. So sollte sich ungefähr auch die Bewertung von LangGraph4j anfühlen: weniger wie die Einführung eines Frameworks, mehr wie ein Gespräch mit jemandem, der genau die Wand schon durchbrochen hat, vor der man selbst gleich steht.
+
+## Nützliche Links
+
+- [LangGraph4j auf GitHub](https://github.com/langgraph4j/langgraph4j)
+- [LangGraph4js Dokumentation zu Unterbrechungen](https://langgraph4j.github.io/langgraph4j/main/core/core-library/?h=interrupt#breakpoints-aka-interruptions), zu `interruptBefore`/`interruptAfter`
+- [LangChain4j](https://github.com/langchain4j/langchain4j), das Tool-Calling-Framework, auf dem LangGraph4j aufsetzt
+- [api.transitous.org](https://transitous.org/), die öffentliche, MOTIS-basierte Transit-API, von der die Demo Live-Abfahrten holt
