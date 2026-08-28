@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (21)
+## English posts (22)
 
 ## English blog posts
+### Why Deploying Java AI Apps to the Cloud Is Easier Than You Think
+- URL: https://rabauer.dev/en/blog/langchain4j-azure-deploy/
+- Date: 2026-08-27
+- Summary: Brian Benz, Principal AI Advocate at Microsoft, joined for a session that changed its own plan halfway through: he ended up coding the app himself with GitHub Copilot, then deploying it with Microsoft's internal agent Scout. The individual steps really were fast, langchain4j's model swap never broke, and Azure AI Foundry stood up a real model in minutes. Two hours of live debugging show why that still isn't the same as done.
+
 ### LangGraph4j Gives Your Java AI Workflow the Control a Loop Can't
 - URL: https://rabauer.dev/en/blog/langgraph4j-agents/
 - Date: 2026-08-18
@@ -137,9 +142,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (21)
+## German posts (22)
 
 ## German blog posts
+### Warum Java-KI-Apps in die Cloud zu bringen einfacher ist, als du denkst
+- URL: https://rabauer.dev/de/blog/langchain4j-azure-deploy/
+- Date: 2026-08-27
+- Summary: Brian Benz, Principal AI Advocate bei Microsoft, war dabei, in einer Session, die ihren eigenen Plan auf halber Strecke über den Haufen warf: Er hat die App am Ende selbst mit GitHub Copilot gebaut und dann mit Microsofts internem Agenten Scout deployt. Die einzelnen Schritte waren wirklich schnell, langchain4js Modell-Wechsel ist kein einziges Mal kaputtgegangen, und Azure AI Foundry hatte in Minuten ein echtes Modell live. Zwei Stunden live Debugging zeigen, warum das noch lange nicht dasselbe ist wie fertig.
+
 ### LangGraph4j gibt deinem Java-KI-Workflow die Kontrolle, die ein Loop nicht hat
 - URL: https://rabauer.dev/de/blog/langgraph4j-agents/
 - Date: 2026-08-18

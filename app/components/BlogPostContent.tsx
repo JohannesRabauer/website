@@ -24,6 +24,7 @@ import CodeSnippet from '@/app/components/CodeSnippet';
 import PartyModeDiagram from '@/app/components/PartyModeDiagram';
 import EntireCheckpointDiagram from '@/app/components/EntireCheckpointDiagram';
 import LangGraph4jControlTowerDiagram from '@/app/components/LangGraph4jControlTowerDiagram';
+import ScoutFanOutDiagram from '@/app/components/ScoutFanOutDiagram';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -109,6 +110,9 @@ export default function BlogPostContent({ locale, slug }: Props) {
     ),
     LangGraph4jControlTowerDiagram: (props: React.ComponentProps<typeof LangGraph4jControlTowerDiagram>) => (
       <LangGraph4jControlTowerDiagram {...props} locale={locale} />
+    ),
+    ScoutFanOutDiagram: (props: React.ComponentProps<typeof ScoutFanOutDiagram>) => (
+      <ScoutFanOutDiagram {...props} locale={locale} />
     ),
   };
 
