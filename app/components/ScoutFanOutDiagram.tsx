@@ -19,7 +19,7 @@ interface Copy {
 const COPY: Record<'en' | 'de', Copy> = {
   en: {
     ariaLabel:
-      'Diagram of one deploy prompt fanning out through Microsoft Scout into roughly 21 parallel sub-agents provisioning four Azure resources: an AKS cluster, which came up cleanly; an Azure OpenAI deployment, where a sub-agent had to swap a just-discontinued GPT-4o for GPT-5.6 mid-run; a Postgres instance with pgvector, which Scout deployed as a managed cloud database instead of the local container the plan called for; and a GitHub Actions workflow, whose first run failed because secrets were not yet wired up. A caption at the bottom reads: one prompt, about 21 agents, three real bugs a human still had to catch.',
+      'Diagram of one deploy prompt fanning out through Microsoft Scout into roughly 21 parallel sub-agents provisioning four Azure resources: an AKS cluster, which came up cleanly; an Azure OpenAI deployment, where a sub-agent had to swap a just-discontinued GPT-4o for GPT-5.6 mid-run; a Postgres instance with pgvector, which Scout deployed as a managed cloud database instead of the local container the plan called for; and a GitHub Actions workflow, whose first run failed because secrets were not yet wired up. A caption at the bottom reads: one prompt, about 21 agents, three deployment surprises a human still had to catch.',
     deployLabel: 'Deploy prompt',
     scoutTitle: 'Scout',
     scoutSubtitle: '~21 parallel sub-agents, one codebase',
@@ -31,11 +31,11 @@ const COPY: Record<'en' | 'de', Copy> = {
     postgresCaption: 'deployed managed in the cloud, plan said local container',
     actionsLabel: 'GitHub Actions CI',
     actionsCaption: 'first run failed, secrets not wired up yet',
-    bottomCaption: 'One prompt, about 21 agents, three real bugs a human still had to catch.',
+    bottomCaption: 'One prompt, about 21 agents, three deployment surprises a human still had to catch.',
   },
   de: {
     ariaLabel:
-      'Diagramm eines einzelnen Deploy-Prompts, der über Microsoft Scout in rund 21 parallele Sub-Agenten auffächert, die vier Azure-Ressourcen bereitstellen: einen AKS-Cluster, der sauber hochkam; ein Azure-OpenAI-Deployment, bei dem ein Sub-Agent mitten im Lauf ein gerade eingestelltes GPT-4o durch GPT-5.6 ersetzen musste; eine Postgres-Instanz mit pgvector, die Scout als verwaltete Cloud-Datenbank bereitstellte statt des im Plan vorgesehenen lokalen Containers; und einen GitHub-Actions-Workflow, dessen erster Lauf fehlschlug, weil die Secrets noch nicht verdrahtet waren. Eine Bildunterschrift unten liest: ein Prompt, etwa 21 Agenten, drei echte Bugs, die ein Mensch trotzdem abfangen musste.',
+      'Diagramm eines einzelnen Deploy-Prompts, der über Microsoft Scout in rund 21 parallele Sub-Agenten auffächert, die vier Azure-Ressourcen bereitstellen: einen AKS-Cluster, der sauber hochkam; ein Azure-OpenAI-Deployment, bei dem ein Sub-Agent mitten im Lauf ein gerade eingestelltes GPT-4o durch GPT-5.6 ersetzen musste; eine Postgres-Instanz mit pgvector, die Scout als verwaltete Cloud-Datenbank bereitstellte statt des im Plan vorgesehenen lokalen Containers; und einen GitHub-Actions-Workflow, dessen erster Lauf fehlschlug, weil die Secrets noch nicht verdrahtet waren. Die Bildunterschrift unten lautet: ein Prompt, etwa 21 Agenten, drei Überraschungen beim Deployment, die ein Mensch trotzdem abfangen musste.',
     deployLabel: 'Deploy-Prompt',
     scoutTitle: 'Scout',
     scoutSubtitle: '~21 parallele Sub-Agenten, eine Codebasis',
@@ -47,7 +47,7 @@ const COPY: Record<'en' | 'de', Copy> = {
     postgresCaption: 'verwaltet in der Cloud bereitgestellt, Plan sah lokalen Container vor',
     actionsLabel: 'GitHub Actions CI',
     actionsCaption: 'erster Lauf fehlgeschlagen, Secrets noch nicht verdrahtet',
-    bottomCaption: 'Ein Prompt, etwa 21 Agenten, drei echte Bugs, die ein Mensch trotzdem abfangen musste.',
+    bottomCaption: 'Ein Prompt, etwa 21 Agenten, drei Überraschungen beim Deployment, die ein Mensch trotzdem abfangen musste.',
   },
 };
 

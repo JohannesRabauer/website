@@ -31,10 +31,10 @@ The homepage is the best source for identity and profile information, while the 
 ## English posts (22)
 
 ## English blog posts
-### Why Deploying Java AI Apps to the Cloud Is Easier Than You Think
+### Deploying a Java AI App to Azure: What Was Easy, What Broke
 - URL: https://rabauer.dev/en/blog/langchain4j-azure-deploy/
 - Date: 2026-08-27
-- Summary: Brian Benz, Principal AI Advocate at Microsoft, joined for a session that changed its own plan halfway through: he ended up coding the app himself with GitHub Copilot, then deploying it with Microsoft's internal agent Scout. The individual steps really were fast, langchain4j's model swap never broke, and Azure AI Foundry stood up a real model in minutes. Two hours of live debugging show why that still isn't the same as done.
+- Summary: Brian Benz built a Java support-ticket app with GitHub Copilot and deployed it to Azure with Microsoft Scout. The model integration took minutes; stale configuration, generated dependencies, licensing, and deployment scope took the rest of the two-hour session.
 
 ### LangGraph4j Gives Your Java AI Workflow the Control a Loop Can't
 - URL: https://rabauer.dev/en/blog/langgraph4j-agents/
@@ -145,10 +145,10 @@ The homepage is the best source for identity and profile information, while the 
 ## German posts (22)
 
 ## German blog posts
-### Warum Java-KI-Apps in die Cloud zu bringen einfacher ist, als du denkst
+### Eine Java-KI-App auf Azure deployen: Was einfach war und was scheiterte
 - URL: https://rabauer.dev/de/blog/langchain4j-azure-deploy/
 - Date: 2026-08-27
-- Summary: Brian Benz, Principal AI Advocate bei Microsoft, war dabei, in einer Session, die ihren eigenen Plan auf halber Strecke über den Haufen warf: Er hat die App am Ende selbst mit GitHub Copilot gebaut und dann mit Microsofts internem Agenten Scout deployt. Die einzelnen Schritte waren wirklich schnell, langchain4js Modell-Wechsel ist kein einziges Mal kaputtgegangen, und Azure AI Foundry hatte in Minuten ein echtes Modell live. Zwei Stunden live Debugging zeigen, warum das noch lange nicht dasselbe ist wie fertig.
+- Summary: Brian Benz baute mit GitHub Copilot eine Java-App für Support-Tickets und deployte sie mit Microsoft Scout auf Azure. Die Modellintegration dauerte Minuten. Veraltete Konfiguration, generierte Abhängigkeiten, Lizenzen und der Umfang des Deployments füllten den Rest der zweistündigen Session.
 
 ### LangGraph4j gibt deinem Java-KI-Workflow die Kontrolle, die ein Loop nicht hat
 - URL: https://rabauer.dev/de/blog/langgraph4j-agents/
