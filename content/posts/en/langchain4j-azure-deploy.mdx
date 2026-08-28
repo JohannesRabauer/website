@@ -82,7 +82,7 @@ The cleanest technical result was that **langchain4j was never the problem.** Br
 
 One of Copilot's clarifying questions asked for the language of the sample support tickets. It correctly suggested **English and German**, based only on the repository directory's name. Neither host had supplied that detail.
 
-While code generated in the background, Brian toured Azure AI Foundry's model catalog. Its benchmark leaderboard compared quality, safety, and cost across roughly 11,000 available models. By then, **Sonnet 5** had quietly become my favorite model to work with.
+While code generated in the background, Brian toured Azure AI Foundry's model catalog. Its benchmark leaderboard compared quality, safety, cost, latency, and throughput across roughly 11,000 available models. **Sonnet 5 is my personal favorite**, but the direct comparison challenged that preference: Grok scored higher on quality and lower on cost. Sonnet 5 generated slightly more tokens per second, while the safety result needed careful reading because a lower "attack success rate" was better.
 
 GitHub Models, which Brian used to lean on for exactly this kind of quick demo, had just been retired. These days he points people to NVIDIA's [build.nvidia.com](https://build.nvidia.com/) for a similar free playground, slow but usable.
 
@@ -113,11 +113,7 @@ Once the app finally built, Scout took over the Azure side from a single prompt:
 
 That fan-out was impressive, but the plan's ambition caught up with the clock. A support-ticket triage app with vector search, live model swapping, and a CI/CD pipeline is a lot to fit into two hours. A discussed detail about running Postgres locally never reached Scout's prompt, so it provisioned Azure Database for PostgreSQL instead. Scout tried to deploy the discontinued GPT-4o and had to switch to GPT-5.6 mid-run. The first GitHub Actions run failed because its secrets weren't wired up. As the stream ended, a pod was still crash-looping because of a temperature-zero model call.
 
-Scout and Copilot did not fail the demo. The app was simply too large for a two-hour stream. Choosing a smaller target next time is the lesson, not a workaround. Brian had expected that risk.
-
-<Quote author="Brian Benz" role="Principal AI Advocate at Microsoft">
-I did 20 minutes of preparation for this. I wanted to make it as real as possible. So that's my story and I'll stick to it.
-</Quote>
+Scout and Copilot did not fail the demo. The app was simply too large for a two-hour stream. Choosing a smaller target next time is the lesson, not a workaround.
 
 ## What I would change next time
 

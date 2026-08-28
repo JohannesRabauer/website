@@ -83,7 +83,7 @@ Das klarste technische Ergebnis: **langchain4j war nie das Problem.** Brian zog 
 
 Eine Rückfrage von Copilot betraf die Sprache der Beispiel-Tickets. Das System schlug korrekt **Englisch und Deutsch** vor, allein aufgrund des Namens des Repository-Verzeichnisses. Keiner der beiden Hosts hatte diese Vorgabe gemacht.
 
-Während im Hintergrund Code entstand, führte Brian durch den Modellkatalog von Azure AI Foundry. Das Benchmark-Leaderboard verglich Qualität, Sicherheit und Kosten von rund 11.000 Modellen. **Sonnet 5** war zu diesem Zeitpunkt bereits mein Lieblingsmodell.
+Während im Hintergrund Code entstand, führte Brian durch den Modellkatalog von Azure AI Foundry. Das Benchmark-Leaderboard verglich Qualität, Sicherheit, Kosten, Latenz und Durchsatz von rund 11.000 Modellen. **Sonnet 5 ist mein persönlicher Favorit.** Der direkte Vergleich stellte diese Vorliebe jedoch infrage: Grok schnitt bei Qualität und Kosten besser ab. Sonnet 5 erzeugte etwas mehr Token pro Sekunde. Das Ergebnis zur Sicherheit musste man genau lesen, denn bei der "Attack Success Rate" war ein niedriger Wert besser.
 
 Für solche schnellen Demos hatte Brian früher GitHub Models genutzt. Der Dienst war gerade eingestellt worden. Heute empfiehlt er NVIDIAs [build.nvidia.com](https://build.nvidia.com/): kostenlos und brauchbar, wenn auch langsam.
 
@@ -114,11 +114,7 @@ Als die App endlich baute, übernahm Scout die Azure-Seite, aus einem einzigen P
 
 Das Auffächern war beeindruckend. Doch der Umfang des Plans holte die Session ein. Eine Support-Ticket-Triage-App mit Vektorsuche, Live-Modellwechsel und CI/CD-Pipeline ist viel für zwei Stunden. Die besprochene lokale Postgres-Instanz fehlte in Scouts Prompt. Deshalb stellte Scout Azure Database for PostgreSQL bereit. Es versuchte außerdem, das eingestellte GPT-4o zu deployen, und wechselte mitten im Lauf auf GPT-5.6. Der erste GitHub-Actions-Lauf scheiterte an fehlenden Secrets. Am Ende des Streams hing ein Pod wegen eines Modellaufrufs mit Temperatur null in einer Crash-Loop.
 
-Scout und Copilot haben die Demo nicht ruiniert. Die App war schlicht zu groß für einen zweistündigen Stream. Beim nächsten Mal ist ein kleineres Ziel die richtige Konsequenz, kein fauler Kompromiss. Brian hatte mit diesem Risiko gerechnet.
-
-<Quote author="Brian Benz" role="Principal AI Advocate bei Microsoft">
-Ich habe 20 Minuten Vorbereitung dafür gemacht. Ich wollte es so echt wie möglich machen. Das ist meine Geschichte, und dabei bleibe ich.
-</Quote>
+Scout und Copilot haben die Demo nicht ruiniert. Die App war schlicht zu groß für einen zweistündigen Stream. Beim nächsten Mal ist ein kleineres Ziel die richtige Konsequenz, kein fauler Kompromiss.
 
 ## Was ich beim nächsten Mal ändern würde
 
