@@ -28,9 +28,14 @@ The homepage is the best source for identity and profile information, while the 
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
 
-## English posts (21)
+## English posts (22)
 
 ## English blog posts
+### Deploying a Java AI App to Azure: What Was Easy, What Broke
+- URL: https://rabauer.dev/en/blog/langchain4j-azure-deploy/
+- Date: 2026-08-27
+- Summary: Brian Benz built a Java support-ticket app with GitHub Copilot and deployed it to Azure with Microsoft Scout. The model integration took minutes; stale configuration, generated dependencies, licensing, and deployment scope took the rest of the two-hour session.
+
 ### LangGraph4j Gives Your Java AI Workflow the Control a Loop Can't
 - URL: https://rabauer.dev/en/blog/langgraph4j-agents/
 - Date: 2026-08-18
@@ -137,9 +142,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (21)
+## German posts (22)
 
 ## German blog posts
+### Eine Java-KI-App auf Azure deployen: Was einfach war und was scheiterte
+- URL: https://rabauer.dev/de/blog/langchain4j-azure-deploy/
+- Date: 2026-08-27
+- Summary: Brian Benz baute mit GitHub Copilot eine Java-App für Support-Tickets und deployte sie mit Microsoft Scout auf Azure. Die Modellintegration dauerte Minuten. Veraltete Konfiguration, generierte Abhängigkeiten, Lizenzen und der Umfang des Deployments füllten den Rest der zweistündigen Session.
+
 ### LangGraph4j gibt deinem Java-KI-Workflow die Kontrolle, die ein Loop nicht hat
 - URL: https://rabauer.dev/de/blog/langgraph4j-agents/
 - Date: 2026-08-18

@@ -1,0 +1,141 @@
+---
+title: "Eine Java-KI-App auf Azure deployen: Was einfach war und was scheiterte"
+date: "2026-08-27"
+summary: "Brian Benz baute mit GitHub Copilot eine Java-App für Support-Tickets und deployte sie mit Microsoft Scout auf Azure. Die Modellintegration dauerte Minuten. Veraltete Konfiguration, generierte Abhängigkeiten, Lizenzen und der Umfang des Deployments füllten den Rest der zweistündigen Session."
+tags: ["java", "langchain4j", "vaadin", "spring-boot", "github-copilot", "azure", "live-coding", "ai-agents"]
+youtubeId: "TI7_Wz5Oag0"
+mainRepository: "https://github.com/bbenz/20260827-jug-oberpfalz-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung und Begrüßung von Brian Benz"
+  - time: "02:31"
+    label: "Brians Rolle im Cloud-Native-Team von Microsoft und Azure AI Foundry"
+  - time: "04:05"
+    label: "Java-Glaubwürdigkeit für Azure: Brians Geschichte bei Microsoft"
+  - time: "08:07"
+    label: "Wie viel Code Brian im KI-Zeitalter noch von Hand schreibt"
+  - time: "10:40"
+    label: "Der Plan wird umgeworfen: Brian codet und deployt die App selbst"
+  - time: "14:23"
+    label: "Start einer Java-Support-Ticket-Analytics-App mit langchain4j"
+  - time: "15:09"
+    label: "GitHub Copilot briefen und langchain4j statt Spring AI wählen"
+  - time: "19:37"
+    label: "Den Prompt entwerfen, Beispieldaten, und ein Ausflug zur Sprachdiktierfunktion"
+  - time: "26:04"
+    label: "Tour durch Azure AI Foundrys Modelle, während Copilot Rückfragen stellt"
+  - time: "35:21"
+    label: "Das Ende von GitHub Models und build.nvidia.com als Alternative"
+  - time: "40:41"
+    label: "Wechsel zu Claude Sonnet 5 und Modellvergleich auf Azures Leaderboard"
+  - time: "49:00"
+    label: "Der generierte Stack im Review: Flyway, PG vector, Vaadin und langchain4j"
+  - time: "54:56"
+    label: "Ein Abstecher zu Microsoft Scout, Brians persönlichem KI-Agenten"
+  - time: "01:07:31"
+    label: "Eine außer Kontrolle geratene Testschleife einfangen, damit die App baut"
+  - time: "01:16:05"
+    label: "Docker, WSL und eine fest codierte Modellversion: die Jagd nach lokalen Bugs"
+  - time: "01:33:26"
+    label: "Eine Vaadin-Lizenzüberraschung und ein Downgrade als Workaround"
+  - time: "01:47:59"
+    label: "Übergabe an Scout: AKS, Postgres und Azure OpenAI bereitstellen"
+  - time: "02:02:59"
+    label: "Ein GitHub-Actions-Workflow für Continuous Deployment kommt dazu"
+  - time: "02:21:56"
+    label: "Zum Abschluss: eine ehrliche Demo, echte Bugs, und der Blick auf JCON"
+---
+
+Eine Java-App mit einem echten KI-Modell zu verbinden und auf Azure zu deployen, klang nach einem ganzen Tag Arbeit. Im Stream dauerte jeder Schritt nur wenige Minuten. Das ganze System zum Laufen zu bringen, brauchte mehr als zwei Stunden. Die Lücke zwischen einfachen Einzelschritten und einem funktionierenden Deployment wurde zur eigentlichen Geschichte.
+
+<CoSpeakerCard
+  name="Brian Benz"
+  role="Principal AI Advocate"
+  company="Microsoft"
+  bio="Brian ist Java Champion und Jakarta EE Ambassador. Er arbeitet seit fast 14 Jahren bei Microsoft daran, Java-Glaubwürdigkeit auf Azure aufzubauen, angefangen bei einer Gruppe, die gezielt eingestellt wurde, um einer Firma, die die Java-Community lange ignorierte, Vertrauen aus der Open-Source-Welt zu verschaffen."
+  imageSrc="/blog/brian-benz.png"
+  github="https://github.com/bbenz"
+  linkedin="https://www.linkedin.com/in/brianbenz"
+  x="https://x.com/bbenz"
+  bluesky="https://bsky.app/profile/bbenz.bsky.social"
+  youtube="https://www.youtube.com/user/brianbenz"
+  locale="de"
+/>
+
+## Was wir überhaupt deployt haben
+
+Das [fertige Repository](https://github.com/bbenz/20260827-jug-oberpfalz-demo) legt den Stack fest: Java 21, Spring Boot 3.5.16, langchain4j 1.19.0 und Vaadin 24.8.17. Die App importiert Support-Tickets und berechnet Kennzahlen per SQL. Sie speichert Embeddings mit pgvector in PostgreSQL und nutzt Azure OpenAI für die KI-gestützte Triage und semantische Suche. Das war kein Hello-World-Endpunkt mit einem einzelnen Modellaufruf.
+
+Lokal läuft PostgreSQL über Docker Compose, Spring Boot direkt auf dem Rechner. Auf Azure kommen ein AKS-Cluster, Azure Container Registry, Azure Database for PostgreSQL, ein Azure-OpenAI-Deployment, Workload Identity und ein GitHub-Actions-Workflow hinzu. Im Stream wechselte Brian zwischen beiden Umgebungen und ließ zugleich die Anwendung generieren.
+
+## Der Plan überlebte den ersten Kontakt nicht
+
+Die ursprüngliche Aufteilung war klar: Ich würde live eine Java-Support-Ticket-App mit langchain4j coden, Brian würde sie nach Azure deployen. Nach etwa zehn Minuten verwarfen wir den Plan. Brian wollte *drei* Tools zeigen. Eine geteilte Session hätte keines davon angemessen gezeigt. Also baute er die App selbst und demonstrierte dabei seinen ganzen Workflow.
+
+Brian baute *und* deployte die App mit drei Werkzeugen. Die **GitHub-Copilot-Desktop-App** generierte Code aus einem Prompt. In **VS Code mit Copilot** prüfte und reparierte er das Ergebnis. **Scout**, Microsofts autonomer Agent in der Frontier-Vorschau, übernahm das Azure-Deployment. Brian schätzt, dass er noch **20 Prozent** des Codes selbst tippt. Den generierten Rest prüft oder korrigiert er.
+
+Microsoft bietet Scout über eine [öffentliche Download-Seite](https://www.microsoft.com/en-us/download/details.aspx?id=108685) an. Der Zugang erfordert weiterhin die Teilnahme am Frontier-Programm und ein GitHub-Copilot-Business- oder -Enterprise-Abo.
+
+## Der einfache Teil hat gehalten
+
+Das klarste technische Ergebnis: **langchain4j war nie das Problem.** Brian zog es Spring AI vor, weil seine große Auswahl an Provider-Anbindungen zu einer Demo mit Modellwechsel passte. Der Wechsel blieb eine Konfigurationsänderung und griff nicht in den Anwendungscode ein.
+
+Eine Rückfrage von Copilot betraf die Sprache der Beispiel-Tickets. Das System schlug korrekt **Englisch und Deutsch** vor, allein aufgrund des Namens des Repository-Verzeichnisses. Keiner der beiden Hosts hatte diese Vorgabe gemacht.
+
+Während im Hintergrund Code entstand, führte Brian durch den Modellkatalog von Azure AI Foundry. Das Benchmark-Leaderboard verglich Qualität, Sicherheit, Kosten, Latenz und Durchsatz von rund 11.000 Modellen. **Sonnet 5 ist mein persönlicher Favorit.** Der direkte Vergleich stellte diese Vorliebe jedoch infrage: Grok schnitt bei Qualität und Kosten besser ab. Sonnet 5 erzeugte etwas mehr Token pro Sekunde. Das Ergebnis zur Sicherheit musste man genau lesen, denn bei der "Attack Success Rate" war ein niedriger Wert besser.
+
+Für solche schnellen Demos hatte Brian früher GitHub Models genutzt. Der Dienst war gerade eingestellt worden. Heute empfiehlt er NVIDIAs [build.nvidia.com](https://build.nvidia.com/): kostenlos und brauchbar, wenn auch langsam.
+
+Nichts davon hat lange gedauert. Ein Framework wählen, eine austauschbare Modellkonfiguration verdrahten, durch einen Katalog blättern, das ist das "einfacher, als du denkst" aus dem Pitch, und es stimmte.
+
+## Dann kamen zwei Stunden echte Bugs
+
+Die generierte App zum Laufen zu bringen, fraß den Rest des Streams. Die Fehler kamen nacheinander:
+
+- Ein Copilot-Agent begann im Hintergrund, jede heruntergeladene Abhängigkeit zu kompilieren und zu testen. Brian hatte das noch nie erlebt und stoppte die Schleife von Hand.
+- Ein Maven-Offline-Flag aus einer wiederverwendeten `.env`-Datei blockierte die Abhängigkeitsauflösung.
+- Eine fest codierte, nicht unterstützte Azure-OpenAI-API-Version verhinderte den Modellzugriff. Die fertige App lässt `OPENAI_API_VERSION` leer. So wählt das enthaltene Azure SDK die neueste unterstützte Version.
+- Docker Desktop verlor die WSL-Verbindung. Ein Neustart und der Wechsel der Shell lösten das Problem.
+
+Dann kam Vaadin dazu. **[Vaadin 24.9 änderte die Test- und Lizenzprüfung für Premium-Funktionen im Entwicklungsmodus](https://vaadin.com/blog/vaadin-24-9-release)**. Die generierte App löste diese Prüfung aus und verlangte eine Pro-Lizenz, die keiner der beiden Hosts hatte.
+
+<Quote author="Brian Benz" role="Principal AI Advocate bei Microsoft">
+Oh oh, wir brauchen eine Vaadin-Pro-Lizenz. Ich habe keine Vaadin-Pro-Lizenz. Oh oh.
+</Quote>
+
+Copilot führte das Problem auf die generierten Abhängigkeiten zurück. Es entfernte die versehentlich eingebaute Vaadin-TestBench-Abhängigkeit und setzte **Vaadin 24.8.17** fest, also die Version vor der neuen Prüfung. Keiner dieser Fehler kam aus langchain4j.
+
+<ScoutFanOutDiagram locale="de" />
+
+## Nicht die Werkzeuge, der Umfang war das eigentliche Problem
+
+Als die App endlich baute, übernahm Scout die Azure-Seite, aus einem einzigen Prompt: Deploy das hier in eine Resource Group, mit allem, was gebraucht wird. Es leitete AKS aus den bereits vorhandenen Kubernetes-Manifesten im Repository ab und teilte sich dann in rund 21 parallele Sub-Agenten auf, um gleichzeitig einen Cluster, ein Azure-OpenAI-Deployment, eine Container Registry und eine verwaltete Postgres-Instanz mit pgvector bereitzustellen, alles auf derselben Codebasis.
+
+Das Auffächern war beeindruckend. Doch der Umfang des Plans holte die Session ein. Eine Support-Ticket-Triage-App mit Vektorsuche, Live-Modellwechsel und CI/CD-Pipeline ist viel für zwei Stunden. Die besprochene lokale Postgres-Instanz fehlte in Scouts Prompt. Deshalb stellte Scout Azure Database for PostgreSQL bereit. Es versuchte außerdem, das eingestellte GPT-4o zu deployen, und wechselte mitten im Lauf auf GPT-5.6. Der erste GitHub-Actions-Lauf scheiterte an fehlenden Secrets. Am Ende des Streams hing ein Pod wegen eines Modellaufrufs mit Temperatur null in einer Crash-Loop.
+
+Scout und Copilot haben die Demo nicht ruiniert. Die App war schlicht zu groß für einen zweistündigen Stream. Beim nächsten Mal ist ein kleineres Ziel die richtige Konsequenz, kein fauler Kompromiss.
+
+## Was ich beim nächsten Mal ändern würde
+
+Ich würde dieselben Werkzeuge nutzen, aber die Demo verkleinern. Ein UI-Ablauf, ein Modell-Deployment und ein Datenbankpfad ließen genug Zeit, um die Anwendung auf Azure zu prüfen. Diesmal reichte die Zeit nur für die Bereitstellung.
+
+Der Deployment-Prompt muss außerdem wie eine Infrastruktur-Spezifikation funktionieren. Er sollte festlegen, ob PostgreSQL lokal oder verwaltet läuft, welches Modell erlaubt ist und welche Secrets und Identitäten gebraucht werden. Ein Health Check muss den Erfolg belegen. Vor allem sollte "fertig" heißen, dass ein Nutzer den Ticket-Triage-Ablauf unter der deployten URL abschließen kann. Vorhandene Azure-Ressourcen allein reichen nicht.
+
+## "Fertig" heißt: Die Anwendung läuft
+
+<Quote author="Brian Benz" role="Principal AI Advocate bei Microsoft">
+Es hieß, es sei fertig, und dann lief es einfach nicht. Das ist echtes Leben, oder? Solche Dinge passieren beim Bauen, und dann testet man alles durch und iteriert einfach weiter.
+</Quote>
+
+Die Modellkonfiguration ging schnell. langchain4js Abstraktion hielt, und ein echtes Azure-AI-Foundry-Modell war nach wenigen Minuten live. Trotzdem braucht ein KI-gestütztes Deployment Aufsicht. Bei jedem Fehler musste ein Mensch das Symptom erkennen, den Plan korrigieren oder den Code reparieren. Brian arbeitete nach dem Stream weiter und veröffentlichte das **[fertige, funktionierende Beispiel](https://github.com/bbenz/20260827-jug-oberpfalz-demo)**. Das zählt mehr als die Erfolgsmeldung eines Agenten.
+
+## Nützliche Links
+
+- [Brians fertiges Beispiel für die Support-Ticket-Analyse](https://github.com/bbenz/20260827-jug-oberpfalz-demo), mit lokaler Einrichtung, Kubernetes-Manifesten und dem AKS-Deployment-Workflow
+- [langchain4j](https://github.com/langchain4j/langchain4j), das Framework, dessen Modellabstraktion kein einziges Mal kaputtging, selbst als alles andere es tat
+- [Vaadin-24.9-Release-Notes](https://vaadin.com/blog/vaadin-24-9-release), zur neuen Lizenzprüfung, die beide Hosts kalt erwischte
+- [Microsoft Foundry](https://azure.microsoft.com/en-us/products/ai-foundry/), der live gezeigte Modellkatalog und die Deployment-Plattform (früher Azure AI Foundry)
+- [Ankündigung zur Einstellung von GitHub Models](https://github.blog/changelog/2026-07-30-github-models-is-now-retired/), dem Dienst, auf den sich Brian früher für schnelle Modell-Demos verlassen hat, bevor er abgeschaltet wurde
+- [build.nvidia.com](https://build.nvidia.com/), der kostenlose Modell-Spielplatz, den Brian jetzt stattdessen nutzt
+- [Download-Seite für Microsoft Scout](https://www.microsoft.com/en-us/download/details.aspx?id=108685), falls du Zugang anfragen und es selbst ausprobieren willst

@@ -1,0 +1,140 @@
+---
+title: "Deploying a Java AI App to Azure: What Was Easy, What Broke"
+date: "2026-08-27"
+summary: "Brian Benz built a Java support-ticket app with GitHub Copilot and deployed it to Azure with Microsoft Scout. The model integration took minutes; stale configuration, generated dependencies, licensing, and deployment scope took the rest of the two-hour session."
+tags: ["java", "langchain4j", "vaadin", "spring-boot", "github-copilot", "azure", "live-coding", "ai-agents"]
+youtubeId: "TI7_Wz5Oag0"
+mainRepository: "https://github.com/bbenz/20260827-jug-oberpfalz-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction and welcoming Brian Benz"
+  - time: "02:31"
+    label: "Brian's role on Microsoft's cloud-native team and Azure AI Foundry"
+  - time: "04:05"
+    label: "Bringing Java credibility to Azure: Brian's history at Microsoft"
+  - time: "08:07"
+    label: "How much code Brian still writes by hand in the AI era"
+  - time: "10:40"
+    label: "Reworking the plan: Brian will code and deploy the app himself"
+  - time: "14:23"
+    label: "Kicking off a Java support-ticket analytics app with langchain4j"
+  - time: "15:09"
+    label: "Prompting GitHub Copilot and picking langchain4j over Spring AI"
+  - time: "19:37"
+    label: "Drafting the prompt, sample data, and a voice-dictation aside"
+  - time: "26:04"
+    label: "Touring Azure AI Foundry's models while Copilot asks clarifying questions"
+  - time: "35:21"
+    label: "GitHub Models' shutdown and NVIDIA's build.nvidia.com as an alternative"
+  - time: "40:41"
+    label: "Switching to Claude Sonnet 5 and comparing models on Azure's leaderboard"
+  - time: "49:00"
+    label: "Reviewing the generated stack: Flyway, PG vector, Vaadin, and langchain4j"
+  - time: "54:56"
+    label: "A detour into Microsoft Scout, Brian's personal AI agent"
+  - time: "01:07:31"
+    label: "Reining in a runaway test loop to get the app building"
+  - time: "01:16:05"
+    label: "Docker, WSL, and a hardcoded model version: chasing local bugs"
+  - time: "01:33:26"
+    label: "A Vaadin licensing surprise and downgrading to work around it"
+  - time: "01:47:59"
+    label: "Handing off to Scout: provisioning AKS, Postgres, and Azure OpenAI"
+  - time: "02:02:59"
+    label: "Adding a GitHub Actions workflow for continuous deployment"
+  - time: "02:21:56"
+    label: "Wrapping up: an honest demo, real bugs, and looking ahead to JCON"
+---
+
+Building a Java app against a real AI model and deploying it to Azure sounded like a full day of setup. During the stream, each setup step took minutes. Getting the whole system to run took more than two hours. The gap between easy parts and a working deployment became the real story.
+
+<CoSpeakerCard
+  name="Brian Benz"
+  role="Principal AI Advocate"
+  company="Microsoft"
+  bio="Brian is a Java Champion and Jakarta EE Ambassador who has spent almost 14 years at Microsoft building Java credibility on Azure, going back to a group hired specifically to bring open-source trust to a company the Java community mostly ignored."
+  imageSrc="/blog/brian-benz.png"
+  github="https://github.com/bbenz"
+  linkedin="https://www.linkedin.com/in/brianbenz"
+  x="https://x.com/bbenz"
+  bluesky="https://bsky.app/profile/bbenz.bsky.social"
+  youtube="https://www.youtube.com/user/brianbenz"
+/>
+
+## What we deployed
+
+The [finished repository](https://github.com/bbenz/20260827-jug-oberpfalz-demo) pins the stack to Java 21, Spring Boot 3.5.16, langchain4j 1.19.0, and Vaadin 24.8.17. The app imports support tickets, calculates SQL-based metrics, stores embeddings in PostgreSQL with pgvector, and uses Azure OpenAI for AI-assisted triage and semantic search. That context matters: this wasn't a hello-world endpoint with one model call.
+
+The local path uses Docker Compose for PostgreSQL and runs Spring Boot on the host. The Azure path adds an AKS cluster, Azure Container Registry, Azure Database for PostgreSQL, an Azure OpenAI deployment, workload identity, and a GitHub Actions deployment workflow. The stream crossed both paths while also generating the application itself.
+
+## The plan didn't survive first contact
+
+The original split was clean: I'd live-code a Java support-ticket app with langchain4j, and Brian would deploy it to Azure. About ten minutes in, we scrapped it. Brian had *three* tools he wanted to demo, not one, and splitting the session in half would have shown none of them properly, so we agreed he'd handle the whole build himself and use the second hour to show off his own workflow instead.
+
+Brian built *and* deployed the app himself with three tools. He used the **GitHub Copilot desktop app** to generate code from a prompt, **VS Code with Copilot** to review and repair the result, and **Scout**, Microsoft's autonomous agent in Frontier preview, for the Azure deployment. He estimated that he still types **20%** of the code. An agent generates the rest, which he then reviews or fixes.
+
+Microsoft offers Scout through a [public download page](https://www.microsoft.com/en-us/download/details.aspx?id=108685). Access still requires enrollment in its Frontier program and a GitHub Copilot Business or Enterprise subscription.
+
+## The easy part held up
+
+The cleanest technical result was that **langchain4j was never the problem.** Brian picked it over Spring AI specifically because its range of provider connectors suited a demo that needed to swap models mid-stream. The model change stayed behind configuration rather than leaking into application code.
+
+One of Copilot's clarifying questions asked for the language of the sample support tickets. It correctly suggested **English and German**, based only on the repository directory's name. Neither host had supplied that detail.
+
+While code generated in the background, Brian toured Azure AI Foundry's model catalog. Its benchmark leaderboard compared quality, safety, cost, latency, and throughput across roughly 11,000 available models. **Sonnet 5 is my personal favorite**, but the direct comparison challenged that preference: Grok scored higher on quality and lower on cost. Sonnet 5 generated slightly more tokens per second, while the safety result needed careful reading because a lower "attack success rate" was better.
+
+GitHub Models, which Brian used to lean on for exactly this kind of quick demo, had just been retired. These days he points people to NVIDIA's [build.nvidia.com](https://build.nvidia.com/) for a similar free playground, slow but usable.
+
+None of this part took long. Picking a framework, wiring a swappable model config, browsing a catalog, that's the "easier than you think" the pitch promised, and it was true.
+
+## Then came two hours of real bugs
+
+Getting the generated app to run ate the rest of the stream. The failures arrived one after another:
+
+- A background Copilot agent started compiling and testing every downloaded dependency. Brian had never seen that behavior before and stopped the loop by hand.
+- A Maven offline flag from a reused `.env` file blocked dependency resolution.
+- A hardcoded, unsupported Azure OpenAI API version broke model access. The finished app leaves `OPENAI_API_VERSION` blank so the bundled Azure SDK can select its newest supported version.
+- Docker Desktop lost its WSL connection. A restart and shell switch restored it.
+
+Then Vaadin joined in. **[Vaadin 24.9 changed how dev-mode trials and license checks work for premium features](https://vaadin.com/blog/vaadin-24-9-release)**. The generated app tripped that check and demanded a Pro license neither host had.
+
+<Quote author="Brian Benz" role="Principal AI Advocate at Microsoft">
+Uh oh, we need a Vaadin Pro license. I don't have a Vaadin Pro license. Uh oh.
+</Quote>
+
+Copilot traced the problem to the generated dependency setup. It removed an incorrectly added Vaadin TestBench dependency and pinned **Vaadin 24.8.17**, before the new check. None of these failures came from langchain4j.
+
+<ScoutFanOutDiagram />
+
+## Scope, not the tools, was the real problem
+
+Once the app finally built, Scout took over the Azure side from a single prompt: deploy this to a resource group, with whatever services it needs. It inferred AKS from the existing Kubernetes manifests already in the repo, then split into roughly 21 parallel sub-agents to provision a cluster, an Azure OpenAI deployment, a container registry, and a managed Postgres instance with pgvector, all at once, on the same codebase.
+
+That fan-out was impressive, but the plan's ambition caught up with the clock. A support-ticket triage app with vector search, live model swapping, and a CI/CD pipeline is a lot to fit into two hours. A discussed detail about running Postgres locally never reached Scout's prompt, so it provisioned Azure Database for PostgreSQL instead. Scout tried to deploy the discontinued GPT-4o and had to switch to GPT-5.6 mid-run. The first GitHub Actions run failed because its secrets weren't wired up. As the stream ended, a pod was still crash-looping because of a temperature-zero model call.
+
+Scout and Copilot did not fail the demo. The app was simply too large for a two-hour stream. Choosing a smaller target next time is the lesson, not a workaround.
+
+## What I would change next time
+
+I would keep the same tools and cut the demo scope. One UI flow, one model deployment, and one database path would leave enough time to verify the deployed application instead of merely provisioning it.
+
+The deployment prompt also needs to act like an infrastructure specification. It should state whether PostgreSQL is local or managed, name the allowed model deployment, list the secrets and identities to wire up, and define which health check proves success. Most importantly, "done" should mean that a user can complete the ticket-triage flow against the deployed URL, not that the Azure resources exist.
+
+## "Done" has to mean running
+
+<Quote author="Brian Benz" role="Principal AI Advocate at Microsoft">
+It said it was done and it just didn't run. This is like real world stuff, right? You might have these things when you build it, and then you test everything out and you just keep iterating.
+</Quote>
+
+The model setup was quick, langchain4j's abstraction held, and a real Azure AI Foundry model was live in minutes. AI-assisted deployment still needs supervision. Each failure needed a human to notice the symptom, correct the plan, or fix the code. Brian kept working after the stream and published the **[finished, working example](https://github.com/bbenz/20260827-jug-oberpfalz-demo)**. That follow-through matters more than an agent reporting that its task is complete.
+
+## Useful links
+
+- [Brian's finished support-ticket analytics example](https://github.com/bbenz/20260827-jug-oberpfalz-demo), including local setup, Kubernetes manifests, and the AKS deployment workflow
+- [langchain4j](https://github.com/langchain4j/langchain4j), the framework whose model abstraction never broke, even after everything else did
+- [Vaadin 24.9 release notes](https://vaadin.com/blog/vaadin-24-9-release), covering the new license check that caught both hosts off guard
+- [Microsoft Foundry](https://azure.microsoft.com/en-us/products/ai-foundry/), the model catalog and deployment platform (formerly Azure AI Foundry) shown live
+- [GitHub Models retirement announcement](https://github.blog/changelog/2026-07-30-github-models-is-now-retired/), the service Brian used to rely on for quick model demos before it shut down
+- [build.nvidia.com](https://build.nvidia.com/), the free model playground Brian now uses instead
+- [Microsoft Scout download page](https://www.microsoft.com/en-us/download/details.aspx?id=108685), if you want to request access and try it yourself
