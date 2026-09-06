@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-let assetPrefix = '';
-let basePath = '';
+// Allows a preview deployment (e.g. rabauer.dev/preview) to be built with a
+// non-root base path without affecting the normal production build.
+const previewBasePath = process.env.NEXT_BASE_PATH || '';
+
+let assetPrefix = previewBasePath;
+let basePath = previewBasePath;
 
 const nextConfig = {
   output: 'export',
