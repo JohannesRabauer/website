@@ -175,35 +175,14 @@ Apply the ground rules above (constraints, style, bilingual conventions) through
 
 Save the pair to `content/posts/en/<slug>.mdx` and `content/posts/de/<slug>.mdx`, matching the `PostFrontmatter` shape exactly: `title`, `date`, `summary`, `tags`, `youtubeId`, `mainRepository` (optional), `draft` (default `false` unless the user wants it staged first), `timestamps`.
 
-## Step 12 — Self-edit against AI writing tells
+## Step 12 — Run the `good-writing` skill on the draft
 
-Before saving, reread the draft specifically hunting for these patterns. They're the most common tells that a text was machine-written rather than by someone who was actually there, compiled from Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) essay. The goal isn't to hit a checklist — it's that a session recap should read like the user telling a colleague what happened, not like a press release about it.
+Before saving, invoke the `good-writing` skill (via the Skill tool, don't just recall its checklist from memory) against the full draft, English and German bodies both. That skill is the single source of truth for avoiding AI-writing tells, vocabulary, sentence-level patterns, structure, formatting, and it's updated independently of this one, so calling it fresh matters more than reciting a cached copy of its rules. The underlying goal is the same one stated there: nothing produced here should read as AI-written, and a session recap specifically should read like the user telling a colleague what happened, not like a press release about it.
 
-**Vocabulary that's become an AI tell through overuse.** If one of these is the natural word, fine, but check whether a plainer word says the same thing: *delve, boasts, crucial, intricate/intricacies, garner, landscape (as in "the X landscape"), pivotal, underscore, tapestry, testament, vibrant, additionally, align with, enhance, foster/fostering, showcase, highlight (as a verb meaning "shows"), leverage.*
+Two things stay specific to this project and aren't part of the generic skill, so check them here as well, after the good-writing pass:
 
-**Avoiding plain "is/has" for no reason.** "The workflow serves as a foundation" instead of "the workflow is a foundation." "The talk features three demos" instead of "the talk has three demos." Use the plain copula when it's plain.
-
-**Inflating stakes with legacy/significance language.** "Marks a pivotal moment," "stands as a testament to," "plays a crucial role in," "underscores the importance of." A session recap earns its importance from what actually happened, not from a sentence announcing that it was important.
-
-**Dangling participle padding.** Sentences that end with an unearned "-ing" clause tacked on for weight: "...further highlighting the growing need for X" or "...underscoring the significance of Y." If the participle clause doesn't add a new fact, cut it.
-
-**Negative parallelism as a crutch.** "Not just X, but also Y." "It's not about X, it's about Y." "X rather than Y." One or two of these read fine; a post full of them reads like a template.
-
-**Rule-of-three padding.** Automatically grouping adjectives or examples into triplets ("fast, flexible, and powerful") because three feels complete, not because there are exactly three. Use however many the fact actually supports.
-
-**Promotional/travel-brochure tone.** "Rich," "vibrant," "nestled," "in the heart of," "diverse array of." This is a technical recap, not tourism copy.
-
-**Vague attribution.** "Industry reports suggest," "observers have noted," "experts argue" — the constraints above already ban inventing sources, and this phrasing is exactly how an invented source sneaks in disguised as consensus. Every claim should trace to the transcript or the user, not to an unnamed "they."
-
-**Formulaic essay conclusion.** "Despite its challenges, X shows great promise for the future." The takeaway section should say the specific thing the user told you in Step 5, not wrap up with a generic good-news/bad-news bow.
-
-**Formatting tells:** Title Case Section Headers (use sentence case), bullet lists built entirely from `**Bold label:** description` where prose would read better, emoji used as visual structure, em dashes standing in for periods or commas in most sentences (the ground rules above already ban `—`/`-` mid-sentence), horizontal rules inserted before headings, tables used for content that's really just a paragraph.
-
-**Exception — bold/italic on this project.** The generic tell to watch for is *mechanical* bolding: bolding nouns or phrases at random, with no particular claim behind them, just to look scannable. This project's house style (Step 11) deliberately wants the opposite kind of emphasis, and wants it often: one or two bolded or italicized takeaways in nearly every short paragraph, placed on the actual claim, number, or turn being made. That's wanted here, not a tell — the difference is whether the emphasis marks a real point or just decorates a term.
-
-**Elegant variation.** Swapping in a synonym every time a word repeats, even when the repeated word is clearer. If the session was about "agents," it's fine to say "agents" five times in a row instead of cycling through "assistants," "systems," and "tools" to avoid repetition.
-
-**Overworked metaphor.** If Step 6 produced a chosen metaphor, check it was used once or twice with purpose, not stretched to cover every section — a metaphor forced into every paragraph reads as artificial as the vocabulary tells above.
+- **Bold/italic is wanted, not a tell, on this project.** The generic skill flags *mechanical* bolding, nouns or phrases bolded at random with no claim behind them. This project's house style (Step 11) deliberately wants the opposite kind of emphasis, and wants it often: one or two bolded or italicized takeaways in nearly every short paragraph, placed on the actual claim, number, or turn being made. That's wanted here, not a tell — the difference is whether the emphasis marks a real point or just decorates a term. If the two seem to conflict, this project's rule wins, per good-writing's own note that a project's house style can override an individual formatting default.
+- **Overworked metaphor.** If Step 6 produced a chosen metaphor, check it was used once or twice with purpose, not stretched to cover every section — a metaphor forced into every paragraph reads as artificial as any of the vocabulary tells the good-writing skill checks for.
 
 ## Step 13 — Tell the user what's next
 

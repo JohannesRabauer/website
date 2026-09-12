@@ -51,15 +51,11 @@ So this session had three rules. Build with an AI coding tool, not by hand. Get 
 
 ## The stack, picked for cost, not habit
 
-Every choice here was made to keep the running cost at zero, not because it's what I'd reach for by default.
+Every choice here was made to keep the running cost at zero, not because it's what I'd reach for by default. The build stayed on Quarkus's plain JVM path, no native image, because native builds fight reflection, and the Google Cloud client libraries this project needs lean on reflection heavily. [Time and time again I try to build a native image and it never really works](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). My usual Quarkus cold start on other projects is under two seconds, so that became the target to beat on the JVM instead.
 
-**Quarkus without a native image.** Native builds start faster, but they fight reflection, and the Google Cloud client libraries this project needs lean on reflection heavily. [Time and time again I try to build a native image and it never really works](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478), so this stayed on the plain JVM build. My usual Quarkus cold start on other projects is under two seconds, which became the target to beat.
+For the UI, Qute won over Vaadin, which I actually prefer when I write by hand. Pairing Vaadin with AI tools has burned me before: licensing issues, missing annotations the AI didn't catch. [With AI I right now cannot recommend it](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). Qute sits close enough to plain HTML that the AI generates it reliably.
 
-**Qute instead of Vaadin.** I like Vaadin when I write the UI by hand, but pairing it with AI tools has burned me before, licensing issues, missing annotations the AI didn't catch. [With AI I right now cannot recommend it](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). Qute is close enough to plain HTML that the AI generates it reliably.
-
-**Firestore instead of a SQL database.** This is the decision that actually makes "zero cost while idle" true. A SQL instance bills while it's running, whether anyone's using it or not. Firestore doesn't, so the app never accrues a cost just for existing.
-
-**Google login**, through Quarkus's own `quarkus-oidc` extension configured with `provider=google`. No separate library, no custom credential handling.
+The decision that makes "zero cost while idle" true is Firestore over a SQL database. A SQL instance bills while it's running, whether anyone's using it or not; Firestore doesn't, so the app never accrues a cost just for existing. Google login rode on top of that, through Quarkus's own `quarkus-oidc` extension configured with `provider=google`: no separate library, no custom credential handling.
 
 None of this was rehearsed. **I had never used Grok 4.6 before this stream**, the model GitHub Copilot ran in autopilot mode, and I'd never seriously used Google Cloud either. Both were live, first-time experiments, which is exactly the point of these sessions.
 
@@ -91,7 +87,7 @@ Adding **Google login** is where the AI-does-everything approach actually broke.
 
 Claude Code couldn't create the Google OAuth client either, but for a more honest reason: creating an OAuth client is a manual step in the Google Cloud console, full stop, no API shortcut for an agent to take. So I did it myself, muting the stream twice to keep the client secret off camera, then had Claude store the values as **GitHub secrets** rather than typing them into the chat.
 
-That's the part the diagram above is really about. Every other box in this project ran through a prompt. This one didn't, and it's exactly where the debugging happened: a deploy that failed with an unadvertised OAuth "end session endpoint" I never got a clean fix for, a "resource not found" after a successful login, and a credential mismatch that turned out to be a pasting artifact. I'd copied the client secret using Windows `cmd` instead of PowerShell, which left stray characters in the value. Once I redid that in PowerShell and redeployed, sign-in worked end to end, and viewers in the stream, "Suzan," "Sumi," and "Mr. SK" among them, signed in with their own Google accounts and added their own data.
+That's the part the diagram above is really about. Every other box in this project ran through a prompt. This one didn't, and it's exactly where the debugging happened. First, a deploy failed with an unadvertised OAuth "end session endpoint" I never got a clean fix for. Then sign-in worked but produced a "resource not found" error afterward. Then a credential mismatch turned out to be a pasting artifact: I'd copied the client secret using Windows `cmd` instead of PowerShell, which left stray characters in the value. Once I redid that in PowerShell and redeployed, sign-in worked end to end. Viewers in the stream, including "Suzan," "Sumi," and "Mr. SK," signed in with their own Google accounts and added their own data.
 
 Even with all of that churn, the billing dashboard read **$0** again afterward. And I'll say the honest part out loud: the data model still doesn't cleanly separate multiple independent families. It happened to work for everyone testing it live, but the family/trip identifier is still hardcoded in places I flagged myself during the code walkthrough. Every one of these solo streams starts with me thinking today will be short because I know exactly what I'm doing, and every single time it derails somehow.
 
