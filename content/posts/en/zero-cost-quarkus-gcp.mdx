@@ -1,0 +1,111 @@
+---
+title: "Java Can't Scale to Zero? This Quarkus App Says Otherwise."
+date: "2026-09-10"
+summary: "A solo session building a family travel-budget tracker with Quarkus, Qute, and Firestore, deployed to Google Cloud Run and confirmed at $0 in the billing dashboard twice. The zero-cost part held up. The real fight was getting AI agents through Google's own login setup, not the app code."
+tags: ["quarkus", "google-cloud-run", "firestore", "oidc", "java", "live-coding", "github-copilot", "claude-code"]
+youtubeId: "5PKJI3Wb65o"
+mainRepository: "https://github.com/JohannesRabauer/expense-app-cloud"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:22"
+    label: "Why a zero-cost budget tracker: the family vacation story"
+  - time: "04:21"
+    label: "The plan: build and deploy entirely with AI"
+  - time: "05:52"
+    label: "GCP project setup and the zero-cost goal"
+  - time: "07:58"
+    label: "Feeding the build prompt to GitHub Copilot"
+  - time: "34:52"
+    label: "First local run attempt and Firestore credential errors"
+  - time: "50:27"
+    label: "App running locally: family members, budgets, and layout fixes"
+  - time: "53:51"
+    label: "Telling AI to provision GCP infra and CI/CD"
+  - time: "1:04:04"
+    label: "Code walkthrough: records and Firestore repository structure"
+  - time: "1:11:01"
+    label: "GitHub Actions workflow and first Cloud Run deployment"
+  - time: "1:18:52"
+    label: "Live app test and confirming zero billing cost"
+  - time: "1:28:22"
+    label: "Adding Google login: Copilot struggles and IDE crashes"
+  - time: "1:41:14"
+    label: "Switching to Claude Code for the OAuth implementation"
+  - time: "1:44:19"
+    label: "OAuth client setup and GitHub secrets"
+  - time: "1:52:45"
+    label: "Debugging OIDC config errors and credential mismatches"
+  - time: "2:14:21"
+    label: "Login finally works: multi-user test with viewers"
+  - time: "2:17:11"
+    label: "Measuring cold-start boot time"
+  - time: "2:21:12"
+    label: "Wrap-up and closing"
+---
+
+The idea came from an actual family vacation in England the week before this session. My kids wanted to buy things and had no idea what their budget was. I tracked it on a to-do app, which worked but was a mess. That was the excuse. The real, longer-running reason is simpler: **I'm cheap about my own side projects**. I don't want to pay to host something just for myself, but I do want it reachable from anywhere, for my family and for friends, at no cost.
+
+So this session had three rules. Build with an AI coding tool, not by hand. Get it running locally before deploying. And do the entire cloud setup, project creation, OAuth client, Cloud Run deployment, through the AI as well, not the GCP console or memorized CLI commands. I don't use gcloud often enough to remember it.
+
+## The stack, picked for cost, not habit
+
+Every choice here was made to keep the running cost at zero, not because it's what I'd reach for by default.
+
+**Quarkus without a native image.** Native builds start faster, but they fight reflection, and the Google Cloud client libraries this project needs lean on reflection heavily. [Time and time again I try to build a native image and it never really works](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478), so this stayed on the plain JVM build. My usual Quarkus cold start on other projects is under two seconds, which became the target to beat.
+
+**Qute instead of Vaadin.** I like Vaadin when I write the UI by hand, but pairing it with AI tools has burned me before, licensing issues, missing annotations the AI didn't catch. [With AI I right now cannot recommend it](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). Qute is close enough to plain HTML that the AI generates it reliably.
+
+**Firestore instead of a SQL database.** This is the decision that actually makes "zero cost while idle" true. A SQL instance bills while it's running, whether anyone's using it or not. Firestore doesn't, so the app never accrues a cost just for existing.
+
+**Google login**, through Quarkus's own `quarkus-oidc` extension configured with `provider=google`. No separate library, no custom credential handling.
+
+None of this was rehearsed. **I had never used Grok 4.6 before this stream**, the model GitHub Copilot ran in autopilot mode, and I'd never seriously used Google Cloud either. Both were live, first-time experiments, which is exactly the point of these sessions.
+
+<ZeroCostQuarkusOpsDiagram />
+
+## The app came together fast. The login didn't.
+
+The first local run failed on Firestore credential errors, no Application Default Credentials configured locally. The fix was simple: switch local development to an in-memory store, so the app runs without Docker or real Google credentials at all. Then the data model needed a correction of its own, budgets and expenses were shared across the whole family instead of per person, which [didn't make sense at all](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=3027) once I actually tried using it. Each family member got their own envelope: a budget, expenses, and optional income, modeled as immutable Java records, close to event sourcing in shape.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/zero-cost-quarkus-dashboard.png"
+    alt="Family trip dashboard showing budgets, spent, income, and remaining totals for two family members, Anna and Peter"
+    caption="The family dashboard: one shared trip, one private envelope per person."
+  />
+</div>
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/zero-cost-quarkus-person-envelope.png"
+    alt="Per-person budget envelope for Anna, showing budget, spent, income, and remaining amounts alongside forms to log expenses and income"
+    caption="Anna's own envelope: budget, expenses, income, and what's left."
+  />
+</div>
+
+Provisioning the cloud side went the same way: one prompt telling the AI to set up whatever Google Cloud needed and write a GitHub Actions workflow that deploys on every push to `main`. It built with Maven on Java 21 and deployed to Cloud Run in `europe-west` with CPU boost and `--min-instances=0`. The first deployment worked. I opened the billing dashboard for the trailing seven days: **$0**. That's the whole pitch of this session, confirmed on screen, not just claimed in a title.
+
+Adding **Google login** is where the AI-does-everything approach actually broke. GitHub Copilot's browser-canvas view, meant to click through the Google Cloud console on my behalf, kept dying mid-flow. It crashed hard enough at one point that I lost my Copilot session entirely and had to log back in. [I'm bit disappointed here](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=5302), I said on stream, before giving it one last try and switching to Claude Code instead.
+
+Claude Code couldn't create the Google OAuth client either, but for a more honest reason: creating an OAuth client is a manual step in the Google Cloud console, full stop, no API shortcut for an agent to take. So I did it myself, muting the stream twice to keep the client secret off camera, then had Claude store the values as **GitHub secrets** rather than typing them into the chat.
+
+That's the part the diagram above is really about. Every other box in this project ran through a prompt. This one didn't, and it's exactly where the debugging happened: a deploy that failed with an unadvertised OAuth "end session endpoint" I never got a clean fix for, a "resource not found" after a successful login, and a credential mismatch that turned out to be a pasting artifact. I'd copied the client secret using Windows `cmd` instead of PowerShell, which left stray characters in the value. Once I redid that in PowerShell and redeployed, sign-in worked end to end, and viewers in the stream, "Suzan," "Sumi," and "Mr. SK" among them, signed in with their own Google accounts and added their own data.
+
+Even with all of that churn, the billing dashboard read **$0** again afterward. And I'll say the honest part out loud: the data model still doesn't cleanly separate multiple independent families. It happened to work for everyone testing it live, but the family/trip identifier is still hardcoded in places I flagged myself during the code walkthrough. Every one of these solo streams starts with me thinking today will be short because I know exactly what I'm doing, and every single time it derails somehow.
+
+## The cold start missed my own target
+
+I'd done real prep for this: AppCDS enabled, the Firestore gRPC channel warmed on a background thread at startup, Cloud Run's CPU boost during startup, all aimed at a sub-two-second cold start. Forcing the instance to scale down and back up live, I measured **roughly six seconds, then five, then six again, then four** on a later attempt, consistently worse than the baseline I'd hit in testing the day before. I didn't find the cause on stream. That's an honest gap, not a claim I'm walking back: the cost story held up perfectly, the latency story needs more work.
+
+## Final thought
+
+The headline claim survived contact with reality: a Java app on Cloud Run really can scale to zero and really can cost nothing while idle, checked twice on the actual billing page, not assumed from a spec sheet. What surprised me was where the AI-driven workflow held up and where it didn't. Provisioning infra, writing the deploy pipeline, wiring Firestore, all of that went through a prompt without much drama. The one step that forced me back into a browser and a mouse was the one step Google itself gates behind a manual click, OAuth client creation, and that's exactly where the bugs piled up afterward. If you're planning to hand an AI agent your entire deployment, budget for that one console tab anyway.
+
+## Useful links
+
+- [Quarkus OIDC guide](https://quarkus.io/guides/security-openid-connect-providers): configuring `quarkus-oidc` with built-in providers like Google
+- [Quarkus Google Cloud Services (Quarkiverse)](https://github.com/quarkiverse/quarkus-google-cloud-services): the Firestore extension used for storage, including a local emulator Dev Service
+- [Cloud Run pricing](https://cloud.google.com/run/pricing): the Always Free tier this session stayed inside of
+- [The BMad Method for Java Developers](/en/blog/bmad-method): my usual AI-workflow toolkit, skipped here since it's too involved for a single-stream build
