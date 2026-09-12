@@ -2,10 +2,15 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
+import { withBasePath } from '@/lib/basePath';
 
 type Props = React.ComponentPropsWithoutRef<'img'> & { caption?: React.ReactNode };
 
 export default function ZoomableImage({ src, alt, width, height, className, caption, ...rest }: Props) {
+  if (typeof src === 'string') {
+    src = withBasePath(src);
+  }
+
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 

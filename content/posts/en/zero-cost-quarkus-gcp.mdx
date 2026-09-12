@@ -1,7 +1,7 @@
 ---
 title: "Java Can't Scale to Zero? This Quarkus App Says Otherwise."
 date: "2026-09-10"
-summary: "A solo session building a family travel-budget tracker with Quarkus, Qute, and Firestore, deployed to Google Cloud Run and confirmed at $0 in the billing dashboard twice. The zero-cost part held up. The real fight was getting AI agents through Google's own login setup, not the app code."
+summary: "A solo session building a family travel-budget tracker with Quarkus, Qute, and Firestore, deployed to Google Cloud Run and confirmed at $0 in the billing dashboard twice. Zero cost held up, and Google's own login setup caused more trouble than the app code did."
 tags: ["quarkus", "google-cloud-run", "firestore", "oidc", "java", "live-coding", "github-copilot", "claude-code"]
 youtubeId: "5PKJI3Wb65o"
 mainRepository: "https://github.com/JohannesRabauer/expense-app-cloud"
@@ -45,25 +45,29 @@ timestamps:
     label: "Wrap-up and closing"
 ---
 
-The idea came from an actual family vacation in England the week before this session. My kids wanted to buy things and had no idea what their budget was. I tracked it on a to-do app, which worked but was a mess. That was the excuse. The real, longer-running reason is simpler: **I'm cheap about my own side projects**. I don't want to pay to host something just for myself, but I do want it reachable from anywhere, for my family and for friends, at no cost.
+A family vacation in England the week before this session started it. My kids wanted to buy things and had no idea what budget they had left. I tracked it on a to-do app, which worked but was a mess. I'm also cheap about my own side projects: I won't pay to host something just for myself, but I want it reachable from anywhere, for family and friends, at no cost.
 
-So this session had three rules. Build with an AI coding tool, not by hand. Get it running locally before deploying. And do the entire cloud setup, project creation, OAuth client, Cloud Run deployment, through the AI as well, not the GCP console or memorized CLI commands. I don't use gcloud often enough to remember it.
+So this session had three rules. Build with an AI coding tool, not by hand. Get it running locally first. And do the entire cloud setup, project, OAuth client, Cloud Run deployment, through the AI too, not the GCP console or memorized gcloud commands.
+
+Here's the shape of it end to end:
+
+<ZeroCostQuarkusArchitectureDiagram />
 
 ## The stack, picked for cost, not habit
 
-Every choice here was made to keep the running cost at zero, not because it's what I'd reach for by default. The build stayed on Quarkus's plain JVM path, no native image, because native builds fight reflection, and the Google Cloud client libraries this project needs lean on reflection heavily. [Time and time again I try to build a native image and it never really works](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). My usual Quarkus cold start on other projects is under two seconds, so that became the target to beat on the JVM instead.
+Every choice here kept the running cost at zero. The build stayed on Quarkus's plain JVM path, no native image: native builds fight reflection, and the Google Cloud client libraries this project needs lean on reflection heavily. [Time and time again I try to build a native image and it never really works](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). My usual Quarkus cold start elsewhere is under two seconds, so that became the target on the JVM instead.
 
-For the UI, Qute won over Vaadin, which I actually prefer when I write by hand. Pairing Vaadin with AI tools has burned me before: licensing issues, missing annotations the AI didn't catch. [With AI I right now cannot recommend it](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). Qute sits close enough to plain HTML that the AI generates it reliably.
+Qute won over Vaadin for the UI. I prefer Vaadin by hand, but pairing it with AI tools has burned me before: licensing issues, missing annotations the AI didn't catch. [With AI I right now cannot recommend it](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=478). Qute sits close enough to plain HTML that the AI generates it reliably.
 
-The decision that makes "zero cost while idle" true is Firestore over a SQL database. A SQL instance bills while it's running, whether anyone's using it or not; Firestore doesn't, so the app never accrues a cost just for existing. Google login rode on top of that, through Quarkus's own `quarkus-oidc` extension configured with `provider=google`: no separate library, no custom credential handling.
+Firestore over a SQL database is the decision that makes "zero cost while idle" true: a SQL instance bills while running, idle or not, and Firestore doesn't. Google login rode on top of that, through Quarkus's own `quarkus-oidc` extension with `provider=google`: no separate library, no custom credential handling.
 
-None of this was rehearsed. **I had never used Grok 4.6 before this stream**, the model GitHub Copilot ran in autopilot mode, and I'd never seriously used Google Cloud either. Both were live, first-time experiments, which is exactly the point of these sessions.
+None of this was rehearsed. **I had never used Grok 4.6 before this stream**, the model GitHub Copilot ran in autopilot mode, and I'd never seriously used Google Cloud either.
 
 <ZeroCostQuarkusOpsDiagram />
 
 ## The app came together fast. The login didn't.
 
-The first local run failed on Firestore credential errors, no Application Default Credentials configured locally. The fix was simple: switch local development to an in-memory store, so the app runs without Docker or real Google credentials at all. Then the data model needed a correction of its own, budgets and expenses were shared across the whole family instead of per person, which [didn't make sense at all](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=3027) once I actually tried using it. Each family member got their own envelope: a budget, expenses, and optional income, modeled as immutable Java records, close to event sourcing in shape.
+The first local run failed on Firestore credential errors: no Application Default Credentials configured locally. The fix was simple: switch local development to an in-memory store, no Docker, no real credentials needed. The data model needed a fix too. Budgets and expenses were shared across the whole family instead of per person, which [didn't make sense at all](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=3027) once I tried using it. Each family member got their own envelope: budget, expenses, optional income, modeled as immutable Java records, close to event sourcing in shape.
 
 <div className="mdx-image-compact">
   <ZoomableImage
@@ -81,23 +85,23 @@ The first local run failed on Firestore credential errors, no Application Defaul
   />
 </div>
 
-Provisioning the cloud side went the same way: one prompt telling the AI to set up whatever Google Cloud needed and write a GitHub Actions workflow that deploys on every push to `main`. It built with Maven on Java 21 and deployed to Cloud Run in `europe-west` with CPU boost and `--min-instances=0`. The first deployment worked. I opened the billing dashboard for the trailing seven days: **$0**. That's the whole pitch of this session, confirmed on screen, not just claimed in a title.
+Provisioning the cloud side was one prompt: set up whatever Google Cloud needed, write a GitHub Actions workflow that deploys on every push to `main`. It built with Maven on Java 21 and deployed to Cloud Run in `europe-west` with CPU boost and `--min-instances=0`. First deployment worked. The billing dashboard for the trailing seven days read **$0**.
 
-Adding **Google login** is where the AI-does-everything approach actually broke. GitHub Copilot's browser-canvas view, meant to click through the Google Cloud console on my behalf, kept dying mid-flow. It crashed hard enough at one point that I lost my Copilot session entirely and had to log back in. [I'm bit disappointed here](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=5302), I said on stream, before giving it one last try and switching to Claude Code instead.
+Google login is where the AI-does-everything approach broke. Copilot's browser-canvas view, meant to click through the Google Cloud console for me, kept dying mid-flow. It crashed hard enough once that I lost the whole Copilot session and had to log back in. [I'm bit disappointed here](https://www.youtube.com/watch?v=5PKJI3Wb65o&t=5302), I said on stream, before giving it one last try and switching to Claude Code.
 
-Claude Code couldn't create the Google OAuth client either, but for a more honest reason: creating an OAuth client is a manual step in the Google Cloud console, full stop, no API shortcut for an agent to take. So I did it myself, muting the stream twice to keep the client secret off camera, then had Claude store the values as **GitHub secrets** rather than typing them into the chat.
+Claude Code couldn't create the OAuth client either, for a more honest reason: it's a manual step in the Google Cloud console, no API shortcut for an agent to take. So I did it myself, muting the stream twice to keep the client secret off camera, then had Claude store the values as **GitHub secrets** instead of typing them into the chat.
 
-That's the part the diagram above is really about. Every other box in this project ran through a prompt. This one didn't, and it's exactly where the debugging happened. First, a deploy failed with an unadvertised OAuth "end session endpoint" I never got a clean fix for. Then sign-in worked but produced a "resource not found" error afterward. Then a credential mismatch turned out to be a pasting artifact: I'd copied the client secret using Windows `cmd` instead of PowerShell, which left stray characters in the value. Once I redid that in PowerShell and redeployed, sign-in worked end to end. Viewers in the stream, including "Suzan," "Sumi," and "Mr. SK," signed in with their own Google accounts and added their own data.
+That's what the diagram above is about. Every other box in this project ran through a prompt. This one didn't, and that's exactly where the debugging happened. First, a deploy failed on an unadvertised OAuth "end session endpoint" I never got a clean fix for. Then sign-in worked but produced a "resource not found" error. Then a credential mismatch turned out to be a pasting artifact: I'd copied the client secret using Windows `cmd` instead of PowerShell, which left stray characters in the value. PowerShell fixed it, and sign-in worked end to end. Viewers, including "Suzan," "Sumi," and "Mr. SK," signed in with their own Google accounts and added their own data.
 
-Even with all of that churn, the billing dashboard read **$0** again afterward. And I'll say the honest part out loud: the data model still doesn't cleanly separate multiple independent families. It happened to work for everyone testing it live, but the family/trip identifier is still hardcoded in places I flagged myself during the code walkthrough. Every one of these solo streams starts with me thinking today will be short because I know exactly what I'm doing, and every single time it derails somehow.
+Billing read **$0** again afterward. Honest gap: the data model still doesn't cleanly separate multiple independent families. It happened to work for everyone testing it live, but the family/trip identifier is still hardcoded in places I flagged myself during the code walkthrough.
 
 ## The cold start missed my own target
 
-I'd done real prep for this: AppCDS enabled, the Firestore gRPC channel warmed on a background thread at startup, Cloud Run's CPU boost during startup, all aimed at a sub-two-second cold start. Forcing the instance to scale down and back up live, I measured **roughly six seconds, then five, then six again, then four** on a later attempt, consistently worse than the baseline I'd hit in testing the day before. I didn't find the cause on stream. That's an honest gap, not a claim I'm walking back: the cost story held up perfectly, the latency story needs more work.
+Real prep went into this: AppCDS, the Firestore gRPC channel warmed on a background thread at startup, Cloud Run's CPU boost, all aimed at under two seconds. Forcing the instance down and back up live, I measured **roughly six seconds, then five, then six, then four** on a later attempt, worse than the test run I'd done the day before. I never found the cause. Cost held up perfectly; latency needs more work.
 
 ## Final thought
 
-The headline claim survived contact with reality: a Java app on Cloud Run really can scale to zero and really can cost nothing while idle, checked twice on the actual billing page, not assumed from a spec sheet. What surprised me was where the AI-driven workflow held up and where it didn't. Provisioning infra, writing the deploy pipeline, wiring Firestore, all of that went through a prompt without much drama. The one step that forced me back into a browser and a mouse was the one step Google itself gates behind a manual click, OAuth client creation, and that's exactly where the bugs piled up afterward. If you're planning to hand an AI agent your entire deployment, budget for that one console tab anyway.
+The headline claim held: a Java app on Cloud Run can scale to zero and cost nothing while idle, checked twice on the actual billing page. What surprised me was where the AI-driven workflow broke. Not the infra, the deploy pipeline, or Firestore, all of that went through a prompt without drama, but the one step Google itself gates behind a manual click: OAuth client creation. That's exactly where the bugs piled up. Hand an AI agent your entire deployment, and budget for that one console tab anyway.
 
 ## Useful links
 

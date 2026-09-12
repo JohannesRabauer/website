@@ -26,6 +26,7 @@ import EntireCheckpointDiagram from '@/app/components/EntireCheckpointDiagram';
 import LangGraph4jControlTowerDiagram from '@/app/components/LangGraph4jControlTowerDiagram';
 import ScoutFanOutDiagram from '@/app/components/ScoutFanOutDiagram';
 import ZeroCostQuarkusOpsDiagram from '@/app/components/ZeroCostQuarkusOpsDiagram';
+import ZeroCostQuarkusArchitectureDiagram from '@/app/components/ZeroCostQuarkusArchitectureDiagram';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -114,6 +115,9 @@ export default function BlogPostContent({ locale, slug }: Props) {
     ),
     ZeroCostQuarkusOpsDiagram: (props: React.ComponentProps<typeof ZeroCostQuarkusOpsDiagram>) => (
       <ZeroCostQuarkusOpsDiagram {...props} locale={locale} />
+    ),
+    ZeroCostQuarkusArchitectureDiagram: (props: React.ComponentProps<typeof ZeroCostQuarkusArchitectureDiagram>) => (
+      <ZeroCostQuarkusArchitectureDiagram {...props} locale={locale} />
     ),
     ScoutFanOutDiagram: (props: React.ComponentProps<typeof ScoutFanOutDiagram>) => (
       <ScoutFanOutDiagram {...props} locale={locale} />

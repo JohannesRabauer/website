@@ -1,7 +1,7 @@
 ---
 name: good-writing
 description: >-
-  Use this skill whenever writing or editing prose meant to sound human — blog posts, articles, emails, video descriptions, social posts, documentation, or any text the user will publish under their own name. Strips out the stock patterns that make text read as AI-generated, per Wikipedia's "Signs of AI writing" field guide - puffed-up significance, rule-of-three padding, negative parallelism ("it's not just X, it's Y"), false ranges, elegant variation, formulaic transitions, vague attributions, boilerplate structure, and overuse of bold/bullets/em dashes. Also applies language-specific style rules on top of the checklist: Gutes Deutsch nach Wolf Schneider for German text, Plain English per Strunk & White for English text. Trigger this any time the user asks to write, draft, rewrite, "humanize," or edit copy for external use, even if they don't explicitly mention AI detection or say "make this sound human."
+  Use this skill whenever writing or editing prose meant to sound human — blog posts, articles, emails, video descriptions, social posts, documentation, or any text the user will publish under their own name. Strips out the stock patterns that make text read as AI-generated, per Wikipedia's "Signs of AI writing" field guide - puffed-up significance, rule-of-three padding, negative parallelism ("it's not just X, it's Y"), the manufactured-reveal template ("the real reason was..."), false ranges, elegant variation, formulaic transitions, vague attributions, boilerplate structure, and overuse of bold/bullets/em dashes. Also applies language-specific style rules on top of the checklist: Gutes Deutsch nach Wolf Schneider for German text, Plain English per Strunk & White for English text. Trigger this any time the user asks to write, draft, rewrite, "humanize," or edit copy for external use, even if they don't explicitly mention AI detection or say "make this sound human."
 ---
 
 # Avoid AI Writing Tells
@@ -49,44 +49,47 @@ This list drifts as models change (GPT-4-era favorites like "delve" and "tapestr
 **8. Negative parallelism.** "It's not just X, it's Y." "This isn't just a tool, it's a movement." Also its punchier cousin, the **outline of negatives**: "no gimmicks, no filler, just results" — a rhythmic list of things something *isn't*, standing in for saying what it is.
 **Fix:** state the claim directly. If a real contrast exists, it survives without the "not just... it's" scaffolding.
 
-**9. Excessive synonym variance ("elegant variation").** Swapping in a different synonym every time a word repeats, even when the repeated word is clearer — calling the same person "the founder," then "the entrepreneur," then "the visionary" purely to avoid repetition.
+**9. The manufactured-reveal template ("The real X was Y").** "The real reason is...," "The real fight was...," "The real problem turned out to be...," "What actually happened was...". A stock rhetorical move that stages a claim as a dramatic reveal of hidden truth, regardless of whether the thing being revealed is actually surprising or was hidden from anyone.
+**Fix:** just state the fact. "I don't want to pay to host something for myself" needs no "the real reason is" in front of it; the sentence already carries its own weight.
+
+**10. Excessive synonym variance ("elegant variation").** Swapping in a different synonym every time a word repeats, even when the repeated word is clearer — calling the same person "the founder," then "the entrepreneur," then "the visionary" purely to avoid repetition.
 **Fix:** repeat the plain word. Clarity beats variety; a human writer doesn't flinch at using "agents" five times in a row.
 
-**10. Vague attribution.** "Critics argue," "some believe," "experts say," "many consider," "observers have noted," "industry reports suggest," with no name attached.
+**11. Vague attribution.** "Critics argue," "some believe," "experts say," "many consider," "observers have noted," "industry reports suggest," with no name attached.
 **Fix:** name the source, or cut the claim. If you don't know who said it, don't attribute it to a faceless crowd.
 
-**11. Editorializing asides / didactic disclaimers.** Inserted meta-commentary addressed at an imagined reader rather than actual content: "it's important to note," "it's worth noting that," "crucial to remember," "results may vary."
+**12. Editorializing asides / didactic disclaimers.** Inserted meta-commentary addressed at an imagined reader rather than actual content: "it's important to note," "it's worth noting that," "crucial to remember," "results may vary."
 **Fix:** cut it, or fold the actual caveat into a real sentence with content.
 
 ### Structure and shape
 
-**12. Formulaic transitions and connectives.** "Furthermore," "moreover," "additionally," "in today's fast-paced world," "when it comes to X," "at the end of the day." These show up at several times the normal human rate because the model is stitching text together linearly rather than reasoning in paragraphs.
+**13. Formulaic transitions and connectives.** "Furthermore," "moreover," "additionally," "in today's fast-paced world," "when it comes to X," "at the end of the day." These show up at several times the normal human rate because the model is stitching text together linearly rather than reasoning in paragraphs.
 **Fix:** cut them outright most of the time — sentences usually connect fine without a signpost. Where a transition is genuinely needed, use a plain one ("but," "so," "still").
 
-**13. Boilerplate summary/conclusion moves.** Restating what was just said ("In summary," "Overall, X represents..."), especially at the end of a short piece where the reader hasn't forgotten the first paragraph.
+**14. Boilerplate summary/conclusion moves.** Restating what was just said ("In summary," "Overall, X represents..."), especially at the end of a short piece where the reader hasn't forgotten the first paragraph.
 **Fix:** just end. Land on the last real point, not a recap.
 
-**14. Formulaic "Despite its challenges" closer.** The outline-shaped ending that raises a generic downside only to wave it away with generic optimism: "Despite its challenges, X shows great promise for the future."
+**15. Formulaic "Despite its challenges" closer.** The outline-shaped ending that raises a generic downside only to wave it away with generic optimism: "Despite its challenges, X shows great promise for the future."
 **Fix:** the ending should say the specific thing that's actually true, good or bad, not perform a balanced-sounding shrug.
 
-**15. Rigid, symmetrical structure.** Every section the same length, every list the same number of items, headers that all follow "The X of Y," a "Challenges" or "Future Outlook" section tacked onto everything regardless of whether it's warranted.
+**16. Rigid, symmetrical structure.** Every section the same length, every list the same number of items, headers that all follow "The X of Y," a "Challenges" or "Future Outlook" section tacked onto everything regardless of whether it's warranted.
 **Fix:** let structure follow content. Some points need a paragraph, some need one sentence. Cut sections that don't have real material.
 
-**16. Relentlessly even, upbeat tone.** No friction, no genuine criticism, every problem "easily addressed," every downside softened into a silver lining.
+**17. Relentlessly even, upbeat tone.** No friction, no genuine criticism, every problem "easily addressed," every downside softened into a silver lining.
 **Fix:** if there's a real weakness, say so plainly. Certainty and enthusiasm should track how the writer actually feels, not stay pinned at a constant pleasant hum.
 
 ### Formatting
 
-**17. Overuse of bold, bullets, and emoji.** Turning ordinary prose into bolded lists, or scattering emoji into headers, when the content is a normal paragraph. Also watch for **inline-header vertical lists**, bullets built entirely from a bolded term followed by a colon and a definition ("**Term:** description of that term," repeated down a list) when the same content would read better as prose.
+**18. Overuse of bold, bullets, and emoji.** Turning ordinary prose into bolded lists, or scattering emoji into headers, when the content is a normal paragraph. Also watch for **inline-header vertical lists**, bullets built entirely from a bolded term followed by a colon and a definition ("**Term:** description of that term," repeated down a list) when the same content would read better as prose.
 **Fix:** default to prose. Use a list only when the content is actually a list (steps, discrete items) — not as a formatting reflex.
 
-**18. Title Case Section Headings.** Capitalizing every main word in a heading, instead of the sentence case a human writer typically defaults to.
+**19. Title Case Section Headings.** Capitalizing every main word in a heading, instead of the sentence case a human writer typically defaults to.
 **Fix:** sentence case headings, capitalize only the first word and proper nouns.
 
-**19. Em dashes and other punctuation tics.** Not a reliable tell on their own (plenty of human writers use em dashes constantly), but worth checking if they're the *only* punctuation doing structural work in a piece — commas, periods, and parentheses can usually carry more of the load. Also check for curly/smart quotes (" " ' ') mixed in with straight ones elsewhere in the same piece, a sign of unedited paste-through.
+**20. Em dashes and other punctuation tics.** Not a reliable tell on their own (plenty of human writers use em dashes constantly), but worth checking if they're the *only* punctuation doing structural work in a piece — commas, periods, and parentheses can usually carry more of the load. Also check for curly/smart quotes (" " ' ') mixed in with straight ones elsewhere in the same piece, a sign of unedited paste-through.
 **Fix:** vary sentence construction rather than leaning on one connector; make quote style consistent throughout.
 
-**20. Leftover template and chatbot artifacts.** Fill-in-the-blank phrasing left unedited, placeholder text ("2025-XX-XX"), chatbot sign-offs ("I hope this helps! Let me know if you have questions"), knowledge-cutoff disclaimers ("as of my last update," "I don't have real-time access to..."), or apology/refusal leftovers ("as an AI language model, I..."). These should never survive a real editing pass.
+**21. Leftover template and chatbot artifacts.** Fill-in-the-blank phrasing left unedited, placeholder text ("2025-XX-XX"), chatbot sign-offs ("I hope this helps! Let me know if you have questions"), knowledge-cutoff disclaimers ("as of my last update," "I don't have real-time access to..."), or apology/refusal leftovers ("as an AI language model, I..."). These should never survive a real editing pass.
 **Fix:** delete on sight — catch them on the final read, every time.
 
 ## How to apply this while drafting (not just after)

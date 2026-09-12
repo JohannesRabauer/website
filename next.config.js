@@ -35,6 +35,13 @@ const nextConfig = {
   basePath: basePath,
   // This setting helps with static exports
   trailingSlash: true,
+  // Next.js only rewrites basePath into next/image and next/link automatically.
+  // Components that build a plain <img src="/blog/...">/<a href="/..."> from a
+  // hardcoded root-relative string (MDX content images, in particular) need to
+  // prepend it themselves — see lib/basePath.ts.
+  env: {
+    NEXT_PUBLIC_BASE_PATH: previewBasePath,
+  },
 };
 
 module.exports = nextConfig;
