@@ -208,3 +208,15 @@ Before saving, reread the draft specifically hunting for these patterns. They're
 ## Step 13 — Tell the user what's next
 
 Point out that `npm run dev` will let them preview the post locally, and that RSS/llms.txt regenerate automatically on build (`predev`/`prebuild` scripts) — no manual step needed there. Don't run the dev server or commit anything yourself unless asked.
+
+## Step 14 — Always offer to publish to the `preview` branch
+
+This repo has a live-preview mechanism, documented in the repo's own `README.md` under "Preview deployments": pushing (or merging) content onto the `preview` branch triggers `.github/workflows/publish-preview.yml`, which deploys that branch under `https://rabauer.dev/preview/` alongside the normal production site built from `main`. This is the intended way to let the user check a freshly drafted post on a phone or share a draft link before it's merged to `main`.
+
+Once the post (and any commit the user asked for) is in place, always ask whether they want it pushed to `preview` too — don't wait for them to bring it up, and don't skip this even if they didn't mention "preview" in their request. This is a repo-specific step this skill's own workflow would otherwise miss.
+
+If they say yes:
+1. Fetch `origin preview` and check `git merge-base --is-ancestor origin/preview <your branch>` — if `preview` is an ancestor of the content branch, a fast-forward (`git checkout -B preview origin/preview && git merge --ff-only <your branch>`) is enough. If it isn't (preview has diverged, e.g. another draft is already staged there), stop and ask the user how to reconcile rather than force-pushing or discarding what's already on `preview`.
+2. This pushes directly to a shared branch that immediately triggers a public deployment — confirm with the user before running `git push origin preview`, the same as any other push to a shared branch per the general git safety rules.
+3. After pushing, tell the user the preview workflow was triggered and where to look once it finishes (`https://rabauer.dev/preview/<locale>/blog/<slug>`), and remind them of the README's caveat: a subsequent `main` deploy will overwrite `/preview` until the preview workflow is re-run.
+4. Return to the branch you were working on afterward; don't leave the session sitting on a local `preview` checkout.
