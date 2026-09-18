@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { IconType } from "react-icons";
 import { useSyncExternalStore } from "react";
-import { FaAnchor, FaBlog, FaBook, FaCodeBranch, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot, FaStar } from "react-icons/fa";
+import { FaAnchor, FaBlog, FaBook, FaCodeBranch, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot } from "react-icons/fa";
 import { Michroma } from "next/font/google";
 import SocialBadges from "../components/SocialBadges";
 
@@ -186,20 +186,6 @@ export default function JSDPage() {
               <FaFileAlt className="text-[#8f9fcb] text-8xl drop-shadow-[0_0_10px_rgba(98,114,164,0.45)]" />
             </div>
             <span className={`${michroma.className} jcon-label w-full text-center text-[#8f9fcb] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Slides</span>
-          </a>
-
-          {/* Rating page */}
-          <a
-            href="https://schedule.jcon.one/2026/session/1117149"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="jcon-card w-[220px]"
-            aria-label="Rate the session"
-          >
-            <div className="w-[180px] h-[180px] rounded flex items-center justify-center border border-[#ff2c4d]/45 bg-[#ff2c4d]/10">
-              <FaStar className="text-[#ff2c4d] text-8xl drop-shadow-[0_0_10px_rgba(214,42,66,0.5)]" />
-            </div>
-            <span className={`${michroma.className} jcon-label w-full text-center text-[#ff2c4d] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Rate the session</span>
           </a>
         </div>
 
