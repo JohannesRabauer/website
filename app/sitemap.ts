@@ -7,7 +7,7 @@ import { toAbsoluteUrl } from '@/lib/seo';
 
 export const dynamic = 'force-static';
 
-const STATIC_PATHS = ['/', '/impressum', '/datenschutz', '/jcon-2026'] as const;
+const STATIC_PATHS = ['/', '/impressum', '/datenschutz', '/jcon-2026', '/jsd-2026'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
