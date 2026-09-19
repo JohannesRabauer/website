@@ -1,0 +1,148 @@
+---
+title: "Drei Coding-Agenten, ein Java-Projekt. Ein Blick auf biomelab."
+date: "2026-09-17"
+summary: "Manuel de la Peña hat mir biomelab gezeigt, sein Open-Source-Dashboard, um Coding-Agenten parallel auf der eigenen Maschine laufen zu lassen, unabhängig vom Harness eines KI-Anbieters. Wir haben es live installiert, sind auf einen Windows-Bug gestoßen, der uns mitten in der Session zu seiner Maschine wechseln ließ, und haben dann drei Agenten gleichzeitig in Docker Sandboxes auf einem echten Java-Projekt laufen lassen."
+tags: ["biomelab", "docker", "docker-sandbox", "ai-agents", "java", "spring-boot", "git-worktrees", "testcontainers", "github-copilot", "live-coding"]
+youtubeId: "9-WxSKFFEcE"
+mainRepository: "https://github.com/JohannesRabauer/biomelab-german-disaster-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "01:33"
+    label: "Manuels Hintergrund und die Entstehung von biomelab"
+  - time: "04:19"
+    label: "Was biomelab ist und welches Problem es löst"
+  - time: "07:07"
+    label: "Open Source, Lizenz und der Website-Playground"
+  - time: "10:42"
+    label: "biomelab live zum ersten Mal installieren"
+  - time: "12:34"
+    label: "Das Demo-Projekt und der Never-touch-main-Workflow"
+  - time: "15:12"
+    label: "Erste Worktree-Panne, Kanban vs. Grid-Ansicht"
+  - time: "21:22"
+    label: "Notiz-Manager und Issue-gesteuerte Worktrees"
+  - time: "23:38"
+    label: "Eine Docker Sandbox aus biomelab heraus einrichten"
+  - time: "28:56"
+    label: "Sandbox starten, ein Terminal-Fokus-Bug live"
+  - time: "33:22"
+    label: "Wechsel zu Manuels Maschine"
+  - time: "37:09"
+    label: "App neu aufsetzen, den Scaffolding-Agenten starten"
+  - time: "44:20"
+    label: "Abstecher: das Agenten-Gedächtnis-Projekt regent"
+  - time: "47:51"
+    label: "Den Code des Agenten im Editor prüfen"
+  - time: "50:28"
+    label: "Ein Product-Owner-Skill und ein zweiter Agent"
+  - time: "55:38"
+    label: "Committen und den ersten Pull Request öffnen"
+  - time: "01:00:24"
+    label: "Warum biomelab den echten Repo-Zustand zeigt"
+  - time: "01:06:20"
+    label: "Vergleich mit GitHub Copilots App, Worktrees vs. Branches"
+  - time: "01:09:40"
+    label: "Manuels PR-Automatisierungs-Skills"
+  - time: "01:10:57"
+    label: "Feature-Idee: ein Agent erzeugt mehrere Worktrees"
+  - time: "01:14:11"
+    label: "Drei Issues parallel bearbeiten"
+  - time: "01:25:39"
+    label: "Docker Sandbox blockiert und erlaubt einen Netzwerk-Request"
+  - time: "01:29:48"
+    label: "PRs mergen, die App läuft zum ersten Mal"
+  - time: "01:36:04"
+    label: "Zweiten PR mergen, mehrere Worktrees gleichzeitig"
+  - time: "01:41:34"
+    label: "Ein Agent pro Sandbox, und wie Secrets verborgen bleiben"
+  - time: "01:47:55"
+    label: "Fazit: was biomelab ist und was nicht"
+  - time: "01:50:02"
+    label: "Multi-Maschinen-Setup und der Weg in die Cloud"
+  - time: "01:51:00"
+    label: "Schlussworte und Open-Source-Mitarbeit"
+---
+
+Zwei oder drei Coding-Agenten gleichzeitig laufen zu lassen ist inzwischen normal. **Den Überblick zu behalten, welcher gerade was tut, ist es nicht.** Manuel de la Peña war zu Gast, um *biomelab*, sein Open-Source-Dashboard genau für dieses Problem, zum ersten Mal auf meiner Maschine zu installieren. Danach haben wir drei Agenten gleichzeitig auf ein echtes Java-Projekt losgelassen, um zu sehen, ob es hält.
+
+<CoSpeakerCard
+  name="Manuel de la Peña"
+  role="Staff Software Engineer bei Docker, Docker-Sandboxes-Team"
+  company="Docker"
+  bio="Core-Maintainer von testcontainers-go und Schöpfer von biomelab, einem Open-Source-Desktop-Dashboard für git worktrees und die darin laufenden Coding-Agenten. Seit 2011 in Open Source unterwegs, erst in Java, dann Go, jetzt bei Docker nach der Übernahme von AtomicJar, dem Startup hinter Testcontainers."
+  imageSrc="https://avatars.githubusercontent.com/mdelapenya"
+  github="https://github.com/mdelapenya"
+  linkedin="https://www.linkedin.com/in/ACoAAAORXqABlGW5UPCwMg_TzKAKKkpEJyHT3ME"
+  x="https://x.com/mdelapenya"
+  bluesky="https://bsky.app/profile/mdelapenya.bsky.social"
+/>
+
+## Ein Dashboard für eine ganze Agenten-Flotte
+
+Manuels Problem war simpel und bekannt: zu viele Terminal-Tabs, zu viele VS-Code-Fenster, **kein einziger Ort, an dem sichtbar war, welcher Agent gerade woran arbeitete.** Also baute er biomelab, ein tastaturgesteuertes Dashboard, das links alle registrierten Projekte auflistet und rechts die git worktrees des gewählten Projekts als Karten zeigt.
+
+Der Name ist wörtlich gemeint. Manuel war beim Bau von biomelab im Docker-Sandboxes-Team, intern "SBX" genannt, und *Biome* blieb als sein eigener Name für das Tool hängen: ein Lab, in dem diese kleinen, isolierten Ökosysteme wachsen, eines pro Agent. Es ist MIT-lizenziert, und der Betrieb mit Docker Sandboxes braucht **nicht mehr als einen kostenlosen Docker-Login.**
+
+## Main bleibt unangetastet
+
+Das ganze Tool ist um eine Regel herum gebaut. Jede Aufgabe bekommt ihre eigene Worktree, erzeugt mit einem einzigen Tastendruck, sodass **nie versehentlich etwas auf `main` landet.**
+
+<Quote author="Manuel de la Peña" role="Schöpfer von biomelab">
+Ich fasse main nie an.
+</Quote>
+
+Das ist keine Disziplin, an die Manuel sich erinnern muss. *Es ist strukturell verankert*: main ist die große Karte an der Wurzel der Projektansicht, alles andere sind Worktrees, und ein Kanban-Board (umschalten mit `g`) verfolgt jede davon durch fünf Zustände, von "erstellt" bis "gemerged".
+
+## Eine Sandbox, nicht eine pro Worktree
+
+Hier lag ich vorher falsch: Ich hatte angenommen, jede Worktree läuft in ihrer eigenen isolierten microVM. **Tut sie nicht.** Pro *Projekt* läuft eine Docker Sandbox, und jede Worktree-Session eines Agenten lebt in genau dieser einen Sandbox, unterschieden nur durch den Dateisystempfad.
+
+<BiomelabSandboxDiagram />
+
+Manuels Begründung ist praktisch, keine architektonische Reinheit: Eine microVM startet in Millisekunden, aber eine pro Worktree mit jeweils mehreren GB RAM und mehreren zehn GB Speicher skaliert auf einem Laptop nicht. Der Preis dafür: **Worktrees sind nicht stark voneinander isoliert**, was mit ein Grund ist, warum Manuel [regent](https://www.re-gent.dev/) erkundet, ein separates Tool, das Agenten-Gespräche auf einem eigenen Git-Branch aufzeichnet, als geteiltes Gedächtnis zwischen Sessions, die sonst nicht miteinander reden können.
+
+## Was auf Sendung schiefging
+
+Es lief nicht glatt, und das ehrlich zu sagen gehört dazu. Die erste Worktree-Erstellung scheiterte komplett: Das Demo-Repo hatte noch keinen initialen Commit, also gab es kein `main`, von dem aus man hätte branchen können. **Diese Lücke hat Manuel in biomelab selbst nach der Session behoben.**
+
+Dann, speziell auf meiner Maschine, öffnete sich beim Öffnen eines Worktree-Terminals das Fenster und schloss sich sofort wieder, immer und immer wieder, und blockierte jeden Fortschritt. Das ist ein Bug in biomelabs Windows-Terminal-Handling, der noch nicht ausgebügelt ist. Auf Manuels Maschine trat er kein einziges Mal auf, und genau dorthin sind wir gewechselt: **Wir haben mein Setup komplett aufgegeben und den Rest der Session von seinem Bildschirm aus bestritten.**
+
+Später scheiterte auch mein erster Pull Request beim Push, weil der Git-Remote der Sandbox auf SSH stand und ich das Signing-Kit für dieses Repo nicht installiert hatte. Ich habe Claude einfach gesagt, den Remote auf HTTPS umzustellen, statt es von Hand zu reparieren.
+
+<Quote author="Manuel de la Peña" role="Schöpfer von biomelab">
+Also, die sind wirklich schlau. Die verstehen das.
+</Quote>
+
+## Drei Agenten, ein Java-Projekt
+
+Nach den ersten Kanten haben wir eine kleine Spring-Boot-App registriert, die deutsche Katastrophenereignisse trackt, und sie wirklich laufen lassen: ein Scaffolding-Agent baute die App, ein zweiter Agent entwarf einen "Product Owner"-Skill, dann arbeiteten drei weitere Agenten parallel je ein eigenes GitHub-Issue ab, **alle in derselben Sandbox.**
+
+Docker Sandboxs Netzwerk-Policy erwischte einen davon mitten im Lauf und blockierte per Deny-all-Standard eine ausgehende Anfrage an Maven Central. Bemerkenswert war nicht der Block selbst, sondern dass **der Agent selbst erkannte, wo er lief, und aktiv darum bat, die Anfrage freizugeben, bevor er weitermachte.**
+
+<Quote author="Manuel de la Peña" role="Schöpfer von biomelab">
+Das ist perfekt, weil er einen gewissen Kontext davon hat, was eine Sandbox ist.
+</Quote>
+
+Wir haben die Anfrage freigegeben, die Aufgabe war fertig, und die Tests des gemergten Pull Requests liefen durch. Zwischendurch habe ich live eine Idee eingebracht: Ein Agent, der schon in einer Worktree läuft, soll biomelab selbst anweisen können, mehrere weitere zu erzeugen, eine pro Issue, statt dass ein Mensch das von Hand macht. **Manuel gefiel die Idee so gut, dass er dafür live, mitten im Gespräch, ein GitHub-Issue eröffnete.**
+
+## Kein Kollaborations-Tool
+
+Das ist der eigentliche Punkt. GUI-Tools zum Verwalten von Coding-Agenten gibt es längst, und die meisten KI-Anbieter liefern inzwischen ihre eigenen: GitHub Copilot hat eine App mit einer ähnlichen Projektliste, und andere Anbieter haben ihre eigenen Session-Ansichten. Der Unterschied bei biomelab ist, dass es **egal ist, welchen Harness man nutzt.** Es ist um die Worktree herum gebaut, für Isolation an Docker Sandbox angebunden, und funktioniert unabhängig davon, ob der Agent darin Claude, Codex oder etwas ganz anderes ist.
+
+Was es ausdrücklich nicht ist: ein Kollaborations-Tool. **Es läuft auf einer Maschine, verfolgt die Aufgaben einer Person, und koordiniert nichts im Team.** Wenn deine Arbeit ohnehin schon in der Cloud läuft, brauchst du es vielleicht nicht, und Docker Sandbox vielleicht auch nicht. Aber wenn du lokal arbeitest und eine Agenten-Flotte willst, die nicht an die Desktop-App eines einzigen Anbieters gebunden ist, ist genau dafür das Tool gebaut.
+
+## Fazit
+
+Wenn du bereit bist, ein bisschen zu experimentieren, und eine leichtgewichtige Art suchst, Coding-Agenten lokal zu orchestrieren, **ist das einen Versuch wert.** Es ist Open Source, und Lücken, die du findest (eine hat Manuel selbst live, mitten in der Aufzeichnung, behoben), sind nur einen Pull Request oder ein Issue entfernt.
+
+<Quote author="Manuel de la Peña" role="Schöpfer von biomelab">
+Eine der Sachen, die ich in dieser KI-Welt gelernt habe: Man muss erkunden. Übernimm kein Tool nur, weil es gerade jemand promotet. Erkunden, experimentieren, selbst machen, scheitern, und wenn das, was du zum Lernen der Grundlagen baust, nicht funktioniert, nimm etwas anderes.
+</Quote>
+
+## Nützliche Links
+
+- [biomelab.dev](https://biomelab.dev/)
+- [Docker Sandbox Docs](https://docs.docker.com/ai/sandboxes/)
+- [regent, geteiltes Agenten-Gedächtnis über git](https://www.re-gent.dev/)
