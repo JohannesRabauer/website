@@ -83,7 +83,7 @@ Running two or three coding agents at once is normal now. **Keeping track of whi
 
 Manuel's problem was simple and familiar: too many terminal tabs, too many VS Code windows, **no single place to see which agent was working on what.** So he built biomelab, a keyboard-driven dashboard that lists every enrolled project on the left and that project's git worktrees as cards on the right.
 
-The name is literal. Manuel was on Docker's Sandboxes team while building it, internally nicknamed "SBX," and *biome* stuck as his own name for it: a lab where these small, isolated ecosystems grow, one per agent. It's MIT-licensed, and running it against Docker Sandboxes needs **nothing more than a free Docker login.**
+The name is literal, and borrowed. *Biome* was Docker's own internal working title for Docker Sandboxes, Manuel's team, before the product shipped under its official name. He kept it for his own tool: a lab where these small, isolated ecosystems grow, one per agent. It's MIT-licensed, and running it against Docker Sandboxes needs **nothing more than a free Docker login.**
 
 ## Main stays untouched
 
@@ -105,15 +105,15 @@ Manuel's reasoning is practical, not architectural purity: a microVM starts in m
 
 ## What went wrong on stream
 
-It wasn't smooth, and that's the honest part worth saying out loud. Creating the first worktree failed outright: the demo repo had no initial commit yet, so there was no `main` to branch from. **Manuel fixed that gap in biomelab itself after the session.**
+It wasn't smooth, and that's the honest part worth saying out loud. **biomelab is still at v0.7.0**, nowhere near a stable release, so a fair share of what follows just comes with that territory.
 
-Then, on my machine specifically, opening a worktree's terminal made it pop open and immediately close, over and over, blocking all progress. It's a bug tied to biomelab's Windows terminal handling that isn't ironed out yet. It never happened once we switched to Manuel's machine, which is exactly what we did: **we abandoned my setup entirely and ran the rest of the session from his screen.**
+Creating the first worktree failed outright: the demo repo had no initial commit yet, so there was no `main` to branch from ([issue #80](https://github.com/mdelapenya/biomelab/issues/80)). Manuel fixed that gap in biomelab itself after the session.
 
-Later, pushing my first pull request failed too, because the sandbox's git remote was set to SSH and I hadn't installed the signing kit for that repo. I just told Claude to switch the remote to HTTPS instead of fixing it by hand.
+Then, on my machine specifically, opening a worktree's terminal made it pop open and immediately close, over and over, blocking all progress ([issue #81](https://github.com/mdelapenya/biomelab/issues/81)). It's a Windows-specific bug in how biomelab tracks terminal focus. It never happened once we switched to Manuel's machine, which is exactly what we did: **we abandoned my setup entirely and ran the rest of the session from his screen.** I joked on stream that they'd picked the wrong guy to demo this live, and I wasn't wrong. A milder version of the same class of bug still showed up there: pressing enter sometimes opened a fresh terminal instead of refocusing the one already running, a bug Manuel filed live during the stream ([issue #84](https://github.com/mdelapenya/biomelab/issues/84)).
 
-<Quote author="Manuel de la Peña" role="Creator of biomelab">
-Well, they are really smart. They understand.
-</Quote>
+Merging isn't wired up yet either: biomelab opens pull requests but can't merge them, so the first PR got merged from GitHub itself rather than from inside the dashboard ([issue #83](https://github.com/mdelapenya/biomelab/issues/83)).
+
+Pushing my first pull request failed too, because the sandbox's git remote was set to SSH and I hadn't installed the signing kit for that repo. **I just told Claude to switch the remote to HTTPS, and it did, correctly, without me touching a git command by hand.**
 
 ## Three agents, one Java project
 

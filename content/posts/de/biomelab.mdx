@@ -83,7 +83,7 @@ Zwei oder drei Coding-Agenten gleichzeitig laufen zu lassen ist inzwischen norma
 
 Manuels Problem war simpel und bekannt: zu viele Terminal-Tabs, zu viele VS-Code-Fenster, **kein einziger Ort, an dem sichtbar war, welcher Agent gerade woran arbeitete.** Also baute er biomelab, ein tastaturgesteuertes Dashboard, das links alle registrierten Projekte auflistet und rechts die git worktrees des gewählten Projekts als Karten zeigt.
 
-Der Name ist wörtlich gemeint. Manuel war beim Bau von biomelab im Docker-Sandboxes-Team, intern "SBX" genannt, und *Biome* blieb als sein eigener Name für das Tool hängen: ein Lab, in dem diese kleinen, isolierten Ökosysteme wachsen, eines pro Agent. Es ist MIT-lizenziert, und der Betrieb mit Docker Sandboxes braucht **nicht mehr als einen kostenlosen Docker-Login.**
+Der Name ist wörtlich gemeint, und geliehen. *Biome* war Dockers eigener interner Arbeitstitel für Docker Sandboxes, Manuels Team, bevor das Produkt unter seinem offiziellen Namen erschien. Er behielt ihn für sein eigenes Tool: ein Lab, in dem diese kleinen, isolierten Ökosysteme wachsen, eines pro Agent. Es ist MIT-lizenziert, und der Betrieb mit Docker Sandboxes braucht **nicht mehr als einen kostenlosen Docker-Login.**
 
 ## Main bleibt unangetastet
 
@@ -105,15 +105,15 @@ Manuels Begründung ist praktisch, keine architektonische Reinheit: Eine microVM
 
 ## Was auf Sendung schiefging
 
-Es lief nicht glatt, und das ehrlich zu sagen gehört dazu. Die erste Worktree-Erstellung scheiterte komplett: Das Demo-Repo hatte noch keinen initialen Commit, also gab es kein `main`, von dem aus man hätte branchen können. **Diese Lücke hat Manuel in biomelab selbst nach der Session behoben.**
+Es lief nicht glatt, und das ehrlich zu sagen gehört dazu. **biomelab steht noch bei v0.7.0**, weit von einem stabilen Release entfernt, ein guter Teil dessen, was jetzt kommt, gehört einfach zu diesem Stadium dazu.
 
-Dann, speziell auf meiner Maschine, öffnete sich beim Öffnen eines Worktree-Terminals das Fenster und schloss sich sofort wieder, immer und immer wieder, und blockierte jeden Fortschritt. Das ist ein Bug in biomelabs Windows-Terminal-Handling, der noch nicht ausgebügelt ist. Auf Manuels Maschine trat er kein einziges Mal auf, und genau dorthin sind wir gewechselt: **Wir haben mein Setup komplett aufgegeben und den Rest der Session von seinem Bildschirm aus bestritten.**
+Die erste Worktree-Erstellung scheiterte komplett: Das Demo-Repo hatte noch keinen initialen Commit, also gab es kein `main`, von dem aus man hätte branchen können ([Issue #80](https://github.com/mdelapenya/biomelab/issues/80)). Diese Lücke hat Manuel in biomelab selbst nach der Session behoben.
 
-Später scheiterte auch mein erster Pull Request beim Push, weil der Git-Remote der Sandbox auf SSH stand und ich das Signing-Kit für dieses Repo nicht installiert hatte. Ich habe Claude einfach gesagt, den Remote auf HTTPS umzustellen, statt es von Hand zu reparieren.
+Dann, speziell auf meiner Maschine, öffnete sich beim Öffnen eines Worktree-Terminals das Fenster und schloss sich sofort wieder, immer und immer wieder, und blockierte jeden Fortschritt ([Issue #81](https://github.com/mdelapenya/biomelab/issues/81)). Das ist ein Windows-spezifischer Bug in biomelabs Terminal-Fokus-Handling. Auf Manuels Maschine trat er kein einziges Mal auf, und genau dorthin sind wir gewechselt: **Wir haben mein Setup komplett aufgegeben und den Rest der Session von seinem Bildschirm aus bestritten.** Ich habe live gewitzelt, dass sie sich den falschen Typen für eine Live-Demo ausgesucht hätten, und ich hatte recht damit. Eine mildere Version desselben Bugs tauchte auch dort noch auf: Enter zu drücken öffnete manchmal ein neues Terminal statt das bereits laufende zu fokussieren, ein Bug, den Manuel live während des Streams meldete ([Issue #84](https://github.com/mdelapenya/biomelab/issues/84)).
 
-<Quote author="Manuel de la Peña" role="Schöpfer von biomelab">
-Also, die sind wirklich schlau. Die verstehen das.
-</Quote>
+Auch das Mergen ist noch nicht verdrahtet: biomelab öffnet Pull Requests, kann sie aber nicht mergen, also wurde der erste PR direkt auf GitHub gemerged statt aus dem Dashboard heraus ([Issue #83](https://github.com/mdelapenya/biomelab/issues/83)).
+
+Später scheiterte auch mein erster Pull Request beim Push, weil der Git-Remote der Sandbox auf SSH stand und ich das Signing-Kit für dieses Repo nicht installiert hatte. **Ich habe Claude einfach gesagt, den Remote auf HTTPS umzustellen, und er hat es richtig gemacht, ohne dass ich selbst einen Git-Befehl angefasst habe.**
 
 ## Drei Agenten, ein Java-Projekt
 
