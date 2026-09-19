@@ -95,6 +95,13 @@ I never touch main.
 
 That's not a discipline Manuel has to remember. *It's structural*: main is the big card at the root of the project view, worktrees are everything else, and a kanban board (toggle with `g`) tracks each one through five states, from created to merged.
 
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/biomelab-kanban-board.png"
+    alt="biomelab's kanban board showing enrolled projects on the left and five columns of worktree cards on the right, with a scaffolding card sitting in the PR In Review column"
+  />
+</div>
+
 ## One sandbox, not one per worktree
 
 Here's the part I got wrong going in: I assumed each worktree ran in its own isolated microVM. **It doesn't.** One Docker Sandbox runs per *project*, and every worktree's agent session lives inside that same sandbox, told apart only by filesystem path.
@@ -108,6 +115,13 @@ Manuel's reasoning is practical, not architectural purity: a microVM starts in m
 It wasn't smooth, and that's the honest part worth saying out loud. **biomelab is still at v0.7.0**, nowhere near a stable release, so a fair share of what follows just comes with that territory.
 
 Creating the first worktree failed outright: the demo repo had no initial commit yet, so there was no `main` to branch from ([issue #80](https://github.com/mdelapenya/biomelab/issues/80)). Manuel fixed that gap in biomelab itself after the session.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/biomelab-worktree-reference-error.png"
+    alt="biomelab on Windows showing invalid reference: reference not found after trying to create the scaffolding worktree on a repo with no initial commit"
+  />
+</div>
 
 Then, on my machine specifically, opening a worktree's terminal made it pop open and immediately close, over and over, blocking all progress ([issue #81](https://github.com/mdelapenya/biomelab/issues/81)). It's a Windows-specific bug in how biomelab tracks terminal focus. It never happened once we switched to Manuel's machine, which is exactly what we did: **we abandoned my setup entirely and ran the rest of the session from his screen.** I joked on stream that they'd picked the wrong guy to demo this live, and I wasn't wrong. A milder version of the same class of bug still showed up there: pressing enter sometimes opened a fresh terminal instead of refocusing the one already running, a bug Manuel filed live during the stream ([issue #84](https://github.com/mdelapenya/biomelab/issues/84)).
 

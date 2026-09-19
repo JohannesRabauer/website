@@ -95,6 +95,13 @@ Ich fasse main nie an.
 
 Das ist keine Disziplin, an die Manuel sich erinnern muss. *Es ist strukturell verankert*: main ist die große Karte an der Wurzel der Projektansicht, alles andere sind Worktrees, und ein Kanban-Board (umschalten mit `g`) verfolgt jede davon durch fünf Zustände, von "erstellt" bis "gemerged".
 
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/biomelab-kanban-board.png"
+    alt="biomelabs Kanban-Board: links die registrierten Projekte, rechts fünf Spalten mit Worktree-Karten, eine Scaffolding-Karte steht in der Spalte PR In Review"
+  />
+</div>
+
 ## Eine Sandbox, nicht eine pro Worktree
 
 Hier lag ich vorher falsch: Ich hatte angenommen, jede Worktree läuft in ihrer eigenen isolierten microVM. **Tut sie nicht.** Pro *Projekt* läuft eine Docker Sandbox, und jede Worktree-Session eines Agenten lebt in genau dieser einen Sandbox, unterschieden nur durch den Dateisystempfad.
@@ -108,6 +115,13 @@ Manuels Begründung ist praktisch, keine architektonische Reinheit: Eine microVM
 Es lief nicht glatt, und das ehrlich zu sagen gehört dazu. **biomelab steht noch bei v0.7.0**, weit von einem stabilen Release entfernt, ein guter Teil dessen, was jetzt kommt, gehört einfach zu diesem Stadium dazu.
 
 Die erste Worktree-Erstellung scheiterte komplett: Das Demo-Repo hatte noch keinen initialen Commit, also gab es kein `main`, von dem aus man hätte branchen können ([Issue #80](https://github.com/mdelapenya/biomelab/issues/80)). Diese Lücke hat Manuel in biomelab selbst nach der Session behoben.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/biomelab-worktree-reference-error.png"
+    alt="biomelab unter Windows mit der Fehlermeldung invalid reference: reference not found beim Versuch, die Scaffolding-Worktree in einem Repo ohne initialen Commit zu erstellen"
+  />
+</div>
 
 Dann, speziell auf meiner Maschine, öffnete sich beim Öffnen eines Worktree-Terminals das Fenster und schloss sich sofort wieder, immer und immer wieder, und blockierte jeden Fortschritt ([Issue #81](https://github.com/mdelapenya/biomelab/issues/81)). Das ist ein Windows-spezifischer Bug in biomelabs Terminal-Fokus-Handling. Auf Manuels Maschine trat er kein einziges Mal auf, und genau dorthin sind wir gewechselt: **Wir haben mein Setup komplett aufgegeben und den Rest der Session von seinem Bildschirm aus bestritten.** Ich habe live gewitzelt, dass sie sich den falschen Typen für eine Live-Demo ausgesucht hätten, und ich hatte recht damit. Eine mildere Version desselben Bugs tauchte auch dort noch auf: Enter zu drücken öffnete manchmal ein neues Terminal statt das bereits laufende zu fokussieren, ein Bug, den Manuel live während des Streams meldete ([Issue #84](https://github.com/mdelapenya/biomelab/issues/84)).
 
