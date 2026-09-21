@@ -18,7 +18,25 @@ const SLIDO_DEADLINE = new Date("2026-04-22T23:59:59");
 
 const SLIDO_URL = "https://app.sli.do/event/mrbyk6V9atpK4HLuP51qEL/live/questions?section=ce0c8c2b-1ebc-4f04-bf89-c718917ad6f2";
 
-const GITHUB_URL = "https://github.com/JohannesRabauer/website/blob/main/public/jsd-2026/Ten%20Angry%20Comments%20Later.pdf";
+type Talk = {
+  title: string;
+  subtitle: string;
+  slidesUrl: string | null;
+};
+
+const TALKS: Talk[] = [
+  {
+    title: "Ten Angry Comments Later",
+    subtitle: "Stories About Code Reviews, Teams, and Yesterday's Code",
+    slidesUrl: "https://github.com/JohannesRabauer/website/blob/main/public/jsd-2026/Ten%20Angry%20Comments%20Later.pdf",
+  },
+  {
+    title: "Dev-Stories mit Lerneffekt",
+    subtitle: "",
+    // Slides not published yet — will be added once provided.
+    slidesUrl: null,
+  },
+];
 
 type RelatedLink = {
   href: string;
@@ -141,52 +159,71 @@ export default function JSDPage() {
           />
         </Link>
 
-        <h1
-          className={`${michroma.className} text-[#f1f4ff] text-4xl md:text-6xl font-extrabold uppercase tracking-[0.18em]`}
-          style={{ textShadow: "0 0 10px rgba(214, 42, 66, 0.75), 0 0 24px rgba(122, 19, 30, 0.5)" }}
-        >
-         Ten Angry Comments Later
-        </h1>
-
-        <h2 className={`${michroma.className} text-[#ff2c4d] text-2xl md:text-4xl font-bold tracking-wide -mt-3`}>
-          Stories About Code Reviews, Teams, and Yesterday&apos;s Code
-        </h2>
-
-        <p className="max-w-4xl text-[#8f9fcb] text-lg md:text-2xl font-medium leading-tight -mt-4">
+        <p className="max-w-4xl text-[#8f9fcb] text-lg md:text-2xl font-medium leading-tight">
            Johannes Rabauer
         </p>
 
-        {/* Cards */}
-        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-8 mt-2">
-          {/* QR code → Slido (hidden after 22 Apr 2026) */}
-          {showQRCode && (
-            <a
-              href={SLIDO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="jcon-card w-[220px]"
-              aria-label="Join Q&amp;A on Slido"
-            >
-              <div className="w-[180px] h-[180px] rounded flex items-center justify-center border border-[#ff2c4d]/45 bg-[#ff2c4d]/10">
-                <FaQuestionCircle className="text-[#f1f4ff] text-8xl drop-shadow-[0_0_10px_rgba(214,42,66,0.55)]" />
-              </div>
-              <span className={`${michroma.className} jcon-label w-full text-center text-[#f1f4ff] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Q&amp;A via Slido</span>
-            </a>
-          )}
-
-          {/* Placeholder → GitHub page */}
+        {/* QR code → Slido (hidden after 22 Apr 2026) */}
+        {showQRCode && (
           <a
-            href={GITHUB_URL}
+            href={SLIDO_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="jcon-card w-[220px]"
-            aria-label="Slides"
+            aria-label="Join Q&amp;A on Slido"
           >
-            <div className="w-[180px] h-[180px] rounded flex items-center justify-center border border-[#8f9fcb]/45 bg-[#8f9fcb]/10">
-              <FaFileAlt className="text-[#8f9fcb] text-8xl drop-shadow-[0_0_10px_rgba(98,114,164,0.45)]" />
+            <div className="w-[180px] h-[180px] rounded flex items-center justify-center border border-[#ff2c4d]/45 bg-[#ff2c4d]/10">
+              <FaQuestionCircle className="text-[#f1f4ff] text-8xl drop-shadow-[0_0_10px_rgba(214,42,66,0.55)]" />
             </div>
-            <span className={`${michroma.className} jcon-label w-full text-center text-[#8f9fcb] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Slides</span>
+            <span className={`${michroma.className} jcon-label w-full text-center text-[#f1f4ff] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Q&amp;A via Slido</span>
           </a>
+        )}
+
+        {/* Talks */}
+        <div className="flex flex-col items-center gap-12 mt-2 w-full">
+          {TALKS.map(({ title, subtitle, slidesUrl }) => (
+            <div key={title} className="flex flex-col items-center gap-6">
+              <div className="flex flex-col items-center gap-3">
+                <h1
+                  className={`${michroma.className} text-[#f1f4ff] text-3xl md:text-5xl font-extrabold uppercase tracking-[0.18em]`}
+                  style={{ textShadow: "0 0 10px rgba(214, 42, 66, 0.75), 0 0 24px rgba(122, 19, 30, 0.5)" }}
+                >
+                  {title}
+                </h1>
+
+                {subtitle && (
+                  <h2 className={`${michroma.className} text-[#ff2c4d] text-xl md:text-3xl font-bold tracking-wide`}>
+                    {subtitle}
+                  </h2>
+                )}
+              </div>
+
+              {slidesUrl ? (
+                <a
+                  href={slidesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="jcon-card w-[220px]"
+                  aria-label={`Slides for ${title}`}
+                >
+                  <div className="w-[180px] h-[180px] rounded flex items-center justify-center border border-[#8f9fcb]/45 bg-[#8f9fcb]/10">
+                    <FaFileAlt className="text-[#8f9fcb] text-8xl drop-shadow-[0_0_10px_rgba(98,114,164,0.45)]" />
+                  </div>
+                  <span className={`${michroma.className} jcon-label w-full text-center text-[#8f9fcb] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Slides</span>
+                </a>
+              ) : (
+                <div
+                  className="jcon-card w-[220px] opacity-60 cursor-default"
+                  aria-label={`Slides for ${title} coming soon`}
+                >
+                  <div className="w-[180px] h-[180px] rounded flex items-center justify-center border border-[#8f9fcb]/25 bg-[#8f9fcb]/5">
+                    <FaFileAlt className="text-[#8f9fcb]/60 text-8xl" />
+                  </div>
+                  <span className={`${michroma.className} jcon-label w-full text-center text-[#8f9fcb]/60 text-[1.4rem] md:text-[1.5rem] leading-tight`}>Coming Soon</span>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
         <section className="w-full max-w-6xl rounded-[1.25rem] border border-[#7f2d3a]/45 bg-[#120c0f]/72 px-5 py-6 shadow-[0_0_30px_rgba(80,28,36,0.18)] backdrop-blur-md">
