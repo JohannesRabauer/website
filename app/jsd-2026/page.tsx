@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { IconType } from "react-icons";
 import { useSyncExternalStore } from "react";
-import { FaAnchor, FaBlog, FaBook, FaCodeBranch, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot } from "react-icons/fa";
+import { FaAnchor, FaBlog, FaBook, FaCodeBranch, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot, FaTools } from "react-icons/fa";
 import { Michroma } from "next/font/google";
 import SocialBadges from "../components/SocialBadges";
 
@@ -33,8 +33,7 @@ const TALKS: Talk[] = [
   {
     title: "Dev-Stories mit Lerneffekt",
     subtitle: "",
-    // Slides not published yet — will be added once provided.
-    slidesUrl: null,
+    slidesUrl: "https://github.com/JohannesRabauer/website/blob/main/public/jsd-2026/TalesFromTheDevSide_JSD2026.pdf",
   },
 ];
 
@@ -109,6 +108,16 @@ const RELATED_LINKS: RelatedLink[] = [
     iconPanelClassName: "border-[#d596f4]/35 bg-[#d596f4]/10",
     iconClassName: "text-[#d596f4] drop-shadow-[0_0_10px_rgba(213,150,244,0.32)]",
     titleClassName: "text-[#d596f4]",
+  },
+  {
+    href: "https://github.com/bmad-code-org/BMAD-METHOD",
+    title: "BMad Method",
+    description: "A large, well-structured skill collection for agentic coding: a strong example of skills that keep the agent inside a workflow instead of wandering off.",
+    meta: "github.com/bmad-code-org/BMAD-METHOD",
+    Icon: FaTools,
+    iconPanelClassName: "border-[#6ee7b7]/35 bg-[#6ee7b7]/10",
+    iconClassName: "text-[#6ee7b7] drop-shadow-[0_0_10px_rgba(110,231,183,0.35)]",
+    titleClassName: "text-[#6ee7b7]",
   },
 ];
 
