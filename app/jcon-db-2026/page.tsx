@@ -27,7 +27,6 @@ const SLIDES_PDF_URL = `${PAGE_PATH}/${SLIDES_PDF_FILE}`;
 const hasSlidesPdf = fs.existsSync(path.join(process.cwd(), "public", "jcon-db-2026", SLIDES_PDF_FILE));
 
 const LIVE_DECK_URL = "https://johannesrabauer.github.io/talk-ai-learnings/";
-const TALK_REPO_URL = "https://github.com/JohannesRabauer/talk-ai-learnings";
 
 export const metadata: Metadata = {
   title: `${TALK_TITLE}: Slides & Links | Johannes Rabauer`,
@@ -201,13 +200,6 @@ const TOOLS: Tool[] = [
     ],
   },
   {
-    name: "Eichhorst Principle",
-    by: "Ingo Eichhorst",
-    description:
-      "Shannon's communication model applied to AI delivery. Bad result? Find the weak link: context, model or checks. Don't just re-prompt.",
-    links: [{ label: "Method overview", href: "/methods/eichhorst-principle/" }],
-  },
-  {
     name: "Guided Coding",
     by: "Kenny Pflug",
     description: "One change, one plan, one record. Includes Kenny's advice on finding the right plan size.",
@@ -254,11 +246,6 @@ const MORE_LINKS: (ToolLink & { note: string })[] = [
     label: "rabauer.dev blog",
     href: "/en/blog/",
     note: "A write-up for every session, with the key moments and links.",
-  },
-  {
-    label: "AI coding methods",
-    href: "/methods/",
-    note: "Short overviews of every method from the streams, side by side.",
   },
 ];
 
@@ -366,14 +353,6 @@ export default function JconDb2026Page() {
               className="inline-flex items-center justify-center gap-3 rounded-[12px] border border-[#DADADA] bg-white px-6 py-4 text-lg font-semibold transition hover:border-[#141414]"
             >
               <FaPlay className="text-sm" aria-hidden="true" /> Interactive deck
-            </a>
-            <a
-              href={TALK_REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 rounded-[12px] border border-[#DADADA] bg-white px-6 py-4 text-lg font-semibold transition hover:border-[#141414]"
-            >
-              <FaGithub aria-hidden="true" /> Talk source
             </a>
           </div>
         </div>
@@ -514,26 +493,6 @@ export default function JconDb2026Page() {
                     <h3 className="mt-2 text-lg font-bold leading-snug tracking-[-0.015em]">{s.title}</h3>
                   </div>
 
-                  <a
-                    href={s.cohost.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 rounded-[12px] border border-[#E8E8E8] p-2 pr-3 transition hover:border-[#DADADA]"
-                  >
-                    <Image
-                      src={s.cohost.image}
-                      alt={s.cohost.name}
-                      width={44}
-                      height={44}
-                      className="h-11 w-11 rounded-full object-cover"
-                    />
-                    <span className="min-w-0">
-                      <span className="block font-semibold leading-tight">{s.cohost.name}</span>
-                      <span className="block truncate text-sm text-[#5E5E5E]">
-                        {s.cohost.role} · {s.cohost.company}
-                      </span>
-                    </span>
-                  </a>
 
                   <div>
                     <div className={LABEL}>In the talk</div>
@@ -609,7 +568,7 @@ export default function JconDb2026Page() {
       <section className="border-t border-[#E8E8E8]">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-8 md:py-20">
           <SectionHead label="After the talk" title="Keep going" />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {MORE_LINKS.map(({ label, href, note }) => (
               <SmartLink key={href} href={href} className={`${CARD} group flex flex-col gap-2 p-5 transition hover:border-[#D71E23]/40`}>
                 <span className="flex items-center justify-between text-lg font-bold tracking-[-0.015em] group-hover:text-[#D71E23]">
