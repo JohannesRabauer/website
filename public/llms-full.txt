@@ -27,10 +27,21 @@ The homepage is the best source for identity and profile information, while the 
 - LinkedIn: https://www.linkedin.com/in/johannes-rabauer
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
+- Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-db-2026/
 
-## English posts (22)
+## English posts (24)
 
 ## English blog posts
+### Three Coding Agents, One Java Project. Take a look at biomelab.
+- URL: https://rabauer.dev/en/blog/biomelab/
+- Date: 2026-09-17
+- Summary: Manuel de la Peña showed me biomelab, his open-source dashboard for running coding agents in parallel on your own machine, independent of any AI vendor's harness. We installed it live, hit a Windows bug that forced a switch to his machine mid-stream, then ran three agents in Docker Sandboxes on a real Java project at once.
+
+### Java Can't Scale to Zero? This Quarkus App Says Otherwise.
+- URL: https://rabauer.dev/en/blog/zero-cost-quarkus-gcp/
+- Date: 2026-09-10
+- Summary: A solo session building a family travel-budget tracker with Quarkus, Qute, and Firestore, deployed to Google Cloud Run and confirmed at $0 in the billing dashboard twice. Zero cost held up, and Google's own login setup caused more trouble than the app code did.
+
 ### Deploying a Java AI App to Azure: What Was Easy, What Broke
 - URL: https://rabauer.dev/en/blog/langchain4j-azure-deploy/
 - Date: 2026-08-27
@@ -142,9 +153,19 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (22)
+## German posts (24)
 
 ## German blog posts
+### Drei Coding-Agenten, ein Java-Projekt. Ein Blick auf biomelab.
+- URL: https://rabauer.dev/de/blog/biomelab/
+- Date: 2026-09-17
+- Summary: Manuel de la Peña hat mir biomelab gezeigt, sein Open-Source-Dashboard, um Coding-Agenten parallel auf der eigenen Maschine laufen zu lassen, unabhängig vom Harness eines KI-Anbieters. Wir haben es live installiert, sind auf einen Windows-Bug gestoßen, der uns mitten in der Session zu seiner Maschine wechseln ließ, und haben dann drei Agenten gleichzeitig in Docker Sandboxes auf einem echten Java-Projekt laufen lassen.
+
+### Java kann nicht auf null skalieren? Diese Quarkus-App sieht das anders.
+- URL: https://rabauer.dev/de/blog/zero-cost-quarkus-gcp/
+- Date: 2026-09-10
+- Summary: Eine Solo-Session: ein Reisebudget-Tracker für die Familie, gebaut mit Quarkus, Qute und Firestore, deployt auf Google Cloud Run und zweimal im Billing-Dashboard bei 0 € bestätigt. Zero Cost hat gehalten, und das Google-Login machte mehr Ärger als der App-Code.
+
 ### Eine Java-KI-App auf Azure deployen: Was einfach war und was scheiterte
 - URL: https://rabauer.dev/de/blog/langchain4j-azure-deploy/
 - Date: 2026-08-27

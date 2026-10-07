@@ -2,7 +2,7 @@ import { FaGithub, FaYoutube, FaLinkedin, FaTwitter, FaEnvelope, FaTwitch } from
 import { SiMastodon, SiBluesky, SiTiktok, SiSessionize } from "react-icons/si";
 
 interface SocialBadgesProps {
-  variant?: "default" | "jcon";
+  variant?: "default" | "jcon" | "quiet";
 }
 
 const links = [
@@ -20,6 +20,7 @@ const links = [
 
 export default function SocialBadges({ variant = "default" }: SocialBadgesProps) {
   const isJcon = variant === "jcon";
+  const isQuiet = variant === "quiet";
   const jconColorClasses = [
     "text-[#f1f4ff] hover:text-[#ff2c4d]",
     "text-[#8f9fcb] hover:text-[#f1f4ff]",
@@ -28,7 +29,9 @@ export default function SocialBadges({ variant = "default" }: SocialBadgesProps)
   return (
     <div
       className={
-        isJcon
+        isQuiet
+          ? "flex flex-wrap justify-center gap-6"
+          : isJcon
           ? "flex flex-wrap justify-center gap-5"
           : "flex flex-wrap justify-center gap-6 mb-10 animate-fade-in delay-300"
       }
@@ -41,7 +44,9 @@ export default function SocialBadges({ variant = "default" }: SocialBadgesProps)
           rel="noopener noreferrer"
           aria-label={label}
           className={
-            isJcon
+            isQuiet
+              ? "text-[#141414] text-3xl transition hover:text-[#D71E23]"
+              : isJcon
               ? `${jconColorClasses[index % 2]} text-6xl transition duration-300 drop-shadow-[0_0_14px_rgba(214,42,66,0.65)] hover:drop-shadow-[0_0_24px_rgba(214,42,66,0.95)]`
               : `${defaultClass} text-3xl transition drop-shadow-cyber`
           }
