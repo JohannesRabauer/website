@@ -9,6 +9,7 @@ import { FaArrowRight, FaExternalLinkAlt, FaFilePdf, FaGithub, FaPlay, FaYoutube
 import SocialBadges from "../components/SocialBadges";
 import { withBasePath } from "@/lib/basePath";
 import { SESSIONS } from "./sessions";
+import SlidoBanner from "./SlidoBanner";
 
 // Styled after the talk's "Quiet Signal" deck design: white surface,
 // near-black ink, XDEV red as the only accent, Geist type, line icons.
@@ -301,6 +302,8 @@ export default function JconDb2026Page() {
       style={{ fontFamily: "var(--font-geist), 'Segoe UI', system-ui, sans-serif" }}
     >
       <style>{`.font-mono{font-family:var(--font-geist-mono),ui-monospace,Consolas,monospace}`}</style>
+
+      <SlidoBanner />
 
       {/* Top rail */}
       <header className="mx-auto flex max-w-6xl items-center justify-between pl-16 pr-4 pt-6 sm:pr-8 xl:pl-8">
