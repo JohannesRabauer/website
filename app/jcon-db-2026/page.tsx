@@ -190,6 +190,16 @@ const TOOLS: Tool[] = [
     ],
   },
   {
+    name: "SkillsJars",
+    by: "James Ward",
+    description:
+      "Agent skills published on Maven Central, so you can version them like any other dependency instead of copying files from strangers.",
+    links: [
+      { label: "skillsjars.com", href: "https://skillsjars.com" },
+      { label: "SkillsJars on GitHub", href: "https://github.com/skillsjars" },
+    ],
+  },
+  {
     name: "Semantic Anchors",
     by: "Ralf D. Müller",
     description:

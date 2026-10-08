@@ -1,4 +1,4 @@
-// Generated from slides/sessions.json in github.com/JohannesRabauer/talk-ai-learnings.
+// Generated from slides/sessions.json in the talk-ai-learnings repo.
 // Every live-coding session the talk draws on; "moments" deep-link into the recordings.
 
 export type Moment = { time: string; url: string; label: string };
@@ -11,7 +11,7 @@ export type Session = {
   thumbnail: string;
   blog: string;
   repo: string | null;
-  cohost: { name: string; role: string; company: string; image: string; github: string };
+  cohost: { name: string; role: string; company: string; github: string };
   talkStories: string[];
   moments: Moment[];
 };
@@ -29,7 +29,6 @@ export const SESSIONS: Session[] = [
       "name": "Kenny Pflug",
       "role": "Guided Coding author",
       "company": "TELIS/GWVS",
-      "image": "/jcon-db-2026/cohosts/kenny-pflug.jpg",
       "github": "https://github.com/feO2x"
     },
     "talkStories": [
@@ -65,12 +64,11 @@ export const SESSIONS: Session[] = [
       "name": "Catherine Edelveis",
       "role": "DevRel",
       "company": "BellSoft",
-      "image": "/jcon-db-2026/cohosts/catherine-edelveis.png",
       "github": "https://github.com/des-felins"
     },
     "talkStories": [
       "Split the prompt",
-      "Gates watch, so you don't"
+      "Quality gates watch, so you don't."
     ],
     "moments": [
       {
@@ -107,11 +105,10 @@ export const SESSIONS: Session[] = [
       "name": "Ryan Jarvinen",
       "role": "Principal Developer Advocate",
       "company": "IBM",
-      "image": "/jcon-db-2026/cohosts/ryan-jarvinen.jpg",
       "github": "https://github.com/ryanj"
     },
     "talkStories": [
-      "The agent turned off the tests"
+      "Quality gates watch, so you don't."
     ],
     "moments": [
       {
@@ -143,7 +140,6 @@ export const SESSIONS: Session[] = [
       "name": "Kevin Wittek",
       "role": "Engineering Leader",
       "company": "Docker",
-      "image": "/jcon-db-2026/cohosts/kevin-wittek.jpg",
       "github": "https://github.com/kiview"
     },
     "talkStories": [
@@ -184,7 +180,6 @@ export const SESSIONS: Session[] = [
       "name": "Ralf D. Müller",
       "role": "arc42 committer, creator of docToolchain",
       "company": "DB Systel",
-      "image": "/jcon-db-2026/cohosts/ralf-d-mueller.jpg",
       "github": "https://github.com/rdmueller"
     },
     "talkStories": [
@@ -225,7 +220,6 @@ export const SESSIONS: Session[] = [
       "name": "Simon Martinelli",
       "role": "Java Architect, author of the Vaadin-JOOQ Archetype",
       "company": "Martinelli GmbH",
-      "image": "/jcon-db-2026/cohosts/simon-martinelli.jpg",
       "github": "https://github.com/simasch"
     },
     "talkStories": [
@@ -272,7 +266,6 @@ export const SESSIONS: Session[] = [
       "name": "Abdel Sghiouar",
       "role": "Cloud Developer Advocate",
       "company": "Google",
-      "image": "/jcon-db-2026/cohosts/abdel-sghiouar.jpg",
       "github": "https://github.com/boredabdel"
     },
     "talkStories": [
@@ -313,7 +306,6 @@ export const SESSIONS: Session[] = [
       "name": "Anton Arhipov",
       "role": "Developer Advocate",
       "company": "JetBrains",
-      "image": "/jcon-db-2026/cohosts/anton-arhipov.jpg",
       "github": "https://github.com/antonarhipov"
     },
     "talkStories": [
@@ -366,6 +358,41 @@ export const SESSIONS: Session[] = [
     ]
   },
   {
+    "id": "kiro-java-hero-game",
+    "date": "2026-06-18",
+    "title": "Can Kiro Change Java Development?",
+    "youtube": "https://youtu.be/Vp5AspPXN-4",
+    "thumbnail": "https://img.youtube.com/vi/Vp5AspPXN-4/hqdefault.jpg",
+    "blog": "/en/blog/kiro-java-hero-game/",
+    "repo": "https://github.com/JohannesRabauer/kiro-java-hero-game",
+    "cohost": {
+      "name": "James Ward",
+      "role": "Principal Developer Advocate",
+      "company": "AWS",
+      "github": "https://github.com/jamesward"
+    },
+    "talkStories": [
+      "Specs are for humans"
+    ],
+    "moments": [
+      {
+        "time": "15:00",
+        "url": "https://youtu.be/Vp5AspPXN-4?t=900",
+        "label": "Kiro turns vision.md into requirements"
+      },
+      {
+        "time": "37:40",
+        "url": "https://youtu.be/Vp5AspPXN-4?t=2260",
+        "label": "Spec-driven discussion: keep the spec or archive it"
+      },
+      {
+        "time": "2:04:40",
+        "url": "https://youtu.be/Vp5AspPXN-4?t=7480",
+        "label": "Looking at the finished app"
+      }
+    ]
+  },
+  {
     "id": "github-copilot-app-java-development",
     "date": "2026-06-25",
     "title": "How Good Is GitHub Copilot App for Java Development?",
@@ -377,7 +404,6 @@ export const SESSIONS: Session[] = [
       "name": "Bruno Borges",
       "role": "Principal Product Manager for Java",
       "company": "Microsoft",
-      "image": "/jcon-db-2026/cohosts/bruno-borges.jpg",
       "github": "https://github.com/brunoborges"
     },
     "talkStories": [
@@ -424,7 +450,6 @@ export const SESSIONS: Session[] = [
       "name": "Ingo Eichhorst",
       "role": "AI Architect & Engineering Trainer",
       "company": "IONOS",
-      "image": "/jcon-db-2026/cohosts/ingo-eichhorst.jpg",
       "github": "https://github.com/ingo-eichhorst"
     },
     "talkStories": [
@@ -433,13 +458,10 @@ export const SESSIONS: Session[] = [
       "Ramble",
       "Let the AI ask the questions",
       "Small spec, clear goal",
-      "Specs are for humans",
       "A stronger oracle",
       "Worked first try, then tested",
-      "Not too big, not too small",
-      "A fresh agent only had the PRD",
-      "Gates watch, so you don't",
-      "One more gate: the agent reviews itself",
+      "Quality gates watch, so you don't.",
+      "Another quality gate: self-review",
       "AI proposes. You own the oracle."
     ],
     "moments": [
@@ -521,6 +543,47 @@ export const SESSIONS: Session[] = [
     ]
   },
   {
+    "id": "ibm-bob-v2",
+    "date": "2026-07-16",
+    "title": "AI Coding with IBM Bob v2: Building a Habit Tracker Live",
+    "youtube": "https://youtu.be/_7rzl1_td5Y",
+    "thumbnail": "/jcon-db-2026/sessions/ibm-bob-v2.jpg",
+    "blog": "/en/blog/ibm-bob-v2/",
+    "repo": "https://github.com/JohannesRabauer/bobs-habit-tracker",
+    "cohost": {
+      "name": "Maximilian Jesch",
+      "role": "Senior Outbound Product Manager",
+      "company": "IBM",
+      "github": "https://github.com/Max-Jesch"
+    },
+    "talkStories": [
+      "Write your own skills",
+      "Walls of text"
+    ],
+    "moments": [
+      {
+        "time": "45:36",
+        "url": "https://youtu.be/_7rzl1_td5Y?t=2736",
+        "label": "Create your own skills; skills run with agent permissions"
+      },
+      {
+        "time": "51:23",
+        "url": "https://youtu.be/_7rzl1_td5Y?t=3083",
+        "label": "Bob's skill-creator builds a batched grill-me"
+      },
+      {
+        "time": "52:41",
+        "url": "https://youtu.be/_7rzl1_td5Y?t=3161",
+        "label": "No mechanism to evaluate skills, 'so full of nonsense'"
+      },
+      {
+        "time": "1:06:38",
+        "url": "https://youtu.be/_7rzl1_td5Y?t=3998",
+        "label": "Core message: just create your own skills"
+      }
+    ]
+  },
+  {
     "id": "bmad-method",
     "date": "2026-07-24",
     "title": "The BMad Method for Java Developers",
@@ -532,13 +595,12 @@ export const SESSIONS: Session[] = [
       "name": "Brian Madison",
       "role": "Creator of the BMad Method",
       "company": "BMad Code",
-      "image": "/jcon-db-2026/cohosts/brian-madison.png",
       "github": "https://github.com/bmadcode"
     },
     "talkStories": [
       "Goal clarity beats instruction detail",
       "Party Mode: many voices",
-      "One more gate: the agent reviews itself"
+      "Another quality gate: self-review"
     ],
     "moments": [
       {
@@ -590,12 +652,10 @@ export const SESSIONS: Session[] = [
       "name": "Manuel de la Peña",
       "role": "Staff Software Engineer",
       "company": "Docker",
-      "image": "/jcon-db-2026/cohosts/manuel-de-la-pena.jpg",
       "github": "https://github.com/mdelapenya"
     },
     "talkStories": [
       "Too many agents, too many tabs",
-      "The agent turned off the tests",
       "Repeated? Make it a skill."
     ],
     "moments": [
