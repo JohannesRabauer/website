@@ -193,9 +193,9 @@ const TOOLS: Tool[] = [
     name: "SkillsJars",
     by: "James Ward",
     description:
-      "Agent skills published on Maven Central, so you can version them like any other dependency instead of copying files from strangers.",
+      "Skills as versioned Maven dependencies. Pin a version and it never changes underneath you. From the talk: write your own skills, keep one team repo, pin versions.",
     links: [
-      { label: "skillsjars.com", href: "https://skillsjars.com" },
+      { label: "skillsjars.com", href: "https://www.skillsjars.com/" },
       { label: "SkillsJars on GitHub", href: "https://github.com/skillsjars" },
     ],
   },
