@@ -27,7 +27,6 @@ const SLIDES_PDF_FILE = "enterprise-ai-trends.pdf";
 const SLIDES_PDF_URL = `${PAGE_PATH}/${SLIDES_PDF_FILE}`;
 const hasSlidesPdf = fs.existsSync(path.join(process.cwd(), "public", "jcon-db-2026", SLIDES_PDF_FILE));
 
-const LIVE_DECK_URL = "https://johannesrabauer.github.io/talk-ai-learnings/";
 
 export const metadata: Metadata = {
   title: `${TALK_TITLE}: Slides & Links | Johannes Rabauer`,
@@ -349,14 +348,6 @@ export default function JconDb2026Page() {
                 <FaFilePdf aria-hidden="true" /> Slides (PDF) · coming soon
               </span>
             )}
-            <a
-              href={LIVE_DECK_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 rounded-[12px] border border-[#DADADA] bg-white px-6 py-4 text-lg font-semibold transition hover:border-[#141414]"
-            >
-              <FaPlay className="text-sm" aria-hidden="true" /> Interactive deck
-            </a>
           </div>
         </div>
 
