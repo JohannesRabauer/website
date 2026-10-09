@@ -29,9 +29,14 @@ The homepage is the best source for identity and profile information, while the 
 - Conference page: https://rabauer.dev/jcon-2026/
 - Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-db-2026/
 
-## English posts (24)
+## English posts (25)
 
 ## English blog posts
+### I Came to Score a PR Bot. Qodo Wasn't One.
+- URL: https://rabauer.dev/en/blog/qodo-is-not-a-pr-bot/
+- Date: 2026-10-08
+- Summary: The plan was a scoreboard: Claude Code builds a feature, Qodo reviews it, every finding gets a verdict. We never kept score. Instead Filip Hric from Qodo showed me that Qodo is less a pull request reviewer than a context layer for coding agents, one that can review a ticket before any code exists.
+
 ### Three Coding Agents, One Java Project. Take a look at biomelab.
 - URL: https://rabauer.dev/en/blog/biomelab/
 - Date: 2026-09-17
@@ -153,9 +158,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (24)
+## German posts (25)
 
 ## German blog posts
+### Ich wollte einen PR-Bot bewerten. Qodo ist keiner.
+- URL: https://rabauer.dev/de/blog/qodo-is-not-a-pr-bot/
+- Date: 2026-10-08
+- Summary: Geplant war eine Punktetafel: Claude Code baut ein Feature, Qodo reviewt es, jedes Finding bekommt ein Urteil. Gezählt haben wir nie. Stattdessen hat mir Filip Hric von Qodo gezeigt, dass Qodo weniger ein Pull-Request-Reviewer ist als eine Kontextschicht für Coding-Agents. Eine, die ein Ticket prüfen kann, bevor es Code gibt.
+
 ### Drei Coding-Agenten, ein Java-Projekt. Ein Blick auf biomelab.
 - URL: https://rabauer.dev/de/blog/biomelab/
 - Date: 2026-09-17

@@ -1,0 +1,141 @@
+---
+title: "Ich wollte einen PR-Bot bewerten. Qodo ist keiner."
+date: "2026-10-08"
+summary: "Geplant war eine Punktetafel: Claude Code baut ein Feature, Qodo reviewt es, jedes Finding bekommt ein Urteil. Gezählt haben wir nie. Stattdessen hat mir Filip Hric von Qodo gezeigt, dass Qodo weniger ein Pull-Request-Reviewer ist als eine Kontextschicht für Coding-Agents. Eine, die ein Ticket prüfen kann, bevor es Code gibt."
+tags: ["qodo", "code-review", "ai-agents", "codex", "context-engineering", "quality-gates", "java", "live-coding"]
+youtubeId: "ljntagQDc5Q"
+mainRepository: "https://github.com/filiphric/gather-java-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "01:38"
+    label: "Begrüßung von Filip Hric"
+  - time: "02:47"
+    label: "Filips Weg von QA zu DevRel"
+  - time: "05:38"
+    label: "Was Qodo ist: Code-Governance und Qualität"
+  - time: "08:15"
+    label: "Warum KI-Code-Review zählt, wenn alle mehr Code ausliefern"
+  - time: "18:13"
+    label: "Code-Generierung vs. Code-Verifikation"
+  - time: "26:10"
+    label: "Regeln, die geladen, aber nicht durchgesetzt sind"
+  - time: "28:29"
+    label: "Demo: Qodo-Review auf Filips Java-Raumbuchungs-PR"
+  - time: "35:05"
+    label: "Ein Skill-Insight-Finding: vier Meetings erzeugen fünf Buchungen"
+  - time: "39:02"
+    label: "Finding-Kategorien und Blast Radius"
+  - time: "43:42"
+    label: "Sollten wir den Code noch lesen?"
+  - time: "50:56"
+    label: "Lernen mit KI und der Aufstieg der Generalisten"
+  - time: "57:59"
+    label: "Shift Left: Review vor dem PR"
+  - time: "1:03:04"
+    label: "Qodos Agentic Toolbox: MCP, CLI und Skills"
+  - time: "1:07:12"
+    label: "Demo: ein Linear-Ticket prüfen, bevor es umgesetzt wird"
+  - time: "1:11:54"
+    label: "Dashboard, Integrationen und Regelverwaltung"
+  - time: "1:22:08"
+    label: "Einstieg: Repos verbinden und die Software-Map"
+  - time: "1:30:16"
+    label: "Regeln im großen Maßstab und der Rule Miner"
+  - time: "1:36:11"
+    label: "Indizierte Branches und warum es keinen Fix-Button gibt"
+  - time: "1:41:13"
+    label: "Review Resolver, Preise und Abschluss"
+---
+
+**Qodo ist kein PR-Bot.** Ich hatte eine weitere KI erwartet, die über einen Pull Request schaut. Gesehen habe ich *eine Kontextschicht für Coding-Agents*.
+
+So war das nicht geplant. Geplant war eine Punktetafel. Claude Code sollte ein Feature in einem Java-Projekt bauen, Qodo sollte es reviewen, und jedes Finding sollte live ein Urteil bekommen: echter Bug, berechtigter Hinweis oder Fehlalarm. *Gezählt haben wir nie.* Filip Hric arbeitete mit Codex statt mit Claude Code, kein Feature entstand, und aus der Session wurde ein Gespräch mit zwei Demos. Ich bin froh darüber.
+
+<CoSpeakerCard
+  name="Filip Hric"
+  role="DevRel Engineer"
+  company="Qodo"
+  bio="Filip kam über Psychologie und Testen in die IT: manuelle QA bei Slido, dann Testautomatisierung und DevRel. Er lebt in der Slowakei mit vier Kindern und Muffin, einem Berner-Sennenhund-Welpen, der den Stream verschlafen hat."
+  imageSrc="/blog/filip-hric.webp"
+  website="https://filiphric.com"
+  linkedin="https://www.linkedin.com/in/filip-hric"
+  x="https://x.com/filip_hric"
+  bluesky="https://bsky.app/profile/filiphric.com"
+  youtube="https://www.youtube.com/user/perffectgentleman"
+  locale="de"
+/>
+
+## Der Reviewer, der das Protokoll gelesen hat
+
+Die meisten Reviewer lesen den Diff ohne Vorwissen. Qodo hat *das Protokoll* gelesen. Bevor es einen Pull Request kommentiert, hat es die ganze Codebase indiziert, jeden Branch, frühere PR-Entscheidungen und die Commit-Historie. Es kann Jira- oder Linear-Tickets einbeziehen, Doku aus Notion oder Confluence und Slack.
+
+Deshalb reichen seine Findings **über den Diff hinaus**. Filip zeigte an jedem Review ein Blast-Radius-Tag. Dazu kommen Findings über Repository-Grenzen hinweg, etwa eine Änderung, die einen Login-Service in einem anderen Repository bricht, mit Link auf die genaue Zeile.
+
+Das Problem dahinter kenne ich. Filips Szenario, [ab 08:15](https://youtube.com/live/ljntagQDc5Q?t=495s): 200 Entwickler mit je einem Coding-Agent schreiben **10- bis 50-mal mehr Code**. Vierzig PRs am Tag statt zwei oder drei. Seine Frage: Wer traut sich da noch, auf Merge zu klicken? Meine Kollegen brauchen *eine bis fünf Stunden* pro Review-Runde. Für vierzig PRs reicht das nicht.
+
+## Der Agent soll seine Hausaufgaben nicht selbst benoten
+
+Filips Hauptargument für einen eigenen Reviewer, [bei 12:17](https://youtube.com/live/ljntagQDc5Q?t=737s):
+
+<Quote author="Filip Hric" role="DevRel Engineer bei Qodo">
+Dieser Agent kann nicht einfach Claude Code sein, das Claude Code reviewt, oder? Oder Codex, das Codex reviewt. Klar findet er vielleicht etwas, aber ... sie haben womöglich denselben blinden Fleck.
+</Quote>
+
+Ich habe leicht widersprochen. In einem meiner Projekte gibt es einen Skill „implementiere dieses Issue“ und einen getrennten Skill „reviewe diesen PR“. **Eine frische Session mit demselben Modell findet trotzdem vieles**, was die umsetzende Session übersehen hat. Filip sah darin eine Bestätigung. Er teilt KI-gestützte Arbeit in zwei Aufgaben, **Code erzeugen und Code prüfen**, und beides müssen getrennte Schritte sein, egal wer sie erledigt.
+
+Einen zweiten Punkt habe ich mitgenommen. [Ab 26:10](https://youtube.com/live/ljntagQDc5Q?t=1570s) sagte er: *Eine Regel im Kontext des Agenten ist noch keine durchgesetzte Regel.* Jemand muss trotzdem prüfen.
+
+## Das Ticket prüfen, bevor es Code gibt
+
+Mein Bild von Qodo änderte sich [bei 57:59](https://youtube.com/live/ljntagQDc5Q?t=3479s). Filip zeichnete die übliche Schleife: Coding-Agent, Pull Request, Review, zurück zum Agenten. Selbst wenn Qodos Review nur etwa zwei Minuten dauert, **kommen die Findings erst nach dem PR**. Er will dieselben Prüfungen früher: auf noch nicht committeten Änderungen, auf Plänen und auf Tickets.
+
+<QodoShiftLeftDiagram />
+
+Die [Agentic Toolbox](https://www.qodo.ai/blog/introducing-qodos-agentic-toolbox/) ist Qodos Weg dorthin. Sie besteht aus einem MCP-Server, einer CLI und einer Reihe von Skills. Damit bekommt ein Coding-Agent dieselben Werkzeuge, die auf einem PR laufen. Der Agent muss sie aufrufen; von selbst unterbricht nichts.
+
+<Quote author="Filip Hric" role="DevRel Engineer bei Qodo">
+Eine schlechte Beschreibung führt zu einem schlechten Plan, und der führt zu einem schlechten Agenten.
+</Quote>
+
+Dann zeigte er es, [bei 1:07:12](https://youtube.com/live/ljntagQDc5Q?t=4032s). In Codex rief er den Codebase-Wisdom-Skill auf ein Linear-Ticket für einen Workshop-Budgetplaner auf. **Es gab noch keinen Code.** Das Ergebnis: Das Ticket doppelte vorhandene Logik für Zeitspannen und schlug `double` für Geldbeträge vor, obwohl eine Regel im Repository `BigDecimal` verlangt.
+
+Filip hatte das Ticket absichtlich so geschrieben, dass es scheitert. Das ging auf komische Weise nach hinten los: *Mit eingeschaltetem Qodo-Plugin weigerte sich sein Agent, die absichtlich fehlerhafte App zu schreiben*, bis er es abschaltete. Vor seiner nächsten Demo muss er daran denken, es wieder abzuschalten.
+
+Ich schreibe meine Tickets schon mit einem Coding-Agent. So einen Skill als letzten Schritt aufzurufen, um das Ticket vor der Umsetzung abzuklopfen, ist **nur ein kleiner Schritt** von dem, was ich heute mache.
+
+## Regeln, die niemand aufgeschrieben hat
+
+Jedes Team hat Konventionen, die nur in Köpfen existieren. Qodos *Rule Miner*, [gezeigt ab 1:30:16](https://youtube.com/live/ljntagQDc5Q?t=5416s), schlägt Regeln aus Mustern im Code vor, die nie dokumentiert wurden. Eine vorgeschlagene Regel gilt dann für ausgewählte Repositories oder die ganze Organisation und taucht in PR-Reviews und in der Toolbox auf.
+
+**Unsichtbare Regeln sichtbar machen** ist eine gute Idee. Ob die gefundenen Regeln taugen, haben wir nicht getestet. Es geht auch andersherum. Auswertungen zeigen, welche Regeln alle ignorieren, sodass man sie abschwächen oder löschen kann. Den Haken sahen wir beide: Ist das Signal nicht relevant, lernen Entwickler, die Kommentare zu überlesen.
+
+Der Blast Radius führt zu Filips Blick nach vorn. [Um 42:28](https://youtube.com/live/ljntagQDc5Q?t=2548s) sagte er voraus, dass Änderungen mit kleinem Blast Radius irgendwann automatisch gemergt werden. Er stellte klar: Das ist seine eigene Vermutung, nicht Qodos Roadmap.
+
+## Sollten wir den Code noch lesen?
+
+[Bei 43:42](https://youtube.com/live/ljntagQDc5Q?t=2622s) kamen wir zu der Frage, mit der ich am meisten ringe. Der Merge-Button lockt mich, wie er es vor KI nie getan hat. In einem Projekt kann ich den Next.js-Teil nicht richtig reviewen. Dieser Engpass drängt mich dazu, eine KI reviewen zu lassen und zu mergen.
+
+<Quote author="Filip Hric" role="DevRel Engineer bei Qodo">
+Es fühlt sich fast unangenehm an, das zu sagen, aber vielleicht gibt es Situationen, in denen man den Code nicht lesen muss.
+</Quote>
+
+Filip sagte, das hänge vom Kontext ab: Gesundheitswesen und Finanzen sind kein Startup. Zeile für Zeile lesen ist eine Form der Prüfung, die ein Agent genauso gut erledigen kann, und menschliche Aufmerksamkeit ist begrenzt. Live sagte ich, den Code nicht mehr zu lesen, sei *nur eine Frage der Zeit*. Einen Tag später bin ich **hin- und hergerissen**. Ich glaube an die Richtung, aber ich bin noch nicht bereit, damit aufzuhören.
+
+[Ab 50:56](https://youtube.com/live/ljntagQDc5Q?t=3056s) ging es darum, was KI mit dem Lernen macht. Filip hört oft, KI lasse alle Gehirne verkümmern, und erlebt das Gegenteil. Bei mir ist es gemischt: Ich rechne damit, Java-Details zu verlieren, und habe Wissen über Deployment und GitHub Actions dazugewonnen. Was jetzt zählt: gute Fragen stellen und die Antworten wirklich lesen.
+
+## Kein Fix-Button
+
+Qodo findet das Problem, erklärt es und schreibt sogar einen Prompt, den man in seinen Agenten kopieren kann. **Code ändert es nicht.** Auf meine Frage, warum es keinen Fix-Button gibt, [bei 1:36:11](https://youtube.com/live/ljntagQDc5Q?t=5771s), sagte Filip: Er erwartet, dass Agent-Schleifen das Beheben übernehmen und irgendwann auch den Klick auf Merge. Auch das ist seine Annahme, kein Versprechen. Heute ist *das Schließen der Schleife Aufgabe deines Agenten*, und diesen Teil haben wir live nicht gesehen.
+
+## Fazit
+
+Ich wollte einen PR-Bot bewerten. Treffender beschreibt man Qodo als **Kontextschicht für Coding-Agents**: Es bringt Tickets, Historie und ungeschriebene Regeln zu dem Agenten, der gerade arbeitet, am Ticket, beim Coden und am Pull Request. Das PR-Review ist nur die sichtbarste Stelle.
+
+Würde ich es morgen ausprobieren, finge ich klein an: *Qodo als PR-Reviewer, mit einem Menschen als Absicherung*. Wenn das hält, ließe ich es allein laufen.
+
+## Nützliche Links
+
+- [Introducing Qodo's Agentic Toolbox](https://www.qodo.ai/blog/introducing-qodos-agentic-toolbox/), der Launch-Post mit allen Skills
+- [Feature-Seite der Qodo Agentic Toolbox](https://www.qodo.ai/features/qodo-agentic-toolbox/), mit Installationsanleitung für Claude Code, Codex und Kiro

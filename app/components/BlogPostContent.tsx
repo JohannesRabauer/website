@@ -24,6 +24,7 @@ import CodeSnippet from '@/app/components/CodeSnippet';
 import PartyModeDiagram from '@/app/components/PartyModeDiagram';
 import EntireCheckpointDiagram from '@/app/components/EntireCheckpointDiagram';
 import LangGraph4jControlTowerDiagram from '@/app/components/LangGraph4jControlTowerDiagram';
+import QodoShiftLeftDiagram from '@/app/components/QodoShiftLeftDiagram';
 import ScoutFanOutDiagram from '@/app/components/ScoutFanOutDiagram';
 import ZeroCostQuarkusOpsDiagram from '@/app/components/ZeroCostQuarkusOpsDiagram';
 import ZeroCostQuarkusArchitectureDiagram from '@/app/components/ZeroCostQuarkusArchitectureDiagram';
@@ -113,6 +114,9 @@ export default function BlogPostContent({ locale, slug }: Props) {
     ),
     LangGraph4jControlTowerDiagram: (props: React.ComponentProps<typeof LangGraph4jControlTowerDiagram>) => (
       <LangGraph4jControlTowerDiagram {...props} locale={locale} />
+    ),
+    QodoShiftLeftDiagram: (props: React.ComponentProps<typeof QodoShiftLeftDiagram>) => (
+      <QodoShiftLeftDiagram {...props} locale={locale} />
     ),
     ZeroCostQuarkusOpsDiagram: (props: React.ComponentProps<typeof ZeroCostQuarkusOpsDiagram>) => (
       <ZeroCostQuarkusOpsDiagram {...props} locale={locale} />
