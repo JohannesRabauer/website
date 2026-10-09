@@ -1,5 +1,5 @@
 ---
-title: "I Came to Score a PR Bot. Qodo Wasn't One."
+title: "Don't Let Your Coding Agent Grade Its Own Homework"
 date: "2026-10-08"
 summary: "The plan was a scoreboard: Claude Code builds a feature, Qodo reviews it, every finding gets a verdict. We never kept score. Instead Filip Hric from Qodo showed me that Qodo is less a pull request reviewer than a context layer for coding agents, one that can review a ticket before any code exists."
 tags: ["qodo", "code-review", "ai-agents", "codex", "context-engineering", "quality-gates", "java", "live-coding"]
@@ -88,7 +88,7 @@ He added a second point I keep thinking about. [From 26:10](https://youtube.com/
 
 ## Review the ticket before the code exists
 
-The part that changed my picture of Qodo came [at 57:59](https://youtube.com/live/ljntagQDc5Q?t=3479s). Filip drew the usual loop: coding agent, pull request, review, back to the agent. Even with Qodo's review taking about two minutes, **the findings arrive after the PR**. He wants the same checks earlier: on uncommitted changes, on plans, and on tickets.
+The part that changed my picture of Qodo came [at 57:59](https://youtube.com/live/ljntagQDc5Q?t=3479s). Filip drew the whole chain: ticket, plan, coding agent, review of uncommitted changes, PR agent. Today the review sits at the very end. Even with Qodo's review taking about two minutes, **the findings arrive after the PR**. He wants the same checks earlier: on uncommitted changes, on plans, and on tickets.
 
 <QodoShiftLeftDiagram />
 

@@ -1,5 +1,5 @@
 ---
-title: "Ich wollte einen PR-Bot bewerten. Qodo ist keiner."
+title: "Lass deinen Coding-Agent nicht seine eigenen Hausaufgaben benoten"
 date: "2026-10-08"
 summary: "Geplant war eine Punktetafel: Claude Code baut ein Feature, Qodo reviewt es, jedes Finding bekommt ein Urteil. Gezählt haben wir nie. Stattdessen hat mir Filip Hric von Qodo gezeigt, dass Qodo weniger ein Pull-Request-Reviewer ist als eine Kontextschicht für Coding-Agents. Eine, die ein Ticket prüfen kann, bevor es Code gibt."
 tags: ["qodo", "code-review", "ai-agents", "codex", "context-engineering", "quality-gates", "java", "live-coding"]
@@ -89,7 +89,7 @@ Einen zweiten Punkt habe ich mitgenommen. [Ab 26:10](https://youtube.com/live/lj
 
 ## Das Ticket prüfen, bevor es Code gibt
 
-Mein Bild von Qodo änderte sich [bei 57:59](https://youtube.com/live/ljntagQDc5Q?t=3479s). Filip zeichnete die übliche Schleife: Coding-Agent, Pull Request, Review, zurück zum Agenten. Selbst wenn Qodos Review nur etwa zwei Minuten dauert, **kommen die Findings erst nach dem PR**. Er will dieselben Prüfungen früher: auf noch nicht committeten Änderungen, auf Plänen und auf Tickets.
+Mein Bild von Qodo änderte sich [bei 57:59](https://youtube.com/live/ljntagQDc5Q?t=3479s). Filip zeichnete die ganze Kette: Ticket, Plan, Coding-Agent, Review vor dem Commit, PR-Agent. Heute sitzt das Review ganz am Ende. Selbst wenn Qodos Review nur etwa zwei Minuten dauert, **kommen die Findings erst nach dem PR**. Er will dieselben Prüfungen früher: auf noch nicht committeten Änderungen, auf Plänen und auf Tickets.
 
 <QodoShiftLeftDiagram />
 

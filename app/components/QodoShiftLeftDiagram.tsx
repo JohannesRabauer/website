@@ -3,45 +3,42 @@ import ZoomableDiagram from './ZoomableDiagram';
 interface Copy {
   ariaLabel: string;
   ticket: string;
-  agent: string;
-  pr: string;
-  review: string;
+  plan: string;
+  agent: [string, string];
+  review: [string, string];
+  prAgent: string;
   lateLoop: string;
-  contextTitle: string;
-  contextSubtitle: string;
-  checkTicket: string;
-  checkCode: string;
-  checkPr: string;
+  toolboxTitle: string;
+  toolboxSubtitle: string;
+  prCaption: string;
 }
 
 const COPY: Record<'en' | 'de', Copy> = {
   en: {
     ariaLabel:
-      'Diagram of where Qodo reviews. Top row: ticket, coding agent, pull request, PR review. A dashed red arrow from the PR review back to the coding agent marks the classic loop, where findings arrive only after the pull request exists. Below, a green box for Qodo context (rules, PR history, codebase graph, tickets) feeds three checks upward: reviewing the ticket before any code, giving the agent rules and review while it codes, and the same review engine on the pull request.',
+      'Diagram of the loop Filip Hric drew on stream: ticket, plan, coding agent, review of uncommitted changes, and the PR agent. A dashed red arrow from the PR agent back to the coding agent marks the classic loop, where findings arrive only after the pull request exists. Below, a green box for the Agentic Toolbox (skills, MCP and CLI on top of Qodo context) feeds the same checks into the earlier steps: the ticket, the plan, the coding agent and the review of uncommitted changes.',
     ticket: 'Ticket',
-    agent: 'Coding agent',
-    pr: 'Pull request',
-    review: 'PR review',
+    plan: 'Plan',
+    agent: ['Coding', 'Agent'],
+    review: ['Review', 'uncommitted'],
+    prAgent: 'PR Agent',
     lateLoop: 'classic loop: findings arrive after the PR',
-    contextTitle: 'Qodo context',
-    contextSubtitle: 'rules · PR history · codebase graph · tickets',
-    checkTicket: 'check the ticket',
-    checkCode: 'rules + review while coding',
-    checkPr: 'same engine on the PR',
+    toolboxTitle: 'Agentic Toolbox',
+    toolboxSubtitle: 'skills · MCP · CLI, on Qodo context: rules, PR history, codebase graph, tickets',
+    prCaption: 'where Qodo reviews today',
   },
   de: {
     ariaLabel:
-      'Diagramm, wo Qodo prüft. Obere Reihe: Ticket, Coding-Agent, Pull Request, PR-Review. Ein gestrichelter roter Pfeil vom PR-Review zurück zum Coding-Agent markiert die klassische Schleife, in der Findings erst nach dem Pull Request ankommen. Darunter speist ein grüner Kasten mit Qodo-Kontext (Regeln, PR-Historie, Codebase-Graph, Tickets) drei Prüfungen nach oben: das Ticket vor jeder Zeile Code prüfen, dem Agenten beim Coden Regeln und Review geben, und dieselbe Review-Engine auf dem Pull Request.',
+      'Diagramm der Schleife, die Filip Hric im Stream gezeichnet hat: Ticket, Plan, Coding-Agent, Review nicht committeter Änderungen und der PR-Agent. Ein gestrichelter roter Pfeil vom PR-Agent zurück zum Coding-Agent markiert die klassische Schleife, in der Findings erst nach dem Pull Request ankommen. Darunter speist ein grüner Kasten für die Agentic Toolbox (Skills, MCP und CLI auf Qodo-Kontext) dieselben Prüfungen in die früheren Schritte ein: Ticket, Plan, Coding-Agent und Review nicht committeter Änderungen.',
     ticket: 'Ticket',
-    agent: 'Coding-Agent',
-    pr: 'Pull Request',
-    review: 'PR-Review',
+    plan: 'Plan',
+    agent: ['Coding-', 'Agent'],
+    review: ['Review vor', 'dem Commit'],
+    prAgent: 'PR-Agent',
     lateLoop: 'klassische Schleife: Findings erst nach dem PR',
-    contextTitle: 'Qodo-Kontext',
-    contextSubtitle: 'Regeln · PR-Historie · Codebase-Graph · Tickets',
-    checkTicket: 'Ticket prüfen',
-    checkCode: 'Regeln + Review beim Coden',
-    checkPr: 'dieselbe Engine am PR',
+    toolboxTitle: 'Agentic Toolbox',
+    toolboxSubtitle: 'Skills · MCP · CLI, auf Qodo-Kontext: Regeln, PR-Historie, Codebase-Graph, Tickets',
+    prCaption: 'hier prüft Qodo heute',
   },
 };
 
@@ -49,19 +46,23 @@ interface Props {
   locale?: 'en' | 'de';
 }
 
+const NODE_W = 150;
+const NODE_H = 64;
+const GAP = 40;
+const LEFT = 20;
+const TOP = 72;
+
 export default function QodoShiftLeftDiagram({ locale = 'en' }: Props) {
   const t = COPY[locale];
 
-  const nodes = [
-    { x: 20, label: t.ticket },
-    { x: 260, label: t.agent },
-    { x: 500, label: t.pr },
-    { x: 740, label: t.review },
-  ];
+  const labels: (string | [string, string])[] = [t.ticket, t.plan, t.agent, t.review, t.prAgent];
+  const xs = labels.map((_, i) => LEFT + i * (NODE_W + GAP));
+  const cx = (i: number) => xs[i] + NODE_W / 2;
+  const midY = TOP + NODE_H / 2;
 
   return (
     <ZoomableDiagram ariaLabel={t.ariaLabel}>
-      <svg viewBox="0 0 920 330" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 970 340" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="qsld-arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="#7C5CBF" />
@@ -74,34 +75,76 @@ export default function QodoShiftLeftDiagram({ locale = 'en' }: Props) {
           </marker>
         </defs>
 
-        {/* classic late loop: PR review back to coding agent */}
-        <path d="M820,70 C820,10 340,10 340,62" fill="none" stroke="#B5351A" strokeWidth={2} strokeDasharray="5 4" markerEnd="url(#qsld-arrow-rust)" />
-        <rect x={430} y={14} width={300} height={22} rx={4} fill="#F8F7F4" opacity={0.95} />
-        <text x={580} y={29} textAnchor="middle" fontSize="11" fontWeight={600} fill="#B5351A">{t.lateLoop}</text>
+        {/* classic late loop: PR agent back to coding agent */}
+        <path
+          d={`M${cx(4)},${TOP} C${cx(4)},14 ${cx(2)},14 ${cx(2)},${TOP - 7}`}
+          fill="none"
+          stroke="#B5351A"
+          strokeWidth={2}
+          strokeDasharray="5 4"
+          markerEnd="url(#qsld-arrow-rust)"
+        />
+        <rect x={cx(3) - 150} y={14} width={300} height={22} rx={4} fill="#F8F7F4" opacity={0.95} />
+        <text x={cx(3)} y={29} textAnchor="middle" fontSize="12" fontWeight={600} fill="#B5351A">{t.lateLoop}</text>
 
         {/* top row */}
-        {nodes.map((n) => (
-          <g key={n.x}>
-            <rect x={n.x} y={70} width={160} height={60} rx={12} fill="#EDE8F5" stroke="#3D2B6B" strokeWidth={1.5} />
-            <text x={n.x + 80} y={105} textAnchor="middle" fontSize="13" fontWeight={700} fill="#3D2B6B">{n.label}</text>
-          </g>
+        {labels.map((label, i) => {
+          const isPr = i === 4;
+          return (
+            <g key={i}>
+              <rect
+                x={xs[i]}
+                y={TOP}
+                width={NODE_W}
+                height={NODE_H}
+                rx={12}
+                fill={isPr ? '#FFFFFF' : '#EDE8F5'}
+                stroke="#3D2B6B"
+                strokeWidth={1.5}
+              />
+              {typeof label === 'string' ? (
+                <text x={cx(i)} y={midY + 5} textAnchor="middle" fontSize="14" fontWeight={700} fill="#3D2B6B">{label}</text>
+              ) : (
+                <text x={cx(i)} y={midY - 3} textAnchor="middle" fontSize="14" fontWeight={700} fill="#3D2B6B">
+                  <tspan x={cx(i)}>{label[0]}</tspan>
+                  <tspan x={cx(i)} dy={17}>{label[1]}</tspan>
+                </text>
+              )}
+            </g>
+          );
+        })}
+        {[0, 1, 2, 3].map((i) => (
+          <line
+            key={i}
+            x1={xs[i] + NODE_W}
+            y1={midY}
+            x2={xs[i + 1] - 7}
+            y2={midY}
+            stroke="#7C5CBF"
+            strokeWidth={2}
+            markerEnd="url(#qsld-arrow-purple)"
+          />
         ))}
-        <line x1={180} y1={100} x2={253} y2={100} stroke="#7C5CBF" strokeWidth={2} markerEnd="url(#qsld-arrow-purple)" />
-        <line x1={420} y1={100} x2={493} y2={100} stroke="#7C5CBF" strokeWidth={2} markerEnd="url(#qsld-arrow-purple)" />
-        <line x1={660} y1={100} x2={733} y2={100} stroke="#7C5CBF" strokeWidth={2} markerEnd="url(#qsld-arrow-purple)" />
+        <text x={cx(4)} y={TOP + NODE_H + 20} textAnchor="middle" fontSize="11" fill="#6B7280">{t.prCaption}</text>
 
-        {/* Qodo context box */}
-        <rect x={20} y={250} width={880} height={64} rx={16} fill="#E6F0EC" stroke="#2A5C45" strokeWidth={2} />
-        <text x={460} y={277} textAnchor="middle" fontSize="13" fontWeight={700} fill="#2A5C45">{t.contextTitle}</text>
-        <text x={460} y={297} textAnchor="middle" fontSize="10" fill="#2A5C45">{t.contextSubtitle}</text>
+        {/* Agentic Toolbox */}
+        <rect x={LEFT} y={250} width={xs[3] + NODE_W - LEFT} height={70} rx={16} fill="#E6F0EC" stroke="#2A5C45" strokeWidth={2} />
+        <text x={(LEFT + xs[3] + NODE_W) / 2} y={279} textAnchor="middle" fontSize="15" fontWeight={700} fill="#2A5C45">{t.toolboxTitle}</text>
+        <text x={(LEFT + xs[3] + NODE_W) / 2} y={300} textAnchor="middle" fontSize="11" fill="#2A5C45">{t.toolboxSubtitle}</text>
 
-        {/* upward checks */}
-        <line x1={100} y1={250} x2={100} y2={137} stroke="#2A5C45" strokeWidth={2} markerEnd="url(#qsld-arrow-green)" />
-        <line x1={340} y1={250} x2={340} y2={137} stroke="#2A5C45" strokeWidth={2} markerEnd="url(#qsld-arrow-green)" />
-        <line x1={820} y1={250} x2={820} y2={137} stroke="#2A5C45" strokeWidth={2} strokeOpacity={0.5} markerEnd="url(#qsld-arrow-green)" />
-        <text x={110} y={195} fontSize="10.5" fontWeight={600} fill="#2A5C45">{t.checkTicket}</text>
-        <text x={350} y={195} fontSize="10.5" fontWeight={600} fill="#2A5C45">{t.checkCode}</text>
-        <text x={810} y={195} textAnchor="end" fontSize="10.5" fill="#6B7280">{t.checkPr}</text>
+        {/* toolbox feeds the earlier steps */}
+        {[0, 1, 2, 3].map((i) => (
+          <line
+            key={i}
+            x1={cx(i)}
+            y1={250}
+            x2={cx(i)}
+            y2={TOP + NODE_H + 7}
+            stroke="#2A5C45"
+            strokeWidth={2}
+            markerEnd="url(#qsld-arrow-green)"
+          />
+        ))}
       </svg>
     </ZoomableDiagram>
   );
