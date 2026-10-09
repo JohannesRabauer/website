@@ -68,9 +68,13 @@ timestamps:
 
 Most reviewers read the diff cold. Qodo has read *the minutes*. Before it comments on a pull request, it has indexed the whole codebase, every branch, past PR decisions and the commit history. It can pull in Jira or Linear tickets, docs from Notion or Confluence, and Slack.
 
+All of that context lives in **Qodo's cloud**. The reviews and the toolbox talk to Qodo's service, and that's where your code gets indexed. Qodo says it doesn't train models on your code. Single-tenant hosting, on-prem and bringing your own model keys are *Enterprise options, for teams of 30 or more*. For some companies that ends the conversation before it starts.
+
 That's why its findings reach **past the diff**. Filip showed a blast radius tag on each review, and cross-repo findings like a change that breaks a login service in another repository, linked to the exact line.
 
 The problem it targets is one I recognize. Filip's scenario, [from 08:15](https://youtube.com/live/ljntagQDc5Q?t=495s): 200 developers with a coding agent each, writing **10 to 50 times more code**. Forty PRs a day instead of two or three. His question was who has the courage to click merge on that. My human colleagues take *one to five hours* per review round trip. That doesn't scale to forty.
+
+Qodo doesn't make that pile smaller, though. Filip's demo PR added about 500 lines, and Qodo answered with *16 findings, then 19*. Even Filip couldn't say what the "20 to 40 minutes" tag on the summary meant. For a lead who already has forty PRs a day, **nineteen comments per PR is more reading, not less**. We both agreed that relevance decides everything: if the signal isn't sharp, developers learn to scroll past it.
 
 ## Don't let the agent grade its own homework
 
@@ -106,7 +110,7 @@ I already write my tickets with a coding agent. Calling a skill like this as the
 
 Every team has conventions that live only in people's heads. Qodo's *rule miner*, [shown at 1:30:16](https://youtube.com/live/ljntagQDc5Q?t=5416s), suggests rules from patterns in the code that were never documented. You apply a suggested rule to some repositories or the whole organisation, and it shows up in PR reviews and in the toolbox.
 
-**Making invisible rules visible** is a good idea. Whether the mined rules are any good, we didn't test. It works the other way too: analytics show which rules everyone ignores, so you can weaken or delete them. Both of us agreed on the catch. If the signal isn't relevant, developers learn to ignore the comments.
+**Making invisible rules visible** is a good idea. Whether the mined rules are any good, we didn't test. It works the other way too: analytics show which rules everyone ignores, so you can weaken or delete them.
 
 Blast radius ties into where Filip thinks this goes. [Around 42:28](https://youtube.com/live/ljntagQDc5Q?t=2548s) he predicted that changes with a small blast radius will eventually be merged automatically. He was clear that this is his own guess, not Qodo's roadmap.
 
@@ -126,11 +130,17 @@ We drifted into what AI does to learning [from 50:56](https://youtube.com/live/l
 
 Qodo finds the problem, explains it and even writes a prompt you can paste into your agent. **It does not change code.** When I asked why there's no fix-it button, [at 1:36:11](https://youtube.com/live/ljntagQDc5Q?t=5771s), Filip said he expects agent loops to take over the fixing and eventually the merge click. Again, his assumption, not a promise. Today, *closing the loop is your agent's job*, and we didn't get to see that part live.
 
+## What does a review cost?
+
+Filip stays out of pricing, and the plans are measured in credits. On [Qodo's pricing page](https://www.qodo.ai/pricing/) a credit costs $0.012, and 2,500 credits buy *about 18 reviews a month*. That's roughly $1.67 for an average review, but bigger PRs cost more and unused credits expire every month. **What a ticket check or a codebase wisdom query costs, the page doesn't say.**
+
+That's not just Qodo. AI tools sell tokens, credits or coins, and you rarely know what one actually buys you. You find out from the bill. Before I put forty PRs a day through any of them, I'd want *a price per unit of work*, not per unit of currency.
+
 ## Final thought
 
 Qodo is best described as **a context layer for coding agents**: it brings the tickets, the history and the unwritten rules to whichever agent is working, at the ticket, during coding and at the pull request. The PR review is just the most visible place it shows up.
 
-If I tried it tomorrow, I'd start small: *Qodo as a PR reviewer, with a human backing it up*. If that holds, I'd let it run on its own.
+If I tried it tomorrow, I'd start small: *Qodo as a PR reviewer, with a human backing it up*, and an eye on the credit pool. If that holds, I'd let it run on its own.
 
 ## Useful links
 
