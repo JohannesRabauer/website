@@ -229,7 +229,7 @@ Look for at least one place where a diagram would make the mental model click fa
 
 ## Step 10 — Draft and save
 
-Write from the confirmed brief (Step 4), not from the summary. The summary is a reference for facts; the brief decides what goes in. **Open with the thesis or the tension** (plan versus reality often makes a good hook), never with "In this session we...". Every highlight from the brief gets a section or a paragraph; everything on the kill list stays out, however tempting.
+Write from the confirmed brief (Step 4), not from the summary. The summary is a reference for facts; the brief decides what goes in. **Open with the thesis or the tension**, never with "In this session we...". **Say a plan-versus-reality gap once**, in one place (usually the frontmatter `summary`), and don't repeat it in the opening or the closing; the user found the repetition tiresome. Every highlight from the brief gets a section or a paragraph; everything on the kill list stays out, however tempting.
 
 Apply the ground rules above (constraints, style, bilingual conventions) throughout. In particular:
 - No invented facts, quotes, or links.
