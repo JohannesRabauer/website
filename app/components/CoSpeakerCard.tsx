@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { FiGlobe } from 'react-icons/fi';
 import { FaBluesky, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
+import { withBasePath } from '@/lib/basePath';
 
 interface Props {
   name: string;
@@ -65,7 +66,7 @@ export default function CoSpeakerCard({
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
         {imageSrc ? (
           <Image
-            src={imageSrc}
+            src={withBasePath(imageSrc)!}
             alt={name}
             width={96}
             height={96}
