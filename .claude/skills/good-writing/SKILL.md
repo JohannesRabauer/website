@@ -137,3 +137,17 @@ If the piece is in English, apply the core rules from Strunk & White's *The Elem
 Read the piece once purely for rhythm, out loud if possible. If every sentence could be swapped with any other sentence in the piece without changing the shape, that's the tell. Real writing has some short sentences, some long ones, a fragment here and there, and a place where the writer clearly cared more than elsewhere.
 
 Then run the checklist above item by item, explicitly, against the actual draft — not from memory of having read it once. This is the step that's easiest to skip under time pressure and the one that matters most: the goal stated at the top of this document (nothing reads as AI-written) is only as good as whether this pass actually happened.
+
+## Final gate: one word per thing, and numbers that add up
+
+Run this last, after the checklist, on the finished draft. It catches a different kind of problem: not text that sounds machine-made, but text that quietly confuses the reader. It's especially worth running after late edits, because cutting a paragraph often leaves a sentence elsewhere pointing at something that's gone.
+
+Adapted from the keyword-consistency and numerical-consistency passes in Lorena A. Barba's [sciwrite](https://github.com/labarba/sciwrite) skill (CC BY 4.0), trimmed for blog posts and docs. Its punctuation advice is deliberately left out: where it suggests dashes, the no-dash rule of the calling project wins.
+
+1. **One term per concept.** List the key nouns (product parts, roles, artifacts: "PR agent", "findings", "skill", "toolbox") and check each is named the same way every time. If a synonym slips in ("comments" for "findings", "PR reviewer" for "PR agent"), the reader has to wonder whether it's a new thing. This is the opposite of elegant variation, and it wins over it. Diagram labels and prose must use the same names.
+2. **Nothing points at something that's gone.** Find every "this", "that", "like this", "the same", "again" and every reference to an example, demo, quote or section. Make sure the thing it points to is still in the text, and appears before it.
+3. **Every number traces back and agrees.** Each figure (counts, prices, durations, timestamps) appears the same everywhere it's used, matches its source, and any derived number (a per-unit price worked out from a pack price) is labelled as an estimate with the arithmetic checkable from what's written.
+4. **Claims sit on primary sources.** A number or fact cited from a third-party summary gets checked against the original (the vendor's own page, the paper, the transcript) before it goes in.
+5. **Each sentence has one clear subject and verb, close together.** Split a sentence whose verb seems to take two unrelated objects ("showed a tag, and cross-repo findings like …") or that stacks a colon, a relative clause and a list. Name the actor where a passive hides who did something ("your code gets indexed" → "Qodo indexes your code").
+
+Fix what you find; don't just list it.

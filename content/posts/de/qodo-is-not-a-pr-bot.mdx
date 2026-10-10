@@ -69,13 +69,13 @@ timestamps:
 
 Die meisten Reviewer lesen den Diff ohne Vorwissen. Qodo hat *das Protokoll* gelesen. Bevor es einen Pull Request kommentiert, hat es die ganze Codebase indiziert, jeden Branch, frühere PR-Entscheidungen und die Commit-Historie. Es kann Jira- oder Linear-Tickets einbeziehen, Doku aus Notion oder Confluence und Slack.
 
-Dieser ganze Kontext liegt **in Qodos Cloud**. Reviews und Toolbox sprechen mit Qodos Dienst, und dort wird dein Code indiziert. Laut Qodo trainiert es keine Modelle mit deinem Code. Single-Tenant-Betrieb, On-Prem und eigene Modell-Schlüssel gibt es *nur im Enterprise-Plan, für Teams ab 30 Personen*. Für manche Firmen ist das Gespräch damit beendet, bevor es beginnt.
+Dieser ganze Kontext liegt **in Qodos Cloud**. Reviews und Toolbox sprechen mit Qodos Dienst, und dort indiziert Qodo deinen Code. Laut Qodo trainiert es keine Modelle mit deinem Code. Single-Tenant-Betrieb, On-Prem und eigene Modell-Schlüssel gibt es *nur im Enterprise-Plan, für Teams ab 30 Personen*. Für manche Firmen ist das Gespräch damit beendet, bevor es beginnt.
 
-Deshalb reichen seine Findings **über den Diff hinaus**. Filip zeigte an jedem Review ein Blast-Radius-Tag. Dazu kommen Findings über Repository-Grenzen hinweg, etwa eine Änderung, die einen Login-Service in einem anderen Repository bricht, mit Link auf die genaue Zeile.
+Deshalb reichen seine Findings **über den Diff hinaus**. Filip zeigte an jedem Review ein Blast-Radius-Tag. Qodo meldet auch Probleme über Repository-Grenzen hinweg, etwa eine Änderung, die einen Login-Service in einem anderen Repository bricht, mit Link auf die genaue Zeile.
 
-Das Problem dahinter kenne ich. Filips Szenario, [ab 08:15](https://youtube.com/live/ljntagQDc5Q?t=495s): 200 Entwickler mit je einem Coding-Agent schreiben **10- bis 50-mal mehr Code**. Vierzig PRs am Tag statt zwei oder drei. Seine Frage: Wer traut sich da noch, auf Merge zu klicken? Meine Kollegen brauchen *eine bis fünf Stunden* pro Review-Runde. Für vierzig PRs reicht das nicht.
+Ich kenne dieses Problem. Filips Szenario, [ab 08:15](https://youtube.com/live/ljntagQDc5Q?t=495s): 200 Entwickler mit je einem Coding-Agent schreiben **10- bis 50-mal mehr Code**. Vierzig PRs am Tag statt zwei oder drei. Seine Frage: Wer traut sich da noch, auf Merge zu klicken? Meine Kollegen brauchen *eine bis fünf Stunden* pro Review-Runde. Für vierzig PRs reicht das nicht.
 
-Kleiner macht Qodo diesen Stapel allerdings nicht. Filips Demo-PR fügte rund 500 Zeilen hinzu, und Qodo antwortete mit *19 Findings*. Für einen Lead mit vierzig PRs am Tag heißt das: **neunzehn Kommentare pro PR sind mehr Lesestoff, nicht weniger**. Einig waren wir uns, dass Relevanz alles entscheidet: Ist das Signal nicht scharf, scrollen Entwickler daran vorbei.
+Kleiner macht Qodo diesen Stapel allerdings nicht. Filips Demo-PR fügte rund 500 Zeilen hinzu, und Qodo antwortete mit *19 Findings*. Für einen Lead mit vierzig PRs am Tag heißt das: **neunzehn Findings pro PR sind mehr Lesestoff, nicht weniger**. Einig waren wir uns, dass Relevanz alles entscheidet: Ist das Signal nicht scharf, scrollen Entwickler daran vorbei.
 
 ## Der Agent soll seine Hausaufgaben nicht selbst benoten
 
@@ -103,7 +103,7 @@ Eine schlechte Beschreibung führt zu einem schlechten Plan, und der führt zu e
 
 Für seine Demo wollte Filip eine absichtlich fehlerhafte App. Das ging auf komische Weise nach hinten los: *Mit eingeschaltetem Qodo-Plugin weigerte sich sein Agent, sie zu schreiben*, bis er das Plugin abschaltete. Vor seiner nächsten Demo muss er daran denken, es wieder abzuschalten.
 
-Ich schreibe meine Tickets schon mit einem Coding-Agent. So einen Skill als letzten Schritt aufzurufen, um das Ticket vor der Umsetzung abzuklopfen, ist **nur ein kleiner Schritt** von dem, was ich heute mache.
+Qodos *Codebase-Wisdom*-Skill kann ein Ticket gegen die Regeln des Repositorys prüfen, bevor jemand Code schreibt. Ich schreibe meine Tickets schon mit einem Coding-Agent. Diesen Skill als letzten Schritt aufzurufen, ist **nur ein kleiner Schritt** von dem, was ich heute mache.
 
 ## Regeln, die niemand aufgeschrieben hat
 
@@ -111,7 +111,7 @@ Jedes Team hat Konventionen, die nur in Köpfen existieren. Qodos *Rule Miner*, 
 
 **Unsichtbare Regeln sichtbar machen** ist eine gute Idee. Ob die gefundenen Regeln taugen, haben wir nicht getestet. Es geht auch andersherum. Auswertungen zeigen, welche Regeln alle ignorieren, sodass man sie abschwächen oder löschen kann.
 
-Der Blast Radius führt zu Filips Blick nach vorn. [Um 42:28](https://youtube.com/live/ljntagQDc5Q?t=2548s) sagte er voraus, dass Änderungen mit kleinem Blast Radius irgendwann automatisch gemergt werden. Er stellte klar: Das ist seine eigene Vermutung, nicht Qodos Roadmap.
+Filip sagte auch voraus, wohin der Blast Radius führt. [Um 42:28](https://youtube.com/live/ljntagQDc5Q?t=2548s) meinte er, dass Änderungen mit kleinem Blast Radius irgendwann automatisch gemergt werden. Er stellte klar: Das ist seine eigene Vermutung, nicht Qodos Roadmap.
 
 ## Sollten wir den Code noch lesen?
 
@@ -131,15 +131,15 @@ Qodo findet das Problem, erklärt es und schreibt sogar einen Prompt, den man in
 
 ## Was kostet ein Review?
 
-Filip hält sich aus dem Thema Preise heraus, und die Pläne rechnen in Credits. Laut [Qodos Preisseite](https://www.qodo.ai/pricing/) kostet ein Credit 0,012 $, und 2.500 Credits reichen für *etwa 18 Reviews im Monat*. Das sind rund 1,67 $ für ein durchschnittliches Review, aber größere PRs kosten mehr, und ungenutzte Credits verfallen jeden Monat. **Was eine Ticket-Prüfung oder eine Codebase-Wisdom-Abfrage kostet, steht dort nicht.**
+Filip hält sich aus dem Thema Preise heraus, und Qodo rechnet in Credits ab. Laut [Qodos Preisseite](https://www.qodo.ai/pricing/) kostet ein Credit 0,012 $, und 2.500 Credits reichen für *etwa 18 Reviews im Monat*. Das sind rund 1,67 $ für ein durchschnittliches Review, aber größere PRs kosten mehr, und ungenutzte Credits verfallen jeden Monat. **Was eine Ticket-Prüfung oder eine Codebase-Wisdom-Abfrage kostet, steht dort nicht.**
 
-Das ist kein reines Qodo-Problem. KI-Werkzeuge verkaufen Tokens, Credits oder Coins, und selten weiß man, was man dafür tatsächlich bekommt. Man erfährt es aus der Rechnung. Bevor ich vierzig PRs am Tag durch eines davon schicke, will ich *einen Preis pro Arbeitseinheit*, nicht pro Währungseinheit.
+Das ist kein reines Qodo-Problem. KI-Werkzeuge verkaufen Tokens, Credits oder Coins, und selten weiß man, was man dafür bekommt. Man erfährt es aus der Rechnung. Bevor ich vierzig PRs am Tag durch eines davon schicke, will ich *einen Preis pro Arbeitseinheit*, nicht pro Währungseinheit.
 
 ## Fazit
 
-Am treffendsten beschreibt man Qodo als **Kontextschicht für Coding-Agents**: Es bringt Tickets, Historie und ungeschriebene Regeln zu dem Agenten, der gerade arbeitet, am Ticket, beim Coden und am Pull Request. Das PR-Review ist nur die sichtbarste Stelle.
+Am treffendsten beschreibt man Qodo als **Kontextschicht für Coding-Agents**. Es bringt Tickets, Historie und ungeschriebene Regeln zu dem Agenten, der gerade arbeitet, vom Ticket bis zum Pull Request. Der PR-Agent ist die sichtbarste Stelle.
 
-Würde ich es morgen ausprobieren, finge ich klein an: *Qodo als PR-Reviewer, mit einem Menschen als Absicherung*, und mit einem Blick auf den Credit-Pool. Wenn das hält, ließe ich es allein laufen.
+Würde ich es morgen ausprobieren, finge ich klein an: *Qodos PR-Agent auf unseren Pull Requests, mit einem Menschen als Absicherung*, und mit einem Blick auf den Credit-Pool. Wenn das hält, ließe ich es allein laufen.
 
 ## Nützliche Links
 
