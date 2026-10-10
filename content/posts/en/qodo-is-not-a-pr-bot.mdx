@@ -74,7 +74,7 @@ That's why its findings reach **past the diff**. Filip showed a blast radius tag
 
 The problem it targets is one I recognize. Filip's scenario, [from 08:15](https://youtube.com/live/ljntagQDc5Q?t=495s): 200 developers with a coding agent each, writing **10 to 50 times more code**. Forty PRs a day instead of two or three. His question was who has the courage to click merge on that. My human colleagues take *one to five hours* per review round trip. That doesn't scale to forty.
 
-Qodo doesn't make that pile smaller, though. Filip's demo PR added about 500 lines, and Qodo answered with *19 findings*. Filip himself called that kind of a lot. For a lead who already has forty PRs a day, **nineteen comments per PR is more reading, not less**. We both agreed that relevance decides everything: if the signal isn't sharp, developers learn to scroll past it.
+Qodo doesn't make that pile smaller, though. Filip's demo PR added about 500 lines, and Qodo answered with *19 findings*. For a lead who already has forty PRs a day, **nineteen comments per PR is more reading, not less**. We both agreed that relevance decides everything: if the signal isn't sharp, developers learn to scroll past it.
 
 ## Don't let the agent grade its own homework
 
@@ -94,15 +94,13 @@ The part that changed my picture of Qodo came [at 57:59](https://youtube.com/liv
 
 <QodoShiftLeftDiagram />
 
-The [Agentic Toolbox](https://www.qodo.ai/blog/introducing-qodos-agentic-toolbox/) is how Qodo gets there. It's an MCP server, a CLI and a set of skills that give a coding agent the same tools that run on a PR. The agent has to call them; nothing interrupts on its own.
+The [Agentic Toolbox](https://www.qodo.ai/blog/introducing-qodos-agentic-toolbox/) is how Qodo gets there. It's an MCP server, a CLI and a set of skills. Qodo's PR agent uses them, and a coding agent can call the same tools long before there's a PR. The agent has to call them; nothing interrupts on its own.
 
 <Quote author="Filip Hric" role="DevRel Engineer at Qodo">
 Bad description is going to result in a bad plan, which is going to result in a bad agent.
 </Quote>
 
-Then he showed it, [at 1:07:12](https://youtube.com/live/ljntagQDc5Q?t=4032s). In Codex, he ran the codebase wisdom skill on a Linear ticket for a workshop budget planner. **No code existed yet.** It flagged that the ticket duplicated existing duration logic and suggested `double` for money, where a repository rule requires `BigDecimal`.
-
-Filip had written that ticket to fail on purpose. That backfired in a funny way: *with the Qodo plugin switched on, his agent refused to write the deliberately buggy app* until he turned it off. He has to remember to switch it off again before his next demo.
+For his demo, Filip wanted a deliberately buggy app. That backfired in a funny way: *with the Qodo plugin switched on, his agent refused to write it* until he turned the plugin off. He has to remember to switch it off again before his next demo.
 
 I already write my tickets with a coding agent. Calling a skill like this as the last step, to pressure-test the ticket before anyone implements it, is **one short step** from what I do today.
 

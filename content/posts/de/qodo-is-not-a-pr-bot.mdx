@@ -75,7 +75,7 @@ Deshalb reichen seine Findings **über den Diff hinaus**. Filip zeigte an jedem 
 
 Das Problem dahinter kenne ich. Filips Szenario, [ab 08:15](https://youtube.com/live/ljntagQDc5Q?t=495s): 200 Entwickler mit je einem Coding-Agent schreiben **10- bis 50-mal mehr Code**. Vierzig PRs am Tag statt zwei oder drei. Seine Frage: Wer traut sich da noch, auf Merge zu klicken? Meine Kollegen brauchen *eine bis fünf Stunden* pro Review-Runde. Für vierzig PRs reicht das nicht.
 
-Kleiner macht Qodo diesen Stapel allerdings nicht. Filips Demo-PR fügte rund 500 Zeilen hinzu, und Qodo antwortete mit *19 Findings*. Filip selbst nannte das ziemlich viel. Für einen Lead mit vierzig PRs am Tag heißt das: **neunzehn Kommentare pro PR sind mehr Lesestoff, nicht weniger**. Einig waren wir uns, dass Relevanz alles entscheidet: Ist das Signal nicht scharf, scrollen Entwickler daran vorbei.
+Kleiner macht Qodo diesen Stapel allerdings nicht. Filips Demo-PR fügte rund 500 Zeilen hinzu, und Qodo antwortete mit *19 Findings*. Für einen Lead mit vierzig PRs am Tag heißt das: **neunzehn Kommentare pro PR sind mehr Lesestoff, nicht weniger**. Einig waren wir uns, dass Relevanz alles entscheidet: Ist das Signal nicht scharf, scrollen Entwickler daran vorbei.
 
 ## Der Agent soll seine Hausaufgaben nicht selbst benoten
 
@@ -95,15 +95,13 @@ Mein Bild von Qodo änderte sich [bei 57:59](https://youtube.com/live/ljntagQDc5
 
 <QodoShiftLeftDiagram />
 
-Die [Agentic Toolbox](https://www.qodo.ai/blog/introducing-qodos-agentic-toolbox/) ist Qodos Weg dorthin. Sie besteht aus einem MCP-Server, einer CLI und einer Reihe von Skills. Damit bekommt ein Coding-Agent dieselben Werkzeuge, die auf einem PR laufen. Der Agent muss sie aufrufen; von selbst unterbricht nichts.
+Die [Agentic Toolbox](https://www.qodo.ai/blog/introducing-qodos-agentic-toolbox/) ist Qodos Weg dorthin. Sie besteht aus einem MCP-Server, einer CLI und einer Reihe von Skills. Qodos PR-Agent nutzt sie, und ein Coding-Agent kann dieselben Werkzeuge aufrufen, lange bevor es einen PR gibt. Der Agent muss sie aufrufen; von selbst unterbricht nichts.
 
 <Quote author="Filip Hric" role="DevRel Engineer bei Qodo">
 Eine schlechte Beschreibung führt zu einem schlechten Plan, und der führt zu einem schlechten Agenten.
 </Quote>
 
-Dann zeigte er es, [bei 1:07:12](https://youtube.com/live/ljntagQDc5Q?t=4032s). In Codex rief er den Codebase-Wisdom-Skill auf ein Linear-Ticket für einen Workshop-Budgetplaner auf. **Es gab noch keinen Code.** Das Ergebnis: Das Ticket doppelte vorhandene Logik für Zeitspannen und schlug `double` für Geldbeträge vor, obwohl eine Regel im Repository `BigDecimal` verlangt.
-
-Filip hatte das Ticket absichtlich so geschrieben, dass es scheitert. Das ging auf komische Weise nach hinten los: *Mit eingeschaltetem Qodo-Plugin weigerte sich sein Agent, die absichtlich fehlerhafte App zu schreiben*, bis er es abschaltete. Vor seiner nächsten Demo muss er daran denken, es wieder abzuschalten.
+Für seine Demo wollte Filip eine absichtlich fehlerhafte App. Das ging auf komische Weise nach hinten los: *Mit eingeschaltetem Qodo-Plugin weigerte sich sein Agent, sie zu schreiben*, bis er das Plugin abschaltete. Vor seiner nächsten Demo muss er daran denken, es wieder abzuschalten.
 
 Ich schreibe meine Tickets schon mit einem Coding-Agent. So einen Skill als letzten Schritt aufzurufen, um das Ticket vor der Umsetzung abzuklopfen, ist **nur ein kleiner Schritt** von dem, was ich heute mache.
 

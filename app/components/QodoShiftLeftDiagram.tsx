@@ -10,13 +10,12 @@ interface Copy {
   lateLoop: string;
   toolboxTitle: string;
   toolboxSubtitle: string;
-  prCaption: string;
 }
 
 const COPY: Record<'en' | 'de', Copy> = {
   en: {
     ariaLabel:
-      'Diagram of the loop Filip Hric drew on stream: ticket, plan, coding agent, review of uncommitted changes, and the PR agent. A dashed red arrow from the PR agent back to the coding agent marks the classic loop, where findings arrive only after the pull request exists. Below, a green box for the Agentic Toolbox (skills, MCP and CLI on top of Qodo context) feeds the same checks into the earlier steps: the ticket, the plan, the coding agent and the review of uncommitted changes.',
+      'Diagram of the loop Filip Hric drew on stream: ticket, plan, coding agent, review of uncommitted changes, and the PR agent. A dashed red arrow from the PR agent back to the coding agent marks the classic loop, where findings arrive only after the pull request exists. Below, a green box for the Agentic Toolbox (skills, MCP and CLI on top of Qodo context) feeds all five steps: the PR agent uses it, and so can the ticket, the plan, the coding agent and the review of uncommitted changes, long before there is a pull request.',
     ticket: 'Ticket',
     plan: 'Plan',
     agent: ['Coding', 'Agent'],
@@ -25,11 +24,10 @@ const COPY: Record<'en' | 'de', Copy> = {
     lateLoop: 'classic loop: findings arrive after the PR',
     toolboxTitle: 'Agentic Toolbox',
     toolboxSubtitle: 'skills · MCP · CLI, on Qodo context: rules, PR history, codebase graph, tickets',
-    prCaption: 'where Qodo reviews today',
   },
   de: {
     ariaLabel:
-      'Diagramm der Schleife, die Filip Hric im Stream gezeichnet hat: Ticket, Plan, Coding-Agent, Review nicht committeter Änderungen und der PR-Agent. Ein gestrichelter roter Pfeil vom PR-Agent zurück zum Coding-Agent markiert die klassische Schleife, in der Findings erst nach dem Pull Request ankommen. Darunter speist ein grüner Kasten für die Agentic Toolbox (Skills, MCP und CLI auf Qodo-Kontext) dieselben Prüfungen in die früheren Schritte ein: Ticket, Plan, Coding-Agent und Review nicht committeter Änderungen.',
+      'Diagramm der Schleife, die Filip Hric im Stream gezeichnet hat: Ticket, Plan, Coding-Agent, Review nicht committeter Änderungen und der PR-Agent. Ein gestrichelter roter Pfeil vom PR-Agent zurück zum Coding-Agent markiert die klassische Schleife, in der Findings erst nach dem Pull Request ankommen. Darunter speist ein grüner Kasten für die Agentic Toolbox (Skills, MCP und CLI auf Qodo-Kontext) alle fünf Schritte: Der PR-Agent nutzt sie, und ebenso Ticket, Plan, Coding-Agent und Review nicht committeter Änderungen, lange bevor es einen Pull Request gibt.',
     ticket: 'Ticket',
     plan: 'Plan',
     agent: ['Coding-', 'Agent'],
@@ -38,7 +36,6 @@ const COPY: Record<'en' | 'de', Copy> = {
     lateLoop: 'klassische Schleife: Findings erst nach dem PR',
     toolboxTitle: 'Agentic Toolbox',
     toolboxSubtitle: 'Skills · MCP · CLI, auf Qodo-Kontext: Regeln, PR-Historie, Codebase-Graph, Tickets',
-    prCaption: 'hier prüft Qodo heute',
   },
 };
 
@@ -125,15 +122,14 @@ export default function QodoShiftLeftDiagram({ locale = 'en' }: Props) {
             markerEnd="url(#qsld-arrow-purple)"
           />
         ))}
-        <text x={cx(4)} y={TOP + NODE_H + 20} textAnchor="middle" fontSize="11" fill="#6B7280">{t.prCaption}</text>
 
         {/* Agentic Toolbox */}
-        <rect x={LEFT} y={250} width={xs[3] + NODE_W - LEFT} height={70} rx={16} fill="#E6F0EC" stroke="#2A5C45" strokeWidth={2} />
-        <text x={(LEFT + xs[3] + NODE_W) / 2} y={279} textAnchor="middle" fontSize="15" fontWeight={700} fill="#2A5C45">{t.toolboxTitle}</text>
-        <text x={(LEFT + xs[3] + NODE_W) / 2} y={300} textAnchor="middle" fontSize="11" fill="#2A5C45">{t.toolboxSubtitle}</text>
+        <rect x={LEFT} y={250} width={xs[4] + NODE_W - LEFT} height={70} rx={16} fill="#E6F0EC" stroke="#2A5C45" strokeWidth={2} />
+        <text x={(LEFT + xs[4] + NODE_W) / 2} y={279} textAnchor="middle" fontSize="15" fontWeight={700} fill="#2A5C45">{t.toolboxTitle}</text>
+        <text x={(LEFT + xs[4] + NODE_W) / 2} y={300} textAnchor="middle" fontSize="11" fill="#2A5C45">{t.toolboxSubtitle}</text>
 
-        {/* toolbox feeds the earlier steps */}
-        {[0, 1, 2, 3].map((i) => (
+        {/* toolbox feeds every step, the PR agent included */}
+        {[0, 1, 2, 3, 4].map((i) => (
           <line
             key={i}
             x1={cx(i)}
