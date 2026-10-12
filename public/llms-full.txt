@@ -27,7 +27,7 @@ The homepage is the best source for identity and profile information, while the 
 - LinkedIn: https://www.linkedin.com/in/johannes-rabauer
 - Sessionize: https://sessionize.com/johannes/
 - Conference page: https://rabauer.dev/jcon-2026/
-- Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-db-2026/
+- Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-btc-2026/
 
 ## English posts (25)
 

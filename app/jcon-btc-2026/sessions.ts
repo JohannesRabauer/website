@@ -57,7 +57,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-03-05",
     "title": "Live Vibe Coding Battle: Build a Java App with GitHub Copilot",
     "youtube": "https://youtu.be/emA_olJE6AU",
-    "thumbnail": "/jcon-db-2026/sessions/vibe-coding-battle.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/vibe-coding-battle.jpg",
     "blog": "/en/blog/vibe-coding-battle/",
     "repo": "https://github.com/code-with-bellsoft/ai-coding-battle",
     "cohost": {
@@ -98,7 +98,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-04-13",
     "title": "AI Coding with IBM Bob: Building a JavaFX Chess Game Live",
     "youtube": "https://youtu.be/uvQwVpG3c5A",
-    "thumbnail": "/jcon-db-2026/sessions/ibm-bob.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/ibm-bob.jpg",
     "blog": "/en/blog/ibm-bob/",
     "repo": "https://github.com/JohannesRabauer/ibm-bob-javafx-chess",
     "cohost": {
@@ -133,7 +133,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-04-30",
     "title": "How Safe Is Docker Sandbox? Testing AI Agents with Java",
     "youtube": "https://youtu.be/I-FqemEnUAc",
-    "thumbnail": "/jcon-db-2026/sessions/docker-sbx.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/docker-sbx.jpg",
     "blog": "/en/blog/docker-sbx/",
     "repo": "https://github.com/JohannesRabauer/docker-sandbox-demo",
     "cohost": {
@@ -173,7 +173,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-05-10",
     "title": "LLM Coding with Semantic Anchors: From Vibe Coding to a Real Java App",
     "youtube": "https://youtu.be/Q_DWMayAQEQ",
-    "thumbnail": "/jcon-db-2026/sessions/semantic-anchors.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/semantic-anchors.jpg",
     "blog": "/en/blog/semantic-anchors/",
     "repo": null,
     "cohost": {
@@ -213,7 +213,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-05-13",
     "title": "Spec-Driven Development and the AI Unified Process",
     "youtube": "https://youtu.be/4Fw4Qne9z8E",
-    "thumbnail": "/jcon-db-2026/sessions/ai-unified-process.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/ai-unified-process.jpg",
     "blog": "/en/blog/ai-unified-process/",
     "repo": "https://github.com/JohannesRabauer/spec-driven-demo",
     "cohost": {
@@ -259,7 +259,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-05-31",
     "title": "How Good Is Google's New Antigravity CLI?",
     "youtube": "https://youtu.be/61KMU_3SPQI",
-    "thumbnail": "/jcon-db-2026/sessions/antigravity-cli.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/antigravity-cli.jpg",
     "blog": "/en/blog/antigravity-cli/",
     "repo": "https://github.com/JohannesRabauer/antigravity-marathon-demo",
     "cohost": {
@@ -299,7 +299,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-06-11",
     "title": "Junie, IntelliJ, and Spec-Driven Development",
     "youtube": "https://youtu.be/LekXCf-FJ00",
-    "thumbnail": "/jcon-db-2026/sessions/junie-intellij-spec-driven.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/junie-intellij-spec-driven.jpg",
     "blog": "/en/blog/junie-intellij-spec-driven/",
     "repo": "https://github.com/JohannesRabauer/junie-midi-javafx-app",
     "cohost": {
@@ -397,7 +397,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-06-25",
     "title": "How Good Is GitHub Copilot App for Java Development?",
     "youtube": "https://youtu.be/Xg3uYN6AMCA",
-    "thumbnail": "/jcon-db-2026/sessions/github-copilot-app-java-development.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/github-copilot-app-java-development.jpg",
     "blog": "/en/blog/github-copilot-app-java-development/",
     "repo": "https://github.com/JohannesRabauer/hr-onboarding-java-app",
     "cohost": {
@@ -443,7 +443,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-07-02",
     "title": "Stop Prompting. Start Building Software Factories for Java",
     "youtube": "https://youtu.be/5vm4eckX6f8",
-    "thumbnail": "/jcon-db-2026/sessions/software-factories.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/software-factories.jpg",
     "blog": "/en/blog/software-factories/",
     "repo": "https://github.com/JohannesRabauer/quanta",
     "cohost": {
@@ -547,7 +547,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-07-16",
     "title": "AI Coding with IBM Bob v2: Building a Habit Tracker Live",
     "youtube": "https://youtu.be/_7rzl1_td5Y",
-    "thumbnail": "/jcon-db-2026/sessions/ibm-bob-v2.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/ibm-bob-v2.jpg",
     "blog": "/en/blog/ibm-bob-v2/",
     "repo": "https://github.com/JohannesRabauer/bobs-habit-tracker",
     "cohost": {
@@ -588,7 +588,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-07-24",
     "title": "The BMad Method for Java Developers",
     "youtube": "https://youtu.be/Gki9fAlefyw",
-    "thumbnail": "/jcon-db-2026/sessions/bmad-method.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/bmad-method.jpg",
     "blog": "/en/blog/bmad-method/",
     "repo": "https://github.com/JohannesRabauer/bmad-personal-finance-tracker",
     "cohost": {
@@ -645,7 +645,7 @@ export const SESSIONS: Session[] = [
     "date": "2026-09-17",
     "title": "Three Coding Agents, One Java Project. Take a look at biomelab.",
     "youtube": "https://youtu.be/9-WxSKFFEcE",
-    "thumbnail": "/jcon-db-2026/sessions/biomelab.jpg",
+    "thumbnail": "/jcon-btc-2026/sessions/biomelab.jpg",
     "blog": "/en/blog/biomelab/",
     "repo": "https://github.com/JohannesRabauer/biomelab-german-disaster-demo",
     "cohost": {

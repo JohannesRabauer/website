@@ -17,16 +17,15 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 const TALK_TITLE = "Enterprise AI Trends That Actually Matter";
-const PAGE_PATH = "/jcon-db-2026";
+const PAGE_PATH = "/jcon-btc-2026";
 
 /**
- * Drop the exported deck at public/jcon-db-2026/enterprise-ai-trends.pdf.
+ * Drop the exported deck at public/jcon-btc-2026/enterprise-ai-trends.pdf.
  * The Slides button switches from "coming soon" to the download on the next build.
  */
 const SLIDES_PDF_FILE = "enterprise-ai-trends.pdf";
 const SLIDES_PDF_URL = `${PAGE_PATH}/${SLIDES_PDF_FILE}`;
-const hasSlidesPdf = fs.existsSync(path.join(process.cwd(), "public", "jcon-db-2026", SLIDES_PDF_FILE));
-
+const hasSlidesPdf = fs.existsSync(path.join(process.cwd(), "public", "jcon-btc-2026", SLIDES_PDF_FILE));
 
 export const metadata: Metadata = {
   title: `${TALK_TITLE}: Slides & Links | Johannes Rabauer`,
@@ -151,9 +150,28 @@ const PIPELINE: { icon: string; name: string; caption: ReactNode }[] = [
 ];
 
 type ToolLink = { label: string; href: string };
-type Tool = { name: string; by: string; description: string; links: ToolLink[]; featured?: boolean };
+type Tool = {
+  name: string;
+  by: string;
+  description: string;
+  links: ToolLink[];
+  featured?: boolean;
+  logo?: { src: string; alt: string; width: number; height: number };
+};
 
 const TOOLS: Tool[] = [
+  {
+    name: "IBM Bob",
+    by: "IBM",
+    logo: { src: "/jcon-btc-2026/bob-mascot.png", alt: "IBM Bob mascot", width: 456, height: 680 },
+    description:
+      "The AI coding partner from two of the sessions: a JavaFX chess game and a habit tracker, both built live. The free trial comes with 50 Bob Coins.",
+    links: [
+      { label: "Try Bob (ibm.biz/JCON-Bob)", href: "https://ibm.biz/JCON-Bob" },
+      { label: "Session: JavaFX chess game", href: "/en/blog/ibm-bob/" },
+      { label: "Session: habit tracker", href: "/en/blog/ibm-bob-v2/" },
+    ],
+  },
   {
     name: "Grill Me",
     by: "Matt Pocock",
@@ -304,7 +322,7 @@ function SectionHead({ label, title, children }: { label: string; title: string;
 
 /* ---------------------------------------------------------------- page -- */
 
-export default function JconDb2026Page() {
+export default function JconBtc2026Page() {
   return (
     <main
       className={`${geist.variable} ${geistMono.variable} min-h-screen bg-white text-[#141414] antialiased selection:bg-[#D71E23] selection:text-white`}
@@ -362,7 +380,7 @@ export default function JconDb2026Page() {
         </div>
 
         <Image
-          src="/jcon-db-2026/duke.png"
+          src="/jcon-btc-2026/duke.png"
           alt="Johannes as Java Duke"
           width={420}
           height={480}
@@ -427,7 +445,7 @@ export default function JconDb2026Page() {
             The skills and methods behind the stories. Most of them came straight from a co-host.
           </SectionHead>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {TOOLS.map(({ name, by, description, links, featured }) => (
+            {TOOLS.map(({ name, by, description, links, featured, logo }) => (
               <article
                 key={name}
                 className={`${CARD} flex flex-col gap-4 p-6 ${featured ? "border-[#D71E23]/35 bg-[#D71E23]/[0.035]" : ""}`}
@@ -437,6 +455,9 @@ export default function JconDb2026Page() {
                     <h3 className="text-xl font-bold tracking-[-0.02em]">{name}</h3>
                     <div className={`${LABEL} mt-1`}>{by}</div>
                   </div>
+                  {logo && (
+                    <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} className="h-10 w-auto shrink-0" />
+                  )}
                   {featured && (
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#D71E23] text-white">
                       <Glyph name="skill" className="h-5 w-5" />
