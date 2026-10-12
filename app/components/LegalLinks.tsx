@@ -33,6 +33,12 @@ export default function LegalLinks({
       >
         Datenschutz
       </Link>
+      <Link
+        href="/nutzungsbedingungen"
+        className={`transition-colors ${defaultLinkClassName} ${linkClassName}`.trim()}
+      >
+        Nutzungsbedingungen
+      </Link>
     </nav>
   );
 }

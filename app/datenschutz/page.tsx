@@ -177,7 +177,38 @@ export default function DatenschutzPage() {
         nicht länger als 30 Tage gespeichert, ohne aktualisiert zu werden.
       </p>
 
-      <h2>10. Ihre Rechte</h2>
+      <h2>10. Nutzung der TikTok-Schnittstellen</h2>
+      <p>
+        Dasselbe Werkzeug („Social Publisher“, auf Basis von Postiz) veröffentlicht meine eigenen
+        Kurzvideos auch auf meinem eigenen TikTok-Konto. Dafür nutzt es die{' '}
+        <strong>TikTok Login Kit</strong> und die <strong>TikTok Content Posting API</strong>:
+        Ich verbinde mein Konto einmalig per OAuth 2.0, danach lädt das Werkzeug meine Videos
+        mit Beschreibung zeitgesteuert hoch und ruft Profilangaben (Anzeigename, Profilbild)
+        sowie Statistiken zu meinen eigenen Videos und meinem Konto ab. Das Werkzeug wird
+        ausschließlich von mir für mein eigenes Konto genutzt; es ist nicht öffentlich zugänglich
+        und verarbeitet keine Daten anderer TikTok-Nutzerinnen und -Nutzer.
+      </p>
+      <p>
+        Dabei gelten die{' '}
+        <a href="https://www.tiktok.com/legal/terms-of-service" target="_blank" rel="noopener noreferrer">
+          Nutzungsbedingungen von TikTok
+        </a>{' '}
+        sowie die{' '}
+        <a href="https://www.tiktok.com/legal/privacy-policy-eea" target="_blank" rel="noopener noreferrer">
+          Datenschutzrichtlinie von TikTok
+        </a>
+        .
+      </p>
+      <p>
+        Gespeichert werden nur das Zugriffstoken für mein Konto, Anzeigename und Konto-ID, die
+        geplanten Beiträge sowie Status und Statistiken meiner eigenen Videos, ausschließlich auf
+        einem privaten Server unter meiner Kontrolle. Die Daten werden nicht an Dritte
+        weitergegeben und nicht für Werbung verwendet. Der Zugriff kann jederzeit in der
+        TikTok-App unter Einstellungen und Datenschutz, Sicherheit, Apps und Dienste widerrufen
+        werden; danach lösche ich das Zugriffstoken und die abgerufenen Daten innerhalb von 7 Tagen.
+      </p>
+
+      <h2>11. Ihre Rechte</h2>
       <p>
         Sie haben im Rahmen der gesetzlichen Vorgaben das Recht auf Auskunft über die Sie
         betreffenden personenbezogenen Daten sowie auf Berichtigung, Löschung, Einschränkung der
@@ -191,7 +222,7 @@ export default function DatenschutzPage() {
         Außerdem haben Sie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren.
       </p>
 
-      <h2>11. Stand</h2>
+      <h2>12. Stand</h2>
       <p>Stand: {legalContact.updatedAt}</p>
     </LegalPageShell>
   );
