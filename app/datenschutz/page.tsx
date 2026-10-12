@@ -134,7 +134,50 @@ export default function DatenschutzPage() {
         Technologien einsetzen. Darauf habe ich keinen Einfluss.
       </p>
 
-      <h2>9. Ihre Rechte</h2>
+      <h2>9. Nutzung der YouTube API-Dienste</h2>
+      <p>
+        Für meinen eigenen YouTube-Kanal nutze ich ein selbst betriebenes Veröffentlichungswerkzeug
+        („Social Publisher“, auf Basis der Open-Source-Software Postiz), das die{' '}
+        <strong>YouTube API-Dienste</strong> (YouTube API Services) verwendet. Damit lade ich
+        eigene Videos (YouTube Shorts) mit Titel, Beschreibung und Tags zeitgesteuert auf meinen
+        Kanal hoch und rufe Statistiken zu meinen eigenen Videos ab. Das Werkzeug wird
+        ausschließlich von mir für meinen eigenen Kanal genutzt; es ist nicht öffentlich zugänglich
+        und verarbeitet keine Daten anderer YouTube-Nutzerinnen und -Nutzer.
+      </p>
+      <p>
+        Mit der Nutzung der YouTube API-Dienste gelten die{' '}
+        <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">
+          Nutzungsbedingungen von YouTube
+        </a>{' '}
+        sowie die{' '}
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+          Datenschutzerklärung von Google
+        </a>
+        .
+      </p>
+      <p>
+        Gespeichert werden dabei nur die für die Veröffentlichung nötigen Daten: das
+        Zugriffstoken für meinen Kanal (OAuth 2.0), Kanalname und Kanal-ID, die geplanten Beiträge
+        sowie Status und Statistiken meiner eigenen Videos. Diese Daten liegen ausschließlich auf
+        einem privaten Server unter meiner Kontrolle, werden nicht an Dritte weitergegeben und
+        nicht für Werbung verwendet.
+      </p>
+      <p>
+        Der Zugriff des Werkzeugs auf ein Google-Konto kann jederzeit über die{' '}
+        <a
+          href="https://security.google.com/settings/security/permissions"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Sicherheitseinstellungen des Google-Kontos
+        </a>{' '}
+        widerrufen werden; das gespeicherte Zugriffstoken ist danach unwirksam. Nach einem
+        Widerruf oder dem Trennen des Kanals lösche ich das Zugriffstoken und die über die
+        YouTube API-Dienste abgerufenen Daten innerhalb von 7 Tagen. Abgerufene Statistiken werden
+        nicht länger als 30 Tage gespeichert, ohne aktualisiert zu werden.
+      </p>
+
+      <h2>10. Ihre Rechte</h2>
       <p>
         Sie haben im Rahmen der gesetzlichen Vorgaben das Recht auf Auskunft über die Sie
         betreffenden personenbezogenen Daten sowie auf Berichtigung, Löschung, Einschränkung der
@@ -148,7 +191,7 @@ export default function DatenschutzPage() {
         Außerdem haben Sie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren.
       </p>
 
-      <h2>10. Stand</h2>
+      <h2>11. Stand</h2>
       <p>Stand: {legalContact.updatedAt}</p>
     </LegalPageShell>
   );

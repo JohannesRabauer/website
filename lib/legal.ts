@@ -4,7 +4,7 @@ export const legalContact = {
   postalCodeCity: '[Bitte PLZ und Ort ergänzen]',
   country: 'Deutschland',
   email: 'johannes@rabauer.dev',
-  updatedAt: '03.04.2026',
+  updatedAt: '12.10.2026',
 };
 
 export const giscusDiscussionUrl =
