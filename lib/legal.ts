@@ -1,7 +1,7 @@
 export const legalContact = {
   fullName: 'Johannes Rabauer',
-  streetAddress: '[Bitte Straße und Hausnummer ergänzen]',
-  postalCodeCity: '[Bitte PLZ und Ort ergänzen]',
+  streetAddress: 'Kornstraße 3',
+  postalCodeCity: '85368 Wang',
   country: 'Deutschland',
   email: 'johannes@rabauer.dev',
   updatedAt: '12.10.2026',
