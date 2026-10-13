@@ -1,10 +1,12 @@
 ---
 name: good-writing
 description: >-
-  Use this skill whenever writing or editing prose meant to sound human — blog posts, articles, emails, video descriptions, social posts, documentation, or any text the user will publish under their own name. Strips out the stock patterns that make text read as AI-generated, per Wikipedia's "Signs of AI writing" field guide - puffed-up significance, rule-of-three padding, negative parallelism ("it's not just X, it's Y"), the manufactured-reveal template ("the real reason was..."), false ranges, elegant variation, formulaic transitions, vague attributions, boilerplate structure, and overuse of bold/bullets/em dashes. Also applies language-specific style rules on top of the checklist: Gutes Deutsch nach Wolf Schneider for German text, Plain English per Strunk & White for English text. Trigger this any time the user asks to write, draft, rewrite, "humanize," or edit copy for external use, even if they don't explicitly mention AI detection or say "make this sound human."
+  Use this skill whenever writing or editing prose meant to sound human — blog posts, articles, emails, video descriptions, social posts, documentation, or any text the user will publish under their own name. Strips out the stock patterns that make text read as AI-generated, per Wikipedia's "Signs of AI writing" field guide - puffed-up significance, rule-of-three padding, negative parallelism ("it's not just X, it's Y"), the manufactured-reveal template ("the real reason was..."), false ranges, elegant variation, formulaic transitions, vague attributions, boilerplate structure, invented judgments put in the author's mouth, and overuse of bold/bullets. Also enforces a hard, zero-tolerance ban on em dashes (the — character) per standing user preference. Also applies language-specific style rules on top of the checklist: Gutes Deutsch nach Wolf Schneider for German text, Plain English per Strunk & White for English text. Trigger this any time the user asks to write, draft, rewrite, "humanize," or edit copy for external use, even if they don't explicitly mention AI detection or say "make this sound human." For English text, also runs the vendored `unslop` skill as a deeper structural pass on top of this checklist.
 ---
 
 # Avoid AI Writing Tells
+
+**NEVER USE THE — CHARACTER. NEVER. NOT ONCE, NOT ANYWHERE, NOT EVEN IN A TWO-LINE LINKEDIN MESSAGE.** This is the single rule the user has had to repeat the most, so it goes here, first: if the text you are about to output contains —, rewrite the sentence with a comma, period, colon, semicolon, or parentheses before you show it to anyone. This holds even though other files in this repo (internal docs, skill files, this very file's own prose) use em dashes as house style; that usage does NOT license — in anything drafted for the user to send, publish, or read as a deliverable. Check the literal output for the — character as the very last step before every delivery.
 
 A checklist-driven pass for making written output read like it came from a person who knows the subject and has opinions about it, not like it was assembled from a template. Based on Wikipedia's WikiProject AI Cleanup field guide ("[Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)"), which catalogs the patterns editors use to flag undisclosed AI-generated content, cross-checked against the project's own resource list.
 
@@ -12,11 +14,17 @@ A checklist-driven pass for making written output read like it came from a perso
 
 **No text this skill produces should be identifiable as AI-written.** That is the actual job here, not a side effect of "good style." Every rule below exists in service of that one goal, and when a specific instruction elsewhere (a house style, a format request) seems to conflict with it, the fix is almost always to satisfy both by writing something *specific* — not to drop this goal in favor of the other one. Treat every item on the checklist below as something to strictly avoid, not a suggestion to weigh against convenience.
 
+## English text: also run the `unslop` skill
+
+For English output, run `.claude/skills/unslop/SKILL.md` in full alongside the checklist below, not instead of it. Unslop adds an era-dated vocabulary/rhetoric blacklist (`references/blacklist.md`), the author's style profile (`references/style-profile.md`), and a structure-and-epistemics layer (chewed conclusions, single-track paragraph shape, invented specifics, uniform confidence) that the research it cites says is what actually survives a surface cleanup. Run its final check against `references/prose-benchmarks.md` too.
+
+Where the two conflict, this file wins: the em-dash ban is absolute, and no unslop calibration profile can re-enable em dashes or override any other hard rule here. German text skips unslop (it's English-only) and gets the checklist plus the Gutes Deutsch rules.
+
 ## Important framing
 
-None of these patterns are individually damning in isolation — humans use em dashes, triplets, and "furthermore" too. What gives AI writing away is the *density and consistency* of these patterns stacked together, plus the way they replace specific knowledge with generic-but-plausible-sounding statements. The goal is not "never type this word," it's: default to specificity and let structure vary, so nothing feels templated — and treat every pattern below as something to actively hunt down and remove, not just something to be aware of.
+None of these patterns (except em dashes, which are banned outright) are individually damning in isolation — humans use triplets, and "furthermore" too. What gives AI writing away is the *density and consistency* of these patterns stacked together, plus the way they replace specific knowledge with generic-but-plausible-sounding statements. The goal is not "never type this word," it's: default to specificity and let structure vary, so nothing feels templated — and treat every pattern below as something to actively hunt down and remove, not just something to be aware of.
 
-This means the fix is rarely "delete the em dash." It's "go find the actual fact, opinion, or detail that a template-filler would have skipped."
+For most items the fix is rarely "delete the word." It's "go find the actual fact, opinion, or detail that a template-filler would have skipped."
 
 ## The checklist
 
@@ -50,7 +58,8 @@ This list drifts as models change (GPT-4-era favorites like "delve" and "tapestr
 **Fix:** state the claim directly. If a real contrast exists, it survives without the "not just... it's" scaffolding.
 
 **9. The manufactured-reveal template ("The real X was Y").** "The real reason is...," "The real fight was...," "The real problem turned out to be...," "What actually happened was...". A stock rhetorical move that stages a claim as a dramatic reveal of hidden truth, regardless of whether the thing being revealed is actually surprising or was hidden from anyone.
-**Fix:** just state the fact. "I don't want to pay to host something for myself" needs no "the real reason is" in front of it; the sentence already carries its own weight.
+Its teaser cousin downgrades one thing so the next sentence can point at another: "X turned out to be the boring part. So what does the real work?", "the interesting part sits one level up", "that's where it gets interesting".
+**Fix:** just state the fact. "I don't want to pay to host something for myself" needs no "the real reason is" in front of it; the sentence already carries its own weight. For a teaser, state what was found: "The more interesting thing for me were the communities."
 
 **10. Excessive synonym variance ("elegant variation").** Swapping in a different synonym every time a word repeats, even when the repeated word is clearer — calling the same person "the founder," then "the entrepreneur," then "the visionary" purely to avoid repetition.
 **Fix:** repeat the plain word. Clarity beats variety; a human writer doesn't flinch at using "agents" five times in a row.
@@ -60,6 +69,9 @@ This list drifts as models change (GPT-4-era favorites like "delve" and "tapestr
 
 **12. Editorializing asides / didactic disclaimers.** Inserted meta-commentary addressed at an imagined reader rather than actual content: "it's important to note," "it's worth noting that," "crucial to remember," "results may vary."
 **Fix:** cut it, or fold the actual caveat into a real sentence with content.
+
+**12a. Words the person never said.** When a text speaks for the user or reports what someone said (posts in his name, recaps, announcements, quotes from a transcript), every evaluative word must be one they used or the source records. "Not really the great thing" does not become "boring", "useless" or "the magic part"; "worked pretty nice" does not become "worked great". A sharper word than the speaker chose reads as AI and doesn't sound like him; the user has flagged exactly this.
+**Fix:** take the judgment words from the source (transcript, quoted text, his own notes) and keep them, even when they're plainer and less punchy.
 
 ### Structure and shape
 
@@ -86,8 +98,8 @@ This list drifts as models change (GPT-4-era favorites like "delve" and "tapestr
 **19. Title Case Section Headings.** Capitalizing every main word in a heading, instead of the sentence case a human writer typically defaults to.
 **Fix:** sentence case headings, capitalize only the first word and proper nouns.
 
-**20. Em dashes and other punctuation tics.** Not a reliable tell on their own (plenty of human writers use em dashes constantly), but worth checking if they're the *only* punctuation doing structural work in a piece — commas, periods, and parentheses can usually carry more of the load. Also check for curly/smart quotes (" " ' ') mixed in with straight ones elsewhere in the same piece, a sign of unedited paste-through.
-**Fix:** vary sentence construction rather than leaning on one connector; make quote style consistent throughout.
+**20. Em dashes: hard ban, and other punctuation tics.** Unlike every other item, this is not a density judgment: the user has an explicit, standing preference against em dashes in any context, at any frequency. Do not use the — character, not even once. Also don't let a hyphen stand in for one as a sentence break. Also check for curly/smart quotes (" " ' ') mixed in with straight ones elsewhere in the same piece, a sign of unedited paste-through.
+**Fix:** rewrite with a comma, period, semicolon, colon, or parentheses (always possible); make quote style consistent throughout. Do a literal search for — before every delivery.
 
 **21. Leftover template and chatbot artifacts.** Fill-in-the-blank phrasing left unedited, placeholder text ("2025-XX-XX"), chatbot sign-offs ("I hope this helps! Let me know if you have questions"), knowledge-cutoff disclaimers ("as of my last update," "I don't have real-time access to..."), or apology/refusal leftovers ("as an AI language model, I..."). These should never survive a real editing pass.
 **Fix:** delete on sight — catch them on the final read, every time.
@@ -97,8 +109,10 @@ This list drifts as models change (GPT-4-era favorites like "delve" and "tapestr
 The checklist above is for auditing, but it's more effective to write this way from the start:
 
 - **Front-load one real detail per claim.** Before writing a sentence that states something is important, useful, or notable, put in the specific fact that makes it so. If no such fact is available, that's a sign the sentence shouldn't be there.
+- **Make each paragraph deliver one point, not a timeline.** Avoid "then we did X, then Y, and after that Z". Chronology can order the sections, but each paragraph should state the takeaway of its moment as directly as possible; a beat without one gets cut or folded into one that has one.
+- **Keep sentences short and let some be very short.** Default to under roughly 20 words; split a sentence carrying two ideas at the clause break instead of chaining with commas or "which". After a dense sentence, a three-to-six word one gives the point room.
 - **Vary sentence and paragraph length on purpose.** Don't let every paragraph land at 3-4 sentences of similar length. Short paragraphs, even single-sentence ones, are fine.
-- **Write the opinion, not just the description.** A human writer describing something usually has a take — what's good, what's annoying, what surprised them. Generic AI copy tends to describe without judging. Include the judgment.
+- **Write the opinion, not just the description.** A human writer describing something usually has a take — what's good, what's annoying, what surprised them. Generic AI copy tends to describe without judging. Include the judgment, but only one the author actually holds (see 12a); when writing in the user's name, take it from his own words.
 - **Match the register the user actually asked for.** Check whether the person has any known preferences for voice (casual vs. formal, first person, contractions, specific words to avoid) and apply those on top of this checklist — those preferences take priority over defaults here, and a project's own house style (e.g. deliberately heavy use of bold for a specific reason) can override an individual formatting rule above as long as the underlying goal, not reading as AI-written, is still met some other way.
 
 ## Language-specific style rules
@@ -137,6 +151,8 @@ If the piece is in English, apply the core rules from Strunk & White's *The Elem
 Read the piece once purely for rhythm, out loud if possible. If every sentence could be swapped with any other sentence in the piece without changing the shape, that's the tell. Real writing has some short sentences, some long ones, a fragment here and there, and a place where the writer clearly cared more than elsewhere.
 
 Then run the checklist above item by item, explicitly, against the actual draft — not from memory of having read it once. This is the step that's easiest to skip under time pressure and the one that matters most: the goal stated at the top of this document (nothing reads as AI-written) is only as good as whether this pass actually happened.
+
+Then, separately and always, scan the literal text for the — character and rewrite every sentence that has one.
 
 ## Final gate: one word per thing, and numbers that add up
 
