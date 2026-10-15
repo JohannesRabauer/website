@@ -10,7 +10,6 @@ import SocialBadges from "../components/SocialBadges";
 import { withBasePath } from "@/lib/basePath";
 import { SESSIONS } from "./sessions";
 import FeedbackButton from "./FeedbackButton";
-import SlidoButton from "./SlidoButton";
 
 // Styled after the talk's "Quiet Signal" deck design: white surface,
 // near-black ink, XDEV red as the only accent, Geist type, line icons.
@@ -363,7 +362,6 @@ export default function JconBtc2026Page() {
                 <FaFilePdf aria-hidden="true" /> Slides (PDF) · coming soon
               </span>
             )}
-            <SlidoButton />
             <a
               href="https://ibm.biz/JCON-Bob"
               target="_blank"
