@@ -9,7 +9,7 @@ import { FaArrowRight, FaExternalLinkAlt, FaFilePdf, FaGithub, FaPlay, FaYoutube
 import SocialBadges from "../components/SocialBadges";
 import { withBasePath } from "@/lib/basePath";
 import { SESSIONS } from "./sessions";
-import SlidoBanner from "./SlidoBanner";
+import SlidoButton from "./SlidoButton";
 
 // Styled after the talk's "Quiet Signal" deck design: white surface,
 // near-black ink, XDEV red as the only accent, Geist type, line icons.
@@ -330,8 +330,6 @@ export default function JconBtc2026Page() {
     >
       <style>{`.font-mono{font-family:var(--font-geist-mono),ui-monospace,Consolas,monospace}`}</style>
 
-      <SlidoBanner />
-
       {/* Top rail */}
       <header className="mx-auto flex max-w-6xl items-center justify-between pl-16 pr-4 pt-6 sm:pr-8 xl:pl-8">
         <Link href="/" aria-label="Back to main page" className="transition-opacity hover:opacity-70">
@@ -376,6 +374,7 @@ export default function JconBtc2026Page() {
                 <FaFilePdf aria-hidden="true" /> Slides (PDF) · coming soon
               </span>
             )}
+            <SlidoButton />
           </div>
         </div>
 
