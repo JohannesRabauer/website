@@ -9,7 +9,11 @@ const SLIDO_URL = "https://app.sli.do/event/fh9TsTVfTR39Dq6EF7GFY5";
 const SHOW_FROM = new Date("2026-10-15T00:00:00");
 const SHOW_UNTIL = new Date("2026-10-16T00:00:00");
 
-const subscribe = () => () => undefined;
+// Re-check every minute so a tab left open across midnight shows or hides the banner without a reload.
+const subscribe = (onChange: () => void) => {
+  const id = window.setInterval(onChange, 60_000);
+  return () => window.clearInterval(id);
+};
 
 export default function SlidoBanner() {
   const visible = useSyncExternalStore(
