@@ -3,8 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { IconType } from "react-icons";
-import { useSyncExternalStore } from "react";
-import { FaAnchor, FaBlog, FaBook, FaCodeBranch, FaFileAlt, FaIdCard, FaQuestionCircle, FaRobot, FaTools } from "react-icons/fa";
+import { FaAnchor, FaBlog, FaBook, FaCodeBranch, FaFileAlt, FaIdCard, FaRobot, FaTools } from "react-icons/fa";
 import { Michroma } from "next/font/google";
 import SocialBadges from "../components/SocialBadges";
 
@@ -12,11 +11,6 @@ const michroma = Michroma({
   subsets: ["latin"],
   weight: "400",
 });
-
-/** Slido Q&A link is shown until midnight on 22 April 2026 */
-const SLIDO_DEADLINE = new Date("2026-04-22T23:59:59");
-
-const SLIDO_URL = "https://app.sli.do/event/mrbyk6V9atpK4HLuP51qEL/live/questions?section=ce0c8c2b-1ebc-4f04-bf89-c718917ad6f2";
 
 type Talk = {
   title: string;
@@ -121,15 +115,7 @@ const RELATED_LINKS: RelatedLink[] = [
   },
 ];
 
-const subscribeToQrCodeAvailability = () => () => undefined;
-
 export default function JSDPage() {
-  const showQRCode = useSyncExternalStore(
-    subscribeToQrCodeAvailability,
-    () => new Date() < SLIDO_DEADLINE,
-    () => true
-  );
-
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center bg-[#0a0608] text-white overflow-hidden">
       {/* ── Animated neon-grid background ── */}
@@ -171,22 +157,6 @@ export default function JSDPage() {
         <p className="max-w-4xl text-[#8f9fcb] text-lg md:text-2xl font-medium leading-tight">
            Johannes Rabauer
         </p>
-
-        {/* QR code → Slido (hidden after 22 Apr 2026) */}
-        {showQRCode && (
-          <a
-            href={SLIDO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="jcon-card w-[220px]"
-            aria-label="Join Q&amp;A on Slido"
-          >
-            <div className="w-[180px] h-[180px] rounded flex items-center justify-center border border-[#ff2c4d]/45 bg-[#ff2c4d]/10">
-              <FaQuestionCircle className="text-[#f1f4ff] text-8xl drop-shadow-[0_0_10px_rgba(214,42,66,0.55)]" />
-            </div>
-            <span className={`${michroma.className} jcon-label w-full text-center text-[#f1f4ff] text-[1.4rem] md:text-[1.5rem] leading-tight`}>Q&amp;A via Slido</span>
-          </a>
-        )}
 
         {/* Talks */}
         <div className="flex flex-col items-center gap-12 mt-2 w-full">
