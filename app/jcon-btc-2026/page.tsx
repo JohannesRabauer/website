@@ -9,6 +9,7 @@ import { FaArrowRight, FaExternalLinkAlt, FaFilePdf, FaGithub, FaPlay, FaYoutube
 import SocialBadges from "../components/SocialBadges";
 import { withBasePath } from "@/lib/basePath";
 import { SESSIONS } from "./sessions";
+import FeedbackButton from "./FeedbackButton";
 import SlidoButton from "./SlidoButton";
 
 // Styled after the talk's "Quiet Signal" deck design: white surface,
@@ -357,6 +358,7 @@ export default function JconBtc2026Page() {
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <FeedbackButton />
             {hasSlidesPdf ? (
               <a
                 href={withBasePath(SLIDES_PDF_URL)}
