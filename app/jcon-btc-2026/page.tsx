@@ -157,22 +157,9 @@ type Tool = {
   description: string;
   links: ToolLink[];
   featured?: boolean;
-  logo?: { src: string; alt: string; width: number; height: number };
 };
 
 const TOOLS: Tool[] = [
-  {
-    name: "IBM Bob",
-    by: "IBM",
-    logo: { src: "/jcon-btc-2026/bob-mascot.png", alt: "IBM Bob mascot", width: 456, height: 680 },
-    description:
-      "The AI coding partner from two of the sessions: a JavaFX chess game and a habit tracker, both built live. The free trial comes with 50 Bob Coins.",
-    links: [
-      { label: "Try Bob (ibm.biz/JCON-Bob)", href: "https://ibm.biz/JCON-Bob" },
-      { label: "Session: JavaFX chess game", href: "/en/blog/ibm-bob/" },
-      { label: "Session: habit tracker", href: "/en/blog/ibm-bob-v2/" },
-    ],
-  },
   {
     name: "Grill Me",
     by: "Matt Pocock",
@@ -377,6 +364,14 @@ export default function JconBtc2026Page() {
               </span>
             )}
             <SlidoButton />
+            <a
+              href="https://ibm.biz/JCON-Bob"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 rounded-[12px] border-2 border-[#E8E8E8] bg-white px-6 py-4 text-lg font-semibold text-[#141414] transition hover:border-[#141414]"
+            >
+              <Image src="/jcon-btc-2026/bob-mascot.png" alt="" width={456} height={680} className="h-6 w-auto" /> Try Bob
+            </a>
           </div>
         </div>
 
@@ -446,7 +441,7 @@ export default function JconBtc2026Page() {
             The skills and methods behind the stories. Most of them came straight from a co-host.
           </SectionHead>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {TOOLS.map(({ name, by, description, links, featured, logo }) => (
+            {TOOLS.map(({ name, by, description, links, featured }) => (
               <article
                 key={name}
                 className={`${CARD} flex flex-col gap-4 p-6 ${featured ? "border-[#D71E23]/35 bg-[#D71E23]/[0.035]" : ""}`}
@@ -456,9 +451,6 @@ export default function JconBtc2026Page() {
                     <h3 className="text-xl font-bold tracking-[-0.02em]">{name}</h3>
                     <div className={`${LABEL} mt-1`}>{by}</div>
                   </div>
-                  {logo && (
-                    <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} className="h-10 w-auto shrink-0" />
-                  )}
                   {featured && (
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#D71E23] text-white">
                       <Glyph name="skill" className="h-5 w-5" />
