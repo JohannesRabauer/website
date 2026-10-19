@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   publisher: PERSON_NAME,
   keywords: [
     "Johannes Rabauer",
-    "Senior Software Engineer",
+    "Staff Engineer, AI Enablement",
     "Java",
     "AI-assisted development",
     "software architecture",

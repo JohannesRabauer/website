@@ -3,7 +3,7 @@ import { BLOG_SITE_URL } from './blog-i18n';
 export const PERSON_NAME = 'Johannes Rabauer';
 export const SITE_NAME = 'rabauer.dev';
 export const SITE_URL = BLOG_SITE_URL;
-export const PERSON_JOB_TITLE = 'Senior Software Engineer';
+export const PERSON_JOB_TITLE = 'Staff Engineer, AI Enablement';
 export const PERSON_EMPLOYER = 'XDEV Software GmbH';
 export const PERSON_EMPLOYER_URL = 'https://xdev.software/';
 export const PERSON_EMAIL = 'johannes@rabauer.dev';
@@ -11,7 +11,7 @@ export const PERSON_IMAGE_PATH = '/Logo_round.png';
 export const PERSON_BANNER_PATH = '/banner.jpg';
 
 export const HOMEPAGE_ANSWER =
-  'Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, and a public speaker focused on AI-assisted development, software architecture, and secure, scalable systems.';
+  'Johannes Rabauer works as Staff Engineer for AI Enablement at XDEV Software GmbH. He is a Java specialist and a public speaker focused on AI-assisted development, software architecture, and secure, scalable systems.';
 
 export const HOMEPAGE_INTRO =
   'Java, AI-assisted development, public speaking, and practical engineering craft.';
@@ -48,7 +48,7 @@ export const HOMEPAGE_FAQS = [
   {
     question: 'Who is Johannes Rabauer?',
     answer:
-      'Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, a public speaker, and the author of rabauer.dev.',
+      'Johannes Rabauer works as Staff Engineer for AI Enablement at XDEV Software GmbH. He is a Java specialist, a public speaker, and the author of rabauer.dev.',
   },
   {
     question: 'What topics does Johannes Rabauer write and speak about?',

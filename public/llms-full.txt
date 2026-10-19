@@ -1,7 +1,7 @@
 # rabauer.dev full context
 
 ## Site summary
-Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, and a public speaker focused on AI-assisted development, software architecture, and secure, scalable systems. On rabauer.dev he publishes practical articles, conference material, videos, certifications, and publications about modern Java, engineering craft, and real-world AI workflows.
+Johannes Rabauer works as Staff Engineer for AI Enablement at XDEV Software GmbH. He is a Java specialist and a public speaker focused on AI-assisted development, software architecture, and secure, scalable systems. On rabauer.dev he publishes practical articles, conference material, videos, certifications, and publications about modern Java, engineering craft, and real-world AI workflows.
 
 ## Homepage
 - URL: https://rabauer.dev/
@@ -9,7 +9,7 @@ Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java spe
 
 ## FAQ
 ### Who is Johannes Rabauer?
-Johannes Rabauer is a Senior Software Engineer at XDEV Software GmbH, a Java specialist, a public speaker, and the author of rabauer.dev.
+Johannes Rabauer works as Staff Engineer for AI Enablement at XDEV Software GmbH. He is a Java specialist, a public speaker, and the author of rabauer.dev.
 
 ### What topics does Johannes Rabauer write and speak about?
 He focuses on Java, AI-assisted development, software modernization, software architecture, code review culture, and practical engineering workflows.

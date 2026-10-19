@@ -106,7 +106,7 @@ function Hero() {
           variants={itemVariants}
           className="text-cyber-cyan text-lg sm:text-2xl font-semibold mb-6"
         >
-          Senior Software Engineer at{" "}
+          Staff Engineer, AI Enablement at{" "}
           <a
             href="https://xdev.software"
             target="_blank"
