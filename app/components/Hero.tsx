@@ -183,6 +183,9 @@ function Hero() {
           variants={itemVariants}
           className="flex flex-wrap justify-center gap-3 mt-2"
         >
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-cyber-pink/30 bg-cyber-pink/[0.08] text-cyber-pink text-[11px] tracking-widest uppercase font-mono">
+            AI Enabler
+          </span>
           <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-cyber-green/30 bg-cyber-green/[0.08] text-cyber-green text-[11px] tracking-widest uppercase font-mono">
             Java Developer
           </span>
@@ -191,9 +194,6 @@ function Hero() {
           </span>
           <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-cyber-cyan/30 bg-cyber-cyan/[0.08] text-cyber-cyan text-[11px] tracking-widest uppercase font-mono">
             Tech Enthusiast
-          </span>
-          <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-cyber-pink/30 bg-cyber-pink/[0.08] text-cyber-pink text-[11px] tracking-widest uppercase font-mono">
-            AI Enabler
           </span>
         </motion.div>
       </motion.div>
