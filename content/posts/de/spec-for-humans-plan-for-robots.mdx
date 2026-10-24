@@ -1,0 +1,144 @@
+---
+title: "Die Spec ist für Menschen, der Plan für Roboter"
+date: "2026-10-22"
+summary: "Pasha Finkelshteyn arbeitet an der JVM, nicht an Frontends. In einem Stream hat er GitHub Copilot durch seinen Spec-first-Workflow gelenkt und ein Maven-Plugin bauen lassen, das den Abhängigkeitsgraphen eines Projekts als interaktive HTML-Seite ausgibt. Seine Regel: Die Spec liest man wie einen Bauplan, den Plan arbeiten die Agents ab wie einen Bauzeitenplan, den niemand lesen muss."
+tags: ["spec-driven-development", "ai-agents", "skills", "github-copilot", "tdd", "maven", "java", "live-coding"]
+youtubeId: "mufzjT87pmI"
+mainRepository: "https://github.com/JohannesRabauer/maven-dep-graph"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "01:10"
+    label: "Begrüßung von Pasha, und was der JCP ist"
+  - time: "03:58"
+    label: "Pashas Weg von der Psychologie zu Java"
+  - time: "06:54"
+    label: "Warum diese Session: Drauflosreden vs. schnellerer Start"
+  - time: "08:57"
+    label: "Pashas Workflow: die Superpowers-Skills"
+  - time: "13:39"
+    label: "Grill with docs, ADRs und UI UX Pro Max"
+  - time: "17:05"
+    label: "Systematic Debugging und der Good-OSS-Citizen-Skill"
+  - time: "23:38"
+    label: "Die Skills mit GitHub Copilot installieren"
+  - time: "33:26"
+    label: "Brainstorming zum Plugin: Graph, Konflikte, Scopes"
+  - time: "49:03"
+    label: "Teilbäume ausblenden, Abhängigkeitspfade und neueste Versionen"
+  - time: "56:24"
+    label: "Überarbeitetes Mockup und Managed Overrides"
+  - time: "1:05:34"
+    label: "Spec und Plan im Review"
+  - time: "1:20:04"
+    label: "Erster Blick auf den generierten Java-Code"
+  - time: "1:27:38"
+    label: "Ein Implementer gibt zu, Code vor den Tests geschrieben zu haben"
+  - time: "1:39:54"
+    label: "Das generierte JavaScript, und var vs. explizite Typen"
+  - time: "1:51:06"
+    label: "Integrationstests und ein handgeschriebener JSON-Writer"
+  - time: "2:01:43"
+    label: "Tokens, Kontext und eine hängende Shell"
+  - time: "2:11:22"
+    label: "Rückblick und erster Blick auf die laufende Seite"
+  - time: "2:16:12"
+    label: "TDD vs. BMAD, und Abschluss"
+---
+
+**Pasha macht kein Frontend.** Er arbeitet an Java-Performance und der JVM. Trotzdem wurde die Seite mit dem Abhängigkeitsgraphen, die wir mit KI-Agents gebaut haben, in seinen Worten *genau das, was wir besprochen hatten*. Der Grund ist seine Reihenfolge: **Design, Spec, Code**.
+
+<CoSpeakerCard
+  name="Pasha Finkelshteyn"
+  role="Developer Advocate"
+  company="BellSoft"
+  bio="Pasha hat einen Master in Psychologie und keine technische Ausbildung. Mit 20 fing er in C++ Builder an zu programmieren, wechselte vor rund 19 Jahren zu Java und hat seitdem auch Kotlin, Scala und Clojure geschrieben. Heute, sagt er, schreibt die KI den Code für ihn."
+  imageSrc="/blog/pasha-finkelshteyn.webp"
+  website="https://time.asm0dey.site/"
+  github="https://github.com/asm0dey"
+  linkedin="https://www.linkedin.com/in/asm0dey"
+  bluesky="https://bsky.app/profile/asm0dey.site"
+  locale="de"
+/>
+
+## Bauplan und Bauzeitenplan
+
+Ein Bau hat zwei Dokumente. Der Bauherr gibt *den Bauplan* frei. Die Gewerke arbeiten nach *dem Bauzeitenplan*. Niemand erwartet, dass der Bauherr den Zeitplan liest.
+
+Pashas Workflow teilt KI-Arbeit genauso auf. Er läuft auf [Superpowers](https://github.com/obra/superpowers), einer Sammlung von Agent-Skills. **Brainstorming** stellt dir eine Handvoll Fragen und schreibt eine kurze Spec. **Writing plans** macht aus dieser Spec einen langen, detaillierten Plan. [Bei 10:31](https://youtube.com/live/mufzjT87pmI?t=631s) fasste er es so zusammen:
+
+<Quote author="Pasha Finkelshteyn" role="Developer Advocate bei BellSoft">
+Es erzeugt ein sehr langes Dokument, das ich fast nie lese. Für mich gilt: Die Spec ist für Menschen, der Plan für Roboter.
+</Quote>
+
+<SpecFirstBlueprintDiagram />
+
+**Subagent-driven development** gibt dann jeden Task des Plans an einen eigenen Agent. Der Orchestrator wählt das Modell nach Schwierigkeit: *Haiku, um eine Datei abzutippen, Sonnet für etwas Integration, Opus für komplexe Abwägungen*. Jeder Task läuft nach Red-Green-TDD, und der Plan nennt sogar den Fehler, den der fehlschlagende Test liefern soll.
+
+Nach jedem Task prüft ein Reviewer-Subagent die Arbeit. Er kennt den Task, *nicht die Überlegungen des Implementers*. Genau dieser frische Kontext ist der Punkt:
+
+<Quote author="Pasha Finkelshteyn" role="Developer Advocate bei BellSoft">
+Ich traue keinem Review, das in derselben Session stattfindet.
+</Quote>
+
+## Wo dein Urteil hineingehört
+
+Die Spec ist das einzige Dokument, das du liest. Also **müssen deine Entscheidungen dort landen**. Unser Prompt war zwei Zeilen lang: ein Maven-Plugin, das eine interaktive HTML-Seite mit dem Abhängigkeitsgraphen schreibt. Das Brainstorming machte daraus in etwa einer halben Stunde echte Entscheidungen.
+
+Manche kamen aus Pashas Erfahrung. Er wollte umschaltbare Scopes, denn *eine Runtime-Abhängigkeit, die eine Compile-Abhängigkeit überschreibt, heißt: Du hast gegen eine andere Bibliothek kompiliert*. Er wollte die Seite komplett offline: **kein CDN, kein Internet**, denn ein Abhängigkeitsbericht braucht keins. Und als wir uns bei einer Version uneinig waren, die gegen das Dependency Management gepinnt ist, haben wir sie weder in „Konflikt“ noch in „passt“ gezwängt. Wir haben eine dritte Kategorie eingeführt, *Managed Override*, mit eigener Farbe.
+
+Eine Entscheidung kam aus meinem Drauflosreden, das Pasha mir eigentlich abgewöhnen wollte. Ich wollte einen Link zu Maven Central, um nach neueren Versionen zu sehen. Pasha wies darauf hin, dass das Plugin Maven Central einfach per HTTP fragen kann. Jetzt zeigt die Seite, **ob jede Abhängigkeit aktuell ist**, innerhalb derselben Major-Version und insgesamt. Ich hatte eine Lösung verlangt, statt mein Problem zu nennen. *Das Drauflosreden hat es trotzdem ans Licht gebracht.*
+
+Die fertige Spec zu lesen dauerte rund **zehn Minuten**. Das hat sich gelohnt. Die Spec hatte stillschweigend optionale Abhängigkeiten ergänzt, die niemand verlangt hatte. So etwas fällt in einem Bauplan auf und geht in einem Plan mit 8 Tasks unter.
+
+Einen Schritt haben wir aus Zeitgründen übersprungen: [Grill with docs](https://github.com/mattpocock/skills), Matt Pococks Skill, der jeden Entscheidungspunkt abfragt und ADRs schreibt. Laut Pasha hätte das noch eine halbe Stunde gekostet. Er hat einmal *dreieinhalb Stunden* Grilling-Fragen beantwortet, bevor eine Zeile Code entstand.
+
+## Die Gewerke arbeiten den Zeitplan ab
+
+Sobald wir uns für subagent-driven development entschieden hatten, lief der Plan von allein. Wir haben die Zeit genutzt, **um zu lesen, was die Agents schrieben**, statt sie zu steuern.
+
+Die Java-Seite brauchte nur die Maven-Plugin-API, Maven Core, die Annotations und JUnit. Die Integrationstests liefen mit dem Maven Invoker Plugin und synthetischen Projekten. Pasha hat sein letztes Maven-Plugin vor über 15 Jahren geschrieben und sagte, *er hätte nicht gewusst, wie man diese Tests baut*.
+
+Der beste Moment kam [bei 1:27:38](https://youtube.com/live/mufzjT87pmI?t=5258s). Ein Implementer-Subagent meldete, dass er **den Code vor den Tests geschrieben** hatte, ohne vorherigen fehlschlagenden Lauf. Er markierte den Task als „done with concerns“. Warum er von den Schritten des Plans abwich, wusste Pasha nicht. Ihm gefiel, dass er es *dem Orchestrator ehrlich gesagt hat*.
+
+Einig waren wir uns nicht überall. Pasha verteidigte den handgeschriebenen JSON-Writer der Agents: Er serialisiert eine Klasse, ist getestet und umgeht die Risiken einer Bibliothek, die auch deserialisiert. Ich nähme trotzdem lieber eine gepflegte Bibliothek. Bei `var` gilt: Pasha nutzt es überall, ich sehe gern den Typ. Wenn ein Agent den Code schreibt, **ist es uns beiden ziemlich egal**.
+
+## Qualität kostet Zeit, nicht Tokens
+
+Ich hatte Zweifel an TDD. Verbrennt ein zuerst fehlschlagender Test nicht Tokens? Die Zahlen [bei 2:01:43](https://youtube.com/live/mufzjT87pmI?t=7303s) sagten: weniger als gedacht. Rund **23,4 Millionen Tokens, die meisten aus dem Cache**, und 278.000 Output-Tokens. Die günstigen Modelle erledigten die Routine-Tasks. Pashas Punkt: Die Tests sind kurz und laufen deterministisch. *Sie kosten Zeit.*
+
+Und Zeit ging uns aus. Pasha hatte vorhergesagt, dass der Build in den letzten 40 Minuten nicht fertig wird, und er hatte recht. Wir hörten bei **Task 7 von 8** auf: Scope-Schalter und das helle und dunkle Theme funktionierten, Seitenleiste und Suche gab es noch nicht. Außerdem hing eine Shell zehn Minuten lang ohne Grund.
+
+Das Plugin habe ich nach dem Stream fertiggestellt. Das dauerte **noch etwa eine Stunde**. Jetzt liegt es auf Maven Central, und du kannst es ausprobieren, ohne deine POM anzufassen:
+
+```bash
+mvn dev.rabauer:dep-graph-maven-plugin:0.2.0:graph
+```
+
+Danach `target/dep-graph.html` öffnen. Dieser Workflow ist *nicht der schnellste Weg zu einer funktionierenden Seite*. Er führt zu einer Seite, die dem entspricht, was du entschieden hast. Wir haben Qualität vor Tempo gestellt, und ich würde mich wieder so entscheiden.
+
+## Der eine Skill, den Pasha dir mitgeben will
+
+Um den Kern herum nutzt Pasha weitere Skills: [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) für Design-Richtlinien, die zur Art der App passen, und Systematic Debugging, zu dem wir nicht mehr kamen. Einer stach aber heraus, [bei 20:17](https://youtube.com/live/mufzjT87pmI?t=1217s):
+
+<Quote author="Pasha Finkelshteyn" role="Developer Advocate bei BellSoft">
+Wenn ihr euch aus diesem Stream nur eine Sache merkt, dann Good OSS Citizen.
+</Quote>
+
+[Good OSS Citizen](https://github.com/tesslio/good-oss-citizen) von Tessl läuft, bevor du in einem fremden Projekt einen PR oder ein Issue aufmachst. Er liest das Repository und dessen CONTRIBUTING.md und **passt deinen Beitrag daran an**. Pashas Beispiele: Er teilt einen PR, der über dem Zeilenlimit eines Projekts liegt, oder sagt dir, dass du die Beschreibung selbst schreiben sollst, wenn das Projekt keine KI-Texte annimmt.
+
+## Fazit
+
+Pashas Workflow setzt dich dort ein, wo dein Urteil zählt: **in einer Spec, die kurz genug ist, um sie wirklich zu lesen**. Lies sie wie einen Bauplan, jede Zeile. Dann lass die Agents den Plan abarbeiten, mit Tests und einem Reviewer, der die Überlegungen des Implementers nie gesehen hat.
+
+Das ist langsamer als Prompten und Nachbessern. Dafür entstand ein Frontend, mit dem zwei Backend-Entwickler zufrieden waren. *Beim nächsten Mal will ich dieselbe Spec mit meinem BMAD-Prozess bauen* und vergleichen.
+
+## Nützliche Links
+
+- [Superpowers](https://github.com/obra/superpowers), die Skills hinter Brainstorming, Writing plans und subagent-driven development
+- [Grill with docs](https://github.com/mattpocock/skills), Matt Pococks Skill, der jede Entscheidung abfragt und ADRs schreibt
+- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill), der Design-Skill, den Pasha für Frontend-Arbeit nutzt
+- [Good OSS Citizen](https://github.com/tesslio/good-oss-citizen), der Skill für Beiträge zu fremden Projekten
+- [Live-Demo des dep-graph-maven-plugin](https://johannesrabauer.github.io/maven-dep-graph/demo/), die fertige Seite zum Durchklicken
+- [dep-graph-maven-plugin auf Maven Central](https://central.sonatype.com/artifact/dev.rabauer/dep-graph-maven-plugin)

@@ -29,6 +29,7 @@ import ScoutFanOutDiagram from '@/app/components/ScoutFanOutDiagram';
 import ZeroCostQuarkusOpsDiagram from '@/app/components/ZeroCostQuarkusOpsDiagram';
 import ZeroCostQuarkusArchitectureDiagram from '@/app/components/ZeroCostQuarkusArchitectureDiagram';
 import BiomelabSandboxDiagram from '@/app/components/BiomelabSandboxDiagram';
+import SpecFirstBlueprintDiagram from '@/app/components/SpecFirstBlueprintDiagram';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -129,6 +130,9 @@ export default function BlogPostContent({ locale, slug }: Props) {
     ),
     BiomelabSandboxDiagram: (props: React.ComponentProps<typeof BiomelabSandboxDiagram>) => (
       <BiomelabSandboxDiagram {...props} locale={locale} />
+    ),
+    SpecFirstBlueprintDiagram: (props: React.ComponentProps<typeof SpecFirstBlueprintDiagram>) => (
+      <SpecFirstBlueprintDiagram {...props} locale={locale} />
     ),
   };
 

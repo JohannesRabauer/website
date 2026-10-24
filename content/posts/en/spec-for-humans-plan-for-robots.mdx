@@ -1,0 +1,143 @@
+---
+title: "Spec Is for Humans, Plan Is for Robots"
+date: "2026-10-22"
+summary: "Pasha Finkelshteyn works on the JVM, not on front-ends. In one stream he steered GitHub Copilot through his spec-first workflow to build a Maven plugin that renders a project's dependency graph as one interactive HTML page. His rule: read the spec like a blueprint, and let the agents work through the plan like a schedule nobody needs to read."
+tags: ["spec-driven-development", "ai-agents", "skills", "github-copilot", "tdd", "maven", "java", "live-coding"]
+youtubeId: "mufzjT87pmI"
+mainRepository: "https://github.com/JohannesRabauer/maven-dep-graph"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:10"
+    label: "Welcome Pasha, and what the JCP is"
+  - time: "03:58"
+    label: "Pasha's path from psychology to Java"
+  - time: "06:54"
+    label: "Why this session: rambling vs. a faster start"
+  - time: "08:57"
+    label: "Pasha's workflow: the Superpowers skills"
+  - time: "13:39"
+    label: "Grill with docs, ADRs and UI UX Pro Max"
+  - time: "17:05"
+    label: "Systematic debugging and the good OSS citizen skill"
+  - time: "23:38"
+    label: "Installing the skills with GitHub Copilot"
+  - time: "33:26"
+    label: "Brainstorming the plugin: graph, conflicts, scopes"
+  - time: "49:03"
+    label: "Hiding subtrees, dependency paths and latest versions"
+  - time: "56:24"
+    label: "Redrawn mockup and managed overrides"
+  - time: "1:05:34"
+    label: "Reviewing the spec and the plan"
+  - time: "1:20:04"
+    label: "First look at the generated Java code"
+  - time: "1:27:38"
+    label: "An implementer admits it wrote code before tests"
+  - time: "1:39:54"
+    label: "The generated JavaScript, and var vs. explicit types"
+  - time: "1:51:06"
+    label: "Integration tests and a hand-written JSON writer"
+  - time: "2:01:43"
+    label: "Tokens, context and a hanging shell"
+  - time: "2:11:22"
+    label: "Recap and first look at the running page"
+  - time: "2:16:12"
+    label: "TDD vs. BMAD, and wrap-up"
+---
+
+**Pasha doesn't do front-end.** He works on Java performance and the JVM. Yet the dependency graph page we built with AI agents came out, in his words, *exactly what we discussed*. The reason is the order he works in: **design, spec, code**.
+
+<CoSpeakerCard
+  name="Pasha Finkelshteyn"
+  role="Developer Advocate"
+  company="BellSoft"
+  bio="Pasha has a master's degree in psychology and no technical education. He started programming at 20 in C++ Builder, moved to Java about 19 years ago, and has written Kotlin, Scala and Clojure since. These days, he says, AI writes the code for him."
+  imageSrc="/blog/pasha-finkelshteyn.webp"
+  website="https://time.asm0dey.site/"
+  github="https://github.com/asm0dey"
+  linkedin="https://www.linkedin.com/in/asm0dey"
+  bluesky="https://bsky.app/profile/asm0dey.site"
+/>
+
+## The blueprint and the work schedule
+
+A building has two documents. The client signs off *the blueprint*. The crews follow *the work schedule*. Nobody expects the client to read the schedule.
+
+Pasha's workflow splits AI work the same way. It runs on [Superpowers](https://github.com/obra/superpowers), a set of agent skills. **Brainstorming** asks you a handful of questions and writes a short spec. **Writing plans** turns that spec into a long, detailed plan. [At 10:31](https://youtube.com/live/mufzjT87pmI?t=631s) he summed it up:
+
+<Quote author="Pasha Finkelshteyn" role="Developer Advocate at BellSoft">
+It actually creates a very long document which I almost never read. So for me, spec is for humans, plan is for robots.
+</Quote>
+
+<SpecFirstBlueprintDiagram />
+
+**Subagent-driven development** then hands each plan task to its own agent. The orchestrator picks the model by difficulty: *Haiku to retype a file, Sonnet for some integration, Opus for complex judgment*. Each task runs red-green TDD, and the plan even names the error the failing test should produce.
+
+After every task, a reviewer subagent checks the work. It knows the task, *not the implementer's reasoning*. That clean context is the whole point:
+
+<Quote author="Pasha Finkelshteyn" role="Developer Advocate at BellSoft">
+I actually don't trust any review done in the same session.
+</Quote>
+
+## Where your judgment goes in
+
+The spec is the one document you read, so it's **where your decisions have to land**. Our prompt was two lines: a Maven plugin that writes one interactive HTML page of the dependency graph. Brainstorming turned that into real decisions over about half an hour.
+
+Some came from Pasha's experience. He wanted scopes switchable, because *a runtime dependency that overrides a compile one means you compiled against a different library*. He wanted the page fully offline: **no CDN, no internet**, since a dependency report has no reason to need one. And when we disagreed on a version pinned against dependency management, we didn't force it into "conflict" or "fine". We made a third category, *managed override*, with its own color.
+
+One decision came from my rambling, which Pasha had come to talk me out of. I asked for a link to Maven Central to check for newer versions. Pasha pointed out that the plugin can just ask Maven Central with a plain HTTP call. Now the page says **whether each dependency is the latest**, within the same major version and overall. I had asked for a solution, not named my problem. *Rambling surfaced it anyway.*
+
+Reading the finished spec took about **ten minutes**. It was worth it. The spec had quietly added optional dependencies, which nobody asked for. That's the kind of thing you catch in a blueprint and miss in an 8-task plan.
+
+We skipped one step for time: [Grill with docs](https://github.com/mattpocock/skills), Matt Pocock's skill that walks every decision point and writes ADRs. Pasha said it would have taken another half hour. He once answered grilling questions for *three and a half hours* before any code was written.
+
+## The crews work the schedule
+
+Once we picked subagent-driven development, the plan ran by itself. We spent the time **reading what the agents wrote** instead of steering them.
+
+The Java side needed only the Maven plugin API, Maven core, the annotations and JUnit. Integration tests used the Maven Invoker plugin with synthetic projects. Pasha last wrote a Maven plugin more than 15 years ago and said he *wouldn't have known how to build these tests himself*.
+
+The best moment came [at 1:27:38](https://youtube.com/live/mufzjT87pmI?t=5258s). An implementer subagent reported that it had **written the code before the tests**, with no failing run first. It marked the task "done with concerns". Pasha didn't know why it broke the plan's steps. He liked that it *told the orchestrator honestly*.
+
+We didn't agree on everything. Pasha defended the hand-written JSON writer the agents produced: it serializes one class, it's tested, and it avoids the risks of a deserializing library. I'd still rather use a maintained library. On `var`, Pasha uses it everywhere; I like seeing the type. With an agent writing the code, **neither of us cared much**.
+
+## Quality costs time, not tokens
+
+I came in doubting TDD. Doesn't writing a failing test first burn tokens? The numbers [at 2:01:43](https://youtube.com/live/mufzjT87pmI?t=7303s) said less than I thought: about **23.4 million tokens, most of them cached**, and 278K output tokens. The cheap models did the routine tasks. Pasha's point: the tests are short and run deterministically. *They cost time.*
+
+And time was what we ran out of. Pasha predicted the build wouldn't finish in the last 40 minutes, and he was right. We stopped at **task 7 of 8**: scope switches and the dark and light theme worked, the side panel and search didn't exist yet. A shell also hung for ten minutes doing nothing.
+
+I finished the plugin off-stream. It took **about another hour**. It's now on Maven Central, and you can try it without touching your POM:
+
+```bash
+mvn dev.rabauer:dep-graph-maven-plugin:0.2.0:graph
+```
+
+Then open `target/dep-graph.html`. This workflow is *not the fastest way to a working page*. It is a way to a page that matches what you decided. We chose quality over speed, and I'd make that trade again.
+
+## The one skill Pasha wants you to keep
+
+Pasha uses more skills around the core: [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) for design guidelines that fit the kind of app you build, and systematic debugging, which we didn't get to. But one stood out [at 20:17](https://youtube.com/live/mufzjT87pmI?t=1217s):
+
+<Quote author="Pasha Finkelshteyn" role="Developer Advocate at BellSoft">
+If you need to remember only one thing from this stream, it is good OSS citizen.
+</Quote>
+
+[Good OSS citizen](https://github.com/tesslio/good-oss-citizen), from Tessl, runs before you open a PR or an issue in someone else's project. It reads the repository and its CONTRIBUTING.md, then **reshapes your contribution to fit**. Pasha's examples: it splits a PR that's over a project's line limit, or tells you to write the description yourself if the project doesn't accept AI-written text.
+
+## Final thought
+
+Pasha's workflow puts you where your judgment counts: **in a spec short enough to actually read**. Read it like a blueprint, every line. Then let the agents work through the plan, with tests and a reviewer that never saw the implementer's reasoning.
+
+It's slower than prompting and fixing. It also built a front-end that two back-end developers were happy with. *Next time, I want to build the same spec with my BMAD process* and compare.
+
+## Useful links
+
+- [Superpowers](https://github.com/obra/superpowers), the skills behind brainstorming, writing plans and subagent-driven development
+- [Grill with docs](https://github.com/mattpocock/skills), Matt Pocock's skill for walking through every decision and writing ADRs
+- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill), the design skill Pasha uses for front-end work
+- [Good OSS citizen](https://github.com/tesslio/good-oss-citizen), the skill to run before contributing to someone else's project
+- [dep-graph-maven-plugin live demo](https://johannesrabauer.github.io/maven-dep-graph/demo/), the finished page to click through
+- [dep-graph-maven-plugin on Maven Central](https://central.sonatype.com/artifact/dev.rabauer/dep-graph-maven-plugin)

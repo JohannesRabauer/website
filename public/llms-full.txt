@@ -29,9 +29,14 @@ The homepage is the best source for identity and profile information, while the 
 - Conference page: https://rabauer.dev/jcon-2026/
 - Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-btc-2026/
 
-## English posts (25)
+## English posts (26)
 
 ## English blog posts
+### Spec Is for Humans, Plan Is for Robots
+- URL: https://rabauer.dev/en/blog/spec-for-humans-plan-for-robots/
+- Date: 2026-10-22
+- Summary: Pasha Finkelshteyn works on the JVM, not on front-ends. In one stream he steered GitHub Copilot through his spec-first workflow to build a Maven plugin that renders a project's dependency graph as one interactive HTML page. His rule: read the spec like a blueprint, and let the agents work through the plan like a schedule nobody needs to read.
+
 ### Don't Let Your Coding Agent Grade Its Own Homework
 - URL: https://rabauer.dev/en/blog/qodo-is-not-a-pr-bot/
 - Date: 2026-10-08
@@ -158,9 +163,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (25)
+## German posts (26)
 
 ## German blog posts
+### Die Spec ist für Menschen, der Plan für Roboter
+- URL: https://rabauer.dev/de/blog/spec-for-humans-plan-for-robots/
+- Date: 2026-10-22
+- Summary: Pasha Finkelshteyn arbeitet an der JVM, nicht an Frontends. In einem Stream hat er GitHub Copilot durch seinen Spec-first-Workflow gelenkt und ein Maven-Plugin bauen lassen, das den Abhängigkeitsgraphen eines Projekts als interaktive HTML-Seite ausgibt. Seine Regel: Die Spec liest man wie einen Bauplan, den Plan arbeiten die Agents ab wie einen Bauzeitenplan, den niemand lesen muss.
+
 ### Lass deinen Coding-Agent nicht seine eigenen Hausaufgaben benoten
 - URL: https://rabauer.dev/de/blog/qodo-is-not-a-pr-bot/
 - Date: 2026-10-08
