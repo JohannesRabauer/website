@@ -88,7 +88,21 @@ Die Spec ist das einzige Dokument, das du liest. Also **müssen deine Entscheidu
 
 Manche kamen aus Pashas Erfahrung. Er wollte umschaltbare Scopes, denn *eine Runtime-Abhängigkeit, die eine Compile-Abhängigkeit überschreibt, heißt: Du hast gegen eine andere Bibliothek kompiliert*. Er wollte die Seite komplett offline: **kein CDN, kein Internet**, denn ein Abhängigkeitsbericht braucht keins. Und als wir uns bei einer Version uneinig waren, die gegen das Dependency Management gepinnt ist, haben wir sie weder in „Konflikt“ noch in „passt“ gezwängt. Wir haben eine dritte Kategorie eingeführt, *Managed Override*, mit eigener Farbe.
 
+Beim Ausblenden von Teilen des Graphen lief es genauso. Pasha wollte einen Teilbaum ausblenden, ich wollte nur sehen, wovon ein Knoten abhängt. *Die Spec nahm beides auf*, dazu alle Pfade von der Wurzel zu einem Knoten, in einem Rechtsklick-Menü.
+
+<ZoomableImage
+  src="/blog/dep-graph-context-menu.webp"
+  alt="Rechtsklick-Menü am Modul zipper-core mit den Optionen expand everything below, show only what this depends on, show all paths from root, hide this subtree und reset view; die Seitenleiste listet drei Pfade von der Wurzel"
+  caption="Das Rechtsklick-Menü aus der Demo des fertigen Plugins: beide Arten, Teile des Graphen auszublenden, dazu alle Pfade von der Wurzel."
+/>
+
 Eine Entscheidung kam aus meinem Drauflosreden, das Pasha mir eigentlich abgewöhnen wollte. Ich wollte einen Link zu Maven Central, um nach neueren Versionen zu sehen. Pasha wies darauf hin, dass das Plugin Maven Central einfach per HTTP fragen kann. Jetzt zeigt die Seite, **ob jede Abhängigkeit aktuell ist**, innerhalb derselben Major-Version und insgesamt. Ich hatte eine Lösung verlangt, statt mein Problem zu nennen. *Das Drauflosreden hat es trotzdem ans Licht gebracht.*
+
+<ZoomableImage
+  src="/blog/dep-graph-conflict-panel.webp"
+  alt="Die generierte Seite mit dem Abhängigkeitsgraphen: commons-io 2.19.0 ist rot umrandet, weil commons-compress 2.16.1 wollte; die Seitenleiste erklärt Nearest wins, listet beide angefragten Versionen und die Pfade von der Wurzel und zeigt, dass ein Update auf 2.22.0 verfügbar ist"
+  caption="Ein Konflikt auf der fertigen Seite: Nearest wins hat commons-io 2.19.0 gewählt, und die Seitenleiste zeigt, dass 2.22.0 verfügbar ist."
+/>
 
 Die fertige Spec zu lesen dauerte rund **zehn Minuten**. Das hat sich gelohnt. Die Spec hatte stillschweigend optionale Abhängigkeiten ergänzt, die niemand verlangt hatte. So etwas fällt in einem Bauplan auf und geht in einem Plan mit 8 Tasks unter.
 
@@ -116,7 +130,15 @@ Das Plugin habe ich nach dem Stream fertiggestellt. Das dauerte **noch etwa eine
 mvn dev.rabauer:dep-graph-maven-plugin:0.2.0:graph
 ```
 
-Danach `target/dep-graph.html` öffnen. Dieser Workflow ist *nicht der schnellste Weg zu einer funktionierenden Seite*. Er führt zu einer Seite, die dem entspricht, was du entschieden hast. Wir haben Qualität vor Tempo gestellt, und ich würde mich wieder so entscheiden.
+Danach `target/dep-graph.html` öffnen. Bei einem Multi-Modul-Build bekommst du eine Seite für den ganzen Reactor:
+
+<ZoomableImage
+  src="/blog/dep-graph-multi-module.webp"
+  alt="Abhängigkeitsgraph eines Demo-Builds mit vier Modulen: grüne Modulknoten oben, ihre direkten Abhängigkeiten darunter, und eine rot gestrichelte Kante mit der Beschriftung wants 1.26.2 zu commons-compress 1.27.1, das als Konflikt rot umrandet ist"
+  caption="Der Demo-Build mit vier Modulen. Die rot gestrichelte Kante ist die Version, die verloren hat."
+/>
+
+Dieser Workflow ist *nicht der schnellste Weg zu einer funktionierenden Seite*. Er führt zu einer Seite, die dem entspricht, was du entschieden hast. Wir haben Qualität vor Tempo gestellt, und ich würde mich wieder so entscheiden.
 
 ## Der eine Skill, den Pasha dir mitgeben will
 

@@ -87,7 +87,21 @@ The spec is the one document you read, so it's **where your decisions have to la
 
 Some came from Pasha's experience. He wanted scopes switchable, because *a runtime dependency that overrides a compile one means you compiled against a different library*. He wanted the page fully offline: **no CDN, no internet**, since a dependency report has no reason to need one. And when we disagreed on a version pinned against dependency management, we didn't force it into "conflict" or "fine". We made a third category, *managed override*, with its own color.
 
+Hiding parts of the graph went the same way. Pasha wanted to hide a subtree; I wanted to see only what a node depends on. *The spec took both*, plus every path from the root to a node, in one right-click menu.
+
+<ZoomableImage
+  src="/blog/dep-graph-context-menu.webp"
+  alt="Right-click menu on the zipper-core module with the options expand everything below, show only what this depends on, show all paths from root, hide this subtree and reset view; the side panel lists three paths from root"
+  caption="The right-click menu from the finished plugin's demo: both ways of hiding parts of the graph, plus all paths from the root."
+/>
+
 One decision came from my rambling, which Pasha had come to talk me out of. I asked for a link to Maven Central to check for newer versions. Pasha pointed out that the plugin can just ask Maven Central with a plain HTTP call. Now the page says **whether each dependency is the latest**, within the same major version and overall. I had asked for a solution, not named my problem. *Rambling surfaced it anyway.*
+
+<ZoomableImage
+  src="/blog/dep-graph-conflict-panel.webp"
+  alt="The generated dependency graph page: commons-io 2.19.0 is outlined in red because commons-compress wanted 2.16.1; the side panel explains nearest wins, lists both requested versions and paths from the root, and shows an update to 2.22.0 is available"
+  caption="A conflict in the finished page: nearest wins picked commons-io 2.19.0, and the panel shows that 2.22.0 is available."
+/>
 
 Reading the finished spec took about **ten minutes**. It was worth it. The spec had quietly added optional dependencies, which nobody asked for. That's the kind of thing you catch in a blueprint and miss in an 8-task plan.
 
@@ -115,7 +129,15 @@ I finished the plugin off-stream. It took **about another hour**. It's now on Ma
 mvn dev.rabauer:dep-graph-maven-plugin:0.2.0:graph
 ```
 
-Then open `target/dep-graph.html`. This workflow is *not the fastest way to a working page*. It is a way to a page that matches what you decided. We chose quality over speed, and I'd make that trade again.
+Then open `target/dep-graph.html`. In a multi-module build, you get one page for the whole reactor:
+
+<ZoomableImage
+  src="/blog/dep-graph-multi-module.webp"
+  alt="Dependency graph of a four-module demo build: green module nodes at the top, their direct dependencies below, and a red dashed edge labelled wants 1.26.2 pointing to commons-compress 1.27.1, which is outlined in red as a conflict"
+  caption="The demo build with four modules. The dashed red edge is the version that lost."
+/>
+
+This workflow is *not the fastest way to a working page*. It is a way to a page that matches what you decided. We chose quality over speed, and I'd make that trade again.
 
 ## The one skill Pasha wants you to keep
 
