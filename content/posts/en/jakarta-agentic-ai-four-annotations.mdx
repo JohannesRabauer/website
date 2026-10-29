@@ -1,0 +1,144 @@
+---
+title: "Jakarta Agentic AI: Four Annotations, and Even Copilot Gets It"
+date: "2026-10-28"
+summary: "Luís Neto, committer on Jakarta Agentic AI and author of its Payara Micro integration, guided me while GitHub Copilot added a reviewer agent to a small CFP app. The spec boils down to four annotations. It's so compact that Copilot built a clean agent from the spec URL alone. And it isn't another LLM client: it's a workflow layer, closer to Embabel and LangGraph4j than to Spring AI or LangChain4j."
+tags: ["jakarta-ee", "jakarta-agentic-ai", "payara", "ai-agents", "github-copilot", "ollama", "java", "live-coding"]
+youtubeId: "bm4BRjW0pUs"
+mainRepository: "https://github.com/JohannesRabauer/payara-ai-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Introduction"
+  - time: "01:31"
+    label: "Welcome Luís Neto"
+  - time: "02:29"
+    label: "What Jakarta Agentic AI is and where it came from"
+  - time: "04:49"
+    label: "The CFP demo app on Payara Micro and Ollama"
+  - time: "08:21"
+    label: "Prompting Copilot to build the reviewer agent"
+  - time: "11:23"
+    label: "Compared to Spring AI, LangChain4j and Embabel"
+  - time: "13:45"
+    label: "First look at the generated agent and prompts"
+  - time: "18:07"
+    label: "Luís walks through the workflow: trigger, decision, action, outcome"
+  - time: "21:12"
+    label: "Luís's version, branch by branch"
+  - time: "29:32"
+    label: "Handling exceptions, most specific first"
+  - time: "32:02"
+    label: "What happens when a decision returns false"
+  - time: "35:02"
+    label: "Running the generated agent: two decisions instead of an action"
+  - time: "40:25"
+    label: "Out-of-scope talks: baking a cake gets accepted"
+  - time: "44:26"
+    label: "Stopping Ollama to trigger the exception handler"
+  - time: "50:01"
+    label: "A more specific handler for LLM exceptions"
+  - time: "51:23"
+    label: "Can it work without annotations?"
+  - time: "54:42"
+    label: "One thread per event, MCP and agent-to-agent plans"
+  - time: "57:36"
+    label: "What the agent's name and description are for"
+  - time: "59:06"
+    label: "Chaining agents and getting the result back"
+  - time: "1:06:54"
+    label: "Wrap-up: a local LLM and an AI that learned the spec"
+  - time: "1:07:53"
+    label: "Switching to a paid model in the config"
+  - time: "1:09:51"
+    label: "Closing words"
+---
+
+**Jakarta Agentic AI fits on one index card.** Four annotations, a few rules about order, done. I handed the spec URL to GitHub Copilot, and *it built a working reviewer agent* that Luís Neto, one of the spec's committers, barely had to correct.
+
+<CoSpeakerCard
+  name="Luís Neto"
+  role="Java Software Engineer"
+  company="Azul"
+  bio="Luís lives in Brazil and has written Java since 2004. He came to Azul with Payara, is a committer on Jakarta Agentic AI and wrote the integration that ships the spec in Payara Micro."
+  imageSrc="/blog/luis-neto.webp"
+  website="https://devchallenges.tech/"
+  github="https://github.com/luiseufrasio"
+  linkedin="https://www.linkedin.com/in/luis-neto-16786b227"
+/>
+
+## Not another LLM client
+
+If you're shopping for a Java AI framework, put this one on the right shelf. I asked Luís whether it compares to the annotations in Spring AI or LangChain4j, [at 11:23](https://youtube.com/live/bm4BRjW0pUs?t=683s). He said it works **on another level** and is closer to [Embabel](https://github.com/embabel/embabel-agent).
+
+<Quote author="Luís Neto" role="Committer, Jakarta Agentic AI">
+In the Jakarta Agentic AI, you are creating agents that are going to run in a workflow, in our case, based in CDI events.
+</Quote>
+
+Spring AI and LangChain4j sit close to the LLM call. Jakarta Agentic AI *bundles calls into steps and chains them*. That's what I know from [LangGraph4j](/en/blog/langgraph4j-agents). The model itself is just a `LargeLanguageModel` facade you inject into whichever step needs it.
+
+It's **a specification, not a framework**. Reza Rahman came up with the idea and invited Luís and other Payara people he knew from MicroProfile. The spec sits *outside the Jakarta umbrella* and doesn't follow its release schedule. Milestone 1 is out. Luís expects the first official version maybe next month. Payara Micro is the first implementation; Luís wrote that integration himself in [payara/Payara#8386](https://github.com/payara/Payara/pull/8386).
+
+## Four strokes
+
+Think of an agent as **a four-stroke engine**. Every run goes through the same strokes in the same order, and there are no hidden parts. Luís walked through them [from 18:07](https://youtube.com/live/bm4BRjW0pUs?t=1087s), one branch per step in [his fork](https://github.com/luiseufrasio/payara-ai-demo).
+
+<JakartaAgenticFourStrokeDiagram />
+
+- **`@Trigger`** starts the run. Your code fires a CDI event, Payara catches it. In version 1 there is *exactly one* trigger, and it's required.
+- **`@Decision`** checks something. Returning true or an object continues. Returning *false or null skips straight to the outcome*.
+- **`@Action`** does the work. Each action gets the previous action's result.
+- **`@Outcome`** receives the last result. In the demo it stored the review so the REST resource could return it.
+
+There can be **zero or many** decisions and actions. They run by an `order` attribute, or in source order without one. Failures go to `@OnException` methods, and *the handler for the most specific exception type wins*.
+
+That's the whole spec you need to read code. I called it not complicated at all on stream. I still think so.
+
+## Copilot read the manual
+
+The demo app was a call for papers for a made-up "JCON Brazil 2030", running Payara Micro and Ollama in Docker Compose. Requesting a review only said the reviewer agent didn't exist yet. Luís suggested the prompt [at 08:21](https://youtube.com/live/bm4BRjW0pUs?t=501s): *give Copilot the spec* and ask for an agent that checks the scope, then reviews. I pasted the spec URL he dropped in the chat.
+
+**It worked.** Copilot produced a clean agent for a brand-new standard from the spec alone. Luís's own version, written with Claude Code, looked much the same. Both passed the LLM in as a method parameter, where Luís would inject it as a field. *It still works.*
+
+The interesting difference was the shape. Copilot built **two decisions and no action**: one for scope, one for quality, accepting at 7 out of 10. Luís, [at 36:57](https://youtube.com/live/bm4BRjW0pUs?t=2217s), called it possible, not wrong. For him, though, the review is an action.
+
+<Quote author="Luís Neto" role="Committer, Jakarta Agentic AI">
+The action is something you do, but it's not the verification. The decision is a verification.
+</Quote>
+
+I didn't get the difference at first. We boiled it down to one rule: **a decision can end the workflow, an action can't.** If your agent should always produce a score, that's an action. If a bad score should stop everything, Copilot's version is fine.
+
+## A cake for JCON Brazil
+
+After a rebuild the review ran, and the logs showed both decisions. Then we tested the scope check [at 40:25](https://youtube.com/live/bm4BRjW0pUs?t=2425s). *"Baking a cake" live on stage got accepted*, explained as a process that illustrates principles. "How to properly play soccer" got rejected. Luís joked that baking a cake might be closer to programming than soccer.
+
+That's **the local model, not the spec**. Swapping in a paid model is a few lines in the MicroProfile config: provider, model, API key. Luís put it plainly: then you *spend your money*.
+
+The exception handling held up under a real failure. [At 44:26](https://youtube.com/live/bm4BRjW0pUs?t=2666s) we stopped the Ollama container. The general handler Copilot had written returned a readable error. I added a second handler for the spec's `LLMException`, stopped Ollama again, and **the more specific handler fired**.
+
+## Where version 1 stops
+
+Simple has a price. A decision returning false *quietly skips every action*. I'm not calling that bad, but I prefer handling such things in code over an invisible workflow you just have to know. Luís said the team kept version 1 simple on purpose and welcomes new contributors.
+
+There's **no way around the annotations** for now; the implementation finds the methods by reflection. Reza took inspiration from Jakarta Batch, and Embabel uses similar annotations. My problem with annotations is that you have to know them. Here that's four, so it's a small problem.
+
+Each fired event gets *its own thread*, so one endpoint serves many users. Agents are fully independent today. To chain two, you fire the next event in your own code. Luís named a more flexible workflow for version 2, and **MCP and agent-to-agent communication maybe in version 3 or 4**.
+
+## Final thought
+
+The spec is small enough to learn from four annotations. It's small enough that a coding agent learns it from the spec URL. Luís had an explanation:
+
+<Quote author="Luís Neto" role="Committer, Jakarta Agentic AI">
+The agents are very good to read the specifications because the specifications are written in a well-formatted way.
+</Quote>
+
+If you're choosing a Java AI stack, **compare Jakarta Agentic AI with LangGraph4j and Embabel**, not with Spring AI or LangChain4j. It's a workflow layer on CDI. If you're already on a Jakarta EE runtime, *that may be the deciding point*. Our example was too simple to push it. Version 2 deserves a harder one, and Luís offered to come back for it.
+
+## Useful links
+
+- [Jakarta Agentic AI project site](https://jakartaee.github.io/agentic-ai), with the API docs and Maven coordinates
+- [Jakarta Agentic AI tutorial](https://jakartaee.github.io/agentic-ai/tutorial/), the walkthrough Luís showed on stream
+- [Jakarta Agentic AI 1.0.0-M1 specification](https://jakarta.ee/specifications/agentic-ai/1.0/jakarta-agentic-ai-1.0.0-M1.html), the document Copilot worked from
+- [Luís's version, one branch per step](https://github.com/luiseufrasio/payara-ai-demo)
+- [payara/Payara#8386](https://github.com/payara/Payara/pull/8386), the PR that adds Agentic AI to Payara Micro and Embedded
+- [Embabel](https://github.com/embabel/embabel-agent), the agent framework for the JVM that Luís compared it to
+- [LangGraph4j Gives Your Java AI Workflow the Control a Loop Can't](/en/blog/langgraph4j-agents), my earlier session on LangGraph4j

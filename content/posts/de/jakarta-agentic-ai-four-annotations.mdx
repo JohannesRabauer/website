@@ -1,0 +1,145 @@
+---
+title: "Jakarta Agentic AI: Vier Annotationen, und sogar Copilot versteht es"
+date: "2026-10-28"
+summary: "Luís Neto, Committer bei Jakarta Agentic AI und Autor der Integration in Payara Micro, hat mich angeleitet, während GitHub Copilot einer kleinen CFP-App einen Reviewer-Agent hinzugefügt hat. Die Spezifikation besteht im Kern aus vier Annotationen. Sie ist so kompakt, dass Copilot allein aus der Spec-URL einen sauberen Agent gebaut hat. Und sie ist kein weiterer LLM-Client, sondern eine Workflow-Schicht, näher an Embabel und LangGraph4j als an Spring AI oder LangChain4j."
+tags: ["jakarta-ee", "jakarta-agentic-ai", "payara", "ai-agents", "github-copilot", "ollama", "java", "live-coding"]
+youtubeId: "bm4BRjW0pUs"
+mainRepository: "https://github.com/JohannesRabauer/payara-ai-demo"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "01:31"
+    label: "Willkommen, Luís Neto"
+  - time: "02:29"
+    label: "Was Jakarta Agentic AI ist und woher es kommt"
+  - time: "04:49"
+    label: "Die CFP-Demo-App auf Payara Micro und Ollama"
+  - time: "08:21"
+    label: "Copilot baut den Reviewer-Agent"
+  - time: "11:23"
+    label: "Vergleich mit Spring AI, LangChain4j und Embabel"
+  - time: "13:45"
+    label: "Erster Blick auf den generierten Agent und die Prompts"
+  - time: "18:07"
+    label: "Luís erklärt den Workflow: Trigger, Decision, Action, Outcome"
+  - time: "21:12"
+    label: "Luís' Version, Branch für Branch"
+  - time: "29:32"
+    label: "Exceptions behandeln, die spezifischste zuerst"
+  - time: "32:02"
+    label: "Was passiert, wenn eine Decision false liefert"
+  - time: "35:02"
+    label: "Der generierte Agent läuft: zwei Decisions statt einer Action"
+  - time: "40:25"
+    label: "Themenfremde Talks: Kuchenbacken wird angenommen"
+  - time: "44:26"
+    label: "Ollama stoppen, um den Exception-Handler auszulösen"
+  - time: "50:01"
+    label: "Ein spezifischerer Handler für LLM-Exceptions"
+  - time: "51:23"
+    label: "Geht es auch ohne Annotationen?"
+  - time: "54:42"
+    label: "Ein Thread pro Event, Pläne für MCP und Agent-to-Agent"
+  - time: "57:36"
+    label: "Wofür Name und Beschreibung des Agents da sind"
+  - time: "59:06"
+    label: "Agents verketten und das Ergebnis zurückbekommen"
+  - time: "1:06:54"
+    label: "Fazit: ein lokales LLM und eine KI, die die Spec gelernt hat"
+  - time: "1:07:53"
+    label: "Wechsel auf ein bezahltes Modell in der Konfiguration"
+  - time: "1:09:51"
+    label: "Schlussworte"
+---
+
+**Jakarta Agentic AI passt auf eine Karteikarte.** Vier Annotationen, ein paar Regeln zur Reihenfolge, fertig. Ich habe GitHub Copilot die Spec-URL gegeben, und *es hat einen funktionierenden Reviewer-Agent gebaut*, an dem Luís Neto, einer der Committer der Spezifikation, kaum etwas korrigieren musste.
+
+<CoSpeakerCard
+  name="Luís Neto"
+  role="Java Software Engineer"
+  company="Azul"
+  bio="Luís lebt in Brasilien und schreibt seit 2004 Java. Er kam mit Payara zu Azul, ist Committer bei Jakarta Agentic AI und hat die Integration geschrieben, mit der die Spezifikation in Payara Micro ausgeliefert wird."
+  imageSrc="/blog/luis-neto.webp"
+  website="https://devchallenges.tech/"
+  github="https://github.com/luiseufrasio"
+  linkedin="https://www.linkedin.com/in/luis-neto-16786b227"
+  locale="de"
+/>
+
+## Kein weiterer LLM-Client
+
+Wer ein Java-KI-Framework sucht, sollte dieses ins richtige Regal stellen. Ich habe Luís [bei 11:23](https://youtube.com/live/bm4BRjW0pUs?t=683s) gefragt, ob es mit den Annotationen in Spring AI oder LangChain4j vergleichbar ist. Er sagte, es arbeite **auf einer anderen Ebene** und sei näher an [Embabel](https://github.com/embabel/embabel-agent).
+
+<Quote author="Luís Neto" role="Committer, Jakarta Agentic AI">
+Mit Jakarta Agentic AI baust du Agents, die in einem Workflow laufen, in unserem Fall auf Basis von CDI-Events.
+</Quote>
+
+Spring AI und LangChain4j sitzen nah am LLM-Aufruf. Jakarta Agentic AI *bündelt Aufrufe zu Schritten und verkettet sie*. Das kenne ich von [LangGraph4j](/de/blog/langgraph4j-agents). Das Modell selbst ist nur eine `LargeLanguageModel`-Fassade, die man in jeden Schritt injiziert, der sie braucht.
+
+Es ist **eine Spezifikation, kein Framework**. Die Idee kam von Reza Rahman, der Luís und andere Payara-Leute aus der MicroProfile-Gruppe eingeladen hat. Die Spezifikation steht *außerhalb des Jakarta-Dachs* und folgt nicht dessen Release-Zeitplan. Milestone 1 ist draußen. Die erste offizielle Version erwartet Luís vielleicht nächsten Monat. Payara Micro ist die erste Implementierung; die Integration hat Luís selbst in [payara/Payara#8386](https://github.com/payara/Payara/pull/8386) geschrieben.
+
+## Vier Takte
+
+Man kann sich einen Agent als **Viertaktmotor** vorstellen. Jeder Lauf geht durch dieselben Takte in derselben Reihenfolge, und es gibt keine versteckten Teile. Luís hat sie [ab 18:07](https://youtube.com/live/bm4BRjW0pUs?t=1087s) durchgespielt, mit einem Branch pro Schritt in [seinem Fork](https://github.com/luiseufrasio/payara-ai-demo).
+
+<JakartaAgenticFourStrokeDiagram />
+
+- **`@Trigger`** startet den Lauf. Der eigene Code feuert ein CDI-Event, Payara fängt es. In Version 1 gibt es *genau einen* Trigger, und er ist Pflicht.
+- **`@Decision`** prüft etwas. Liefert sie true oder ein Objekt, geht es weiter. Liefert sie *false oder null, geht es direkt zum Outcome*.
+- **`@Action`** erledigt die Arbeit. Jede Action bekommt das Ergebnis der vorherigen.
+- **`@Outcome`** bekommt das letzte Ergebnis. In der Demo hat es das Review gespeichert, damit die REST-Ressource es zurückgeben kann.
+
+Es kann **null bis viele** Decisions und Actions geben. Sie laufen nach einem `order`-Attribut, ohne eines in der Reihenfolge im Quelltext. Fehler landen in `@OnException`-Methoden, und *der Handler für den spezifischsten Exception-Typ gewinnt*.
+
+Mehr von der Spezifikation braucht man nicht, um den Code zu lesen. Im Stream habe ich das überhaupt nicht kompliziert genannt. Dabei bleibe ich.
+
+## Copilot hat das Handbuch gelesen
+
+Die Demo-App war ein Call for Papers für eine erfundene "JCON Brazil 2030", mit Payara Micro und Ollama in Docker Compose. Wer ein Review anforderte, bekam nur die Meldung, dass es den Reviewer-Agent noch nicht gibt. Luís schlug [bei 08:21](https://youtube.com/live/bm4BRjW0pUs?t=501s) den Prompt vor: *Copilot die Spezifikation geben* und einen Agent verlangen, der erst den Themenbereich prüft und dann reviewt. Ich habe die Spec-URL eingefügt, die er in den Chat gestellt hatte.
+
+**Es hat funktioniert.** Copilot hat allein aus der Spezifikation einen sauberen Agent für einen brandneuen Standard gebaut. Luís' eigene Version, geschrieben mit Claude Code, sah ganz ähnlich aus. Beide haben das LLM als Methodenparameter übergeben, wo Luís es als Feld injizieren würde. *Es funktioniert trotzdem.*
+
+Der spannende Unterschied war die Form. Copilot hat **zwei Decisions und keine Action** gebaut: eine für den Themenbereich, eine für die Qualität, angenommen ab 7 von 10. Luís nannte das [bei 36:57](https://youtube.com/live/bm4BRjW0pUs?t=2217s) möglich, nicht falsch. Für ihn ist das Review aber eine Action.
+
+<Quote author="Luís Neto" role="Committer, Jakarta Agentic AI">
+Die Action ist etwas, das du tust, aber sie ist nicht die Prüfung. Die Decision ist eine Prüfung.
+</Quote>
+
+Den Unterschied habe ich zuerst nicht verstanden. Wir haben ihn auf eine Regel gebracht: **Eine Decision kann den Workflow beenden, eine Action nicht.** Soll der Agent immer eine Bewertung liefern, ist das eine Action. Soll eine schlechte Bewertung alles stoppen, passt Copilots Version.
+
+## Ein Kuchen für die JCON Brazil
+
+Nach einem Rebuild lief das Review, und die Logs zeigten beide Decisions. Dann haben wir [bei 40:25](https://youtube.com/live/bm4BRjW0pUs?t=2425s) die Themenprüfung getestet. *"Baking a cake" live auf der Bühne wurde angenommen*, begründet als Prozess, der Prinzipien veranschaulicht. "How to properly play soccer" wurde abgelehnt. Luís scherzte, Kuchenbacken sei vielleicht näher am Programmieren als Fußball.
+
+Das liegt **am lokalen Modell, nicht an der Spezifikation**. Der Wechsel auf ein bezahltes Modell sind ein paar Zeilen in der MicroProfile-Konfiguration: Provider, Modell, API-Key. Luís brachte es auf den Punkt: Dann *gibst du dein Geld aus*.
+
+Die Exception-Behandlung hat einen echten Ausfall überstanden. [Bei 44:26](https://youtube.com/live/bm4BRjW0pUs?t=2666s) haben wir den Ollama-Container gestoppt. Der allgemeine Handler, den Copilot geschrieben hatte, lieferte eine lesbare Fehlermeldung. Ich habe einen zweiten Handler für die `LLMException` der Spezifikation ergänzt, Ollama erneut gestoppt, und **der spezifischere Handler hat gegriffen**.
+
+## Wo Version 1 aufhört
+
+Einfachheit hat ihren Preis. Eine Decision, die false liefert, *überspringt still jede Action*. Schlecht finde ich das nicht, aber ich regle so etwas lieber im Code als in einem unsichtbaren Workflow, den man einfach kennen muss. Luís sagte, das Team habe Version 1 bewusst einfach gehalten und freue sich über neue Mitwirkende.
+
+An den **Annotationen führt vorerst kein Weg vorbei**; die Implementierung findet die Methoden per Reflection. Reza hat sich an Jakarta Batch orientiert, und Embabel nutzt ähnliche Annotationen. Mein Problem mit Annotationen ist, dass man sie kennen muss. Hier sind es vier, also ein kleines Problem.
+
+Jedes gefeuerte Event bekommt *einen eigenen Thread*, ein Endpunkt bedient also viele Nutzer. Agents sind heute völlig unabhängig. Um zwei zu verketten, feuert man das nächste Event im eigenen Code. Luís nannte einen flexibleren Workflow für Version 2, und **MCP und Agent-to-Agent-Kommunikation vielleicht in Version 3 oder 4**.
+
+## Fazit
+
+Die Spezifikation ist klein genug, um sie an vier Annotationen zu lernen. Sie ist so klein, dass ein Coding-Agent sie aus der Spec-URL lernt. Luís hatte eine Erklärung dafür:
+
+<Quote author="Luís Neto" role="Committer, Jakarta Agentic AI">
+Agents lesen Spezifikationen sehr gut, weil Spezifikationen sauber formatiert geschrieben sind.
+</Quote>
+
+Wer einen Java-KI-Stack auswählt, sollte **Jakarta Agentic AI mit LangGraph4j und Embabel vergleichen**, nicht mit Spring AI oder LangChain4j. Es ist eine Workflow-Schicht auf CDI. Wer schon auf einer Jakarta-EE-Runtime sitzt, *für den kann das den Ausschlag geben*. Unser Beispiel war zu einfach, um es auszureizen. Version 2 verdient ein schwierigeres, und Luís hat angeboten, dafür wiederzukommen.
+
+## Nützliche Links
+
+- [Projektseite von Jakarta Agentic AI](https://jakartaee.github.io/agentic-ai), mit API-Doku und Maven-Koordinaten
+- [Tutorial zu Jakarta Agentic AI](https://jakartaee.github.io/agentic-ai/tutorial/), das Luís im Stream gezeigt hat
+- [Spezifikation Jakarta Agentic AI 1.0.0-M1](https://jakarta.ee/specifications/agentic-ai/1.0/jakarta-agentic-ai-1.0.0-M1.html), das Dokument, mit dem Copilot gearbeitet hat
+- [Luís' Version, ein Branch pro Schritt](https://github.com/luiseufrasio/payara-ai-demo)
+- [payara/Payara#8386](https://github.com/payara/Payara/pull/8386), der PR, der Agentic AI in Payara Micro und Embedded bringt
+- [Embabel](https://github.com/embabel/embabel-agent), das Agent-Framework für die JVM, mit dem Luís es verglichen hat
+- [LangGraph4j gibt deinem Java-KI-Workflow die Kontrolle, die ein Loop nicht hat](/de/blog/langgraph4j-agents), meine frühere Session zu LangGraph4j

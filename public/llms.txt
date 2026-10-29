@@ -13,6 +13,7 @@
 - German blog: https://rabauer.dev/de/blog/
 - Conference session page: https://rabauer.dev/jcon-2026/
 - Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-btc-2026/
+- Talk page (Enterprise AI Trends That Actually Matter, DCN/JUG 2026): https://rabauer.dev/dcn-jug-2026/
 
 ## Topics
 - Java
