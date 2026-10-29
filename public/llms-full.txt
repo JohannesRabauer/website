@@ -30,9 +30,14 @@ The homepage is the best source for identity and profile information, while the 
 - Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-btc-2026/
 - Talk page (Enterprise AI Trends That Actually Matter, DCN/JUG 2026): https://rabauer.dev/dcn-jug-2026/
 
-## English posts (25)
+## English posts (26)
 
 ## English blog posts
+### Jakarta Agentic AI: Four Annotations, and Even Copilot Gets It
+- URL: https://rabauer.dev/en/blog/jakarta-agentic-ai-four-annotations/
+- Date: 2026-10-28
+- Summary: Luís Neto, committer on Jakarta Agentic AI and author of its Payara Micro integration, guided me while GitHub Copilot added a reviewer agent to a small CFP app. The spec boils down to four annotations. It's so compact that Copilot built a clean agent from the spec URL alone. And it isn't another LLM client: it's a workflow layer, closer to Embabel and LangGraph4j than to Spring AI or LangChain4j.
+
 ### Don't Let Your Coding Agent Grade Its Own Homework
 - URL: https://rabauer.dev/en/blog/qodo-is-not-a-pr-bot/
 - Date: 2026-10-08
@@ -159,9 +164,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (25)
+## German posts (26)
 
 ## German blog posts
+### Jakarta Agentic AI: Vier Annotationen, und sogar Copilot versteht es
+- URL: https://rabauer.dev/de/blog/jakarta-agentic-ai-four-annotations/
+- Date: 2026-10-28
+- Summary: Luís Neto, Committer bei Jakarta Agentic AI und Autor der Integration in Payara Micro, hat mich angeleitet, während GitHub Copilot einer kleinen CFP-App einen Reviewer-Agent hinzugefügt hat. Die Spezifikation besteht im Kern aus vier Annotationen. Sie ist so kompakt, dass Copilot allein aus der Spec-URL einen sauberen Agent gebaut hat. Und sie ist kein weiterer LLM-Client, sondern eine Workflow-Schicht, näher an Embabel und LangGraph4j als an Spring AI oder LangChain4j.
+
 ### Lass deinen Coding-Agent nicht seine eigenen Hausaufgaben benoten
 - URL: https://rabauer.dev/de/blog/qodo-is-not-a-pr-bot/
 - Date: 2026-10-08
