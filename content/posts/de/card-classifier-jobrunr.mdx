@@ -1,0 +1,148 @@
+---
+title: "Heimdeck, Auswärtsdeck: Ein Karten-Klassifikator in Java mit JobRunr"
+date: "2026-11-12"
+summary: "Mit Ronald Dehuysser, dem Erfinder von JobRunr, habe ich einen Bildklassifikator für 20 Java-Sammelkarten trainiert, ohne Java zu verlassen. Das Training lief als JobRunr-Hintergrundjob, die Erkennung als einfacher synchroner Aufruf. Diese Aufteilung hat funktioniert. Das Modell nur halb, denn es hatte ein Deck in einem Zimmer gelernt und wurde mit einem anderen getestet."
+tags: ["java", "jobrunr", "djl", "machine-learning", "spring-boot", "live-coding"]
+youtubeId: "uNNbpeubj0U"
+mainRepository: "https://github.com/JohannesRabauer/java-dex-classifier"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Einführung"
+  - time: "02:38"
+    label: "Warum Ronald JobRunr gebaut hat"
+  - time: "07:02"
+    label: "Von AlexNet zu unserem Plan für den Karten-Klassifikator"
+  - time: "12:38"
+    label: "Das Repo, 20 Karten und echte Webcam-Bilder"
+  - time: "19:04"
+    label: "Den Code fürs Live-Coding leeren"
+  - time: "29:29"
+    label: "Ein KI-Agent schreibt den Vorbereitungsjob"
+  - time: "45:10"
+    label: "Jobs, Job-Kontext und Wiederholungen in JobRunr"
+  - time: "48:48"
+    label: "Background-Job-Server und Skalierung auf Kubernetes"
+  - time: "54:39"
+    label: "CO₂-bewusste Job-Planung"
+  - time: "01:00:04"
+    label: "Wechsel zum fertigen Code und Reparatur des Builds"
+  - time: "01:09:10"
+    label: "Prepare- und Train-Job starten"
+  - time: "01:13:09"
+    label: "JobRunr gegen Temporal und die H2-Datenbank"
+  - time: "01:22:14"
+    label: "Datenbanktabellen, Performance und JobRunr Pro"
+  - time: "01:29:00"
+    label: "Wie der Train-Job mit DJL und ResNet 18 arbeitet"
+  - time: "01:36:50"
+    label: "Live-Test der Kartenerkennung"
+  - time: "01:46:57"
+    label: "Wechsel zu Postgres"
+  - time: "01:53:27"
+    label: "Hibernate-Gespräch und Abschluss"
+---
+
+Ein Modell zu trainieren dauert Minuten. Eine Karte zu erkennen dauert einen Aufruf. Behandelt eine Java-App beides gleich, **wartet am Ende ein Nutzer auf einen Trainingslauf**. In dieser Session ging es darum, beides zu trennen. Den langsamen Teil haben wir in einen JobRunr-Hintergrundjob gesteckt, der schnelle Teil blieb synchron, *alles in Java*.
+
+<CoSpeakerCard
+  name="Ronald Dehuysser"
+  role="Erfinder"
+  company="JobRunr"
+  bio="Ronald ist Entwickler aus Belgien. Er startete JobRunr 2020, nach einem verteilten Java-Projekt für Rechnungen mit mehr Nano-Services als Entwicklern, ohne Correlation-IDs und mit Rechnungen, die in einer Dead Letter Queue verloren gingen."
+  github="https://github.com/rdehuyss"
+  linkedin="https://www.linkedin.com/in/ronalddehuysser/"
+  x="https://x.com/rdehuyss"
+  bluesky="https://bsky.app/profile/rdehuyss.bsky.social"
+  locale="de"
+/>
+
+## Das Deck
+
+Für die Session habe ich **20 eigene Sammelkarten über die Java-Welt** gemacht, im Stil eines Quartetts. Das Deck reicht von Duke und JobRunr bis zum Garbage Collector, zur NullPointerException und zu einem Legacy-Monolithen. Das Ziel war einfach: *Karte vor die Webcam halten, und die App nennt sie.*
+
+Die Trainingsbilder hat Ronald selbst aufgenommen. Er hielt jede Karte vor seine Webcam und drückte **20 bis 30 Mal pro Karte** einen Knopf. Dieses Detail sollte man sich merken. Es entscheidet, wie die Geschichte ausgeht.
+
+## Zwei Geschwindigkeiten
+
+Die App hat zwei Aufgaben, und die laufen sehr unterschiedlich schnell.
+
+**Training ist langsam.** Ein Prepare-Job teilt die Fotos etwa 80/20 in Trainings- und Validierungsdaten auf und schneidet sie auf ein kartenförmiges Format zu. Ein Train-Job durchläuft dann die Epochen und meldet am Ende Genauigkeit und Loss. Im Stream dauerte das Training **etwa 24 Minuten**. Auf Ronalds Rechner waren es etwa 10.
+
+**Erkennung ist schnell.** Ein Webcam-Bild geht ins trainierte Modell, ein Kartenname kommt heraus. Das bleibt ein einfacher synchroner Aufruf. *Kein Job, keine Queue, kein Warten.*
+
+<CardClassifierDeckDiagram />
+
+JobRunr nimmt den langsamen Teil aus dem Web-Request. Der Request antwortet sofort, und das Dashboard zeigt die Logs des Jobs und einen Fortschrittsbalken. Der kommt allerdings nicht von allein.
+
+<Quote author="Ronald Dehuysser" role="Erfinder von JobRunr">
+Den Fortschritt musst du selbst pflegen, denn JobRunr weiß nicht, wie lange der Job dauert oder was darin überhaupt passiert.
+</Quote>
+
+Der Trainingscode meldet seinen Fortschritt also selbst über den Job-Kontext. Dafür bekommt man **eine Live-Ansicht eines 24-Minuten-Jobs** statt eines hängenden Browser-Tabs.
+
+## Transfer Learning, ohne Java zu verlassen
+
+Niemand hat ein neuronales Netz von Grund auf trainiert. [DJL](https://djl.ai/), die Deep Java Library, lädt **ResNet 18** herunter, ein vortrainiertes [Bildmodell](https://arxiv.org/abs/1512.03385) mit 18 Schichten. Wir haben nur einen kleinen Klassifikationskopf für unsere 20 Karten darauf trainiert. Dieser Kopf landet in einer eigenen Datei, `head.jd`, neben dem unveränderten Standardmodell.
+
+Ronald hat ResNet 18 statt ResNet 50 gewählt, weil es **auch auf schwächerer Hardware läuft**. DJL bindet die C-Bibliothek von PyTorch über JNI hinter einer Java-API ein. *Kein Python, kein zusätzlicher Dienst.* Ronald nannte Qwen Vision als Alternative, aber dessen Fine-Tuning hätte bedeutet, Java zu verlassen.
+
+Für Java-Entwickler ohne ML-Hintergrund ist das der nützliche Teil. Man braucht **ein vortrainiertes Modell, ein paar hundert Fotos und einen Job-Runner**, keinen neuen Tech-Stack.
+
+## Was JobRunr um den Job herum mitbringt
+
+Während das Modell trainierte, zeigte Ronald, was JobRunr über das Ausführen einer Methode im Hintergrund hinaus kann.
+
+- **Wiederholungen:** Ein fehlgeschlagener Job wird standardmäßig **10 Mal mit exponentiellem Back-off** wiederholt. Die Annotation `@Job` setzt Name, Wiederholungen, Labels und Job-Filter.
+- **Background-Server:** Eine Property macht eine Instanz zum Background-Job-Server. Man deployt dasselbe Jar zweimal, und eine versteckte Instanz erledigt die schwere Arbeit, während die Web-Instanz schnell bleibt. Am Black Friday, sagte Ronald, kann [KEDA](https://keda.sh/) zusätzliche Pods hochfahren.
+- **Geteilte Datenbanken:** Apps mit einer gemeinsamen Datenbank brauchen **eigene Tabellenpräfixe**. Sonst greift ein Server Jobs ab, deren Klassen er nicht kennt.
+- **Last:** Stresstests erreichen **etwa 5.000 Jobs pro Sekunde** auf Postgres, MariaDB und MongoDB. Eine Firma lässt **8 Milliarden Jobs im Jahr** darüber laufen.
+
+Ich fragte, wie sich JobRunr von [Temporal](https://temporal.io/) unterscheidet. Temporal ist sprachunabhängig. JobRunr lebt in der eigenen Anwendung. Stirbt die JVM, stoppen auch die Jobs, aber Kubernetes startet den Pod neu, und JobRunr macht dort weiter, wo es aufgehört hat.
+
+<Quote author="Ronald Dehuysser" role="Erfinder von JobRunr">
+Hier musst du nicht dein Infrastrukturteam fragen: Hey, darf ich Temporal installieren? Denn Temporal ist wieder ein zusätzliches Stück Infrastruktur, das du betreiben musst und für das du manchmal sogar Leute einstellen musst.
+</Quote>
+
+Die größte Überraschung war die **[CO₂-bewusste Planung](https://www.jobrunr.io/en/documentation/background-methods/carbon-aware-jobs/)**. Man gibt einem Job ein Zeitfenster, und JobRunr führt ihn aus, wenn die CO₂-Intensität im Stromnetz am niedrigsten ist. Laut Ronald hat sein Team herausgefunden, dass CO₂-Ausstoß und Strompreis *in 99,9 % der Fälle zusammenhängen*. Ich habe einen dynamischen Stromtarif, deshalb hat mich das hellhörig gemacht. Den Code dafür haben wir im Stream geschrieben, aber **nie ausgeführt**, weil wir vorher den Branch gewechselt haben.
+
+## Heimdeck, Auswärtsdeck
+
+Dann kam der Webcam-Test. Meine erste Karte wurde erkannt. Danach waren **die meisten Antworten falsch** oder sprangen zwischen Karten hin und her. Der Legacy-Monolith kam bei mir auf 68 %. Ronald hielt dieselbe Karte zu Hause hoch und bekam 100 %.
+
+<Quote author="Ronald Dehuysser" role="Erfinder von JobRunr">
+Ich glaube, das liegt daran, dass du auf Windows bist, denn bei mir steht da 100 % Legacy Monolith.
+</Quote>
+
+Es lag nicht an Windows. Das Modell hatte **das Heimdeck** gelernt: Ronalds Ausdrucke, in Ronalds Zimmer, unter Ronalds Licht. Dann musste es **auswärts spielen**, mit meinen Ausdrucken, meinem Zimmer und meinem Licht. Mögliche Ursachen haben wir im Stream gesammelt, getestet haben wir keine:
+
+- ein anderes Zimmer und anderes Licht
+- meine Ausdrucke sehen anders aus als Ronalds
+- viele Karten haben ähnliche Farben, etwa die blauen
+- nur etwa 30 Fotos pro Karte
+
+Die Pipeline hat ihren Job gemacht. **Die Trainingsdaten waren zu einseitig.** Ronalds Lösung: abwechslungsreichere Bilder erzeugen und neu trainieren. Im Stream haben wir nicht neu trainiert.
+
+## Was sonst schiefging
+
+Der Plan war, den fertigen Code zu löschen und mit einem KI-Agenten neu zu bauen. **Das hat nicht geklappt.** Der erste Agent stellte immer wieder dieselbe Frage und löschte eine Klasse. Sonnet schrieb danach die Vorbereitungsmethode, verschob und löschte aber auch Dateien, um die ich nicht gebeten hatte. Nach etwa einer Stunde wechselten wir zum fertigen Code auf dem Main-Branch. Ich erkläre lieber funktionierenden Code, als einem LLM beim Schreiben des Rests zuzusehen.
+
+Auch der Build ging kaputt, und das ging auf meine Kappe. Ich hatte meinen Agenten gebeten, Ronalds Gradle-Setup auf Maven umzustellen. Danach **fehlte die DJL-BOM**. Ronald hätte das gern vor dem Stream gewusst. Zu Recht. Außerdem war Port 8080 belegt, also zog die App auf 8081 um.
+
+## Fazit
+
+**Langsame Arbeit gehört in einen Job.** Das Training lief 24 Minuten als JobRunr-Hintergrundjob, mit Fortschritt und Logs im Dashboard. Die Erkennung blieb ein synchroner Aufruf. DJL hielt alles in Java. *Diese Aufteilung hat im Stream gehalten*, auch als das Modell es nicht tat.
+
+Wer so etwas baut, fängt mit einem vortrainierten Modell an und packt das Training in einen Job. Und **testet mit einem Deck aus einem anderen Zimmer**, bevor er der Genauigkeit traut.
+
+## Nützliche Links
+
+- [JobRunr](https://www.jobrunr.io/), die Bibliothek für Hintergrundjobs in Java
+- [JobRunr auf GitHub](https://github.com/jobrunr/jobrunr), der Open-Source-Kern
+- [JobRunr: Logging und Job-Fortschritt](https://www.jobrunr.io/en/documentation/background-methods/logging-progress/), wie ein Job seinen Fortschrittsbalken selbst steuert
+- [JobRunr: CO₂-bewusste Jobs](https://www.jobrunr.io/en/documentation/background-methods/carbon-aware-jobs/), Planung im Zeitfenster mit der niedrigsten CO₂-Intensität
+- [JobRunr Pro](https://www.jobrunr.io/en/documentation/pro/), die kostenpflichtige Version mit Prioritäts-Queues, Workflows und Job-Suche
+- [DJL-Tutorial zu Transfer Learning](https://docs.djl.ai/master/docs/demos/jupyter/transfer_learning_on_cifar10.html), dieselbe Idee mit einem vortrainierten ResNet und der PyTorch-Engine
+- [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), das Paper hinter ResNet
+- [Temporal](https://temporal.io/), die sprachunabhängige Alternative, mit der wir verglichen haben
+- [Hangfire](https://www.hangfire.io/), die .NET-Bibliothek, die Ronald auf die Idee für JobRunr brachte

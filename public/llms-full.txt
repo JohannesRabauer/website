@@ -31,9 +31,14 @@ The homepage is the best source for identity and profile information, while the 
 - Talk page (Enterprise AI Trends That Actually Matter): https://rabauer.dev/jcon-btc-2026/
 - Talk page (Enterprise AI Trends That Actually Matter, DCN/JUG 2026): https://rabauer.dev/dcn-jug-2026/
 
-## English posts (27)
+## English posts (28)
 
 ## English blog posts
+### Home Deck, Away Deck: Training a Card Classifier in Java with JobRunr
+- URL: https://rabauer.dev/en/blog/card-classifier-jobrunr/
+- Date: 2026-11-12
+- Summary: Ronald Dehuysser, creator of JobRunr, and I trained an image classifier for 20 Java trading cards without leaving Java. Training ran as a JobRunr background job and recognition was a plain synchronous call. That split worked. The model only half did, because it had learned one deck in one room and was tested on another.
+
 ### Jakarta Agentic AI: Four Annotations, and Even Copilot Gets It
 - URL: https://rabauer.dev/en/blog/jakarta-agentic-ai-four-annotations/
 - Date: 2026-10-28
@@ -170,9 +175,14 @@ The homepage is the best source for identity and profile information, while the 
 - Summary: This live session made a strong case for using AI as a disciplined implementation engine: define constraints first, separate planning from coding, and review output against architecture instead of accepting it at face value.
 
 
-## German posts (27)
+## German posts (28)
 
 ## German blog posts
+### Heimdeck, Auswärtsdeck: Ein Karten-Klassifikator in Java mit JobRunr
+- URL: https://rabauer.dev/de/blog/card-classifier-jobrunr/
+- Date: 2026-11-12
+- Summary: Mit Ronald Dehuysser, dem Erfinder von JobRunr, habe ich einen Bildklassifikator für 20 Java-Sammelkarten trainiert, ohne Java zu verlassen. Das Training lief als JobRunr-Hintergrundjob, die Erkennung als einfacher synchroner Aufruf. Diese Aufteilung hat funktioniert. Das Modell nur halb, denn es hatte ein Deck in einem Zimmer gelernt und wurde mit einem anderen getestet.
+
 ### Jakarta Agentic AI: Vier Annotationen, und sogar Copilot versteht es
 - URL: https://rabauer.dev/de/blog/jakarta-agentic-ai-four-annotations/
 - Date: 2026-10-28
