@@ -68,16 +68,20 @@ write(
 );
 
 for (let n = 1; n <= 24; n += 1) {
-  const slug = `advent-${String(n).padStart(2, '0')}`;
-  write(
-    slug,
-    page({
+  // advent-01 is the link used in the videos; advent-1 to advent-9 work too, for people who type it short.
+  const slugs = [`advent-${String(n).padStart(2, '0')}`];
+  if (n < 10) slugs.push(`advent-${n}`);
+  for (const slug of slugs) {
+    write(
       slug,
-      title: `AI Advent Calendar 2026: door ${n}`,
-      target: `${CALENDAR_URL}#door-${n}`,
-      linkText: `Taking you to door ${n} of the AI Advent Calendar.`,
-    }),
-  );
+      page({
+        slug,
+        title: `AI Advent Calendar 2026: door ${n}`,
+        target: `${CALENDAR_URL}#door-${n}`,
+        linkText: `Taking you to door ${n} of the AI Advent Calendar.`,
+      }),
+    );
+  }
 }
 
-console.log('✓ Advent calendar link pages → public/advent and public/advent-01 to public/advent-24');
+console.log('✓ Advent calendar link pages → public/advent, public/advent-01 to advent-24, public/advent-1 to advent-9');
