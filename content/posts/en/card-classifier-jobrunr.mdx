@@ -61,6 +61,13 @@ Training a model takes minutes. Recognizing a card takes one call. If your Java 
 
 For this session I made **20 original trading cards about the Java world**, in the style of Top Trumps. The deck runs from Duke and JobRunr to the Garbage Collector, NullPointerException and a Legacy Monolith. The goal was simple: *hold a card up to the webcam, and the app names it.*
 
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/java-dex-cards.webp"
+    alt="Six of the 20 Java-Dex cards fanned out like a hand: Duke, Hibernate, Garbage Collector, Virtual Threads, NullPointerException and Legacy Monolith, each with a cartoon character, a job title and four stats"
+  />
+</div>
+
 Ronald took the training pictures himself. He held each card up to his webcam and pressed a button **20 to 30 times per card**. Keep that detail in mind. It decides how the story ends.
 
 ## Two speeds of work
@@ -104,11 +111,20 @@ I asked how JobRunr compares to [Temporal](https://temporal.io/). Temporal is la
 Here you don't need to ask your infrastructure team, hey, can I install Temporal? Because Temporal is again an extra piece of infrastructure that you need to manage and sometimes even hire people for.
 </Quote>
 
-The most surprising feature was **[carbon-aware scheduling](https://www.jobrunr.io/en/documentation/background-methods/carbon-aware-jobs/)**. You give a job a time window, and JobRunr runs it when the grid's carbon intensity is lowest. Ronald said his team's analysis found carbon emissions and electricity price *correlated in 99.9% of cases*. I have a dynamic electricity tariff, so that one caught my attention. We typed the code for it on stream but **never ran it**, because we switched branches before we got there.
+The most surprising feature was **[carbon-aware scheduling](https://www.jobrunr.io/en/documentation/background-methods/carbon-aware-jobs/)**. You give a job a time window, and JobRunr runs it when the grid's carbon intensity is lowest. Ronald said his team's analysis found carbon emissions and electricity price *correlated in 99.9% of cases*.
 
 ## Home deck, away deck
 
 Then came the webcam test. My first card was recognized. After that, **most answers were wrong** or jumped between cards, on my machine and on Ronald's. The Legacy Monolith scored 68% on my side and 100% on his.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/card-classifier-xdev-recognized.png"
+    alt="The classifier's web page during the session: the XDEV card held up to the webcam inside a dashed frame, recognized as XDEV with 99.9% confidence, ahead of Tomcat at 0.1% and Lombok at 0.0%"
+  />
+</div>
+
+When it hit, it hit with confidence: **XDEV at 99.9%**. The trouble was how rarely that happened.
 
 The model had learned **the home deck**: Ronald's printed cards, in Ronald's room, under Ronald's light. It then played **an away game** with my prints, my room and my light. We listed possible causes on stream, none of them tested:
 
@@ -122,8 +138,6 @@ The pipeline did its job. **The training data was too narrow.** Ronald's fix is 
 ## What else went wrong
 
 The plan was to delete the finished code and rebuild it with an AI agent. **That did not work.** The first agent kept asking the same question and deleted one class. Sonnet then wrote the preparation method, but also moved and deleted files I hadn't asked about. At about the one-hour mark we switched to the finished code on the main branch. I would rather explain working code than watch an LLM write the rest.
-
-The build broke too, and that was on me. I had asked my agent to switch Ronald's Gradle setup to Maven, which left the project **missing the DJL BOM**. Ronald would have liked to know before the stream. Fair. Port 8080 was taken as well, so the app moved to 8081.
 
 ## Final thought
 

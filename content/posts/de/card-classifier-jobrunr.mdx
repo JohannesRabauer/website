@@ -62,6 +62,13 @@ Ein Modell zu trainieren dauert Minuten. Eine Karte zu erkennen dauert einen Auf
 
 Für die Session habe ich **20 eigene Sammelkarten über die Java-Welt** gemacht, im Stil eines Quartetts. Das Deck reicht von Duke und JobRunr bis zum Garbage Collector, zur NullPointerException und zu einem Legacy-Monolithen. Das Ziel war einfach: *Karte vor die Webcam halten, und die App nennt sie.*
 
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/java-dex-cards.webp"
+    alt="Sechs der 20 Java-Dex-Karten, aufgefächert wie ein Blatt auf der Hand: Duke, Hibernate, Garbage Collector, Virtual Threads, NullPointerException und Legacy Monolith, jeweils mit Comicfigur, Jobtitel und vier Werten"
+  />
+</div>
+
 Die Trainingsbilder hat Ronald selbst aufgenommen. Er hielt jede Karte vor seine Webcam und drückte **20 bis 30 Mal pro Karte** einen Knopf. Dieses Detail sollte man sich merken. Es entscheidet, wie die Geschichte ausgeht.
 
 ## Zwei Geschwindigkeiten
@@ -105,11 +112,20 @@ Ich fragte, wie sich JobRunr von [Temporal](https://temporal.io/) unterscheidet.
 Hier musst du nicht dein Infrastrukturteam fragen: Hey, darf ich Temporal installieren? Denn Temporal ist wieder ein zusätzliches Stück Infrastruktur, das du betreiben musst und für das du manchmal sogar Leute einstellen musst.
 </Quote>
 
-Die größte Überraschung war die **[CO₂-bewusste Planung](https://www.jobrunr.io/en/documentation/background-methods/carbon-aware-jobs/)**. Man gibt einem Job ein Zeitfenster, und JobRunr führt ihn aus, wenn die CO₂-Intensität im Stromnetz am niedrigsten ist. Laut Ronald hat sein Team herausgefunden, dass CO₂-Ausstoß und Strompreis *in 99,9 % der Fälle zusammenhängen*. Ich habe einen dynamischen Stromtarif, deshalb hat mich das hellhörig gemacht. Den Code dafür haben wir im Stream geschrieben, aber **nie ausgeführt**, weil wir vorher den Branch gewechselt haben.
+Die größte Überraschung war die **[CO₂-bewusste Planung](https://www.jobrunr.io/en/documentation/background-methods/carbon-aware-jobs/)**. Man gibt einem Job ein Zeitfenster, und JobRunr führt ihn aus, wenn die CO₂-Intensität im Stromnetz am niedrigsten ist. Laut Ronald hat sein Team herausgefunden, dass CO₂-Ausstoß und Strompreis *in 99,9 % der Fälle zusammenhängen*.
 
 ## Heimdeck, Auswärtsdeck
 
 Dann kam der Webcam-Test. Meine erste Karte wurde erkannt. Danach waren **die meisten Antworten falsch** oder sprangen zwischen Karten hin und her, auf meinem Rechner wie auf Ronalds. Der Legacy-Monolith kam bei mir auf 68 %, bei ihm auf 100 %.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/card-classifier-xdev-recognized.png"
+    alt="Die Webseite des Klassifikators während der Session: Die XDEV-Karte wird in einem gestrichelten Rahmen vor die Webcam gehalten und mit 99,9 % Sicherheit als XDEV erkannt, vor Tomcat mit 0,1 % und Lombok mit 0,0 %"
+  />
+</div>
+
+Wenn es traf, dann mit voller Überzeugung: **XDEV mit 99,9 %**. Das Problem war, wie selten das passierte.
 
 Das Modell hatte **das Heimdeck** gelernt: Ronalds Ausdrucke, in Ronalds Zimmer, unter Ronalds Licht. Dann musste es **auswärts spielen**, mit meinen Ausdrucken, meinem Zimmer und meinem Licht. Mögliche Ursachen haben wir im Stream gesammelt, getestet haben wir keine:
 
@@ -123,8 +139,6 @@ Die Pipeline hat ihren Job gemacht. **Die Trainingsdaten waren zu einseitig.** R
 ## Was sonst schiefging
 
 Der Plan war, den fertigen Code zu löschen und mit einem KI-Agenten neu zu bauen. **Das hat nicht geklappt.** Der erste Agent stellte immer wieder dieselbe Frage und löschte eine Klasse. Sonnet schrieb danach die Vorbereitungsmethode, verschob und löschte aber auch Dateien, um die ich nicht gebeten hatte. Nach etwa einer Stunde wechselten wir zum fertigen Code auf dem Main-Branch. Ich erkläre lieber funktionierenden Code, als einem LLM beim Schreiben des Rests zuzusehen.
-
-Auch der Build ging kaputt, und das ging auf meine Kappe. Ich hatte meinen Agenten gebeten, Ronalds Gradle-Setup auf Maven umzustellen. Danach **fehlte die DJL-BOM**. Ronald hätte das gern vor dem Stream gewusst. Zu Recht. Außerdem war Port 8080 belegt, also zog die App auf 8081 um.
 
 ## Fazit
 
