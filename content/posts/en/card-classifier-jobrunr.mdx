@@ -105,7 +105,7 @@ While the model trained, Ronald walked through what JobRunr does beyond running 
 - **Shared databases:** apps that share one database need **separate table prefixes**. Otherwise a server picks up jobs whose classes it doesn't have.
 - **Load:** stress tests reach **about 5,000 jobs per second** on Postgres, MariaDB and MongoDB. One company runs **8 billion jobs a year** on it.
 
-I asked how JobRunr compares to [Temporal](https://temporal.io/). Temporal is language-agnostic. JobRunr lives inside your application. If the JVM dies, the jobs stop too, but Kubernetes restarts the pod and JobRunr picks up where it left off.
+I asked how JobRunr compares to Temporal, which I had tried in [an earlier session with Les Jackson](/en/blog/temporalizable/). Temporal is language-agnostic. JobRunr lives inside your application. If the JVM dies, the jobs stop too, but Kubernetes restarts the pod and JobRunr picks up where it left off.
 
 <Quote author="Ronald Dehuysser" role="Creator of JobRunr">
 Here you don't need to ask your infrastructure team, hey, can I install Temporal? Because Temporal is again an extra piece of infrastructure that you need to manage and sometimes even hire people for.
@@ -154,5 +154,5 @@ If you build something like this, start with a pretrained model and wrap the tra
 - [JobRunr Pro](https://www.jobrunr.io/en/documentation/pro/), the paid version with priority queues, workflows and job search
 - [DJL transfer learning tutorial](https://docs.djl.ai/master/docs/demos/jupyter/transfer_learning_on_cifar10.html), the same idea with a pretrained ResNet and the PyTorch engine
 - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), the paper behind ResNet
-- [Temporal](https://temporal.io/), the language-agnostic alternative we compared against
+- [My Temporal session with Les Jackson](/en/blog/temporalizable/), durable workflows with the language-agnostic alternative we compared against
 - [Hangfire](https://www.hangfire.io/), the .NET library that first gave Ronald the idea for JobRunr

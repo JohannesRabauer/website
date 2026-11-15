@@ -106,7 +106,7 @@ Während das Modell trainierte, zeigte Ronald, was JobRunr über das Ausführen 
 - **Geteilte Datenbanken:** Apps mit einer gemeinsamen Datenbank brauchen **eigene Tabellenpräfixe**. Sonst greift ein Server Jobs ab, deren Klassen er nicht kennt.
 - **Last:** Stresstests erreichen **etwa 5.000 Jobs pro Sekunde** auf Postgres, MariaDB und MongoDB. Eine Firma lässt **8 Milliarden Jobs im Jahr** darüber laufen.
 
-Ich fragte, wie sich JobRunr von [Temporal](https://temporal.io/) unterscheidet. Temporal ist sprachunabhängig. JobRunr lebt in der eigenen Anwendung. Stirbt die JVM, stoppen auch die Jobs, aber Kubernetes startet den Pod neu, und JobRunr macht dort weiter, wo es aufgehört hat.
+Ich fragte, wie sich JobRunr von Temporal unterscheidet, das ich in [einer früheren Session mit Les Jackson](/de/blog/temporalizable/) ausprobiert hatte. Temporal ist sprachunabhängig. JobRunr lebt in der eigenen Anwendung. Stirbt die JVM, stoppen auch die Jobs, aber Kubernetes startet den Pod neu, und JobRunr macht dort weiter, wo es aufgehört hat.
 
 <Quote author="Ronald Dehuysser" role="Erfinder von JobRunr">
 Hier musst du nicht dein Infrastrukturteam fragen: Hey, darf ich Temporal installieren? Denn Temporal ist wieder ein zusätzliches Stück Infrastruktur, das du betreiben musst und für das du manchmal sogar Leute einstellen musst.
@@ -155,5 +155,5 @@ Wer so etwas baut, fängt mit einem vortrainierten Modell an und packt das Train
 - [JobRunr Pro](https://www.jobrunr.io/en/documentation/pro/), die kostenpflichtige Version mit Prioritäts-Queues, Workflows und Job-Suche
 - [DJL-Tutorial zu Transfer Learning](https://docs.djl.ai/master/docs/demos/jupyter/transfer_learning_on_cifar10.html), dieselbe Idee mit einem vortrainierten ResNet und der PyTorch-Engine
 - [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), das Paper hinter ResNet
-- [Temporal](https://temporal.io/), die sprachunabhängige Alternative, mit der wir verglichen haben
+- [Meine Temporal-Session mit Les Jackson](/de/blog/temporalizable/), robuste Workflows mit der sprachunabhängigen Alternative, mit der wir verglichen haben
 - [Hangfire](https://www.hangfire.io/), die .NET-Bibliothek, die Ronald auf die Idee für JobRunr brachte
