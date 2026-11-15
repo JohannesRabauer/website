@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "predev": "tsx scripts/generate-rss.ts && tsx scripts/generate-llms.ts",
-    "prebuild": "tsx scripts/generate-rss.ts && tsx scripts/generate-llms.ts",
+    "predev": "tsx scripts/generate-rss.ts && tsx scripts/generate-llms.ts && node scripts/generate-advent-links.mjs",
+    "prebuild": "tsx scripts/generate-rss.ts && tsx scripts/generate-llms.ts && node scripts/generate-advent-links.mjs",
     "build": "next build && node scripts/ensure-nojekyll.mjs",
     "start": "next start",
     "lint": "eslint ."
