@@ -33,8 +33,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # next/font downloads Google Fonts during the build, and that download fails now and
+      # then. Retry, so the nightly advent calendar push still deploys at midnight.
       - name: Build website
-        run: npm run build
+        run: |
+          for attempt in 1 2 3 4; do
+            npm run build && exit 0
+            echo "Build attempt $attempt failed, trying again in 30 seconds."
+            sleep 30
+          done
+          exit 1
 
       - name: Debug output directory
         run: |
