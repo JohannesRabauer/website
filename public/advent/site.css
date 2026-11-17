@@ -238,6 +238,10 @@ code { font-family: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace; f
 .footer p { color: var(--frost); max-width: 36rem; }
 .footer-grid { display: grid; gap: 2rem; }
 @media (min-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+/* The same legal links as the rest of rabauer.dev */
+.legal { display: flex; flex-wrap: wrap; justify-content: center; gap: .25rem 1.5rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #ffffff14; font-size: .9rem; }
+.legal a { color: var(--frost); text-decoration: none; padding: .6rem 0; }
+.legal a:hover { color: var(--lantern); text-decoration: underline; }
 
 /* ---------- door dialog ---------- */
 /* The dialog never scrolls itself: only the paper does, so the close button stays put and the
