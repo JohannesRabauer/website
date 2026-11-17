@@ -3,27 +3,170 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Advent Calendar 2026: door 7</title>
-<meta name="description" content="24 small experiments with AI coding agents. One door opens every day, 1 to 24 December 2026.">
-<meta name="robots" content="noindex">
-<link rel="canonical" href="https://johannesrabauer.github.io/ai-advent-calendar/#door-7">
-<meta property="og:title" content="AI Advent Calendar 2026: door 7">
-<meta property="og:description" content="24 small experiments with AI coding agents. One door opens every day, 1 to 24 December 2026.">
+<base href="/advent/">
+<!--meta-->
+<title>AI Advent Calendar 2026 · The Christkind's workshop</title>
+<meta name="description" content="24 doors, 1 to 24 December. Each door is one small AI lesson for developers, set in a winter workshop with a very eager Wichtel.">
+<meta property="og:title" content="AI Advent Calendar 2026">
+<meta property="og:description" content="24 small AI lessons for developers. One door a day, 1 to 24 December.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://rabauer.dev/advent-7/">
-<meta property="og:image" content="https://rabauer.dev/advent/hero.jpg">
-<meta property="og:image:width" content="1152">
-<meta property="og:image:height" content="768">
-<meta property="og:image:alt" content="A night village with a workshop on the hill and one lit window">
+<meta property="og:url" content="https://rabauer.dev/advent/">
+<meta property="og:image" content="https://rabauer.dev/advent/img/og-site.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="canonical" href="https://rabauer.dev/advent/">
+<!--/meta-->
+<meta name="theme-color" content="#0f1a2e">
 <meta name="twitter:card" content="summary_large_image">
-<meta http-equiv="refresh" content="0; url=https://johannesrabauer.github.io/ai-advent-calendar/#door-7">
-<style>body{margin:0;background:#0f1a2e;color:#f4efe4;font:1.0625rem/1.6 system-ui,sans-serif}main{max-width:640px;margin:0 auto;padding:48px 16px}a{color:#f6b54a}</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
+<a class="skip" href="#doors">Skip to the doors</a>
+<a class="presenter" href="https://xdev.software" rel="noopener"><img src="img/xdev-logo.svg" width="120" height="13" alt="XDEV Software"><span>presents</span></a>
+<div class="toolbar" role="group" aria-label="Page settings">
+  <button type="button" class="tool" id="sound-toggle" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6zm-2 15a2 2 0 0 0 4 0z"/></svg><span>Sound <b>off</b></span></button>
+  <button type="button" class="tool" id="motion-toggle" aria-pressed="true"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5zM18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8zM6 15l.6 1.4L8 17l-1.4.6L6 19l-.6-1.4L4 17l1.4-.6z"/></svg><span>Motion <b>on</b></span></button>
+</div>
+
 <main>
-<p>Taking you to door 7 of the AI Advent Calendar.</p>
-<p><a href="https://johannesrabauer.github.io/ai-advent-calendar/#door-7">https://johannesrabauer.github.io/ai-advent-calendar/#door-7</a></p>
+<section class="hero" id="top" aria-labelledby="hero-h">
+  <div class="layers" aria-hidden="true">
+    <div class="layer layer-sky"><img class="art art-sky " src="img/sky-1536.webp" srcset="img/sky-800.webp 800w, img/sky-1536.webp 1536w" sizes="100vw" width="1536" height="1024" alt="" aria-hidden="true" fetchpriority="high" decoding="async"></div>
+    <div class="layer layer-village"><img class="art art-village " src="img/village-1536.webp" srcset="img/village-800.webp 800w, img/village-1536.webp 1536w" sizes="100vw" width="1536" height="1024" alt="" aria-hidden="true" fetchpriority="high" decoding="async"></div>
+    <canvas class="snow" id="snow"></canvas>
+    <div class="layer layer-workshop"><img class="art art-workshop " src="img/workshop-1536.webp" srcset="img/workshop-800.webp 800w, img/workshop-1536.webp 1536w" sizes="100vw" width="1536" height="1024" alt="" aria-hidden="true" fetchpriority="high" decoding="async"></div>
+  </div>
+  <div class="hero-copy wrap">
+    <p class="kicker">AI Advent Calendar 2026</p>
+    <h1 id="hero-h">The Christkind's <span>Workshop</span></h1>
+    <p class="lede">24 doors, 1 to 24 December. Each one is a small AI lesson for developers, and a page of a winter story.</p>
+    <p class="countdown" data-next="2026-11-30T23:00:00.000Z" data-door="1"><span class="cd-label">The first door opens in</span> <span class="cd-time" aria-live="off">1 December</span></p>
+    <p><a class="btn" href="#doors">To the calendar wall</a> <a class="btn btn-ghost" href="#chime">Read the story</a></p>
+  </div>
+  <button type="button" class="egg-santa" id="egg-santa" aria-label="Someone is wandering around in the snow"><img class="art art-lost-santa " src="img/lost-santa-900.webp" srcset="img/lost-santa-480.webp 480w, img/lost-santa-900.webp 900w" sizes="120px" width="900" height="900" alt="" aria-hidden="true" loading="lazy" decoding="async"></button>
+  <p class="egg-bubble" id="egg-santa-bubble" role="status" hidden></p>
+  <div class="scroll-cue" aria-hidden="true"><span></span></div>
+</section>
+
+<section class="chime" id="chime" aria-labelledby="chime-h">
+  <div class="chime-pin wrap">
+    <div class="chime-art"><img class="art art-door-note " src="img/door-note-900.webp" srcset="img/door-note-480.webp 480w, img/door-note-900.webp 900w" sizes="(min-width: 800px) 420px, 70vw" width="900" height="1350" alt="A wooden workshop door. A brass bell rings beside it, and a folded note slides out from under the door." loading="lazy" decoding="async"></div>
+    <div class="chime-copy">
+      <p class="kicker">The story</p>
+      <h2 id="chime-h">A chime, and a note under the door</h2>
+      <p class="beat">You are the new developer in the Christkind's workshop. The Christkind runs it all, and nobody has ever seen the boss.</p>
+      <p class="beat">Tickets arrive as a little chime and a short note under the door, and they are always vaguer than the Christkind thinks.</p>
+      <p class="beat">You have 24 days before the bell rings on the evening of the 24th.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cast" id="cast" aria-labelledby="cast-h">
+  <div class="wrap">
+    <p class="kicker reveal">The workshop</p>
+    <h2 id="cast-h" class="reveal">Your coworkers</h2>
+    <ul class="cast-list">
+      <li class="cast-card reveal cast-wichtel"><img class="art art-wichtel " src="img/wichtel-900.webp" srcset="img/wichtel-480.webp 480w, img/wichtel-900.webp 900w" sizes="(min-width: 800px) 260px, 45vw" width="900" height="900" alt="The Wichtel, a small sprite in a pointy green hat, typing fast and raising one hand: done!" loading="lazy" decoding="async"><h3>The Wichtel</h3><p>The intern, which is your agent. Quick, keen, says “done!” a bit too early.</p><p class="wichtel-says" aria-hidden="true">done!</p></li>
+      <li class="cast-card reveal"><img class="art art-nikolaus " src="img/nikolaus-900.webp" srcset="img/nikolaus-480.webp 480w, img/nikolaus-900.webp 900w" sizes="(min-width: 800px) 260px, 45vw" width="900" height="900" alt="Nikolaus, a kind old man in a red coat with a white beard, reading from a golden book." loading="lazy" decoding="async"><h3>Nikolaus</h3><p>The kind reviewer. Comes on 6 December with his golden book, where he writes down what was done well.</p></li>
+      <li class="cast-card reveal"><img class="art art-ruprecht " src="img/ruprecht-900.webp" srcset="img/ruprecht-480.webp 480w, img/ruprecht-900.webp 900w" sizes="(min-width: 800px) 260px, 45vw" width="900" height="900" alt="Knecht Ruprecht, tall, in a brown hooded coat, holding a clipboard with one eyebrow raised." loading="lazy" decoding="async"><h3>Knecht Ruprecht</h3><p>The release gate. Nothing passes him without a check. Gruff, fair, and secretly proud of you.</p></li>
+      <li class="cast-card reveal cast-gremlin"><img class="art art-gremlin " src="img/gremlin-900.webp" srcset="img/gremlin-480.webp 480w, img/gremlin-900.webp 900w" sizes="(min-width: 800px) 260px, 45vw" width="900" height="900" alt="Two glowing eyes and a cheeky grin peek out from behind a stack of crates." loading="lazy" decoding="async"><h3>The Gremlin</h3><p>Not a person: the vague ticket, the disabled test, the rule nobody enforces. It gets weaker as you get better.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="wall-section" id="doors" aria-labelledby="doors-h" tabindex="-1">
+  <div class="wrap">
+    <p class="kicker">The calendar wall</p>
+    <h2 id="doors-h">24 doors</h2>
+    <p class="lede">Every door is still shut. The first one opens on 1 December at midnight, German time.</p>
+    <p class="countdown" data-next="2026-11-30T23:00:00.000Z" data-door="1"><span class="cd-label">The first door opens in</span> <span class="cd-time" aria-live="off">1 December</span></p>
+    <div class="wall"><ol class="doors" aria-label="The 24 doors, shuffled as on a real advent calendar"><li class="door door-05 week-1 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">5</span><span class="sr-only">Door 5, opens 5 Dec.</span><p class="door-teaser">It works. It hurts the eyes.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>5 Dec</span></div></li><li class="door door-12 week-2 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">12</span><span class="sr-only">Door 12, opens 12 Dec.</span><p class="door-teaser">One recipe, forty files.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>12 Dec</span></div></li><li class="door door-07 week-1 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">7</span><span class="sr-only">Door 7, opens 7 Dec.</span><p class="door-teaser">Three Wichtel, one design, no agreement.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>7 Dec</span></div></li><li class="door door-06 week-1 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">6</span><span class="sr-only">Door 6, opens 6 Dec.</span><p class="door-teaser">Boots out tonight. Someone&#39;s coming, and they brought a book.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>6 Dec</span></div></li><li class="door door-22 week-4 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">22</span><span class="sr-only">Door 22, opens 22 Dec.</span><p class="door-teaser">The right Wichtel for the job.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>22 Dec</span></div></li><li class="door door-20 week-3 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">20</span><span class="sr-only">Door 20, opens 20 Dec.</span><p class="door-teaser">The gate says no.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>20 Dec</span></div></li><li class="door door-03 week-1 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">3</span><span class="sr-only">Door 3, opens 3 Dec.</span><p class="door-teaser">A note with no words.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>3 Dec</span></div></li><li class="door door-09 week-2 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">9</span><span class="sr-only">Door 9, opens 9 Dec.</span><p class="door-teaser">Same result, 35 times cheaper.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>9 Dec</span></div></li><li class="door door-02 week-1 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">2</span><span class="sr-only">Door 2, opens 2 Dec.</span><p class="door-teaser">Three vague sentences, one eager Wichtel. Someone should ask a question.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>2 Dec</span></div></li><li class="door door-01 week-1 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">1</span><span class="sr-only">Door 1, opens 1 Dec.</span><p class="door-teaser">A chime. A note. A boss nobody has met.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>1 Dec</span></div></li><li class="door door-19 week-3 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">19</span><span class="sr-only">Door 19, opens 19 Dec.</span><p class="door-teaser">No cloud. No keys. No problem?</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>19 Dec</span></div></li><li class="door door-18 week-3 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">18</span><span class="sr-only">Door 18, opens 18 Dec.</span><p class="door-teaser">Three suspects.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>18 Dec</span></div></li><li class="door door-10 week-2 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">10</span><span class="sr-only">Door 10, opens 10 Dec.</span><p class="door-teaser">Teach it once.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>10 Dec</span></div></li><li class="door door-15 week-3 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">15</span><span class="sr-only">Door 15, opens 15 Dec.</span><p class="door-teaser">Read the whole thing first.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>15 Dec</span></div></li><li class="door door-13 week-2 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">13</span><span class="sr-only">Door 13, opens 13 Dec.</span><p class="door-teaser">A rule anyone can talk away.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>13 Dec</span></div></li><li class="door door-16 week-3 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">16</span><span class="sr-only">Door 16, opens 16 Dec.</span><p class="door-teaser">&quot;Done,&quot; it says.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>16 Dec</span></div></li><li class="door door-14 week-2 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">14</span><span class="sr-only">Door 14, opens 14 Dec.</span><p class="door-teaser">Green. Too green.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>14 Dec</span></div></li><li class="door door-08 week-2 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">8</span><span class="sr-only">Door 8, opens 8 Dec.</span><p class="door-teaser">Forty copies of one mistake.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>8 Dec</span></div></li><li class="door door-23 week-4 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">23</span><span class="sr-only">Door 23, opens 23 Dec.</span><p class="door-teaser">Three tries, one winner.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>23 Dec</span></div></li><li class="door door-21 week-4 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">21</span><span class="sr-only">Door 21, opens 21 Dec.</span><p class="door-teaser">Three workbenches.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>21 Dec</span></div></li><li class="door door-24 week-4 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">24</span><span class="sr-only">Door 24, opens 24 Dec.</span><p class="door-teaser">Listen for the bell.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>24 Dec</span></div></li><li class="door door-17 week-3 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">17</span><span class="sr-only">Door 17, opens 17 Dec.</span><p class="door-teaser">One key, one room.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>17 Dec</span></div></li><li class="door door-11 week-2 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">11</span><span class="sr-only">Door 11, opens 11 Dec.</span><p class="door-teaser">Confident, and wrong.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>11 Dec</span></div></li><li class="door door-04 week-1 is-locked"><div class="door-face"><span class="door-num" aria-hidden="true">4</span><span class="sr-only">Door 4, opens 4 Dec.</span><p class="door-teaser">It is January. It went wrong.</p><span class="door-date" aria-hidden="true"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 0 0-4 0v2z"/></svg>4 Dec</span></div></li></ol></div>
+  </div>
+</section>
+
+<section class="chapter week week-1" id="week-1" aria-labelledby="week-1-h">
+  <div class="chapter-sky" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="chapter-head reveal">
+      <p class="kicker">Week 1</p>
+      <h2 id="week-1-h">Talk before code</h2>
+      <p class="lede">The notes are vague and the Wichtel builds the wrong thing fast. You learn to make it ask first.</p>
+    </header>
+    <div class="chapter-art reveal"><img class="art art-week1 " src="img/week1-1536.webp" srcset="img/week1-800.webp 800w, img/week1-1536.webp 1536w" sizes="(min-width: 1000px) 900px, 100vw" width="1536" height="1024" alt="Paper notes flutter down onto a workbench; a pair of polished boots waits beside it." loading="lazy" decoding="async"></div>
+    <ol class="notes"><li class="note is-locked"><span class="note-num">1</span><span class="note-text">A chime. A note. A boss nobody has met.</span><span class="note-more">Opens 1 Dec</span></li><li class="note is-locked"><span class="note-num">2</span><span class="note-text">Three vague sentences, one eager Wichtel. Someone should ask a question.</span><span class="note-more">Opens 2 Dec</span></li><li class="note is-locked"><span class="note-num">3</span><span class="note-text">A note with no words.</span><span class="note-more">Opens 3 Dec</span></li><li class="note is-locked"><span class="note-num">4</span><span class="note-text">It is January. It went wrong.</span><span class="note-more">Opens 4 Dec</span></li><li class="note is-locked"><span class="note-num">5</span><span class="note-text">It works. It hurts the eyes.</span><span class="note-more">Opens 5 Dec</span></li><li class="note is-locked"><span class="note-num">6</span><span class="note-text">Boots out tonight. Someone&#39;s coming, and they brought a book.</span><span class="note-more">Opens 6 Dec</span></li><li class="note is-locked"><span class="note-num">7</span><span class="note-text">Three Wichtel, one design, no agreement.</span><span class="note-more">Opens 7 Dec</span></li></ol>
+  </div>
+</section>
+<section class="chapter week week-2" id="week-2" aria-labelledby="week-2-h">
+  <div class="chapter-sky" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="chapter-head reveal">
+      <p class="kicker">Week 2</p>
+      <h2 id="week-2-h">Teach the agent</h2>
+      <p class="lede">The Wichtel repeats the same mistakes. You teach it the house rules, a skill, a hook.</p>
+    </header>
+    <div class="chapter-art reveal"><img class="art art-week2 " src="img/week2-1536.webp" srcset="img/week2-800.webp 800w, img/week2-1536.webp 1536w" sizes="(min-width: 1000px) 900px, 100vw" width="1536" height="1024" alt="The Wichtel on a ladder pins one new card onto the rule board." loading="lazy" decoding="async"></div>
+    <ol class="notes"><li class="note is-locked"><span class="note-num">8</span><span class="note-text">Forty copies of one mistake.</span><span class="note-more">Opens 8 Dec</span></li><li class="note is-locked"><span class="note-num">9</span><span class="note-text">Same result, 35 times cheaper.</span><span class="note-more">Opens 9 Dec</span></li><li class="note is-locked"><span class="note-num">10</span><span class="note-text">Teach it once.</span><span class="note-more">Opens 10 Dec</span></li><li class="note is-locked"><span class="note-num">11</span><span class="note-text">Confident, and wrong.</span><span class="note-more">Opens 11 Dec</span></li><li class="note is-locked"><span class="note-num">12</span><span class="note-text">One recipe, forty files.</span><span class="note-more">Opens 12 Dec</span></li><li class="note is-locked"><span class="note-num">13</span><span class="note-text">A rule anyone can talk away.</span><span class="note-more">Opens 13 Dec</span></li><li class="note is-locked"><span class="note-num">14</span><span class="note-text">Green. Too green.</span><span class="note-more">Opens 14 Dec</span></li></ol>
+  </div>
+</section>
+<section class="chapter week week-3" id="week-3" aria-labelledby="week-3-h">
+  <div class="chapter-sky" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="chapter-head reveal">
+      <p class="kicker">Week 3</p>
+      <h2 id="week-3-h">Trust, but verify</h2>
+      <p class="lede">Mid-December: everything says “all green”, but it is wrong. Knecht Ruprecht&#39;s checks find out why.</p>
+    </header>
+    <div class="chapter-art reveal"><img class="art art-week3 " src="img/week3-1536.webp" srcset="img/week3-800.webp 800w, img/week3-1536.webp 1536w" sizes="(min-width: 1000px) 900px, 100vw" width="1536" height="1024" alt="A row of lamps glows green. Under the shelf, two eyes peek out. Knecht Ruprecht leans in with a magnifying glass." loading="lazy" decoding="async"></div>
+    <ol class="notes"><li class="note is-locked"><span class="note-num">15</span><span class="note-text">Read the whole thing first.</span><span class="note-more">Opens 15 Dec</span></li><li class="note is-locked"><span class="note-num">16</span><span class="note-text">&quot;Done,&quot; it says.</span><span class="note-more">Opens 16 Dec</span></li><li class="note is-locked"><span class="note-num">17</span><span class="note-text">One key, one room.</span><span class="note-more">Opens 17 Dec</span></li><li class="note is-locked"><span class="note-num">18</span><span class="note-text">Three suspects.</span><span class="note-more">Opens 18 Dec</span></li><li class="note is-locked"><span class="note-num">19</span><span class="note-text">No cloud. No keys. No problem?</span><span class="note-more">Opens 19 Dec</span></li><li class="note is-locked"><span class="note-num">20</span><span class="note-text">The gate says no.</span><span class="note-more">Opens 20 Dec</span></li></ol>
+  </div>
+</section>
+<section class="chapter week week-4" id="week-4" aria-labelledby="week-4-h">
+  <div class="chapter-sky" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="chapter-head reveal">
+      <p class="kicker">Week 4</p>
+      <h2 id="week-4-h">Agents on the team</h2>
+      <p class="lede">The workshop scales up: parallel Wichtel, a cheap model for easy jobs. Nikolaus and Ruprecht return for the reviews.</p>
+    </header>
+    <div class="chapter-art reveal"><img class="art art-week4 " src="img/week4-1536.webp" srcset="img/week4-800.webp 800w, img/week4-1536.webp 1536w" sizes="(min-width: 1000px) 900px, 100vw" width="1536" height="1024" alt="Three workbenches, each with its own busy Wichtel." loading="lazy" decoding="async"></div>
+    <ol class="notes"><li class="note is-locked"><span class="note-num">21</span><span class="note-text">Three workbenches.</span><span class="note-more">Opens 21 Dec</span></li><li class="note is-locked"><span class="note-num">22</span><span class="note-text">The right Wichtel for the job.</span><span class="note-more">Opens 22 Dec</span></li><li class="note is-locked"><span class="note-num">23</span><span class="note-text">Three tries, one winner.</span><span class="note-more">Opens 23 Dec</span></li><li class="note is-locked"><span class="note-num">24</span><span class="note-text">Listen for the bell.</span><span class="note-more">Opens 24 Dec</span></li></ol>
+  </div>
+</section>
+
+<section class="finale" id="finale" aria-labelledby="finale-h">
+  <div class="wrap">
+    <div class="finale-art"><img class="art art-bell " src="img/bell-900.webp" srcset="img/bell-480.webp 480w, img/bell-900.webp 900w" sizes="(min-width: 800px) 320px, 60vw" width="900" height="900" alt="A small brass bell with a red bow, ringing." loading="lazy" decoding="async"></div>
+    <h2 id="finale-h">Listen for the bell</h2>
+    <p class="lede">On the evening of the 24th, a little bell rings. Until then: one door a day.</p>
+    
+  </div>
+</section>
 </main>
-<script>location.replace("https://johannesrabauer.github.io/ai-advent-calendar/#door-7");</script>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <section aria-labelledby="trad-h">
+      <h2 id="trad-h">About these traditions</h2>
+      <p>This calendar is inspired by German winter traditions. In Bavaria and Franconia the Christkind brings the presents but is never seen; usually only a little bell is heard. On 6 December Nikolaus visits, often with his gruff helper Knecht Ruprecht. Here they are characters in a workplace story. You don&#39;t need to know or share any tradition to open a door.</p>
+    </section>
+    <section aria-labelledby="about-h">
+      <h2 id="about-h">About this calendar</h2>
+      <p>Every door is a tiny project you fetch with one command and run with your coding agent. Claude Code is the reference; GitHub Copilot CLI and Codex work too.</p>
+      <p><a href="https://github.com/JohannesRabauer/ai-advent-calendar">The doors on GitHub</a> · <a href="https://github.com/JohannesRabauer/ai-advent-calendar/discussions">Discussions</a></p>
+      <p class="small">No cookies, no tracking, no third-party requests, and nothing is stored in your browser. Fonts and scripts are served from this site.</p>
+    </section>
+  </div>
+</footer>
+
+<dialog class="door-dialog" id="door-dialog" aria-labelledby="dlg-title">
+  <button type="button" class="dlg-close" id="dlg-close" aria-label="Close door">×</button>
+  <div class="dlg-paper" id="dlg-paper" tabindex="-1"><div class="dlg-body" id="dlg-body"></div></div>
+</dialog>
+
+<div class="wichtel-pop" id="wichtel-pop" aria-hidden="true"><img class="art art-wichtel " src="img/wichtel-900.webp" srcset="img/wichtel-480.webp 480w, img/wichtel-900.webp 900w" sizes="140px" width="900" height="900" alt="" aria-hidden="true" loading="lazy" decoding="async"><p>Done! <span>(Ruprecht: “Did you run it?”)</span></p></div>
+<script src="main.js" defer></script>
 </body>
 </html>
