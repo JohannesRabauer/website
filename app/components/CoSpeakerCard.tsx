@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FiGlobe } from 'react-icons/fi';
-import { FaBluesky, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { FaBluesky, FaGithub, FaLinkedin, FaMastodon, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { type BlogLocale, getBlogDictionary } from '@/lib/blog-i18n';
 import { withBasePath } from '@/lib/basePath';
 
@@ -15,6 +15,7 @@ interface Props {
   linkedin?: string;
   x?: string;
   bluesky?: string;
+  mastodon?: string;
   youtube?: string;
   locale?: BlogLocale;
 }
@@ -54,6 +55,7 @@ export default function CoSpeakerCard({
   linkedin,
   x,
   bluesky,
+  mastodon,
   youtube,
   locale = 'en',
 }: Props) {
@@ -102,6 +104,7 @@ export default function CoSpeakerCard({
             <SocialLink href={linkedin} label="LinkedIn" icon={<FaLinkedin className="h-4 w-4" />} />
             <SocialLink href={x} label="X" icon={<FaXTwitter className="h-4 w-4" />} />
             <SocialLink href={bluesky} label="Bluesky" icon={<FaBluesky className="h-4 w-4" />} />
+            <SocialLink href={mastodon} label="Mastodon" icon={<FaMastodon className="h-4 w-4" />} />
             <SocialLink href={youtube} label="YouTube" icon={<FaYoutube className="h-4 w-4" />} />
           </div>
         </div>
