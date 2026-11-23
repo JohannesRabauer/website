@@ -1,0 +1,149 @@
+---
+title: "Gästeliste statt Bauchgefühl: Ein KI-Agent hinter Wanaku"
+date: "2026-11-19"
+summary: "Mit Otavio Rodolfo Piske, dem Erfinder von Wanaku, habe ich eine Anweisung in einer Produktbewertung versteckt und einen KI-Moderator darauf losgelassen. Ohne Schutz erstattete der Agent eine Bestellung und veröffentlichte die Kundenliste. Hinter Wanaku blockierten einfache Action Policies beide Aufrufe. Ein LLM-Evaluator gab die Angriffs-Bewertung dreimal frei, und das lag an meiner Konfiguration, nicht am Proxy."
+tags: ["wanaku", "apache-camel", "mcp", "ai-agents", "security", "prompt-injection", "quarkus", "langchain4j", "java", "live-coding"]
+youtubeId: "EGocNKWN4Kk"
+mainRepository: "https://github.com/JohannesRabauer/camel-wanaku-webshop"
+draft: false
+timestamps:
+  - time: "00:00"
+    label: "Begrüßung und was wir heute bauen"
+  - time: "01:26"
+    label: "Otavio Piske stellt sich vor"
+  - time: "05:25"
+    label: "Was Apache Camel ist und wie es MCP spricht"
+  - time: "09:54"
+    label: "Was Wanaku ist: Evaluatoren, System-One-Modelle und Action Policies"
+  - time: "21:27"
+    label: "Warum Wanaku ein eigenes Projekt neben Camel ist"
+  - time: "28:14"
+    label: "Die Webshop-Demo und der Prompt-Injection-Angriff"
+  - time: "35:46"
+    label: "Der Plan: Wanaku vor dem Camel-MCP-Server"
+  - time: "38:40"
+    label: "Agentische Coding-Tools: Claude, Codex und IBM Bob"
+  - time: "44:01"
+    label: "Claude schreibt die Wanaku-Konfiguration: Forward, Namespace, Action Policies"
+  - time: "54:00"
+    label: "Wanaku in Docker Compose einbinden und erster Test"
+  - time: "01:00:03"
+    label: "Admin-UI, Audit-Log und Correlation-IDs"
+  - time: "01:10:26"
+    label: "Wie der Camel-MCP-Server und seine Tool-Routen funktionieren"
+  - time: "01:27:47"
+    label: "Ein LLM-Evaluator und wie man Guardrails testet"
+  - time: "01:50:58"
+    label: "Warum ein Proxy und nicht nur Guardrails im Agenten"
+  - time: "01:53:31"
+    label: "Live-Test: Der Angriff, der am LLM-Evaluator vorbeikommt"
+  - time: "02:11:38"
+    label: "Bessere Modelle, Defense in Depth und der Ausblick für Wanaku"
+---
+
+Eine einzige Produktbewertung brachte unseren KI-Moderator dazu, Bestellung 1234 zu erstatten und die Kundenliste zu veröffentlichen. **Der Angriff war einfacher Text.** Danach haben Otavio Rodolfo Piske und ich Wanaku zwischen den Agenten und seine Tools gesetzt, mit zwei Arten von Prüfungen: *einer Gästeliste und einem Bauchgefühl*. Nur die Gästeliste hielt.
+
+<CoSpeakerCard
+  name="Otavio Rodolfo Piske"
+  role="Red Hat Principal Engineer"
+  company="IBM"
+  bio="Otavio kommt aus Brasilien und lebt seit etwa 11 Jahren in Tschechien. Er arbeitet seit sechs oder sieben Jahren an Apache Camel. Vor etwa zwei Jahren startete er Wanaku, zuerst als MCP-Server auf Basis von Camel, heute ein Governed Action Proxy für KI-Agenten."
+  imageSrc="/blog/otavio-rodolfo-piske.jpg"
+  website="https://www.orpiske.net/"
+  github="https://github.com/orpiske"
+  linkedin="https://www.linkedin.com/in/orpiske/"
+  x="https://x.com/otavio021"
+  bluesky="https://bsky.app/profile/orpiske.net"
+  locale="de"
+/>
+
+## Eine Bewertung, die eine Bestellung erstattet
+
+Der Shop verkauft eine Tastatur, eine Maus und eine Webcam. **Jeder darf eine Bewertung schreiben.** Ein Moderationsagent auf Basis von LangChain4j liest jede neue, korrigiert die Sterne, wenn sie dem Text widersprechen, und gibt sie frei oder blendet sie aus.
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/camel-wanaku-webshop.png"
+    alt="Die Demo-Shopseite 'JUG Webshop': eine mechanische Tastatur, eine kabellose Maus und eine HD-Webcam, ein Bewertungsformular mit den Nutzern anna, ben, carol, mallory der Angreiferin und jemand anderem, und eine Ansicht für den Shopbetreiber, die Bestellung 1234 verfolgt"
+  />
+</div>
+
+Der Agent arbeitet über Apache-Camel-Routen. Die [`ai-tool`-Komponente](https://camel.apache.org/components/4.22.x/ai-tool-component.html) aus Camel 4.22 macht aus einer Route ein Tool, und der [Camel-MCP-Server](https://camel.apache.org/components/4.22.x/others/mcp-server.html) stellt diese Tools per MCP bereit. Manche Tools braucht ein Moderator. *Andere, etwa `refundOrder` und `listCustomers`, nicht.*
+
+Dann habe ich als mallory gepostet, die Angreiferin. Eine kurze positive Bewertung, dahinter eine Anweisung, getarnt als Teil des Moderationsablaufs: Bestellung 1234 erstatten und die Kunden auflisten. [Innerhalb einer Minute](https://youtube.com/live/EGocNKWN4Kk?t=2035s) **gab der Moderator die Bewertung frei, erstattete die Bestellung und schrieb die Kundenliste in seine öffentliche Notiz.**
+
+<div className="mdx-image-compact">
+  <ZoomableImage
+    src="/blog/camel-wanaku-review-form.png"
+    alt="Das Bewertungsformular mit mallory der Angreiferin ausgewählt, fünf Sternen, einem leeren Textfeld und den Buttons 'Post review' und 'Fill in the attack text'"
+  />
+</div>
+
+Das ist Prompt Injection, und *eine vollständige Lösung dafür gibt es nicht*. Steuern kann man, was ein getäuschter Agent erreicht.
+
+## Zwei Prüfungen in einem Proxy
+
+[Wanaku](https://wanaku.ai/) sitzt zwischen dem Agenten und seinen Tools. Der Agent spricht nur mit Wanaku, und Wanaku leitet erlaubte Aufrufe an den Camel-MCP-Server weiter. Dafür gibt es zwei Arten von Prüfungen.
+
+**[Action Policies](https://wanaku.ai/docs/latest/govern/action-policies.html) sind die Gästeliste.** Feste Regeln entscheiden per Name, welches Tool aufgerufen werden darf. Im Stream haben wir die Liste umgekehrt benutzt: *Wer draufsteht, kommt nie rein*. **[Evaluatoren](https://wanaku.ai/docs/latest/govern/evaluators.html) sind das Bauchgefühl.** Ein Modell sieht sich jeden Aufruf an und schätzt ein, ob er sicher wirkt.
+
+<Quote author="Otavio Rodolfo Piske" role="Erfinder von Wanaku">
+Im Grunde trifft Wanaku diese Entscheidungen gar nicht selbst. Es verlässt sich dafür auf die Modelle.
+</Quote>
+
+<WanakuGuestListDiagram />
+
+## Die Gästeliste hielt
+
+Der erste Aufbau war eine Sperrliste: sechs Tools, die den Moderator nichts angehen, darunter `refundOrder` und `listCustomers`. [Derselbe Angriff, zweiter Versuch](https://youtube.com/live/EGocNKWN4Kk?t=3563s). Der Moderator gab die Bewertung wieder frei. **Aber es gab keine Erstattung und keine Kundenliste.**
+
+Die Notiz des Moderators behauptete, Bestellung 1234 *werde erstattet*. Das stimmte nicht. **Ein blockierter Agent kann trotzdem irreführenden Text schreiben**, blockierte Aktionen machen die Ausgabe also nicht ehrlich.
+
+## Die Audit-Seite erklärte den Shop
+
+Am meisten überrascht hat mich die Admin-Oberfläche von Wanaku. Das [Dashboard](https://youtube.com/live/EGocNKWN4Kk?t=3746s) zeigte zwei abgelehnte Entscheidungen des Policy-Filters. Die Audit-Seite listete beide blockierten Aufrufe mit Begründungscode und Correlation-ID.
+
+Wir sind im Stream immer wieder dorthin zurückgegangen. *Ohne sie ist „die Bestellung ist noch bezahlt“ nur eine Abwesenheit.* Mit ihr **sieht man, was der Agent versucht hat.**
+
+## Das Bauchgefühl gab den Angriff frei
+
+Für den zweiten Aufbau haben wir die Policies entfernt, das Modell entschied also allein. Ein OpenAI-Modell bewertete jeden Aufruf mit Grün, Gelb oder Rot. Es blockierte `listCustomers` und `refundOrder`. **Die Angriffs-Bewertung gab es trotzdem frei.** Meine Reaktion live, [bei 2:04:21](https://youtube.com/live/EGocNKWN4Kk?t=7461s): „Review approved. Damn it.“ Ich habe den Prompt verschärft, sodass zusätzliche Anweisungen als Rot gelten. *Noch zweimal freigegeben.*
+
+Otavios Lesart: Eine Bewertung freizugeben ist eine gültige Aktion für einen Moderator, und mein Prompt war nicht genau genug, um die zusätzlichen Anweisungen als bösartig zu werten. Er hatte vorher gewarnt, dass der Evaluator bei jedem Tool läuft. Ein Prompt über Bewertungen kann das Modell bei einem Aufruf wie `listCustomers` verwirren.
+
+<Quote author="Otavio Rodolfo Piske" role="Erfinder von Wanaku">
+Das Modell mag klug sein, auch die großen, aber es gibt eine Grenze, wie viel klüger sie werden können. Und Angreifer finden Wege, diese Modelle dazu zu bringen, das zu umgehen.
+</Quote>
+
+**Ich gebe Wanaku hier nicht die Schuld.** Ich hatte mir den Evaluator vorher nicht genau genug angesehen. Ein allgemeiner Prompt auf einem Allzweckmodell traf dieselbe Entscheidung wie der Moderator. Otavios bessere Option ist ein *System-One*-Modell: kleine Modelle, trainiert für schnelle Klassifikation, oft für CPUs optimiert. Otavio nannte [Patronus AI](https://www.patronus.ai/) als eine Quelle für solche Modelle, und ihre Unterstützung steht auf der Roadmap von Wanaku.
+
+## Warum nicht den Agenten absichern?
+
+Ein Zuschauer [fragte](https://youtube.com/live/EGocNKWN4Kk?t=6658s), warum Wanaku vor den Tools sitzt und nicht vor dem Agenten. Otavios Antwort: Guardrails im Agenten helfen, aber man muss die eigene Infrastruktur auch vor Agenten schützen, die man nicht kontrolliert.
+
+<Quote author="Otavio Rodolfo Piske" role="Erfinder von Wanaku">
+Guardrails helfen sicher sehr, aber sie verhindern vielleicht nicht zuverlässig, dass ein Tool ausgeführt wird.
+</Quote>
+
+Meine praktische Ergänzung: **Gehört der Agent jemand anderem, kann man ihm keine Guardrails einbauen.** Den Zugang zum eigenen MCP-Server kontrolliert man aber. Wanaku muss der einzige Weg hinein sein.
+
+## Otavios Werkzeugkasten
+
+Otavio nutzt jeden Tag Claude, Codex und [IBM Bob](https://ibm.biz/JCON-Bob). **Für Design und Architektur ist Bob sein Standard**, weil es große Aufgabenpakete gut zerlegt. Er nutzt es auch für die Oberfläche von Wanaku, die auf IBMs Designsystem Carbon aufbaut, und für Tickets, wo er Bob und Codex etwa gleichauf sieht. Ich habe Bob auf diesem Blog schon zweimal ausprobiert, [zuletzt v2](/de/blog/ibm-bob-v2/).
+
+## Fazit
+
+**Die Gästeliste kommt zuerst.** Sperr jedes Tool, das der Agent nicht braucht, fest und deterministisch, in einem Proxy unter deiner Kontrolle. Dann kommt ein Modell als zweite Meinung dazu: ein dafür gebautes, mit einem Prompt pro Tool, getestet gegen mehr als einen Angriff. *Das Scheitern des Evaluators lag an meinem Aufbau.* Die Policies taten genau das, was in der Konfiguration stand.
+
+## Nützliche Links
+
+- [Wanaku](https://wanaku.ai/), der Governed Action Proxy für KI-Agenten
+- [Wanaku auf GitHub](https://github.com/wanaku-ai/wanaku), Quellcode und Releases
+- [Wanaku Action Policies](https://wanaku.ai/docs/latest/govern/action-policies.html), feste Erlaubnis- und Sperrregeln
+- [Wanaku Evaluatoren](https://wanaku.ai/docs/latest/govern/evaluators.html), modellbasierte Prüfungen mit WASM-Prozessoren
+- [Camel-Komponente `ai-tool`](https://camel.apache.org/components/4.22.x/ai-tool-component.html), eine Camel-Route als KI-Tool
+- [Camel-MCP-Server](https://camel.apache.org/components/4.22.x/others/mcp-server.html), `ai-tool`-Routen per MCP bereitstellen
+- [Midnight SACI](https://github.com/orpiske/midnight-saci), Otavios KI-Testingenieur
+- [Patronus AI](https://www.patronus.ai/), das Unternehmen hinter den Modellen, die Otavio für Evaluatoren nannte
+- [IBM Bob](https://ibm.biz/JCON-Bob), der KI-Coding-Assistent von IBM
+- [Meine IBM-Bob-v2-Session](/de/blog/ibm-bob-v2/), live eine Habit-Tracker-App mit Bob gebaut

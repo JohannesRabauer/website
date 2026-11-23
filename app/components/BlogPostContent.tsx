@@ -32,6 +32,7 @@ import ZeroCostQuarkusArchitectureDiagram from '@/app/components/ZeroCostQuarkus
 import BiomelabSandboxDiagram from '@/app/components/BiomelabSandboxDiagram';
 import SpecFirstBlueprintDiagram from '@/app/components/SpecFirstBlueprintDiagram';
 import CardClassifierDeckDiagram from '@/app/components/CardClassifierDeckDiagram';
+import WanakuGuestListDiagram from '@/app/components/WanakuGuestListDiagram';
 import {
   extractHeadings,
   getAvailablePostLocales,
@@ -141,6 +142,9 @@ export default function BlogPostContent({ locale, slug }: Props) {
     ),
     CardClassifierDeckDiagram: (props: React.ComponentProps<typeof CardClassifierDeckDiagram>) => (
       <CardClassifierDeckDiagram {...props} locale={locale} />
+    ),
+    WanakuGuestListDiagram: (props: React.ComponentProps<typeof WanakuGuestListDiagram>) => (
+      <WanakuGuestListDiagram {...props} locale={locale} />
     ),
   };
 
